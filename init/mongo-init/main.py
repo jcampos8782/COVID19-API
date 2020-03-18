@@ -22,6 +22,7 @@ import csv
 from datetime import datetime
 import hashlib
 from os import environ
+from itertools import islice
 
 DB_USER = environ.get("DB_USER")
 DB_PASS = environ.get("DB_PASS")
@@ -49,33 +50,29 @@ for suffix in files:
     with open(filename) as file:
         reader = csv.reader(file)
         i = 0
-        for row in reader:
-            # Skip headers
-            if i < 2:
-                i += 1
-                continue
+        for municipality, region, lat, lon, date, count  in islice(reader, 2, None):
 
             # key composed of municipality, region, and date
-            key = hashlib.md5(format("%s_%s_%s" % (row[0], row[1], row[4])).encode()).hexdigest()
+            key = hashlib.md5(format("%s_%s_%s" % (municipality, region, date)).encode()).hexdigest()
 
-            if key in documents.keys():
+            if key in documents:
                 document = documents[key]
             else:
                 document = {
-                    "date": datetime.strptime(row[4], "%Y-%d-%M"),
+                    "date": datetime.strptime(date, "%Y-%d-%M"),
                     "cases": {},
                     "geo": {
                         "type": "Point",
-                        "coordinates": [float(row[3]), float(row[2])]
+                        "coordinates": [float(lon), float(lat)]
                     },
                     "location": {
-                        "municipality": row[0],
-                        "region": row[1]
+                        "municipality": municipality,
+                        "region": region
                     }
                 }
                 documents[key] = document
 
-            documents[key]["cases"][suffix.lower()] = int(row[5])
+            documents[key]["cases"][suffix.lower()] = int(count)
 
 print("Creating collection %s" % DB_COLLECTION)
 for document in documents.values():
