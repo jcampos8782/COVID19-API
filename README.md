@@ -31,7 +31,7 @@ This project uses [MongoDB](http://mongodb.com) because of its geospatial indexi
 
 # Build
 
-    DB_USER, DB_PASS, docker-compose up -d
+    DB_USER=<user> DB_PASS=<pass> docker-compose up -d
 
 ## Containers
 
