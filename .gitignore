@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Jetbrains cruft
+.idea/
+
+# Apple cruft
+.DS_STORE

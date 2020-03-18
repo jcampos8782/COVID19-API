@@ -1,0 +1,19 @@
+version: "3"
+services:
+  mongo:
+    image: mongo:3.6.17
+    container_name: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
+  mongo-init:
+    build: ./init/mongo-init
+    container_name: mongo-init
+    depends_on:
+      - mongo
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_HOST=mongo
