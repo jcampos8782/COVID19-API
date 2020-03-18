@@ -25,9 +25,9 @@ from os import environ
 
 DB_USER = environ.get("DB_USER")
 DB_PASS = environ.get("DB_PASS")
-DB_HOST = environ.get("DB_HOST") or "localhost"
-DB_PORT = environ.get("DB_PORT") or "27017"
-DB_NAME = environ.get("DB_NAME") or "cvd19"
+DB_HOST = environ.get("DB_HOST", "localhost")
+DB_PORT = environ.get("DB_PORT",  "27017")
+DB_NAME = environ.get("DB_NAME", "cvd19")
 DB_COLLECTION = "cases"
 
 (DB_USER and DB_PASS) or exit("DB_USER and DB_PASS must be set in environment")
@@ -56,7 +56,7 @@ for suffix in files:
                 continue
 
             # key composed of municipality, region, and date
-            key = hashlib.md5(format("%s%s%s" % (row[0], row[1], row[4])).encode()).hexdigest()
+            key = hashlib.md5(format("%s_%s_%s" % (row[0], row[1], row[4])).encode()).hexdigest()
 
             if key in documents.keys():
                 document = documents[key]
@@ -64,13 +64,13 @@ for suffix in files:
                 document = {
                     "date": datetime.strptime(row[4], "%Y-%d-%M"),
                     "cases": {},
+                    "geo": {
+                        "type": "Point",
+                        "coordinates": [float(row[3]), float(row[2])]
+                    },
                     "location": {
                         "municipality": row[0],
-                        "region": row[1],
-                        "geo": {
-                            "type": "Point",
-                            "coordinates": [float(row[3]), float(row[2])]
-                        }
+                        "region": row[1]
                     }
                 }
                 documents[key] = document
@@ -82,6 +82,6 @@ for document in documents.values():
     db["cases"].insert_one(document)
 
 print("Creating geolocation index")
-db["cases"].create_index([("location.geo", pymongo.GEOSPHERE)])
+db["cases"].create_index([("geo", pymongo.GEOSPHERE)])
 
 print("Import complete!")

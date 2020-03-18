@@ -4,24 +4,24 @@ This project contains some simple APIs for querying and searching COVID-19 data 
 
 # Database
 
-This project uses [MongoDB](http://mongodb.com) because of its geospatial indexing capabilities. 
+This project uses [MongoDB](http://mongodb.com) because of its geospatial indexing capabilities.
 
 ## Schema
 
     {   
         date: Date of the data point,  
-        cases: { 
-            confirmed: Total number of confirmed cases, 
-            deaths: Total number of reported deaths, 
-            recovered: Total number of reported recoveries 
-        }, 
-        location: { 
-            municipality: eg: Santa Clara County, 
-            region: eg: US, 
-            geo: { 
-                type: Point,
-                coordinates: [ lon, lat ] 
-            } 
+        cases: {
+            confirmed: Total number of confirmed cases,
+            deaths: Total number of reported deaths,
+            recovered: Total number of reported recoveries
+        },
+        geo: {
+            type: Point,
+            coordinates: [ lon, lat ]
+        } ,
+        location: {
+            municipality: eg: Santa Clara County,
+            region: eg: US,
         }
     }
 
