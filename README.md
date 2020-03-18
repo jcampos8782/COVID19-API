@@ -42,7 +42,12 @@ This project creates two containers:
 
 ## Updating the database
 
-To update your database with the most up-to-date published data, just rebuild the project using `docker-compose up -d`
+To update your database with the most up-to-date published data, rebuild the mongo-init container and then run the container.
+
+```
+docker-compose build mongo-init
+DB_USER=<user> DB_PASS=<pass> docker-compose up mongo-init
+```
 
 # License
 
