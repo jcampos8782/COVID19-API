@@ -131,5 +131,12 @@ dmypy.json
 # Jetbrains cruft
 .idea/
 
+# Eclipse cruft
+.project/
+.settings/
+
+#Java cruft
+.classpath
+
 # Apple cruft
 .DS_STORE
