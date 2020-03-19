@@ -57,7 +57,7 @@ for suffix in files:
                 document = documents[key]
             else:
                 document = {
-                    "date": datetime.strptime(date, "%Y-%M-%d"),
+                    "date": datetime.strptime(date, "%Y-%m-%d"),
                     "cases": {},
                     "geo": {
                         "type": "Point",
