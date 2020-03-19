@@ -2,6 +2,7 @@ package com.jsoncampos.covid19.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Metrics;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jsoncampos.covid19.dto.Covid19CasesDto;
+import com.jsoncampos.covid19.dto.mappers.Mappers;
 import com.jsoncampos.covid19.models.Covid19Cases;
 import com.jsoncampos.covid19.services.CaseSearchService;
 
@@ -30,17 +33,19 @@ public class Covid19CasesController {
 	}
 	
 	@GetMapping("/geo")
-	public ResponseEntity<List<Covid19Cases>> findCovid19CasesForGeolocation(
+	public ResponseEntity<List<Covid19CasesDto>> findCovid19CasesForGeolocation(
 			@RequestParam double lat,
 			@RequestParam double lon,
 			@RequestParam Optional<Double> maxDistance,
 			@RequestParam Optional<Character> unit) {
 		
-		return new ResponseEntity<List<Covid19Cases>>(
-				searchSvc.findCasesNear(
-						lat, lon, 
-						maxDistance.orElse(DEFAULT_DISTANCE),
-						unit.orElse(DEFAULT_UNIT).equals('k') ? Metrics.KILOMETERS : Metrics.MILES),
+		List<Covid19Cases> cases = searchSvc.findCasesNear(
+				lat, lon, 
+				maxDistance.orElse(DEFAULT_DISTANCE),
+				unit.orElse(DEFAULT_UNIT).equals('k') ? Metrics.KILOMETERS : Metrics.MILES);
+		
+		return new ResponseEntity<List<Covid19CasesDto>>(
+				cases.stream().map(Mappers::convertToCovid19CasesDto).collect(Collectors.toList()),
 				HttpStatus.OK);
 	}
 }
