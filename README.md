@@ -4,7 +4,7 @@ This project contains some simple APIs for querying and searching COVID-19 data 
 
 # API
 
-TODO: Generate swagger doc and link from here
+The web API generates swagger documentation which is accessible at /swagger-ui.html
 
 # Database
 
