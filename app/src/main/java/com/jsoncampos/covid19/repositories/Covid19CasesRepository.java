@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.repository.Query;
 import com.jsoncampos.covid19.models.Covid19Cases;
 
 public interface Covid19CasesRepository extends MongoRepository<Covid19Cases, Long> {
+	
 	@Query(sort= "{'date': -1}")
 	public List<Covid19Cases> findByGeoNear(Point loction, Distance distance);
 }

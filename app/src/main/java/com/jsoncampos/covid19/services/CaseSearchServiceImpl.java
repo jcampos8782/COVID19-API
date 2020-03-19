@@ -27,6 +27,7 @@ public class CaseSearchServiceImpl implements CaseSearchService {
 	public List<Covid19Cases> findCasesNear(double latitude, double longitude, double maxDistance, Metric metric) {
 		checkArgument(Math.abs(latitude) <= 90, String.format("Invalid latitude %s", latitude));
 		checkArgument(Math.abs(latitude) <= 180, String.format("Invalid longitude %s", longitude));
+		checkArgument(maxDistance >= 0, String.format("Invalid maxDistance %f", maxDistance));
 		
 		return repository.findByGeoNear(new Point(longitude, latitude), new Distance(maxDistance, metric));
 	}
