@@ -2,12 +2,16 @@
 
 This project contains some simple APIs for querying and searching COVID-19 data published by the [John Hopkins School of Health](https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases). I make no guarantees as to the accuracy of this data.
 
+# API
+
+TODO: Generate swagger doc and link from here
+
 # Database
 
 This project uses [MongoDB](http://mongodb.com) because of its geospatial indexing capabilities.
 
 ## Schema
-
+```
     {   
         date: Date of the data point,  
         cases: {
@@ -24,6 +28,7 @@ This project uses [MongoDB](http://mongodb.com) because of its geospatial indexi
             region: eg: US,
         }
     }
+```
 
 # Prerequisites
 
@@ -31,14 +36,20 @@ This project uses [MongoDB](http://mongodb.com) because of its geospatial indexi
 
 # Build
 
+    For now, manually set the mongodb username and password in the app/src/main/resources/application.properties file.
+    Then run
+
+    ```
     DB_USER=<user> DB_PASS=<pass> docker-compose up -d
+    ```
 
 ## Containers
 
-This project creates two containers:
+This project creates three containers:
 
- 1. MongoDB database (container name `mongo`)
- 2. A `mongo-init` container which downloads the latest published data from the source and creates (or recreates) the `cvd19` database. This container will shut down upon completion.
+ 1. A SpringBoot application which provides services over the dataset
+ 2. MongoDB database (container name `mongo`)
+ 3. A `mongo-init` container which downloads the latest published data from the source and creates (or recreates) the `cvd19` database. This container will shut down upon completion.
 
 ## Updating the database
 
