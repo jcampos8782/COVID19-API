@@ -48,9 +48,7 @@ for suffix in files:
     print("Processing CSV %s" % filename)
 
     with open(filename) as file:
-        reader = csv.reader(file)
-        i = 0
-        for municipality, region, lat, lon, date, count  in islice(reader, 2, None):
+        for municipality, region, lat, lon, date, count  in islice(csv.reader(file), 2, None):
 
             # key composed of municipality, region, and date
             key = hashlib.md5(format("%s_%s_%s" % (municipality, region, date)).encode()).hexdigest()
@@ -59,7 +57,7 @@ for suffix in files:
                 document = documents[key]
             else:
                 document = {
-                    "date": datetime.strptime(date, "%Y-%d-%M"),
+                    "date": datetime.strptime(date, "%Y-%M-%d"),
                     "cases": {},
                     "geo": {
                         "type": "Point",
@@ -72,7 +70,7 @@ for suffix in files:
                 }
                 documents[key] = document
 
-            documents[key]["cases"][suffix.lower()] = int(count)
+            documents[key]["cases"][suffix.lower()] = int(count) if count else 0
 
 print("Creating collection %s" % DB_COLLECTION)
 for document in documents.values():
