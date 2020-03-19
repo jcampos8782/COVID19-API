@@ -132,7 +132,7 @@ dmypy.json
 .idea/
 
 # Eclipse cruft
-.project/
+.project
 .settings/
 
 #Java cruft
