@@ -9,6 +9,7 @@ import org.springframework.data.geo.Metrics;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +47,15 @@ public class Covid19CasesController {
 		
 		return new ResponseEntity<List<Covid19CasesDto>>(
 				cases.stream().map(Mappers::convertToCovid19CasesDto).collect(Collectors.toList()),
+				HttpStatus.OK);
+	}
+	
+	@GetMapping("/regions/{region}")
+	public ResponseEntity<List<Covid19CasesDto>> findCovid19CasesByRegion(
+			@PathVariable("region") String region) {
+		
+		return new ResponseEntity<List<Covid19CasesDto>>(
+				searchSvc.findCasesByRegion(region).stream().map(Mappers::convertToCovid19CasesDto).collect(Collectors.toList()),
 				HttpStatus.OK);
 	}
 }

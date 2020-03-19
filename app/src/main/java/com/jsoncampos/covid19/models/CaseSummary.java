@@ -22,6 +22,4 @@ public class CaseSummary {
 	public void setRecovered(int recovered) {
 		this.recovered = recovered;
 	}
-	
-	
 }

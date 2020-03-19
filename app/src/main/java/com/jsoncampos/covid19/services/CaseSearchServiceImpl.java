@@ -1,6 +1,7 @@
 package com.jsoncampos.covid19.services;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
@@ -30,5 +31,11 @@ public class CaseSearchServiceImpl implements CaseSearchService {
 		checkArgument(maxDistance >= 0, String.format("Invalid maxDistance %f", maxDistance));
 		
 		return repository.findByGeoNear(new Point(longitude, latitude), new Distance(maxDistance, metric));
+	}
+	
+	@Override
+	public List<Covid19Cases> findCasesByRegion(String region) {
+		checkNotNull(region, "region cannot be null");
+		return repository.findByRegion(region);
 	}
 }

@@ -13,4 +13,7 @@ public interface Covid19CasesRepository extends MongoRepository<Covid19Cases, Lo
 	
 	@Query(sort= "{'date': -1}")
 	public List<Covid19Cases> findByGeoNear(Point loction, Distance distance);
+	
+	@Query(value="{'location.region': ?0 }", sort="{'date': -1}")
+	public List<Covid19Cases> findByRegion(String region);
 }
