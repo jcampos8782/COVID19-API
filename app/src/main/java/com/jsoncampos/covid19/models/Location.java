@@ -1,7 +1,5 @@
 package com.jsoncampos.covid19.models;
 
-import org.springframework.data.mongodb.core.index.Indexed;
-
 public class Location {
 	private String municipality;
 	private String region;

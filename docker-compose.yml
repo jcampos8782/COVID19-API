@@ -6,9 +6,11 @@ services:
     ports:
       - 8080
     environment:
-      - DB_USER:${DB_USER}
-      - DB_PASS:${DB_PASS}
-      - DB_HOST:mongo
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_HOST=mongo
+      - DB_PORT=27017
+      - DB_NAME=cvd19
   mongo:
     image: mongo:3.6.17
     container_name: mongo
