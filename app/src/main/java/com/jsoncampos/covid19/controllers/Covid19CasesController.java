@@ -50,12 +50,12 @@ public class Covid19CasesController {
 				HttpStatus.OK);
 	}
 	
-	@GetMapping("/regions/{region}")
+	@GetMapping("/regions/{id}")
 	public ResponseEntity<List<Covid19CasesDto>> findCovid19CasesByRegion(
-			@PathVariable("region") String region) {
+			@PathVariable("id") String regionId) {
 		
 		return new ResponseEntity<List<Covid19CasesDto>>(
-				searchSvc.findCasesByRegion(region).stream().map(Mappers::convertToCovid19CasesDto).collect(Collectors.toList()),
+				searchSvc.findCasesByRegionId(regionId).stream().map(Mappers::convertToCovid19CasesDto).collect(Collectors.toList()),
 				HttpStatus.OK);
 	}
 }

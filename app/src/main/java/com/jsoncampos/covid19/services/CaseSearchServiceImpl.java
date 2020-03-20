@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metric;
@@ -34,8 +35,9 @@ public class CaseSearchServiceImpl implements CaseSearchService {
 	}
 	
 	@Override
-	public List<Covid19Cases> findCasesByRegion(String region) {
-		checkNotNull(region, "region cannot be null");
-		return repository.findByRegion(region);
+	public List<Covid19Cases> findCasesByRegionId(String regionId) {
+		checkNotNull(regionId, "region cannot be null");
+		// TODO: Fix leaky abstraction of MongoDB
+		return repository.findByRegionId(new ObjectId(regionId));
 	}
 }

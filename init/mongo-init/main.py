@@ -36,12 +36,14 @@ DB_COLLECTION = "cases"
 client = pymongo.MongoClient("mongodb://%s:%s@%s:%s" % (DB_USER, DB_PASS, DB_HOST, DB_PORT))
 db = client[DB_NAME]
 
-if DB_COLLECTION in db.list_collection_names():
-    print("Dropping collection %s" % DB_COLLECTION)
-    db.drop_collection(DB_COLLECTION)
+for collection in db.list_collection_names():
+    print("Dropping collection %s" % collection)
+    db.drop_collection(collection)
 
 files = ['Confirmed', 'Deaths', 'Recovered']
 documents = {}
+regions = {}
+municipalities = {}
 
 for suffix in files:
     filename = format("time_series-ncov-%s.csv" % suffix)
@@ -52,6 +54,21 @@ for suffix in files:
 
             # key composed of municipality, region, and date
             key = hashlib.md5(format("%s_%s_%s" % (municipality, region, date)).encode()).hexdigest()
+            region_id, municipality_id = None, None
+
+            if region and region in regions:
+                region_id = regions[region]
+            elif region:
+                result = db["regions"].insert_one({'name': region})
+                region_id = result.inserted_id
+                regions[region] = region_id
+
+            if municipality and municipality in municipalities:
+                municipality_id = municipalities[municipality]
+            elif municipality:
+                result = db["municipalities"].insert_one({'name': municipality})
+                municipality_id = result.inserted_id
+                municipalities[municipality] = municipality_id
 
             if key in documents:
                 document = documents[key]
@@ -65,7 +82,9 @@ for suffix in files:
                     },
                     "location": {
                         "municipality": municipality,
-                        "region": region
+                        "municipality_id": municipality_id,
+                        "region": region,
+                        "region_id": region_id
                     }
                 }
                 documents[key] = document
