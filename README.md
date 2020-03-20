@@ -11,6 +11,9 @@ The web API generates swagger documentation which is accessible at /swagger-ui.h
 This project uses [MongoDB](http://mongodb.com) because of its geospatial indexing capabilities.
 
 ## Schema
+The schema contains three collections:
+
+### `cases`
 ```
     {   
         date: Date of the data point,  
@@ -25,8 +28,24 @@ This project uses [MongoDB](http://mongodb.com) because of its geospatial indexi
         } ,
         location: {
             municipality: eg: Santa Clara County,
+            municipality_id: <id>,
             region: eg: US,
+            region_id: <id>
         }
+    }
+```
+
+### `regions`
+```
+    {
+        name: eg: US
+    }
+```
+
+### `municipalities`
+```
+    {
+        name: eg: Santa Clara County
     }
 ```
 
