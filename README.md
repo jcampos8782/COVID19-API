@@ -2,6 +2,10 @@
 
 This project contains some simple APIs for querying and searching COVID-19 data published by the [John Hopkins School of Health](https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases). I make no guarantees as to the accuracy of this data.
 
+# UI
+
+Includes a minimalistic React/Redux UI which enables searching by the user's location or by a selected region.
+
 # API
 
 The web API generates swagger documentation which is accessible at /swagger-ui.html
