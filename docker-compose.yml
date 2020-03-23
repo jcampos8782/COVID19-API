@@ -1,5 +1,12 @@
 version: "3"
 services:
+  nginx:
+    build: ./docker/nginx
+    ports:
+      - 8000:80
+    depends_on:
+      - api
+      - ui
   api:
     build: ./app
     container_name: api
@@ -11,6 +18,15 @@ services:
       - DB_HOST=mongo
       - DB_PORT=27017
       - DB_NAME=cvd19
+  ui:
+    build: ./ui
+    container_name: ui
+    ports:
+      - 80
+    environment:
+      - API_PROTOCOL=http
+      - API_HOST=localhost
+      - API_PORT=8000
   mongo:
     image: mongo:3.6.17
     container_name: mongo

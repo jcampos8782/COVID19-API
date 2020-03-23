@@ -52,7 +52,7 @@ export function fetchGeolocation() {
 export function fetchRegions() {
     return dispatch => {
         dispatch(requestRegions());
-        return fetch("http://localhost:8080/api/regions")
+        return fetch(`/api/regions`)
             .then(response => response.json(), error => console.log('Error!', error))
             .then(json => dispatch(receiveRegions(json)));
     }
@@ -61,7 +61,7 @@ export function fetchRegions() {
 export function fetchCasesByGeolocation(coords) {
     return dispatch => {
         dispatch(requestCasesByGeolocation(coords));
-        return fetch(`http://localhost:8080//api/covid19/cases/geo?lat=${coords.latitude}&lon=${coords.longitude}`)
+        return fetch(`/api/covid19/cases/geo?lat=${coords.latitude}&lon=${coords.longitude}`)
             .then(response => response.json(), error => console.log('Error!', error))
             .then(json => dispatch(receiveCases(json)));
     }
@@ -70,7 +70,7 @@ export function fetchCasesByGeolocation(coords) {
 export function fetchCasesByRegion(regionId) {
     return dispatch => {
         dispatch(requestCasesByRegion(regionId));
-        return fetch(`http://localhost:8080//api/covid19/cases/regions/${regionId}`)
+        return fetch(`/api/covid19/cases/regions/${regionId}`)
             .then(response => response.json(), error => console.log('Error!', error))
             .then(json => dispatch(receiveCases(json)));
     }
