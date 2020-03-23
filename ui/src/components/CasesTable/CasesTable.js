@@ -8,6 +8,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+const DATE_FORMAT = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
+
 export default class CasesTable extends React.Component {
     render() {
         return (
@@ -25,16 +27,20 @@ export default class CasesTable extends React.Component {
                     </TableHead>
                     <TableBody>
                         {
-                            this.props.cases.map((c,idx) => (
+                            this.props.cases.map((c,idx) => {
+                                let [{ value: mo },,{ value: da },,{ value: ye }] = DATE_FORMAT.formatToParts(new Date(c.date));
+
+                                return (
                                 <TableRow key={idx}>
-                                    <TableCell component="th" scope="row">{ c.date }</TableCell>
-                                    <TableCell component="th" scope="row">{ c.region }</TableCell>
-                                    <TableCell component="th" scope="row">{ c.municipality }</TableCell>
-                                    <TableCell component="th" scope="row">{ c.confirmed }</TableCell>
-                                    <TableCell component="th" scope="row">{ c.recovered }</TableCell>
-                                    <TableCell component="th" scope="row">{ c.deaths }</TableCell>
+                                    <TableCell component="th" scope="row">{ `${mo}/${da}/${ye}` }</TableCell>
+                                    <TableCell component="th" scope="row">{ c.location.region }</TableCell>
+                                    <TableCell component="th" scope="row">{ c.location.municipality }</TableCell>
+                                    <TableCell component="th" scope="row">{ c.summary.confirmed }</TableCell>
+                                    <TableCell component="th" scope="row">{ c.summary.recovered }</TableCell>
+                                    <TableCell component="th" scope="row">{ c.summary.deaths }</TableCell>
                                 </TableRow>
-                            ))
+                              );
+                            })
                         }
                     </TableBody>
                 </Table>
