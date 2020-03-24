@@ -102,7 +102,7 @@ echo "------------------------"
 echo "PREPARING METADATA..."
 echo "------------------------"
 echo "Processing municipalities..."
-cut -f1 -d','  data/cases/confirmed.csv | sed 's/"//' | sort | uniq | egrep ".+" | grep -v "^#" > data/meta/municipalities.csv
+cut -f1,2 -d','  data/cases/confirmed.csv | sed 's/"//' | sort | uniq | egrep "^[^,]" | grep -v "^#" | grep -v "Province/State"> data/meta/municipalities.csv
 echo "Processing regions..."
 cut -f2 -d','  data/cases/confirmed.csv | sed 's/"//' | sort | uniq | egrep ".+" | grep -v "^#" > data/meta/regions.csv
 
