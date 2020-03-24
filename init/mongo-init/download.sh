@@ -73,6 +73,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   sed -i '' 's/"Korea, South"/South Korea/g' data/cases/confirmed.csv
   sed -i '' 's/"Korea, South"/South Korea/g' data/cases/recovered.csv
   sed -i '' 's/"Korea, South"/South Korea/g' data/cases/deaths.csv
+
+  # Remove the * from Taiwan
+  sed -i '' 's/"Taiwan*"/Taiwan/g' data/cases/confirmed.csv
+  sed -i '' 's/"Taiwan*"/Taiwan/g' data/cases/recovered.csv
+  sed -i '' 's/"Taiwan*"/Taiwan/g' data/cases/deaths.csv
 else
   sed -i 's/"\(.*\), The"/The \1/g' data/cases/confirmed.csv
   sed -i 's/"\(.*\), The"/The \1/g' data/cases/recovered.csv
@@ -82,6 +87,11 @@ else
   sed -i 's/"Korea, South"/South Korea/g' data/cases/confirmed.csv
   sed -i 's/"Korea, South"/South Korea/g' data/cases/recovered.csv
   sed -i 's/"Korea, South"/South Korea/g' data/cases/deaths.csv
+
+  # Remove the * from Taiwan
+  sed -i 's/"Taiwan*"/Taiwan/g' data/cases/confirmed.csv
+  sed -i 's/"Taiwan*"/Taiwan/g' data/cases/recovered.csv
+  sed -i 's/"Taiwan*"/Taiwan/g' data/cases/deaths.csv
 fi
 
 echo "------------------------"
