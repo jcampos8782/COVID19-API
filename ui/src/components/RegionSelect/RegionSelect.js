@@ -21,7 +21,7 @@ export default class RegionSelect extends React.Component {
               >
                   <MenuItem value="-1" selected><em>None</em></MenuItem>
                   {
-                      this.props.regions.map(region => <MenuItem key={region.id} value={region.id}>{region.name}</MenuItem>)
+                      this.props.options.map(region => <MenuItem key={region.id} value={region.id}>{region.name}</MenuItem>)
                   }
               </Select>
           </div>

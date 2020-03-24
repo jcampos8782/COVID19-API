@@ -27,6 +27,7 @@ services:
       - API_PROTOCOL=http
       - API_HOST=localhost
       - API_PORT=8000
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
   mongo:
     image: mongo:3.6.17
     container_name: mongo

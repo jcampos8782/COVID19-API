@@ -1,22 +1,17 @@
 import { SELECT_REGION, RECEIVE_REGIONS } from '../actions/types';
 
-const initialState = {
-  regions: [],
-  selectedRegionId: -1
-};
-
-export default (state = initialState, action) => {
+export default (state = { options: [], selectedRegionId: -1 }, action) => {
   switch(action.type) {
       case SELECT_REGION:
           return {
-              ...state,
-              selectedRegionId: action.selectedRegionId
+            ...state,
+            selectedRegionId: action.selectedRegionId
           };
       case RECEIVE_REGIONS:
-          return {
-              ...state,
-              regions: action.regions
-          };
+        return {
+          ...state,
+          options: action.regions
+        };
       default:
           return state;
   }
