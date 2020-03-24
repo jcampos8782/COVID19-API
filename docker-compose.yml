@@ -19,15 +19,14 @@ services:
       - DB_PORT=27017
       - DB_NAME=cvd19
   ui:
-    build: ./ui
+    build:
+      context: ./ui
+      args:
+        - SERVER_URL=${SERVER_URL}
+        - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     container_name: ui
     ports:
       - 80
-    environment:
-      - API_PROTOCOL=http
-      - API_HOST=localhost
-      - API_PORT=8000
-      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
   mongo:
     image: mongo:3.6.17
     container_name: mongo
