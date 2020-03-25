@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Metrics;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import com.jsoncampos.covid19.models.Covid19Cases;
 import com.jsoncampos.covid19.services.CaseSearchService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000" )
 @RequestMapping(path = "/api/covid19/cases")
 public class Covid19CasesController {
 	
