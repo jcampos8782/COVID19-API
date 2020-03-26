@@ -40,4 +40,11 @@ public class CaseSearchServiceImpl implements CaseSearchService {
 		// TODO: Fix leaky abstraction of MongoDB
 		return repository.findByRegionId(new ObjectId(regionId));
 	}
+	
+	@Override
+	public List<Covid19Cases> findCasesByMunicipalityId(String municipalityId) {
+		checkNotNull(municipalityId, "municipalityId cannot be null");
+		// TODO: Fix leaky abstraction of MongoDB
+		return repository.findByMunicipalityId(new ObjectId(municipalityId));
+	}
 }

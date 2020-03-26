@@ -60,4 +60,13 @@ public class Covid19CasesController {
 				searchSvc.findCasesByRegionId(regionId).stream().map(Mappers::convertToCovid19CasesDto).collect(Collectors.toList()),
 				HttpStatus.OK);
 	}
+	
+	@GetMapping("/municipalities/{id}")
+	public ResponseEntity<List<Covid19CasesDto>> findCovid19CasesByMunicipality(
+			@PathVariable("id") String municipalityId) {
+		
+		return new ResponseEntity<List<Covid19CasesDto>>(
+				searchSvc.findCasesByMunicipalityId(municipalityId).stream().map(Mappers::convertToCovid19CasesDto).collect(Collectors.toList()),
+				HttpStatus.OK);
+	}
 }

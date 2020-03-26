@@ -1,6 +1,7 @@
 import * as Actions from './types';
 import { selectRegion } from './RegionActions';
-import { fetchCasesByRegion } from './CaseActions';
+import { fetchCasesByRegion, fetchCasesByMunicipality } from './CaseActions';
+import { selectMunicipality, fetchMunicipalities } from './MunicipalityActions';
 
 const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
@@ -38,13 +39,29 @@ export const fetchGeocoding = (coords) => {
             .then(response => response.json())
             .then(json => {
               dispatch(receiveGeocoding(json.results));
-
               let region = getState().geolocation.region;
               let matchingRegion = getState().regions.find(r => r.name === region.long_name || r.name === region.short_name);
 
               if (matchingRegion) {
                 dispatch(selectRegion(matchingRegion.id));
-                dispatch(fetchCasesByRegion(matchingRegion.id));
+                // Attempt to fetch the municipalities for the region.
+                return dispatch(fetchMunicipalities(matchingRegion.id));
+              }
+            })
+            .then(result => {
+              if (!result) {
+                return;
+              }
+
+              // Attempt to match the municipality to the user's municipality
+              let municipality = getState().geolocation.municipality;
+              let matchingMunicipality = getState().municipalities.find(m => m.name === municipality.long_name || m.name === municipality.short_name);
+
+              if (matchingMunicipality) {
+                dispatch(selectMunicipality(matchingMunicipality.id));
+                dispatch(fetchCasesByMunicipality(matchingMunicipality.id));
+              } else {
+                dispatch(fetchCasesByRegion(result.regionId));
               }
             });
     }

@@ -17,4 +17,7 @@ public interface Covid19CasesRepository extends MongoRepository<Covid19Cases, Lo
 	
 	@Query(value="{'location.region_id': ?0 }", sort="{'date': -1}")
 	public List<Covid19Cases> findByRegionId(ObjectId regionId);
+	
+	@Query(value="{'location.municipality_id': ?0 }", sort="{'date': -1}")
+	public List<Covid19Cases> findByMunicipalityId(ObjectId municipalityId);
 }

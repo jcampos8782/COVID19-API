@@ -10,6 +10,10 @@ export const requestCasesByRegion = (regionId) => {
     return { type: Actions.REQUEST_CASES_BY_REGION_ID, regionId };
 }
 
+export const requestCasesByMunicipality = (municipalityId) => {
+    return { type: Actions.REQUEST_CASES_BY_MUNICIPALITY_ID, municipalityId };
+}
+
 export const receiveCases = (cases) => {
     return {
         type: Actions.RECEIVE_CASES,
@@ -23,6 +27,15 @@ export function fetchCasesByGeolocation(coords) {
         return fetch(`${SERVER_URL}/api/covid19/cases/geo?lat=${coords.latitude}&lon=${coords.longitude}`)
             .then(response => response.json(), error => console.log('Error!', error))
             .then(json => dispatch(receiveCases(json)));
+    }
+}
+
+export function fetchCasesByMunicipality(municipalityId) {
+    return (dispatch, getState) => {
+      dispatch(requestCasesByMunicipality(municipalityId));
+      return fetch(`${SERVER_URL}/api/covid19/cases/municipalities/${municipalityId}`)
+          .then(response => response.json(), error => console.log('Error!', error))
+          .then(json => dispatch(receiveCases(json)));
     }
 }
 

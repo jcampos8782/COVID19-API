@@ -13,11 +13,15 @@ export const selectRegion = (selectedRegionId) => {
     return { type: Actions.SELECT_REGION, selectedRegionId };
 }
 
+export const unselectRegion = () => {
+    return { type: Actions.UNSELECT_REGION }
+}
+
 export const requestRegions = () => {
     return { type: Actions.REQUEST_REGIONS }
 }
 
-export const fetchRegions = (host = "", onComplete) => {
+export const fetchRegions = (onComplete) => {
     return dispatch => {
         dispatch(requestRegions());
         return fetch(`${SERVER_URL}/api/regions`)
