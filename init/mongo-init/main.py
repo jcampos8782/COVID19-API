@@ -1,33 +1,3 @@
-"""
-Initializes and populates MongoDb tables for time-series data and geolocation lookups
-
-Initializes and populates a MongoDB database with the following tables:
-
- - regions: A collection of region names as referenced in the Google Geocoding API.
- - locations: Geographic coordinates with a reference to the associated region
- - cases: A collection of time-series data which contains a reference to the location associated with the data
-
-The following files are required:
-
- - data/meta/locations.csv: <sub-region>,<region>,<latitude>,<longitude>
- - data/cases/<type>.csv: <sub-region>,<region>,<latitude>,<longitude>,<series>
-
-The <type> in the cases CSV filename will be used as the key in the cases documents for the series data. For example,
-data/cases/confirmed.csv will have a { "confirmed": [ 0, 0, 0, 1, 10 ] } sub-document as a part of its collection.
-
-
-Parameters:
-To use, set the following environment variables and execute this import script:
-DB_USER: mongodb username
-DB_PASS: mongodb password
-DB_HOST: mongodb host (default localhost)
-DB_PORT: mongodb port (default 27017)
-DB_NAME: name of the db to create (default cvd19)
-
-Returns:
-None
-"""
-
 import pymongo
 import csv
 import requests
@@ -45,7 +15,7 @@ DB_PASS = environ.get("DB_PASS")
 DB_HOST = environ.get("DB_HOST", "localhost")
 DB_PORT = environ.get("DB_PORT",  "27017")
 DB_NAME = environ.get("DB_NAME", "cvd19")
-DB_COLL = "cases"
+DB_COLL = "series"
 
 GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY")
 
@@ -57,13 +27,13 @@ DB_INDICES = [
     Index("locations", "region_id", pymongo.HASHED),
     Index("locations", "municipality_id", pymongo.HASHED),
     Index("locations", "geo", pymongo.GEOSPHERE),
-    Index("cases", "location._id", pymongo.HASHED),
-    Index("cases", "location.region_id", pymongo.HASHED),
-    Index("cases", "location.municipality_id", pymongo.HASHED)
+    Index("series", "location._id", pymongo.HASHED),
+    Index("series", "location.region_id", pymongo.HASHED),
+    Index("series", "location.municipality_id", pymongo.HASHED)
 ]
 
 GOOGLE_GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false&key=%s"
-SERIES_FILE_PATH = "data/cases"
+SERIES_FILE_PATH = "data/series"
 FILE_GEO_COORDINATES = "data/meta/coordinates.csv"
 
 # Convert the files in the SERIES_FILE_PATH directory to sources with a type and file
@@ -80,7 +50,7 @@ for source in series_datasources:
 client = pymongo.MongoClient("mongodb://%s:%s@%s:%s" % (DB_USER, DB_PASS, DB_HOST, DB_PORT))
 db = client[DB_NAME]
 
-cases = {}
+series = {}
 locations = {}
 
 print("Performing coordinate reverse lookup via Google APIs")
@@ -147,8 +117,7 @@ with open(FILE_GEO_COORDINATES) as file:
                 "type": "Point",
                 "coordinates": [float(lon), float(lat)]
             },
-            "region_id": region_id,
-            "municipality_id": municipality_id
+            "region_id": municipality_id if municipality else region_id
         }
 
         result = db['locations'].insert_one(location)
@@ -159,29 +128,28 @@ for source in series_datasources:
     print("Processing data file %s" % source.file)
     with open(source.file) as file:
         # skip header using islice
-        for municipality, region, lat, lon, *series in islice(csv.reader(file), 1, None):
+        for municipality, region, lat, lon, *data in islice(csv.reader(file), 1, None):
             location_key = hashlib.md5(format("%s-%s" % ((default_mun.lower()), default_reg.lower())).encode()).hexdigest()
             location = locations[location_key]
 
-            if location_key in cases:
-                document = cases[location_key]
+            if location_key in series:
+                document = series[location_key]
             else:
                 document = {
-                    "cases": {},
+                    "data": {},
                     "location": {
                         "_id": location["_id"],
-                        "region_id": location["region_id"],
-                        "municipality_id": location["municipality_id"]
+                        "region_id": location["parent_id"] if municipality else location["region_id"],
+                        "municipality_id": location["region_id"] if municipality else None
                     }
                 }
 
-                cases[location_key] = document
-
-            cases[location_key]["cases"][source.series] = [int(n) for n in series]
+                series[location_key] = document
+            series[location_key]["data"][source.series] = [int(n) for n in data]
 
 print("Creating collection %s" % DB_COLL)
-for case in cases.values():
-    db["cases"].insert_one(case)
+for doc in series.values():
+    db["series"].insert_one(doc)
 
 for index in DB_INDICES:
     print("Creating %s index on field %s for collection %s" % (index.type, index.field, index.collection))
