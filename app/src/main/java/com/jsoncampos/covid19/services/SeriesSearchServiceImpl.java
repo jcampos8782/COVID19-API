@@ -53,11 +53,4 @@ public class SeriesSearchServiceImpl implements SeriesSearchService {
 		// TODO: Fix leaky abstraction of MongoDB
 		return repository.findByRegionId(new ObjectId(regionId));
 	}
-	
-	@Override
-	public List<Series> findSeriesByMunicipalityId(String municipalityId) {
-		checkNotNull(municipalityId, "municipalityId cannot be null");
-		// TODO: Fix leaky abstraction of MongoDB
-		return repository.findByMunicipalityId(new ObjectId(municipalityId));
-	}
 }

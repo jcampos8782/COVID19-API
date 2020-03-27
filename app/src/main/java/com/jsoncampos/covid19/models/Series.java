@@ -43,31 +43,21 @@ public class Series {
 	}
 	
 	public static class Location {
-		@Field("region_id")
-		private String regionId;
-		
-		@Field("municipality_id")
-		private String municipalityId;
 		
 		@Field("_id")
 		private String locationId;
+
+		@Field("regions")
+		private List<String> regions;
 		
-		public String getRegionId() {
-			return regionId;
+		public List<String> getRegions() {
+			return regions;
 		}
 
-		public void setRegionId(String regionId) {
-			this.regionId = regionId;
+		public void setRegions(List<String> regions) {
+			this.regions = regions;
 		}
-
-		public String getMunicipalityId() {
-			return municipalityId;
-		}
-
-		public void setMunicipalityId(String municipalityId) {
-			this.municipalityId = municipalityId;
-		}
-
+		
 		public String getLocationId() {
 			return locationId;
 		}

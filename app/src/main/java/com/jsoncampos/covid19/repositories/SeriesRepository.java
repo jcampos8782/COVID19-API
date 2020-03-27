@@ -9,11 +9,8 @@ import org.springframework.data.mongodb.repository.Query;
 import com.jsoncampos.covid19.models.Series;
 
 public interface SeriesRepository extends MongoRepository<Series, Long> {
-	@Query(value="{'location.region_id': ?0 }")
+	@Query(value="{'location.regions': ?0 }")
 	public List<Series> findByRegionId(ObjectId regionId);
-	
-	@Query(value="{'location.municipality_id': ?0 }")
-	public List<Series> findByMunicipalityId(ObjectId municipalityId);
 
 	@Query(value="{'location._id': { $in: $0 }}")
 	public List<Series> findByLocationIn(List<String> map);

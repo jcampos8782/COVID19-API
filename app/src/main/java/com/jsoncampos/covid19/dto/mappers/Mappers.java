@@ -8,7 +8,7 @@ import com.jsoncampos.covid19.models.Series;
 public class Mappers {
 	public static SeriesDto convertToSeriesDto(Series model) {
 		return new SeriesDto.Builder()
-				.withLocation(model.getLocation().getMunicipalityId(), model.getLocation().getRegionId())
+				.withRegions(model.getLocation().getRegions())
 				.withData(model.getData())
 				.build();
 	}

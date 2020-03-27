@@ -27,8 +27,7 @@ DB_INDICES = [
     Index("regions", "parent_id", pymongo.HASHED),
     Index("locations", "region_id", pymongo.HASHED),
     Index("locations", "geo", pymongo.GEOSPHERE),
-    Index("series", "location.region_id", pymongo.HASHED),
-    Index("series", "location.municipality_id", pymongo.HASHED)
+    Index("series", "location.regions", pymongo.ASCENDING)
 ]
 
 GOOGLE_GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false&key=%s"
@@ -66,8 +65,7 @@ with open(FILE_GEO_COORDINATES) as file:
             region = db['regions'].find_one({'_id': location["region_id"]})
             locations[key] = {
                 "location_id": location["_id"],
-                "region_id": region["_id"] if "parent_id" not in region else region["parent_id"],
-                "municipality_id": region["_id"] if "parent_id" in region else None,
+                "regions": [region[k] for k in ["_id", "parent_id"] if k in region]
             }
             continue
 
@@ -127,8 +125,7 @@ with open(FILE_GEO_COORDINATES) as file:
         result = db['locations'].insert_one(location)
         locations[key] = {
                 "location_id": location["_id"],
-                "region_id": region_id if municipality else region_id,
-                "municipality_id": municipality_id if municipality else None,
+                "regions": [i for i in [region_id, municipality_id] if i]
             }
 
 # Process the data files.

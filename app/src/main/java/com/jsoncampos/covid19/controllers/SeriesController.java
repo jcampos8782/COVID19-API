@@ -60,13 +60,4 @@ public class SeriesController {
 				searchSvc.findSeriesByRegionId(regionId).stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
 				HttpStatus.OK);
 	}
-	
-	@GetMapping("/municipalities/{id}")
-	public ResponseEntity<List<SeriesDto>> findSeriesByMunicipality(
-			@PathVariable("id") String municipalityId) {
-		
-		return new ResponseEntity<List<SeriesDto>>(
-				searchSvc.findSeriesByMunicipalityId(municipalityId).stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
-				HttpStatus.OK);
-	}
 }
