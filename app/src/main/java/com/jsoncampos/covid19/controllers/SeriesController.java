@@ -15,58 +15,58 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jsoncampos.covid19.dto.Covid19CasesDto;
+import com.jsoncampos.covid19.dto.SeriesDto;
 import com.jsoncampos.covid19.dto.mappers.Mappers;
-import com.jsoncampos.covid19.models.Covid19Cases;
-import com.jsoncampos.covid19.services.CaseSearchService;
+import com.jsoncampos.covid19.models.Series;
+import com.jsoncampos.covid19.services.SeriesSearchService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000" )
-@RequestMapping(path = "/api/covid19/cases")
-public class Covid19CasesController {
+@RequestMapping(path = "/api/series")
+public class SeriesController {
 	
 	private static double DEFAULT_DISTANCE = 10.0;
 	private static char DEFAULT_UNIT = 'k'; // Kilometers
 	
-	private CaseSearchService searchSvc;
+	private SeriesSearchService searchSvc;
 	
 	@Autowired
-	public Covid19CasesController(CaseSearchService searchSvc) {
+	public SeriesController(SeriesSearchService searchSvc) {
 		this.searchSvc = searchSvc;
 	}
 	
 	@GetMapping("/geo")
-	public ResponseEntity<List<Covid19CasesDto>> findCovid19CasesForGeolocation(
+	public ResponseEntity<List<SeriesDto>> findSeriesNearLocation(
 			@RequestParam double lat,
 			@RequestParam double lon,
 			@RequestParam Optional<Double> maxDistance,
 			@RequestParam Optional<Character> unit) {
 		
-		List<Covid19Cases> cases = searchSvc.findCasesNear(
+		List<Series> cases = searchSvc.findSeriesNear(
 				lat, lon, 
 				maxDistance.orElse(DEFAULT_DISTANCE),
 				unit.orElse(DEFAULT_UNIT).equals('k') ? Metrics.KILOMETERS : Metrics.MILES);
 		
-		return new ResponseEntity<List<Covid19CasesDto>>(
-				cases.stream().map(Mappers::convertToCovid19CasesDto).collect(Collectors.toList()),
+		return new ResponseEntity<List<SeriesDto>>(
+				cases.stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
 				HttpStatus.OK);
 	}
 	
 	@GetMapping("/regions/{id}")
-	public ResponseEntity<List<Covid19CasesDto>> findCovid19CasesByRegion(
+	public ResponseEntity<List<SeriesDto>> findSeriesByRegion(
 			@PathVariable("id") String regionId) {
 		
-		return new ResponseEntity<List<Covid19CasesDto>>(
-				searchSvc.findCasesByRegionId(regionId).stream().map(Mappers::convertToCovid19CasesDto).collect(Collectors.toList()),
+		return new ResponseEntity<List<SeriesDto>>(
+				searchSvc.findSeriesByRegionId(regionId).stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
 				HttpStatus.OK);
 	}
 	
 	@GetMapping("/municipalities/{id}")
-	public ResponseEntity<List<Covid19CasesDto>> findCovid19CasesByMunicipality(
+	public ResponseEntity<List<SeriesDto>> findSeriesByMunicipality(
 			@PathVariable("id") String municipalityId) {
 		
-		return new ResponseEntity<List<Covid19CasesDto>>(
-				searchSvc.findCasesByMunicipalityId(municipalityId).stream().map(Mappers::convertToCovid19CasesDto).collect(Collectors.toList()),
+		return new ResponseEntity<List<SeriesDto>>(
+				searchSvc.findSeriesByMunicipalityId(municipalityId).stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
 				HttpStatus.OK);
 	}
 }

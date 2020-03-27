@@ -23,11 +23,10 @@ GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY")
 GOOGLE_API_KEY or exit("GOOGLE_API_KEY must be set in environment")
 
 DB_INDICES = [
-    Index("municipalities", "region_id", pymongo.HASHED),
+    Index("regions", "name", pymongo.HASHED),
+    Index("regions", "parent_id", pymongo.HASHED),
     Index("locations", "region_id", pymongo.HASHED),
-    Index("locations", "municipality_id", pymongo.HASHED),
     Index("locations", "geo", pymongo.GEOSPHERE),
-    Index("series", "location._id", pymongo.HASHED),
     Index("series", "location.region_id", pymongo.HASHED),
     Index("series", "location.municipality_id", pymongo.HASHED)
 ]
@@ -61,10 +60,15 @@ with open(FILE_GEO_COORDINATES) as file:
         # same geocoordinates but one be a parent of the other.
         key = hashlib.md5(format("%s-%s" % ((default_mun.lower()), default_reg.lower())).encode()).hexdigest()
 
-        result = db['locations'].find_one({'key': key})
+        location = db['locations'].find_one({'key': key})
 
-        if result:
-            locations[key] = result
+        if location:
+            region = db['regions'].find_one({'_id': location["region_id"]})
+            locations[key] = {
+                "location_id": location["_id"],
+                "region_id": region["_id"] if "parent_id" not in region else region["parent_id"],
+                "municipality_id": region["_id"] if "parent_id" in region else None,
+            }
             continue
 
         print("Fetching location data for lat: %s lon: %s" % (lat, lon))
@@ -121,7 +125,11 @@ with open(FILE_GEO_COORDINATES) as file:
         }
 
         result = db['locations'].insert_one(location)
-        locations[key] = location
+        locations[key] = {
+                "location_id": location["_id"],
+                "region_id": region_id if municipality else region_id,
+                "municipality_id": municipality_id if municipality else None,
+            }
 
 # Process the data files.
 for source in series_datasources:
@@ -129,19 +137,15 @@ for source in series_datasources:
     with open(source.file) as file:
         # skip header using islice
         for municipality, region, lat, lon, *data in islice(csv.reader(file), 1, None):
-            location_key = hashlib.md5(format("%s-%s" % ((default_mun.lower()), default_reg.lower())).encode()).hexdigest()
-            location = locations[location_key]
+            location_key = hashlib.md5(format("%s-%s" % ((municipality.lower()), region.lower())).encode()).hexdigest()
 
             if location_key in series:
                 document = series[location_key]
             else:
+
                 document = {
                     "data": {},
-                    "location": {
-                        "_id": location["_id"],
-                        "region_id": location["parent_id"] if municipality else location["region_id"],
-                        "municipality_id": location["region_id"] if municipality else None
-                    }
+                    "location": locations[location_key]
                 }
 
                 series[location_key] = document

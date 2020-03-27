@@ -5,6 +5,8 @@ import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.google.gson.Gson;
+
 @Document("locations")
 public class Location {
 	
@@ -13,11 +15,16 @@ public class Location {
 
 	@Field("geo")
 	private Point geo;	
+	
 	@Field("region_id")
 	private String regionId;
-	@Field("municipality_id")
-	private String municipalityId;
 	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public Point getGeo() {
 		return geo;
 	}
@@ -30,16 +37,9 @@ public class Location {
 	public void setRegionId(String regionId) {
 		this.regionId = regionId;
 	}
-	public String getMunicipalityId() {
-		return municipalityId;
-	}
-	public void setMunicipalityId(String municipalityId) {
-		this.municipalityId = municipalityId;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this).toString();
 	}
 }

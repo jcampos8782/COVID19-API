@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jsoncampos.covid19.dto.MunicipalityDto;
 import com.jsoncampos.covid19.dto.RegionDto;
 import com.jsoncampos.covid19.dto.mappers.Mappers;
-import com.jsoncampos.covid19.services.MunicipalitySearchService;
 import com.jsoncampos.covid19.services.RegionSearchService;
 
 @RestController
@@ -24,12 +22,10 @@ import com.jsoncampos.covid19.services.RegionSearchService;
 public class RegionController {
 	
 	private RegionSearchService searchSvc;
-	private MunicipalitySearchService municipalitySearchSvc;
 	
 	@Autowired
-	public RegionController(RegionSearchService searchSvc, MunicipalitySearchService municipalitySearchSvc) {
+	public RegionController(RegionSearchService searchSvc) {
 		this.searchSvc = searchSvc;
-		this.municipalitySearchSvc = municipalitySearchSvc;
 	}
 	
 	@GetMapping
@@ -40,9 +36,9 @@ public class RegionController {
 	}
 	
 	@GetMapping("/{id}/municipalities")
-	public ResponseEntity<List<MunicipalityDto>> getMunicipalitiesForRegion(@PathVariable("id") String regionId) {
-		return new ResponseEntity<List<MunicipalityDto>>(
-				municipalitySearchSvc.findMunicipalitiesForRegion(regionId).stream().map(Mappers::convertToMunicipalityDto).collect(Collectors.toList()),
+	public ResponseEntity<List<RegionDto>> getSubRegions(@PathVariable("id") String regionId) {
+		return new ResponseEntity<List<RegionDto>>(
+				searchSvc.findSubRegions(regionId).stream().map(Mappers::convertToRegionDto).collect(Collectors.toList()),
 				HttpStatus.OK);
 	}
 }

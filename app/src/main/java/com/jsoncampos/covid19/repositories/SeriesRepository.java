@@ -6,15 +6,15 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-import com.jsoncampos.covid19.models.Covid19Cases;
+import com.jsoncampos.covid19.models.Series;
 
-public interface Covid19CasesRepository extends MongoRepository<Covid19Cases, Long> {
+public interface SeriesRepository extends MongoRepository<Series, Long> {
 	@Query(value="{'location.region_id': ?0 }")
-	public List<Covid19Cases> findByRegionId(ObjectId regionId);
+	public List<Series> findByRegionId(ObjectId regionId);
 	
 	@Query(value="{'location.municipality_id': ?0 }")
-	public List<Covid19Cases> findByMunicipalityId(ObjectId municipalityId);
+	public List<Series> findByMunicipalityId(ObjectId municipalityId);
 
 	@Query(value="{'location._id': { $in: $0 }}")
-	public List<Covid19Cases> findByLocationIn(List<String> map);
+	public List<Series> findByLocationIn(List<String> map);
 }

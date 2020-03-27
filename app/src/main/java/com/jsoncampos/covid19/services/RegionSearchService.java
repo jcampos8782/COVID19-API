@@ -6,4 +6,5 @@ import com.jsoncampos.covid19.models.Region;
 
 public interface RegionSearchService {
 	public List<Region> findAll();
+	public List<Region> findSubRegions(String regionId);
 }

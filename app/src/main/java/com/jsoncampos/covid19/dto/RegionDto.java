@@ -2,14 +2,25 @@ package com.jsoncampos.covid19.dto;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RegionDto {
 	private String id;
 	private String name;
+	private String parentId;
+	
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getParentId() {
+		return parentId;
+	}
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 	public String getName() {
 		return name;
@@ -27,6 +38,11 @@ public class RegionDto {
 		
 		public Builder withId(String id) {
 			dto.id = id;
+			return this;
+		}
+		
+		public Builder withParentId(String id) {
+			dto.parentId = id;
 			return this;
 		}
 		

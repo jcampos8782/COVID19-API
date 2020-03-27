@@ -14,25 +14,25 @@ import org.springframework.data.geo.Metric;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
-import com.jsoncampos.covid19.models.Covid19Cases;
+import com.jsoncampos.covid19.models.Series;
 import com.jsoncampos.covid19.models.Location;
-import com.jsoncampos.covid19.repositories.Covid19CasesRepository;
+import com.jsoncampos.covid19.repositories.SeriesRepository;
 import com.jsoncampos.covid19.repositories.LocationRepository;
 
 @Service
-public class CaseSearchServiceImpl implements CaseSearchService {
+public class SeriesSearchServiceImpl implements SeriesSearchService {
 	
-	private Covid19CasesRepository repository;
+	private SeriesRepository repository;
 	private LocationRepository locationRepository;
 	
 	@Autowired
-	public CaseSearchServiceImpl(Covid19CasesRepository repository, LocationRepository locationRepository) {
+	public SeriesSearchServiceImpl(SeriesRepository repository, LocationRepository locationRepository) {
 		this.repository = repository;
 		this.locationRepository = locationRepository;
 	}
 
 	@Override
-	public List<Covid19Cases> findCasesNear(double latitude, double longitude, double maxDistance, Metric metric) {
+	public List<Series> findSeriesNear(double latitude, double longitude, double maxDistance, Metric metric) {
 		checkArgument(Math.abs(latitude) <= 90, String.format("Invalid latitude %s", latitude));
 		checkArgument(Math.abs(latitude) <= 180, String.format("Invalid longitude %s", longitude));
 		checkArgument(maxDistance >= 0, String.format("Invalid maxDistance %f", maxDistance));
@@ -48,14 +48,14 @@ public class CaseSearchServiceImpl implements CaseSearchService {
 	}
 	
 	@Override
-	public List<Covid19Cases> findCasesByRegionId(String regionId) {
+	public List<Series> findSeriesByRegionId(String regionId) {
 		checkNotNull(regionId, "region cannot be null");
 		// TODO: Fix leaky abstraction of MongoDB
 		return repository.findByRegionId(new ObjectId(regionId));
 	}
 	
 	@Override
-	public List<Covid19Cases> findCasesByMunicipalityId(String municipalityId) {
+	public List<Series> findSeriesByMunicipalityId(String municipalityId) {
 		checkNotNull(municipalityId, "municipalityId cannot be null");
 		// TODO: Fix leaky abstraction of MongoDB
 		return repository.findByMunicipalityId(new ObjectId(municipalityId));
