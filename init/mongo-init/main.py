@@ -135,6 +135,9 @@ for source in [GLOBAL_CONFIRMED, GLOBAL_DEATHS]:
             location_key = format("%s-%s" % (format("%.3f" % float(lat)), format("%.3f" % float(lon))))
             location = locations[location_key]
 
+            # Only include municipality data if its included in the CSV file
+            municipality_id = location["municipality_id"] if municipality else None
+
             if location_key in cases:
                 document = cases[location_key]
             else:
@@ -145,7 +148,7 @@ for source in [GLOBAL_CONFIRMED, GLOBAL_DEATHS]:
                         "coordinates": [float(lon), float(lat)]
                     },
                     "location": {
-                        "municipality_id": location["municipality_id"],
+                        "municipality_id": municipality_id,
                         "region_id": location["region_id"]
                     }
                 }
