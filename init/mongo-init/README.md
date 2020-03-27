@@ -68,8 +68,7 @@ The coordinates file should be in the following format:
  - `data` An array of data series for a location. Series are referenced by name within this data collection. 
  - `location` Denormalized location information. 
    - `_id` (required) id of location for reference
-   - `region_id` (required) The topmost location
-   - `municipality_id` (optional) A sub region
+   - `regions` (required) List of regions associated with this series.
 
 ```json
     {   
@@ -79,8 +78,7 @@ The coordinates file should be in the following format:
         }
         location: {
             "_id": ObjectId,
-            "region_id": ObjectId
-            "municipalityId": ObjectId
+            "regions": [...]
         }
     }
 ```
