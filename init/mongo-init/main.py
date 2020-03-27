@@ -19,8 +19,7 @@ None
 
 import pymongo
 import csv
-from datetime import datetime
-import hashlib
+import requests
 from os import environ
 from itertools import islice
 from collections import namedtuple
@@ -33,26 +32,31 @@ DB_PASS = environ.get("DB_PASS")
 DB_HOST = environ.get("DB_HOST", "localhost")
 DB_PORT = environ.get("DB_PORT",  "27017")
 DB_NAME = environ.get("DB_NAME", "cvd19")
-DB_COLLECTION = "cases"
+DB_COLL = "cases"
+
+GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY")
+
+(DB_USER and DB_PASS) or exit("DB_USER and DB_PASS must be set in environment")
+GOOGLE_API_KEY or exit("GOOGLE_API_KEY must be set in environment")
 
 DB_INDICES = [
     Index("municipalities", "region", pymongo.HASHED),
+    Index("locations", "region_id", pymongo.HASHED),
+    Index("locations", "municipality_id", pymongo.HASHED),
     Index("cases", "geo", pymongo.GEOSPHERE),
     Index("cases", "location.region_id", pymongo.HASHED),
     Index("cases", "location.municipality_id", pymongo.HASHED),
     Index("cases", "date", pymongo.DESCENDING)
 ]
 
-DATA_FILEPATH = "data/cases"
-DATA_COLLECTIONS = ["confirmed", "deaths", "recovered"]
+GOOGLE_GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false&key=%s"
 
-REGIONS_FILE = "data/meta/regions.csv"
-MUNICIPALITIES_FILE = "data/meta/municipalities.csv"
+GLOBAL_CONFIRMED = DataSource("confirmed", "data/cases/global_confirmed.csv")
+GLOBAL_DEATHS = DataSource("deaths", "data/cases/global_deaths.csv")
 
-DATA = [DataSource(c, format("%s/%s.csv" % (DATA_FILEPATH, c))) for c in DATA_COLLECTIONS]
+FILE_GEO_COORDINATES = "data/meta/coordinates.csv"
 
 # Ensure user and password are set before trying to connect to mongo
-(DB_USER and DB_PASS) or exit("DB_USER and DB_PASS must be set in environment")
 client = pymongo.MongoClient("mongodb://%s:%s@%s:%s" % (DB_USER, DB_PASS, DB_HOST, DB_PORT))
 db = client[DB_NAME]
 
@@ -62,58 +66,94 @@ for collection in ["cases", "regions", "municipalities"]:
     db.drop_collection(collection)
 
 cases = {}
+locations = {}
 
-# name -> id reverse lookup
-meta = {"regions": {}, "municipalities": {}}
+print("Performing coordinate reverse lookup via Google APIs")
+with open(FILE_GEO_COORDINATES) as file:
+    for default_mun, default_reg, lat, lon in csv.reader(file):
+        # Attempt to lookup in database. If no match, fetch from Google
+        lat_key = format("%.3f" % float(lat))
+        lon_key = format("%.3f" % float(lon))
+        result = db['locations'].find_one({'lat': lat_key, 'lon': lon_key})
 
-print("Processing metadata file %s" % REGIONS_FILE)
-with open(REGIONS_FILE) as file:
-    for row in csv.reader(file):
-        result = db['regions'].insert_one({"name": row[0]})
-        meta['regions'][row[0]] = result.inserted_id
+        if result:
+            locations[format("%s-%s" % (lat_key, lon_key))] = result
+            continue
 
-print("Processing metadata file %s" % MUNICIPALITIES_FILE)
-with open(MUNICIPALITIES_FILE) as file:
-    for name, region in csv.reader(file):
-        region_id = meta['regions'][region]
-        result = db['municipalities'].insert_one({"name": name, 'region_id': region_id})
-        meta['municipalities'][name] = result.inserted_id
+        print("Fetching location data for lat: %s lon: %s" % (lat, lon))
+        response = requests.get(GOOGLE_GEOCODE_URL % (lat, lon, GOOGLE_API_KEY))
+        results = response.json()['results']
+
+        municipality, region = None, None
+
+        if results:
+            municipality_component = list(filter(lambda e: "administrative_area_level_1" in e['types'], results))
+            region_component = list(filter(lambda e: "country" in e['types'], results))
+
+            if municipality_component:
+                municipality = municipality_component[0]['address_components'][0]['long_name']
+            else:
+                print("No municipality found. Defaulting to %s" % default_mun)
+                municipality = default_mun
+
+            if region_component:
+                region = region_component[0]['address_components'][0]['long_name']
+            else:
+                print("No region found. Defaulting to %s" % default_reg)
+                region = default_reg
+
+        # Check if region exists in database
+        municipality_id, region_id = None, None
+        if region:
+            db_region = db["regions"].find_one({"name": region})
+            if db_region:
+                region_id = db_region["_id"]
+            else:
+                print("New region: %s" % region)
+                db_region = db['regions'].insert_one({"name": region})
+                region_id = db_region.inserted_id
+
+        if municipality:
+            db_municipality = db["municipalities"].find_one({"name": municipality})
+            if db_municipality:
+                municipality_id = db_municipality["_id"]
+            else:
+                print("New municipality: %s" % municipality)
+                db_municipality = db['municipalities'].insert_one({"name": municipality, "region_id": region_id})
+                municipality_id = db_municipality.inserted_id
+
+        location = {"lat": lat_key, "lon": lon_key, "region_id": region_id, "municipality_id": municipality_id}
+        locations[format("%s-%s" % (lat_key, lon_key))] = result
+        db['locations'].insert_one(location)
 
 # Process the data files.
-for source in DATA:
+for source in [GLOBAL_CONFIRMED, GLOBAL_DEATHS]:
     print("Processing data file %s" % source.file)
     with open(source.file) as file:
-        for municipality, region, lat, lon, date, count in islice(csv.reader(file), 2, None):
+        # skip header using islice
+        for municipality, region, lat, lon, *series in islice(csv.reader(file), 1, None):
+            location_key = format("%s-%s" % (format("%.3f" % float(lat)), format("%.3f" % float(lon))))
+            location = locations[location_key]
 
-            # key composed of municipality, region, and date. All data for this key (confirmed, deaths, recovered)
-            # Will be stored in a single document
-            key = hashlib.md5(format("%s_%s_%s" % (municipality, region, date)).encode()).hexdigest()
-
-            region_id = meta['regions'][region] if region else None
-            municipality_id = meta['municipalities'][municipality] if municipality else None
-
-            if key in cases:
-                document = cases[key]
+            if location_key in cases:
+                document = cases[location_key]
             else:
                 document = {
-                    "date": datetime.strptime(date, "%Y-%m-%d"),
-                    "cases": {},
+                    "time_series": {},
                     "geo": {
                         "type": "Point",
                         "coordinates": [float(lon), float(lat)]
                     },
                     "location": {
-                        "municipality": municipality,
-                        "municipality_id": municipality_id,
-                        "region": region,
-                        "region_id": region_id
+                        "municipality_id": location["municipality_id"],
+                        "region_id": location["region_id"]
                     }
                 }
-                cases[key] = document
+                cases[location_key] = document
 
-            cases[key]["cases"][source.collection] = int(count) if count else 0
+            cases[location_key]["time_series"][source.collection] = [int(n) for n in series]
 
-print("Creating collection %s" % DB_COLLECTION)
+print("Creating collection %s" % DB_COLL)
 for case in cases.values():
     db["cases"].insert_one(case)
 
