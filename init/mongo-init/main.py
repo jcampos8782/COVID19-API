@@ -40,13 +40,13 @@ GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY")
 GOOGLE_API_KEY or exit("GOOGLE_API_KEY must be set in environment")
 
 DB_INDICES = [
-    Index("municipalities", "region", pymongo.HASHED),
+    Index("municipalities", "region_id", pymongo.HASHED),
     Index("locations", "region_id", pymongo.HASHED),
     Index("locations", "municipality_id", pymongo.HASHED),
-    Index("cases", "geo", pymongo.GEOSPHERE),
+    Index("locations", "geo", pymongo.GEOSPHERE),
+    Index("cases", "location._id", pymongo.HASHED),
     Index("cases", "location.region_id", pymongo.HASHED),
-    Index("cases", "location.municipality_id", pymongo.HASHED),
-    Index("cases", "date", pymongo.DESCENDING)
+    Index("cases", "location.municipality_id", pymongo.HASHED)
 ]
 
 GOOGLE_GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false&key=%s"
@@ -72,12 +72,11 @@ print("Performing coordinate reverse lookup via Google APIs")
 with open(FILE_GEO_COORDINATES) as file:
     for default_mun, default_reg, lat, lon in csv.reader(file):
         # Attempt to lookup in database. If no match, fetch from Google
-        lat_key = format("%.3f" % float(lat))
-        lon_key = format("%.3f" % float(lon))
-        result = db['locations'].find_one({'lat': lat_key, 'lon': lon_key})
+        key = format("%s-%s" % (format("%.3f" % float(lat)), format("%.3f" % float(lon))))
+        result = db['locations'].find_one({'key': key})
 
         if result:
-            locations[format("%s-%s" % (lat_key, lon_key))] = result
+            locations[key] = result
             continue
 
         print("Fetching location data for lat: %s lon: %s" % (lat, lon))
@@ -122,9 +121,18 @@ with open(FILE_GEO_COORDINATES) as file:
                 db_municipality = db['municipalities'].insert_one({"name": municipality, "region_id": region_id})
                 municipality_id = db_municipality.inserted_id
 
-        location = {"lat": lat_key, "lon": lon_key, "region_id": region_id, "municipality_id": municipality_id}
-        locations[format("%s-%s" % (lat_key, lon_key))] = result
-        db['locations'].insert_one(location)
+        location = {
+            "key": key,
+            "geo": {
+                "type": "Point",
+                "coordinates": [float(lon), float(lat)]
+            },
+            "region_id": region_id,
+            "municipality_id": municipality_id
+        }
+
+        result = db['locations'].insert_one(location)
+        locations[key] = location
 
 # Process the data files.
 for source in [GLOBAL_CONFIRMED, GLOBAL_DEATHS]:
@@ -135,26 +143,22 @@ for source in [GLOBAL_CONFIRMED, GLOBAL_DEATHS]:
             location_key = format("%s-%s" % (format("%.3f" % float(lat)), format("%.3f" % float(lon))))
             location = locations[location_key]
 
-            # Only include municipality data if its included in the CSV file
-            municipality_id = location["municipality_id"] if municipality else None
-
             if location_key in cases:
                 document = cases[location_key]
             else:
                 document = {
-                    "time_series": {},
-                    "geo": {
-                        "type": "Point",
-                        "coordinates": [float(lon), float(lat)]
-                    },
+                    "cases": {},
                     "location": {
-                        "municipality_id": municipality_id,
-                        "region_id": location["region_id"]
+                        "_id": location["_id"],
+                        "region_id": location["region_id"],
+                        # Only include municipality data if its included in the CSV file
+                        "municipality_id": location["municipality_id"] if municipality else None
                     }
                 }
+
                 cases[location_key] = document
 
-            cases[location_key]["time_series"][source.collection] = [int(n) for n in series]
+            cases[location_key]["cases"][source.collection] = [int(n) for n in series]
 
 print("Creating collection %s" % DB_COLL)
 for case in cases.values():
