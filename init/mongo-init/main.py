@@ -49,7 +49,7 @@ client = pymongo.MongoClient("mongodb://%s:%s@%s:%s" % (DB_USER, DB_PASS, DB_HOS
 db = client[DB_NAME]
 
 series = {}
-locations = {}
+regions = {}
 
 print("Performing coordinate reverse lookup via Google APIs")
 with open(FILE_GEO_COORDINATES) as file:
@@ -63,10 +63,8 @@ with open(FILE_GEO_COORDINATES) as file:
 
         if location:
             region = db['regions'].find_one({'_id': location["region_id"]})
-            locations[key] = {
-                "location_id": location["_id"],
-                "regions": [region[k] for k in ["_id", "parent_id"] if k in region]
-            }
+            regions[key] = [region[k] for k in ["_id", "parent_id"] if k in region]
+
             continue
 
         print("Fetching location data for lat: %s lon: %s" % (lat, lon))
@@ -123,10 +121,7 @@ with open(FILE_GEO_COORDINATES) as file:
         }
 
         result = db['locations'].insert_one(location)
-        locations[key] = {
-                "location_id": location["_id"],
-                "regions": [i for i in [region_id, municipality_id] if i]
-            }
+        regions[key] = [i for i in [region_id, municipality_id] if i]
 
 # Process the data files.
 for source in series_datasources:
@@ -142,7 +137,7 @@ for source in series_datasources:
 
                 document = {
                     "data": {},
-                    "location": locations[location_key]
+                    "regions": regions[location_key]
                 }
 
                 series[location_key] = document

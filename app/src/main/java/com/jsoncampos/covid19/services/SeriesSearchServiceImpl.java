@@ -14,10 +14,10 @@ import org.springframework.data.geo.Metric;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
-import com.jsoncampos.covid19.models.Series;
 import com.jsoncampos.covid19.models.Location;
-import com.jsoncampos.covid19.repositories.SeriesRepository;
+import com.jsoncampos.covid19.models.Series;
 import com.jsoncampos.covid19.repositories.LocationRepository;
+import com.jsoncampos.covid19.repositories.SeriesRepository;
 
 @Service
 public class SeriesSearchServiceImpl implements SeriesSearchService {
@@ -44,7 +44,11 @@ public class SeriesSearchServiceImpl implements SeriesSearchService {
 			return Arrays.asList();
 		}
 		
-		return repository.findByLocationIn(locationsNearPoint.stream().map(loc -> loc.getId()).collect(Collectors.toList()));
+		var ids = locationsNearPoint.stream()
+			.map(loc -> new ObjectId(loc.getRegionId()))
+			.collect(Collectors.toList());
+		
+		return repository.findByRegionIdIn(ids);
 	}
 	
 	@Override

@@ -18,8 +18,8 @@ public class Series {
 	@Field("data")
 	private Map<String,List<Object>> data;
 	
-	@Field("location")
-	private Series.Location location;
+	@Field("regions")
+	private List<String> regions;
 
 	public Map<String,List<Object>> getData() {
 		return data;
@@ -29,41 +29,16 @@ public class Series {
 		this.data = data;
 	}
 
-	public Series.Location getLocation() {
-		return location;
+	public List<String> getRegions() {
+		return regions;
 	}
 
-	public void setLocation(Location location) {
-		this.location = location;
+	public void setRegions(List<String> regions) {
+		this.regions = regions;
 	}
 	
 	@Override
 	public String toString() {
 		return new Gson().toJson(this).toString();
-	}
-	
-	public static class Location {
-		
-		@Field("_id")
-		private String locationId;
-
-		@Field("regions")
-		private List<String> regions;
-		
-		public List<String> getRegions() {
-			return regions;
-		}
-
-		public void setRegions(List<String> regions) {
-			this.regions = regions;
-		}
-		
-		public String getLocationId() {
-			return locationId;
-		}
-
-		public void setLocationId(String locationId) {
-			this.locationId = locationId;
-		}
 	}
 }

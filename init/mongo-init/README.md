@@ -66,20 +66,15 @@ The coordinates file should be in the following format:
 ## `series`
 
  - `data` An array of data series for a location. Series are referenced by name within this data collection. 
- - `location` Denormalized location information. 
-   - `_id` (required) id of location for reference
-   - `regions` (required) List of regions associated with this series.
+ - `regions` (required) List of regions associated with this series.
 
 ```json
     {   
         data: { 
             <name>: [...],
             ...
-        }
-        location: {
-            "_id": ObjectId,
-            "regions": [...]
-        }
+        },
+        "regions": [...]
     }
 ```
 
