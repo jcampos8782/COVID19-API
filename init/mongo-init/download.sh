@@ -15,7 +15,7 @@ echo "------------------------"
 
 if [[  "$force" || ! -e "data/cases/global_confirmed.csv" ]]; then
   echo "Downloading global confirmed cases data..."
-  wget -O data/cases/global_confirmed.csv "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+  wget -O data/cases/confirmed.csv "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
   echo "Complete!"
   echo ""
 else
@@ -24,7 +24,7 @@ fi
 
 if [[  "$force" || ! -e "data/cases/global_deaths.csv" ]]; then
   echo "Downloading global confirmed cases data..."
-  wget -O data/cases/global_deaths.csv "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
+  wget -O data/cases/deaths.csv "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
   echo "Complete!"
   echo ""
 else
@@ -40,7 +40,7 @@ echo "------------------------"
 echo "PREPARING METADATA..."
 echo "------------------------"
 echo "Extracting lat/lon coordinates..."
-cut -f1,2,3,4 -d','  data/cases/global_confirmed.csv | grep -iv "Lat,Long"> data/meta/coordinates.csv
+cut -f1,2,3,4 -d','  data/cases/confirmed.csv | grep -iv "Lat,Long"> data/meta/locations.csv
 
 echo "------------------------"
 echo "COMPLETE!"
