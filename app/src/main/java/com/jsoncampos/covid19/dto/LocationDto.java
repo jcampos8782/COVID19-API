@@ -1,33 +1,19 @@
 package com.jsoncampos.covid19.dto;
 
 public class LocationDto {
-	private double latitude;
-	private double longitude;
-	private String municipality;
-	private String region;
+	private String municipalityId;
+	private String regionId;
 	
-	public double getLatitude() {
-		return latitude;
+	public String getMunicipalityId() {
+		return municipalityId;
 	}
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+	public void setMunicipalityId(String municipalityId) {
+		this.municipalityId = municipalityId;
 	}
-	public double getLongitude() {
-		return longitude;
+	public String getRegionId() {
+		return regionId;
 	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-	public String getMunicipality() {
-		return municipality;
-	}
-	public void setMunicipality(String municipality) {
-		this.municipality = municipality;
-	}
-	public String getRegion() {
-		return region;
-	}
-	public void setRegion(String region) {
-		this.region = region;
+	public void setRegionId(String regionId) {
+		this.regionId = regionId;
 	}	
 }

@@ -1,26 +1,21 @@
 package com.jsoncampos.covid19.dto;
 
-public class CasesSummaryDto {
-	private int confirmed;
-	private int deaths;
-	private int recovered;
+import java.util.List;
+
+public class CaseSummaryDto {
+	private List<Integer> confirmed;
+	private List<Integer> deaths;
 	
-	public int getConfirmed() {
+	public List<Integer> getConfirmed() {
 		return confirmed;
 	}
-	public void setConfirmed(int confirmed) {
+	public void setConfirmed(List<Integer> confirmed) {
 		this.confirmed = confirmed;
 	}
-	public int getDeaths() {
+	public List<Integer> getDeaths() {
 		return deaths;
 	}
-	public void setDeaths(int deaths) {
+	public void setDeaths(List<Integer> deaths) {
 		this.deaths = deaths;
-	}
-	public int getRecovered() {
-		return recovered;
-	}
-	public void setRecovered(int recovered) {
-		this.recovered = recovered;
 	}
 }

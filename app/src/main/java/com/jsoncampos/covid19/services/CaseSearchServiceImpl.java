@@ -3,7 +3,9 @@ package com.jsoncampos.covid19.services;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +15,20 @@ import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
 import com.jsoncampos.covid19.models.Covid19Cases;
+import com.jsoncampos.covid19.models.Location;
 import com.jsoncampos.covid19.repositories.Covid19CasesRepository;
+import com.jsoncampos.covid19.repositories.LocationRepository;
 
 @Service
 public class CaseSearchServiceImpl implements CaseSearchService {
 	
 	private Covid19CasesRepository repository;
+	private LocationRepository locationRepository;
 	
 	@Autowired
-	public CaseSearchServiceImpl(Covid19CasesRepository repository) {
+	public CaseSearchServiceImpl(Covid19CasesRepository repository, LocationRepository locationRepository) {
 		this.repository = repository;
+		this.locationRepository = locationRepository;
 	}
 
 	@Override
@@ -31,7 +37,14 @@ public class CaseSearchServiceImpl implements CaseSearchService {
 		checkArgument(Math.abs(latitude) <= 180, String.format("Invalid longitude %s", longitude));
 		checkArgument(maxDistance >= 0, String.format("Invalid maxDistance %f", maxDistance));
 		
-		return repository.findByGeoNear(new Point(longitude, latitude), new Distance(maxDistance, metric));
+		List<Location> locationsNearPoint = locationRepository
+				.findByGeoNear(new Point(longitude, latitude), new Distance(maxDistance, metric));
+		
+		if (locationsNearPoint.isEmpty()) {
+			return Arrays.asList();
+		}
+		
+		return repository.findByLocationIn(locationsNearPoint.stream().map(loc -> loc.getId()).collect(Collectors.toList()));
 	}
 	
 	@Override
