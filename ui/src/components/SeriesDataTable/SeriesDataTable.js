@@ -12,10 +12,12 @@ import Typography from '@material-ui/core/Typography';
 
 // const DATE_FORMAT = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
 
-export default class CasesTable extends React.Component {
+export default class SeriesDataTable extends React.Component {
     render() {
         // Series data is in the form { <name>: [data...] }
         let series = Object.keys(this.props.data);
+        console.log(series);
+        console.log(this.props.data);
         return (
             <Paper>
               <Toolbar>

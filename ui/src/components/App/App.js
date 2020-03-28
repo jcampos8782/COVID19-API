@@ -1,7 +1,6 @@
 import React from 'react';
 
-import CasesTable from '../CasesTable';
-import MunicipalitySelect from '../MunicipalitySelect';
+import SeriesDataTable from '../SeriesDataTable';
 import RegionSelect from '../RegionSelect';
 
 export default class App extends React.Component {
@@ -15,8 +14,7 @@ export default class App extends React.Component {
         return (
             <div className="App">
                 <RegionSelect />
-                <MunicipalitySelect />
-                <CasesTable />
+                <SeriesDataTable />
             </div>
         );
     }

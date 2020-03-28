@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import {
   selectRegion,
   unselectRegion,
+  fetchRegion,
   fetchRegions,
-  fetchCasesByRegion,
-  fetchMunicipalities
+  fetchSeriesByRegion,
 } from '../../actions';
 
 const mapStateToProps = state => ({
-  options: state.regions,
+  options: state.regions.all,
   selectedRegionId: state.regionsFilter.selectedRegionId
 });
 
@@ -22,8 +22,8 @@ const mapDispatchToProps = dispatch => ({
         return;
       }
       dispatch(selectRegion(id));
-      dispatch(fetchCasesByRegion(id));
-      dispatch(fetchMunicipalities(id));
+      dispatch(fetchSeriesByRegion(id));
+      dispatch(fetchRegion(id));
     },
     fetchRegions: () => dispatch(fetchRegions())
 });
