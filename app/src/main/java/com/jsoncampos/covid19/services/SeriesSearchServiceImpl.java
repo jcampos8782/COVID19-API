@@ -32,6 +32,11 @@ public class SeriesSearchServiceImpl implements SeriesSearchService {
 	}
 
 	@Override
+	public List<Series> findAll() {
+		return repository.findAll();
+	}
+	
+	@Override
 	public List<Series> findSeriesNear(double latitude, double longitude, double maxDistance, Metric metric) {
 		checkArgument(Math.abs(latitude) <= 90, String.format("Invalid latitude %s", latitude));
 		checkArgument(Math.abs(latitude) <= 180, String.format("Invalid longitude %s", longitude));

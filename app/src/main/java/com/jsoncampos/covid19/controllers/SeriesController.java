@@ -35,6 +35,13 @@ public class SeriesController {
 		this.searchSvc = searchSvc;
 	}
 	
+	@GetMapping
+	public ResponseEntity<List<SeriesDto>> getAllSeries() {
+		return new ResponseEntity<List<SeriesDto>>(
+			searchSvc.findAll().stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
+			HttpStatus.OK);
+	}
+	
 	@GetMapping("/geo")
 	public ResponseEntity<List<SeriesDto>> findSeriesNearLocation(
 			@RequestParam double lat,
@@ -42,13 +49,13 @@ public class SeriesController {
 			@RequestParam Optional<Double> maxDistance,
 			@RequestParam Optional<Character> unit) {
 		
-		List<Series> cases = searchSvc.findSeriesNear(
+		List<Series> series = searchSvc.findSeriesNear(
 				lat, lon, 
 				maxDistance.orElse(DEFAULT_DISTANCE),
 				unit.orElse(DEFAULT_UNIT).equals('k') ? Metrics.KILOMETERS : Metrics.MILES);
 		
 		return new ResponseEntity<List<SeriesDto>>(
-				cases.stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
+				series.stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
 				HttpStatus.OK);
 	}
 	
