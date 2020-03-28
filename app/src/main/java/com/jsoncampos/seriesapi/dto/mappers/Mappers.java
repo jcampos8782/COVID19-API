@@ -1,9 +1,9 @@
-package com.jsoncampos.covid19.dto.mappers;
+package com.jsoncampos.seriesapi.dto.mappers;
 
-import com.jsoncampos.covid19.dto.RegionDto;
-import com.jsoncampos.covid19.dto.SeriesDto;
-import com.jsoncampos.covid19.models.Region;
-import com.jsoncampos.covid19.models.Series;
+import com.jsoncampos.seriesapi.dto.RegionDto;
+import com.jsoncampos.seriesapi.dto.SeriesDto;
+import com.jsoncampos.seriesapi.models.Region;
+import com.jsoncampos.seriesapi.models.Series;
 
 public class Mappers {
 	public static SeriesDto convertToSeriesDto(Series model) {

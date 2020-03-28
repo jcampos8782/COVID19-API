@@ -1,10 +1,12 @@
-package com.jsoncampos.covid19.dto;
+package com.jsoncampos.seriesapi.dto;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({ "id", "name", "parentId" })
 public class RegionDto {
 	private String id;
 	private String name;

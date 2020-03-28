@@ -1,4 +1,4 @@
-package com.jsoncampos.covid19.services;
+package com.jsoncampos.seriesapi.services;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -14,10 +14,10 @@ import org.springframework.data.geo.Metric;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
-import com.jsoncampos.covid19.models.Location;
-import com.jsoncampos.covid19.models.Series;
-import com.jsoncampos.covid19.repositories.LocationRepository;
-import com.jsoncampos.covid19.repositories.SeriesRepository;
+import com.jsoncampos.seriesapi.models.Location;
+import com.jsoncampos.seriesapi.models.Series;
+import com.jsoncampos.seriesapi.repositories.LocationRepository;
+import com.jsoncampos.seriesapi.repositories.SeriesRepository;
 
 @Service
 public class SeriesSearchServiceImpl implements SeriesSearchService {

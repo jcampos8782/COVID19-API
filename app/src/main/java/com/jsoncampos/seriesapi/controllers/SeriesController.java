@@ -1,4 +1,4 @@
-package com.jsoncampos.covid19.controllers;
+package com.jsoncampos.seriesapi.controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Metrics;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jsoncampos.covid19.dto.SeriesDto;
-import com.jsoncampos.covid19.dto.mappers.Mappers;
-import com.jsoncampos.covid19.models.Series;
-import com.jsoncampos.covid19.services.SeriesSearchService;
+import com.jsoncampos.seriesapi.controllers.responses.GetAllSeriesResponse;
+import com.jsoncampos.seriesapi.controllers.responses.GetSeriesByRegionResponse;
+import com.jsoncampos.seriesapi.controllers.responses.GetSeriesNearResponse;
+import com.jsoncampos.seriesapi.dto.mappers.Mappers;
+import com.jsoncampos.seriesapi.models.Series;
+import com.jsoncampos.seriesapi.services.SeriesSearchService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000" )
@@ -36,14 +36,15 @@ public class SeriesController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<SeriesDto>> getAllSeries() {
-		return new ResponseEntity<List<SeriesDto>>(
-			searchSvc.findAll().stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
-			HttpStatus.OK);
+	public GetAllSeriesResponse getAllSeries() {
+		return new GetAllSeriesResponse(searchSvc.findAll()
+				.stream()
+				.map(Mappers::convertToSeriesDto)
+				.collect(Collectors.toList()));
 	}
 	
 	@GetMapping("/geo")
-	public ResponseEntity<List<SeriesDto>> findSeriesNearLocation(
+	public GetSeriesNearResponse getSeriesNear(
 			@RequestParam double lat,
 			@RequestParam double lon,
 			@RequestParam Optional<Double> maxDistance,
@@ -54,17 +55,18 @@ public class SeriesController {
 				maxDistance.orElse(DEFAULT_DISTANCE),
 				unit.orElse(DEFAULT_UNIT).equals('k') ? Metrics.KILOMETERS : Metrics.MILES);
 		
-		return new ResponseEntity<List<SeriesDto>>(
-				series.stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
-				HttpStatus.OK);
+		return new GetSeriesNearResponse(series.stream()
+				.map(Mappers::convertToSeriesDto)
+				.collect(Collectors.toList()));
 	}
 	
 	@GetMapping("/regions/{id}")
-	public ResponseEntity<List<SeriesDto>> findSeriesByRegion(
+	public GetSeriesByRegionResponse getSeriesByRegion(
 			@PathVariable("id") String regionId) {
 		
-		return new ResponseEntity<List<SeriesDto>>(
-				searchSvc.findSeriesByRegionId(regionId).stream().map(Mappers::convertToSeriesDto).collect(Collectors.toList()),
-				HttpStatus.OK);
+		return new GetSeriesByRegionResponse(searchSvc.findSeriesByRegionId(regionId)
+				.stream()
+				.map(Mappers::convertToSeriesDto)
+				.collect(Collectors.toList()));
 	}
 }

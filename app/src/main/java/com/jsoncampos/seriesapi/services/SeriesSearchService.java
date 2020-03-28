@@ -1,10 +1,10 @@
-package com.jsoncampos.covid19.services;
+package com.jsoncampos.seriesapi.services;
 
 import java.util.List;
 
 import org.springframework.data.geo.Metric;
 
-import com.jsoncampos.covid19.models.Series;
+import com.jsoncampos.seriesapi.models.Series;
 
 public interface SeriesSearchService {
 	List<Series> findAll();

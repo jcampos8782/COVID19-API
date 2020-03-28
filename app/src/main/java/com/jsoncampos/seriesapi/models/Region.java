@@ -1,4 +1,4 @@
-package com.jsoncampos.covid19.models;
+package com.jsoncampos.seriesapi.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

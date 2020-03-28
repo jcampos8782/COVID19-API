@@ -1,4 +1,4 @@
-package com.jsoncampos.covid19.models;
+package com.jsoncampos.seriesapi.models;
 
 import java.util.List;
 import java.util.Map;

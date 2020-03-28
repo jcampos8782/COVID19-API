@@ -1,4 +1,4 @@
-package com.jsoncampos.covid19;
+package com.jsoncampos.seriesapi;
 import java.util.Map;
 
 import org.springframework.boot.SpringApplication;

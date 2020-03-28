@@ -1,4 +1,4 @@
-export { default as cases } from './cases';
+export { default as series } from './series';
 export { default as geolocation } from './geolocation';
 export { default as municipalities } from './municipalities';
 export { default as municipalitiesFilter } from './municipalitiesFilter';

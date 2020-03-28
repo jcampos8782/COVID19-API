@@ -1,9 +1,9 @@
-import { RECEIVE_CASES } from '../actions/types';
+import { RECEIVE_SERIES } from '../actions/types';
 
 export default (state = [], action) => {
     switch(action.type) {
-        case RECEIVE_CASES:
-            return action.cases;
+        case RECEIVE_SERIES:
+            return action.series;
         default:
             return state;
     }

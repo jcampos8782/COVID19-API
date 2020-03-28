@@ -21,7 +21,7 @@ export const requestRegions = () => {
     return { type: Actions.REQUEST_REGIONS }
 }
 
-export const fetchRegions = (onComplete) => {
+export const fetchRegions = (regionId = "") => {
     return dispatch => {
         dispatch(requestRegions());
         return fetch(`${SERVER_URL}/api/regions`)

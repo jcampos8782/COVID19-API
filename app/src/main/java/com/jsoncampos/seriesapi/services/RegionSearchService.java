@@ -1,10 +1,11 @@
-package com.jsoncampos.covid19.services;
+package com.jsoncampos.seriesapi.services;
 
 import java.util.List;
 
-import com.jsoncampos.covid19.models.Region;
+import com.jsoncampos.seriesapi.models.Region;
 
 public interface RegionSearchService {
+	public Region find(String regionId);
 	public List<Region> findAll();
 	public List<Region> findSubRegions(String regionId);
 }
