@@ -121,7 +121,7 @@ with open(FILE_GEO_COORDINATES) as file:
         }
 
         result = db['locations'].insert_one(location)
-        regions[key] = [i for i in [region_id, municipality_id] if i]
+        regions[key] = [i for i in [municipality_id, region_id] if i]
 
 # Process the data files.
 for source in series_datasources:

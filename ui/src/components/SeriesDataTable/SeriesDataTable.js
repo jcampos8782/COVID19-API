@@ -13,11 +13,88 @@ import Typography from '@material-ui/core/Typography';
 // const DATE_FORMAT = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
 
 export default class SeriesDataTable extends React.Component {
+
     render() {
-        // Series data is in the form { <name>: [data...] }
-        let series = Object.keys(this.props.data);
-        console.log(series);
-        console.log(this.props.data);
+        if (this.props.data === null) {
+          return <div></div>;
+        }
+
+        let subregionRows = this.props.data.subregions.map(subregion => {
+          let seriesTitles = Object.keys(subregion.series);
+          let dataRows = seriesTitles.map(title => {
+            return (
+              <TableRow key={title}>
+                <TableCell scope="row">{title}</TableCell>
+                {
+                  subregion.series[title].map((data ,i)=> <TableCell key={i} component="td">{data}</TableCell>)
+                }
+              </TableRow>
+            );
+          });
+
+          return (
+            <TableRow key={subregion.region}>
+              <TableCell>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{subregion.region}</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    { dataRows }
+                  </TableBody>
+                </Table>
+              </TableCell>
+            </TableRow>
+          );
+        });
+
+        let subregionContainer = subregionRows.length === 0 ? <div></div> : (
+          <TableContainer>
+            <Table size="small">
+              <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="h6">SubRegions</Typography>
+                    </TableCell>
+                  </TableRow>
+              </TableHead>
+              <TableBody>
+                { subregionRows }
+              </TableBody>
+            </Table>
+          </TableContainer>
+        );
+
+        let aggregateContainer = this.props.data.aggregate.series.length === 0 ? <div></div> : (
+          <TableContainer>
+            <Table size="small">
+              <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="h6">Aggregate</Typography>
+                    </TableCell>
+                  </TableRow>
+              </TableHead>
+              <TableBody>
+                {
+                  Object.keys(this.props.data.aggregate.series).map(title => {
+                    return (
+                      <TableRow key={title}>
+                        <TableCell scope="row">{title}</TableCell>
+                        {
+                          this.props.data.aggregate.series[title].map((data ,i)=> <TableCell key={i} component="td">{data}</TableCell>)
+                        }
+                      </TableRow>
+                    );
+                  })
+                }
+              </TableBody>
+            </Table>
+          </TableContainer>
+        );
+
         return (
             <Paper>
               <Toolbar>
@@ -25,28 +102,8 @@ export default class SeriesDataTable extends React.Component {
                   {this.props.title}
                 </Typography>
               </Toolbar>
-              <TableContainer>
-                <Table size="small">
-                  <TableHead>
-                      <TableRow>
-                      </TableRow>
-                  </TableHead>
-                  <TableBody>
-                      {
-                          series.map(name => {
-                            return (
-                              <TableRow key={name}>
-                                <TableCell component="th" scope="row">{name}</TableCell>
-                                {
-                                  this.props.data[name].map(data => <TableCell component="td">data</TableCell>)
-                                }
-                              </TableRow>
-                            );
-                          })
-                      }
-                  </TableBody>
-                </Table>
-              </TableContainer>
+              {aggregateContainer}
+              {subregionContainer}
             </Paper>
         );
     }

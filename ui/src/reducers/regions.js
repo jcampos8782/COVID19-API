@@ -1,6 +1,8 @@
 import {
   RECEIVE_REGION,
-  RECEIVE_REGIONS
+  RECEIVE_REGIONS,
+  REQUEST_REGION,
+  UNSELECT_REGION,
 } from '../actions/types';
 
 export default (state = {all: [], current: null}, action) => {
@@ -14,6 +16,12 @@ export default (state = {all: [], current: null}, action) => {
           return {
             ...state,
             current: action.region
+          };
+        case UNSELECT_REGION:
+        case REQUEST_REGION:
+          return {
+            ...state,
+            current: null
           };
         default:
             return state;
