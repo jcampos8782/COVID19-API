@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 export default class SeriesDataTable extends React.Component {
 
     render() {
+        // Render an empty div if there is no data.
         if (this.props.data === null) {
           return <div></div>;
         }

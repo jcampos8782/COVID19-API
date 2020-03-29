@@ -4,24 +4,27 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
-export default class RegionSelect extends React.Component {
+export default class Filters extends React.Component {
   componentDidMount() {
-      this.props.fetchRegions()
+      if(this.props.onMount) {
+        this.props.onMount();
+      }
   }
 
   render() {
       return (
           <div>
-              <InputLabel>Region</InputLabel>
+              <InputLabel>{this.props.label}</InputLabel>
               <Select
                 variant="outlined"
-                label="Region"
-                value={this.props.selectedRegionId}
-                onChange={(e) => this.props.selectRegion(e.target.value)}
+                label={this.props.label}
+                value={this.props.selected}
+                onChange={this.props.onChange}
+                disabled={this.props.disabled}
               >
-                  <MenuItem value="-1" selected><em>None</em></MenuItem>
+                  {this.props.default ? this.props.default : "" }
                   {
-                      this.props.options.map(region => <MenuItem key={region.id} value={region.id}>{region.name}</MenuItem>)
+                      this.props.options.map(o => <MenuItem key={o.id} value={o.id}>{o.text}</MenuItem>)
                   }
               </Select>
           </div>

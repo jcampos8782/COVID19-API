@@ -8,6 +8,7 @@ export default (state = [], action) => {
     switch(action.type) {
         case RECEIVE_SERIES:
             return action.series;
+        // Clear data when a new region is requested.
         case REQUEST_SERIES_BY_REGION_ID:
         case REQUEST_SERIES_BY_GEOLOCATION:
             return [];
