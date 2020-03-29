@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SeriesDataTable from '../SeriesDataTable';
-import RegionSelect from '../RegionSelect';
+import Filters from '../Filters';
 
 export default class App extends React.Component {
     componentDidMount() {
@@ -13,7 +13,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <RegionSelect />
+                <Filters />
                 <SeriesDataTable />
             </div>
         );
