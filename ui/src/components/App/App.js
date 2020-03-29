@@ -1,8 +1,7 @@
 import React from 'react';
 
-import CasesTable from '../CasesTable';
-import MunicipalitySelect from '../MunicipalitySelect';
-import RegionSelect from '../RegionSelect';
+import SeriesDataTable from '../SeriesDataTable';
+import Filters from '../Filters';
 
 export default class App extends React.Component {
     componentDidMount() {
@@ -14,9 +13,8 @@ export default class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <RegionSelect />
-                <MunicipalitySelect />
-                <CasesTable />
+                <Filters />
+                <SeriesDataTable />
             </div>
         );
     }

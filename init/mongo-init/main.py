@@ -1,121 +1,151 @@
-"""
-Creates a initializes a MongoDB collection of COVID-19 cases
-
-Initializes a MongoDb collection with COVID-19 data containing the number of confirmed cases, recoveries, and deaths.
-The schema contains location data by municipality, region, and also geographical coordinates. There is one entry
-per municipality/region per day dating back to 1/21/2020.
-
-Parameters:
-To use, set the following environment variables and execute this import script:
-DB_USER: mongodb username
-DB_PASS: mongodb password
-DB_HOST: mongodb host (default localhost)
-DB_PORT: mongodb port (default 27017)
-DB_NAME: name of the db to create (default cvd19)
-
-Returns:
-None
-"""
-
 import pymongo
 import csv
-from datetime import datetime
+import requests
+from os import listdir, environ
+from os.path import isfile, join
 import hashlib
-from os import environ
 from itertools import islice
 from collections import namedtuple
 
 Index = namedtuple("Index", "collection field type")
-DataSource = namedtuple("DataSource", "collection file")
+DataSource = namedtuple("DataSource", "series file")
 
 DB_USER = environ.get("DB_USER")
 DB_PASS = environ.get("DB_PASS")
 DB_HOST = environ.get("DB_HOST", "localhost")
 DB_PORT = environ.get("DB_PORT",  "27017")
 DB_NAME = environ.get("DB_NAME", "cvd19")
-DB_COLLECTION = "cases"
+DB_COLL = "series"
+
+GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY")
+
+(DB_USER and DB_PASS) or exit("DB_USER and DB_PASS must be set in environment")
+GOOGLE_API_KEY or exit("GOOGLE_API_KEY must be set in environment")
 
 DB_INDICES = [
-    Index("municipalities", "region", pymongo.HASHED),
-    Index("cases", "geo", pymongo.GEOSPHERE),
-    Index("cases", "location.region_id", pymongo.HASHED),
-    Index("cases", "location.municipality_id", pymongo.HASHED),
-    Index("cases", "date", pymongo.DESCENDING)
+    Index("regions", "name", pymongo.HASHED),
+    Index("regions", "parent_id", pymongo.HASHED),
+    Index("locations", "region_id", pymongo.HASHED),
+    Index("locations", "geo", pymongo.GEOSPHERE),
+    Index("series", "location.regions", pymongo.ASCENDING)
 ]
 
-DATA_FILEPATH = "data/cases"
-DATA_COLLECTIONS = ["confirmed", "deaths", "recovered"]
+GOOGLE_GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false&key=%s"
+SERIES_FILE_PATH = "data/series"
+FILE_GEO_COORDINATES = "data/meta/coordinates.csv"
 
-REGIONS_FILE = "data/meta/regions.csv"
-MUNICIPALITIES_FILE = "data/meta/municipalities.csv"
+# Convert the files in the SERIES_FILE_PATH directory to sources with a type and file
+series_files = [f for f in listdir(SERIES_FILE_PATH) if isfile(join(SERIES_FILE_PATH, f))]
+series_datasources = [DataSource(f.split('.')[0], "%s/%s" % (SERIES_FILE_PATH, f)) for f in series_files]
 
-DATA = [DataSource(c, format("%s/%s.csv" % (DATA_FILEPATH, c))) for c in DATA_COLLECTIONS]
+if not series_datasources:
+    exit("No CSV files found in directory %s" % SERIES_FILE_PATH)
+
+for source in series_datasources:
+    print("Found series '%s' in file %s" % (source.series, source.file))
 
 # Ensure user and password are set before trying to connect to mongo
-(DB_USER and DB_PASS) or exit("DB_USER and DB_PASS must be set in environment")
 client = pymongo.MongoClient("mongodb://%s:%s@%s:%s" % (DB_USER, DB_PASS, DB_HOST, DB_PORT))
 db = client[DB_NAME]
 
-# Drop the collections prior to starting
-for collection in ["cases", "regions", "municipalities"]:
-    print("Dropping collection %s" % collection)
-    db.drop_collection(collection)
+series = {}
+regions = {}
 
-cases = {}
+print("Performing coordinate reverse lookup via Google APIs")
+with open(FILE_GEO_COORDINATES) as file:
+    for default_mun, default_reg, lat, lon in csv.reader(file):
+        # Attempt to lookup in database. If no match, fetch from Google
+        # Use a mashup of the sub-region and the region for lookups. This allows for two locations to have the
+        # same geocoordinates but one be a parent of the other.
+        key = hashlib.md5(format("%s-%s" % ((default_mun.lower()), default_reg.lower())).encode()).hexdigest()
 
-# name -> id reverse lookup
-meta = {"regions": {}, "municipalities": {}}
+        location = db['locations'].find_one({'key': key})
 
-print("Processing metadata file %s" % REGIONS_FILE)
-with open(REGIONS_FILE) as file:
-    for row in csv.reader(file):
-        result = db['regions'].insert_one({"name": row[0]})
-        meta['regions'][row[0]] = result.inserted_id
+        if location:
+            region = db['regions'].find_one({'_id': location["region_id"]})
+            regions[key] = [region[k] for k in ["_id", "parent_id"] if k in region]
 
-print("Processing metadata file %s" % MUNICIPALITIES_FILE)
-with open(MUNICIPALITIES_FILE) as file:
-    for name, region in csv.reader(file):
-        region_id = meta['regions'][region]
-        result = db['municipalities'].insert_one({"name": name, 'region_id': region_id})
-        meta['municipalities'][name] = result.inserted_id
+            continue
+
+        print("Fetching location data for lat: %s lon: %s" % (lat, lon))
+        response = requests.get(GOOGLE_GEOCODE_URL % (lat, lon, GOOGLE_API_KEY))
+        results = response.json()['results']
+
+        municipality, region = default_mun, default_reg
+
+        if results:
+            # See Google Geocoding reverse lookup documentation:
+            # https://developers.google.com/maps/documentation/geocoding/intro#reverse-example
+            region_component = [loc for loc in results if "country" in loc['types']]
+
+            if region_component:
+                region = region_component[0]['address_components'][0]['long_name']
+            else:
+                print("No region found. Defaulting to %s" % default_reg)
+
+            # Only process the sub-region if one is specified in the input file
+            if default_mun:
+                municipality_component = [loc for loc in results if "administrative_area_level_1" in loc['types']]
+                if municipality_component:
+                    municipality = municipality_component[0]['address_components'][0]['long_name']
+                else:
+                    print("No municipality found. Defaulting to %s" % default_mun)
+
+        # Check if region exists in database
+        municipality_id, region_id = None, None
+        if region:
+            db_region = db["regions"].find_one({"name": region})
+            if db_region:
+                region_id = db_region["_id"]
+            else:
+                print("New region: %s" % region)
+                db_region = db['regions'].insert_one({"name": region})
+                region_id = db_region.inserted_id
+
+        if municipality:
+            db_municipality = db["regions"].find_one({"name": municipality})
+            if db_municipality:
+                municipality_id = db_municipality["_id"]
+            else:
+                print("New municipality: %s for region %s" % (municipality, region))
+                db_municipality = db['regions'].insert_one({"name": municipality, "parent_id": region_id})
+                municipality_id = db_municipality.inserted_id
+
+        location = {
+            "key": key,
+            "geo": {
+                "type": "Point",
+                "coordinates": [float(lon), float(lat)]
+            },
+            "region_id": municipality_id if municipality else region_id
+        }
+
+        result = db['locations'].insert_one(location)
+        regions[key] = [i for i in [municipality_id, region_id] if i]
 
 # Process the data files.
-for source in DATA:
+for source in series_datasources:
     print("Processing data file %s" % source.file)
     with open(source.file) as file:
-        for municipality, region, lat, lon, date, count in islice(csv.reader(file), 2, None):
+        # skip header using islice
+        for municipality, region, lat, lon, *data in islice(csv.reader(file), 1, None):
+            location_key = hashlib.md5(format("%s-%s" % ((municipality.lower()), region.lower())).encode()).hexdigest()
 
-            # key composed of municipality, region, and date. All data for this key (confirmed, deaths, recovered)
-            # Will be stored in a single document
-            key = hashlib.md5(format("%s_%s_%s" % (municipality, region, date)).encode()).hexdigest()
-
-            region_id = meta['regions'][region] if region else None
-            municipality_id = meta['municipalities'][municipality] if municipality else None
-
-            if key in cases:
-                document = cases[key]
+            if location_key in series:
+                document = series[location_key]
             else:
+
                 document = {
-                    "date": datetime.strptime(date, "%Y-%m-%d"),
-                    "cases": {},
-                    "geo": {
-                        "type": "Point",
-                        "coordinates": [float(lon), float(lat)]
-                    },
-                    "location": {
-                        "municipality": municipality,
-                        "municipality_id": municipality_id,
-                        "region": region,
-                        "region_id": region_id
-                    }
+                    "data": {},
+                    "regions": regions[location_key]
                 }
-                cases[key] = document
 
-            cases[key]["cases"][source.collection] = int(count) if count else 0
+                series[location_key] = document
+            series[location_key]["data"][source.series] = [int(n) for n in data]
 
-print("Creating collection %s" % DB_COLLECTION)
-for case in cases.values():
-    db["cases"].insert_one(case)
+print("Creating collection %s" % DB_COLL)
+for doc in series.values():
+    db["series"].insert_one(doc)
 
 for index in DB_INDICES:
     print("Creating %s index on field %s for collection %s" % (index.type, index.field, index.collection))
