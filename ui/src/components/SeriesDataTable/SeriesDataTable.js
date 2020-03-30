@@ -24,7 +24,7 @@ export default class SeriesDataTable extends React.Component {
           <TableCell key={idx}>{heading}</TableCell>
         ));
 
-        let subregionRows = this.props.data.subregions.map(subregion => {
+        let subregionRows = this.props.data.subregions.map((subregion,idx) => {
           let seriesTitles = Object.keys(subregion.series);
           let dataRows = seriesTitles.map(title => {
             return (
@@ -38,7 +38,7 @@ export default class SeriesDataTable extends React.Component {
           });
 
           return (
-            <TableRow key={subregion.region}>
+            <TableRow key={`${subregion.region}-${idx}`}>
               <TableCell>
                 <Table size="small">
                   <TableHead>
