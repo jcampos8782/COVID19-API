@@ -1,12 +1,12 @@
 import React from 'react';
 
-import RegionSelect from './RegionSelect'
+import SelectFilter from './SelectFilter'
 import MenuItem from '@material-ui/core/MenuItem';
 
 export default class Filters extends React.Component {
   render() {
       let seriesFilter = (
-        <RegionSelect
+        <SelectFilter
           label="Series"
           selected={this.props.selectedSeriesId}
           onChange={(e) => this.props.selectSeries(e.target.value, this.props.selectedRegionId)}
@@ -15,7 +15,7 @@ export default class Filters extends React.Component {
       )
 
       let regionsFilter = (
-        <RegionSelect
+        <SelectFilter
           label="Region"
           selected={this.props.selectedRegionId}
           onChange={(e) => this.props.selectRegion(e.target.value, this.props.selectedSeriesId)}
@@ -24,7 +24,7 @@ export default class Filters extends React.Component {
       );
 
       let subregionsFilter = (
-        <RegionSelect
+        <SelectFilter
           label="Subregion"
           selected={this.props.selectedSubregionId}
           disabled={this.props.subregions.length === 0}

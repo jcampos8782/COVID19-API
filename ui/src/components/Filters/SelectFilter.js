@@ -4,7 +4,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
-export default class Filters extends React.Component {
+export default class SelectFilter extends React.Component {
 
   render() {
       return (
