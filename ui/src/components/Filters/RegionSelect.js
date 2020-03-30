@@ -5,11 +5,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 export default class Filters extends React.Component {
-  componentDidMount() {
-      if(this.props.onMount) {
-        this.props.onMount();
-      }
-  }
 
   render() {
       return (

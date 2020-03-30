@@ -1,6 +1,5 @@
 import * as Actions from './types';
 import { selectRegion, selectSubregion, fetchRegion } from './RegionActions';
-import { fetchSeriesByRegion } from './SeriesActions';
 
 const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
@@ -9,7 +8,6 @@ export const receiveGeocoding = (components) => ({ type: Actions.RECEIVE_GEOCODI
 
 export const requestGeolocation = () => ({ type: Actions.REQUEST_GEOLOCATION })
 export const receiveGeolocation = (coords) => ({  type: Actions.RECEIVE_GEOLOCATION, coords })
-
 
 export const fetchGeolocation = () => {
     return dispatch => {
@@ -49,9 +47,6 @@ export const fetchGeocoding = (coords) => {
 
               if (matchingMunicipality) {
                 dispatch(selectSubregion(matchingMunicipality.id));
-                dispatch(fetchSeriesByRegion(matchingMunicipality.id));
-              } else {
-                dispatch(fetchSeriesByRegion(getState().regions.current.id));
               }
             });
     }

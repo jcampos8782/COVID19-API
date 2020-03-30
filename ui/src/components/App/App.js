@@ -5,9 +5,8 @@ import Filters from '../Filters';
 
 export default class App extends React.Component {
     componentDidMount() {
-        if (this.props.isGeolocationAvailable) {
-          this.props.fetchGeolocation();
-        }
+        Promise.all([this.props.fetchRegions(), this.props.fetchSeriesList()])
+          .then(r => this.props.isGeolocationAvailable && this.props.fetchGeolocation());
     }
 
     render() {

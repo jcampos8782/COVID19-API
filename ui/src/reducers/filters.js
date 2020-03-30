@@ -1,26 +1,51 @@
 import {
   SELECT_REGION,
+  UNSELECT_REGION,
   SELECT_SUBREGION,
-  RECEIVE_REGIONS
+  UNSELECT_SUBREGION,
+  SELECT_SERIES,
+  UNSELECT_SERIES
 } from '../actions/types';
 
-export default (state = { selectedRegionId: -1, selectedSubregionId: -1 }, action) => {
+const initialState = {
+  selectedSeriesId: -1,
+  selectedRegionId: -1,
+  selectedSubregionId: -1
+}
+
+export default (state = initialState, action) => {
   switch(action.type) {
       case SELECT_REGION:
         return {
           ...state,
           selectedRegionId: action.id
         };
+      case UNSELECT_REGION:
+        return {
+          ...state,
+          selectedRegionId: -1,
+          selectedSubregionId: -1
+        };
       case SELECT_SUBREGION:
         return {
           ...state,
           selectedSubregionId: action.id
         };
-      case RECEIVE_REGIONS:
+      case UNSELECT_SUBREGION:
         return {
           ...state,
-          options: action.regions
+          selectedSubregionId: -1
         };
+      case SELECT_SERIES:
+        return {
+          ...state,
+          selectedSeriesId: action.id
+        };
+      case UNSELECT_SERIES:
+        return {
+          ...state,
+          selectedSeriesId: -1
+        }
       default:
           return state;
   }

@@ -7,8 +7,9 @@ import {
   unselectRegion,
   selectSubregion,
   unselectSubregion,
+  selectSeries,
+  unselectSeries,
   fetchRegion,
-  fetchRegions,
   fetchSeriesByRegion,
 } from '../../actions';
 
@@ -19,25 +20,42 @@ const mapStateToProps = state => {
   }
 
   return {
+    series: state.series,
     regions: state.regions.all,
     subregions: subregions,
+    selectedSeriesId: state.filters.selectedSeriesId,
     selectedRegionId: state.filters.selectedRegionId,
     selectedSubregionId: state.filters.selectedSubregionId
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchRegions: () => dispatch(fetchRegions()),
-    selectRegion: (id) => {
-      if (id === "-1") {
-        dispatch(unselectRegion());
-        dispatch(unselectSubregion());
+    selectSeries: (selectedSeriesId, selectedRegionId) => {
+      if (selectedSeriesId === "-1") {
+        dispatch(unselectSeries());
         return;
       }
+      dispatch(selectSeries(selectedSeriesId));
+
+      if (selectedRegionId !== -1) {
+          dispatch(fetchSeriesByRegion(selectedSeriesId, selectedRegionId))
+      }
+    },
+
+    selectRegion: (selectedRegionId, selectedSeriesId) => {
       dispatch(unselectSubregion());
-      dispatch(selectRegion(id));
-      dispatch(fetchSeriesByRegion(id));
-      dispatch(fetchRegion(id));
+
+      if (selectedRegionId === "-1") {
+        dispatch(unselectRegion());
+        return;
+      }
+
+      dispatch(selectRegion(selectedRegionId));
+      dispatch(fetchRegion(selectedRegionId));
+
+      if (selectedSeriesId !== -1) {
+        dispatch(fetchSeriesByRegion(selectedSeriesId, selectedRegionId));
+      }
     },
 
     selectSubregion:(id) => {

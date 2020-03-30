@@ -5,12 +5,20 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 export default class Filters extends React.Component {
   render() {
+      let seriesFilter = (
+        <RegionSelect
+          label="Series"
+          selected={this.props.selectedSeriesId}
+          onChange={(e) => this.props.selectSeries(e.target.value, this.props.selectedRegionId)}
+          default=<MenuItem value="-1" selected><em>None</em></MenuItem>
+          options={this.props.series.map(r => ({ id: r.id, text: r.name }))} />
+      )
+
       let regionsFilter = (
         <RegionSelect
           label="Region"
           selected={this.props.selectedRegionId}
-          onMount={this.props.fetchRegions}
-          onChange={(e) => this.props.selectRegion(e.target.value)}
+          onChange={(e) => this.props.selectRegion(e.target.value, this.props.selectedSeriesId)}
           default=<MenuItem value="-1" selected><em>None</em></MenuItem>
           options={this.props.regions.map(r => ({ id: r.id, text: r.name }))} />
       );
@@ -29,6 +37,7 @@ export default class Filters extends React.Component {
           <div>
             {regionsFilter}
             {subregionsFilter}
+            {seriesFilter}
           </div>
       );
   }
