@@ -33,7 +33,7 @@ DB_INDICES = [
     Index("imports", "location.regions", pymongo.ASCENDING)
 ]
 
-SERIES_FILE_PATH = "imports/series"
+SERIES_FILE_PATH = "imports/data"
 FILE_GEO_COORDINATES = "imports/meta/coordinates.csv"
 FILE_SERIES_NAMES = "imports/meta/series.csv"
 
@@ -45,7 +45,7 @@ if not series_datasources:
     exit("No data files found in directory %s" % SERIES_FILE_PATH)
 
 for source in series_datasources:
-    print("Found component '%s' for series '%s' in file %s" % (source.series, source.component, source.file))
+    print("Found component '%s' for series '%s' in file %s" % (source.component, source.series, source.file))
 
 db = pymongo.MongoClient("mongodb://%s:%s@%s:%s" % (DB_USER, DB_PASS, DB_HOST, DB_PORT))[DB_NAME]
 
