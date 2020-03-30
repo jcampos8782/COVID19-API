@@ -14,30 +14,49 @@ import org.springframework.data.geo.Metric;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
+import com.jsoncampos.seriesapi.models.Data;
 import com.jsoncampos.seriesapi.models.Location;
 import com.jsoncampos.seriesapi.models.Series;
+import com.jsoncampos.seriesapi.repositories.DataRepository;
 import com.jsoncampos.seriesapi.repositories.LocationRepository;
 import com.jsoncampos.seriesapi.repositories.SeriesRepository;
 
 @Service
 public class SeriesSearchServiceImpl implements SeriesSearchService {
 	
-	private SeriesRepository repository;
+	private SeriesRepository seriesRepository;
+	private DataRepository dataRepository;
 	private LocationRepository locationRepository;
 	
 	@Autowired
-	public SeriesSearchServiceImpl(SeriesRepository repository, LocationRepository locationRepository) {
-		this.repository = repository;
+	public SeriesSearchServiceImpl(
+			SeriesRepository seriesRepository,
+			DataRepository dataRepository,
+			LocationRepository locationRepository) {
+		this.seriesRepository = seriesRepository;
+		this.dataRepository = dataRepository;
 		this.locationRepository = locationRepository;
 	}
 
 	@Override
-	public List<Series> findAll() {
-		return repository.findAll();
+	public Series find(String seriesId) {
+		return seriesRepository.findById(seriesId).orElse(null);
 	}
 	
 	@Override
-	public List<Series> findSeriesNear(double latitude, double longitude, double maxDistance, Metric metric) {
+	public List<Series> findAll() {
+		return seriesRepository.findAll();
+	}
+	
+	@Override
+	public List<Data> findDataBySeriesId(String seriesId) {
+		checkNotNull(seriesId, "seriesId cannot be null");
+		return dataRepository.findBySeriesId(new ObjectId(seriesId));
+	}
+	
+	@Override
+	public List<Data> findDataNear(String seriesId, double latitude, double longitude, double maxDistance, Metric metric) {
+		checkNotNull(seriesId, "seriesId cannot be null");
 		checkArgument(Math.abs(latitude) <= 90, String.format("Invalid latitude %s", latitude));
 		checkArgument(Math.abs(latitude) <= 180, String.format("Invalid longitude %s", longitude));
 		checkArgument(maxDistance >= 0, String.format("Invalid maxDistance %f", maxDistance));
@@ -53,13 +72,13 @@ public class SeriesSearchServiceImpl implements SeriesSearchService {
 			.map(loc -> new ObjectId(loc.getRegionId()))
 			.collect(Collectors.toList());
 		
-		return repository.findByRegionIdIn(ids);
+		return dataRepository.findByRegionIdIn(new ObjectId(seriesId), ids);
 	}
 	
 	@Override
-	public List<Series> findSeriesByRegionId(String regionId) {
+	public List<Data> findDataByRegionId(String seriesId, String regionId) {
+		checkNotNull(seriesId, "seriesId cannot be null");
 		checkNotNull(regionId, "region cannot be null");
-		// TODO: Fix leaky abstraction of MongoDB
-		return repository.findByRegionId(new ObjectId(regionId));
+		return dataRepository.findByRegionId(new ObjectId(seriesId), new ObjectId(regionId));
 	}
 }

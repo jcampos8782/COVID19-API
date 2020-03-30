@@ -23,7 +23,6 @@ For example, if the the series `confirmed` and `recovered` exist for a region, t
  - `DB_NAME` database name (default `cvd19`)
  
 # To-Dos
- - There is no context for the collections. This could be added at a later point as a component of the data series.
  - Use the data series files for region/location creation and lookup
  
 # Prerequisites
@@ -36,11 +35,13 @@ access the geocoding service.
 
 ## CSV Files
 
-### data/series/\<series>.csv
-These files contain the actual series data. Any files in this folder are assumed to be data series and will be processed
-by this script.
+### imports/series/\<name>/\<component>.csv
+The `series` directory contains series data aggregated by series name. The `.csv` files contain data which describes
+one component of the series.
 
-This script expects series data files to be CSV files in the following format:
+For example, `imports/series/covid19/confirmed_cases.csv` would contain time series data for confirmed COVID-19 cases.
+
+These series files should be in the following format:
 
 ```
 <sub-region name>, <region name>, <latitude>, <longitude>, <data> [, <data> ...]
@@ -52,7 +53,7 @@ longitude coordinates.
 The filename will be used as a key in the associated Mongo document as the series type. For example, `data/series/confirmed.csv`
 will have a `{ data: { confirmed: [...] }}` entry.
 
-#### data/meta/coordinates.csv
+#### imports/meta/coordinates.csv
 This file should contain every region and set of coordinates contained within the individual series files. 
 
 The coordinates file should be in the following format:
@@ -60,6 +61,16 @@ The coordinates file should be in the following format:
 ```
 <sub-region name>, <region name>, <latitude>, <longitude>
 ```
+
+### `series.csv`
+
+```
+<collection-name>,<formatted-name>
+```
+
+Contains series metadata. The directory name should match the collection name in MongoDB. For example, a `imports/series/covid19`
+directory should have a corresponding `imports/meta/series.csv` entry of `covid19,COVID-19`. If a series name is not found,
+it will be defaulted to the directory name.
 
 # Schema
 

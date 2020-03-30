@@ -33,7 +33,7 @@ public class RegionController {
 	@GetMapping
 	public GetAllRegionsResponse getAllRegions() {
 		return new GetAllRegionsResponse(
-				searchSvc.findAll().stream().map(Mappers::convertToRegionDto).collect(Collectors.toList()));
+				searchSvc.findAll().stream().map(Mappers::convertToDto).collect(Collectors.toList()));
 	}
 	
 	@GetMapping("/{id}")
@@ -46,7 +46,7 @@ public class RegionController {
 		
 		List<Region> subregions = searchSvc.findSubRegions(regionId);
 		return new GetRegionResponse(
-				Mappers.convertToRegionDto(region),
-				subregions.stream().map(Mappers::convertToRegionDto).collect(Collectors.toList()));
+				Mappers.convertToDto(region),
+				subregions.stream().map(Mappers::convertToDto).collect(Collectors.toList()));
 	}
 }

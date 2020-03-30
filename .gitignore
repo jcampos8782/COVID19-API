@@ -166,4 +166,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # Data files
-init/mongo-init/data/
+init/mongo-init/imports/

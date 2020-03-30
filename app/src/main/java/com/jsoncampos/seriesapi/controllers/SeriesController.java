@@ -6,17 +6,21 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Metrics;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.jsoncampos.seriesapi.controllers.responses.GetAllSeriesResponse;
 import com.jsoncampos.seriesapi.controllers.responses.GetSeriesByRegionResponse;
 import com.jsoncampos.seriesapi.controllers.responses.GetSeriesNearResponse;
+import com.jsoncampos.seriesapi.controllers.responses.GetSeriesResponse;
 import com.jsoncampos.seriesapi.dto.mappers.Mappers;
+import com.jsoncampos.seriesapi.models.Data;
 import com.jsoncampos.seriesapi.models.Series;
 import com.jsoncampos.seriesapi.services.SeriesSearchService;
 
@@ -37,36 +41,64 @@ public class SeriesController {
 	
 	@GetMapping
 	public GetAllSeriesResponse getAllSeries() {
-		return new GetAllSeriesResponse(searchSvc.findAll()
-				.stream()
-				.map(Mappers::convertToSeriesDto)
-				.collect(Collectors.toList()));
+		 return new GetAllSeriesResponse(
+				 searchSvc.findAll().stream().map(Mappers::convertToDto).collect(Collectors.toList()));
 	}
 	
-	@GetMapping("/geo")
+	@GetMapping("{id}")
+	public GetSeriesResponse getSeries(
+			@PathVariable("id") String seriesId) {
+		
+		Series series = searchSvc.find(seriesId);
+		if (series == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Series not found");
+		}
+		
+		List<Data> dataForSeries = searchSvc.findDataBySeriesId(seriesId);
+		
+		return new GetSeriesResponse(
+				Mappers.convertToDto(series),
+				dataForSeries.stream().map(Mappers::convertToDto).collect(Collectors.toList()));
+	}
+	
+	@GetMapping("{id}/geo")
 	public GetSeriesNearResponse getSeriesNear(
+			@PathVariable("id") String seriesId,
 			@RequestParam double lat,
 			@RequestParam double lon,
 			@RequestParam Optional<Double> maxDistance,
 			@RequestParam Optional<Character> unit) {
 		
-		List<Series> series = searchSvc.findSeriesNear(
+		Series series = searchSvc.find(seriesId);
+		if (series == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Series not found");
+		}
+		
+		List<Data> data = searchSvc.findDataNear(
+				seriesId,
 				lat, lon, 
 				maxDistance.orElse(DEFAULT_DISTANCE),
 				unit.orElse(DEFAULT_UNIT).equals('k') ? Metrics.KILOMETERS : Metrics.MILES);
 		
-		return new GetSeriesNearResponse(series.stream()
-				.map(Mappers::convertToSeriesDto)
-				.collect(Collectors.toList()));
+		return new GetSeriesNearResponse(
+				Mappers.convertToDto(series),
+				data.stream().map(Mappers::convertToDto).collect(Collectors.toList()));
 	}
 	
-	@GetMapping("/regions/{id}")
+	@GetMapping("{id}/regions/{regionId}")
 	public GetSeriesByRegionResponse getSeriesByRegion(
-			@PathVariable("id") String regionId) {
+			@PathVariable("id") String seriesId,
+			@PathVariable("regionId") String regionId) {
 		
-		return new GetSeriesByRegionResponse(searchSvc.findSeriesByRegionId(regionId)
-				.stream()
-				.map(Mappers::convertToSeriesDto)
-				.collect(Collectors.toList()));
+		Series series = searchSvc.find(seriesId);
+		if (series == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Series not found");
+		}
+		
+		List<Data> data = searchSvc.findDataByRegionId(seriesId, regionId);
+		
+		return new GetSeriesByRegionResponse(
+				Mappers.convertToDto(series),
+				data.stream().map(Mappers::convertToDto).collect(Collectors.toList()));
 	}
 }

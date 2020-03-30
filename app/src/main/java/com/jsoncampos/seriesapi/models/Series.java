@@ -1,44 +1,44 @@
 package com.jsoncampos.seriesapi.models;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.google.gson.Gson;
-
 @Document("series")
 public class Series {
-	
+
 	@Id
 	private String id;
 	
-	@Field("data")
-	private Map<String,List<Object>> data;
+	@Field("name")
+	private String name;
 	
-	@Field("regions")
-	private List<String> regions;
+	@Field("cols")
+	private List<String> columns;
 
-	public Map<String,List<Object>> getData() {
-		return data;
+	public String getId() {
+		return id;
 	}
 
-	public void setData(Map<String,List<Object>> data) {
-		this.data = data;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public List<String> getRegions() {
-		return regions;
+	public String getName() {
+		return name;
 	}
 
-	public void setRegions(List<String> regions) {
-		this.regions = regions;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	@Override
-	public String toString() {
-		return new Gson().toJson(this).toString();
+
+	public List<String> getColumns() {
+		return columns;
+	}
+
+	public void setColumns(List<String> columns) {
+		this.columns = columns;
 	}
 }
