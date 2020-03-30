@@ -30,6 +30,7 @@ const mapStateToProps = state => {
     }
 
     return {
+      id: subregionId,
       region: subregionName,
       series: r.data
     }
@@ -40,7 +41,8 @@ const mapStateToProps = state => {
 
   return {
     meta: {
-      columns: currentSeries ? currentSeries.columns : []
+      columns: currentSeries ? currentSeries.columns : [],
+      selectedSubregionId: state.filters.selectedSubregionId
     },
     data: {
       aggregate: {
