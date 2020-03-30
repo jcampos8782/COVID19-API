@@ -20,6 +20,10 @@ export default class SeriesDataTable extends React.Component {
           return <div></div>;
         }
 
+        let columnHeadings = this.props.meta.columns.map((heading,idx) => (
+          <TableCell key={idx}>{heading}</TableCell>
+        ));
+
         let subregionRows = this.props.data.subregions.map(subregion => {
           let seriesTitles = Object.keys(subregion.series);
           let dataRows = seriesTitles.map(title => {
@@ -40,6 +44,7 @@ export default class SeriesDataTable extends React.Component {
                   <TableHead>
                     <TableRow>
                       <TableCell>{subregion.region}</TableCell>
+                      {columnHeadings}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -76,6 +81,7 @@ export default class SeriesDataTable extends React.Component {
                     <TableCell>
                       <Typography variant="h6">Aggregate</Typography>
                     </TableCell>
+                    {columnHeadings}
                   </TableRow>
               </TableHead>
               <TableBody>

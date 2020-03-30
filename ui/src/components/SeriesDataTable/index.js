@@ -6,6 +6,8 @@ const mapStateToProps = state => {
     return { data: null };
   }
 
+  let currentSeries = state.series.current;
+
   // There may be no item specific to the region. If thats the case, aggregate
   // the data manually.
   let aggregateDataItem = state.data.find(d => d.regions.length === 1);
@@ -37,6 +39,9 @@ const mapStateToProps = state => {
   subregionSeries.sort((a,b) => a.region < b.region);
 
   return {
+    meta: {
+      columns: currentSeries ? currentSeries.columns : []
+    },
     data: {
       aggregate: {
         region: state.regions.current.name,

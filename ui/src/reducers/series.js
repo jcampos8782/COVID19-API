@@ -1,11 +1,25 @@
 import {
-  RECEIVE_SERIES_LIST
+  RECEIVE_SERIES_LIST,
+  SELECT_SERIES
 } from '../actions/types';
 
-export default (state = [], action) => {
+const initialState = {
+  all: [],
+  current: null
+};
+
+export default (state = initialState, action) => {
     switch(action.type) {
         case RECEIVE_SERIES_LIST:
-            return action.series;
+          return {
+              ...state,
+              all: action.series
+            };
+        case SELECT_SERIES:
+          return {
+            ...state,
+            current: state.all.find(s => s.id === action.id)
+          };
         default:
             return state;
     }

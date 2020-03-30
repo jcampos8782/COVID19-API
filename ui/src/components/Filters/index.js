@@ -20,7 +20,7 @@ const mapStateToProps = state => {
   }
 
   return {
-    series: state.series,
+    series: state.series.all,
     regions: state.regions.all,
     subregions: subregions,
     selectedSeriesId: state.filters.selectedSeriesId,
