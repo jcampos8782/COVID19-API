@@ -1,10 +1,13 @@
 import React from 'react';
 
+import Container from '@material-ui/core/Container';
 import SelectFilter from './SelectFilter'
 import MenuItem from '@material-ui/core/MenuItem';
 
 export default class Filters extends React.Component {
   render() {
+      const { classes } = this.props;
+
       let seriesFilter = (
         <SelectFilter
           label="Series"
@@ -34,11 +37,13 @@ export default class Filters extends React.Component {
       );
 
       return (
-          <div>
-            {regionsFilter}
-            {subregionsFilter}
-            {seriesFilter}
-          </div>
+          <Container
+            className={classes.filters}
+            spacing={3}>
+              {regionsFilter}
+              {subregionsFilter}
+              {seriesFilter}
+          </Container>
       );
   }
 }

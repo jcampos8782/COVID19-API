@@ -1,5 +1,6 @@
 import Filters from './Filters';
 
+import {withStyles} from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
 import {
@@ -67,4 +68,13 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Filters);
+const styles = theme => ({
+  filters: {
+    "& > div": {
+      display: 'inline-block',
+      paddingRight: 10
+    }
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Filters));
