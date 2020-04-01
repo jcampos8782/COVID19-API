@@ -2,6 +2,7 @@ import Dashboard from './Dashboard';
 import { connect } from 'react-redux';
 
 const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
+
 const mapStateToProps = state => {
   if (state.data.length === 0 || state.regions.current === null) {
     return { data: [] };
@@ -16,7 +17,6 @@ const mapStateToProps = state => {
       aggregateDataItem.data :
       aggregateData(state.data);
 
-  /*
   let subregionDataItems = state.data.filter(d => d !== aggregateDataItem);
   let subregionSeries = subregionDataItems.map(r => {
     // Regions are listed in hierarchical order. The first is the finest grained
@@ -36,9 +36,10 @@ const mapStateToProps = state => {
       series: r.data
     }
   });
+
   // Sort on the region name
   subregionSeries.sort((a,b) => a.region < b.region);
-  */
+
   // series name -> totals for series
   let totals = {};
   // day-to-day diffs
@@ -46,13 +47,17 @@ const mapStateToProps = state => {
   // Stacked totals with day-to-day diffs
   let stacked = {};
 
+  let dateGroups = {};
+
   Object.keys(aggregateSeries).forEach(series => {
     totals[series] = [];
     diffs[series] = [];
     stacked[series] = { total: [], daily: [] }
+    dateGroups[series] = [];
 
     aggregateSeries[series].forEach((value,idx) => {
-      let date = formatDate(Date.parse(currentSeries.columns[idx]));
+      let dateString = currentSeries.columns[idx];
+      let date = formatDate(Date.parse(dateString));
       let diff = idx > 0 ? value - aggregateSeries[series][idx - 1] : value;
 
       let t = {x: date, y: value};
@@ -62,11 +67,23 @@ const mapStateToProps = state => {
       diffs[series].push(d);
       stacked[series]['total'].push(t);
       stacked[series]['daily'].push(d);
+
+      if(subregionSeries.length > 0) {
+        dateGroups[series].push({
+          id: dateString,
+          ...subregionSeries.reduce((obj,curr) => {
+            obj[curr.region] = idx > 0 ? curr.series[series][idx] - curr.series[series][idx - 1]: curr.series[series][idx];
+            return obj;
+          }, {})
+        });
+      }
     });
   });
 
   return {
-    formatDate: (d) => DATE_FORMAT.format(d),
+    meta: {
+      subregions: state.regions.current.subregions.map(r => r.name)
+    },
     data: Object.keys(aggregateSeries).map(series => {
       let length = aggregateSeries[series].length;
       return {
@@ -74,7 +91,8 @@ const mapStateToProps = state => {
         current: aggregateSeries[series][length - 1],
         totals: totals[series],
         diffs: diffs[series],
-        stacked: stacked[series]
+        stacked: stacked[series],
+        regions: dateGroups[series]
       };
     })
   };
