@@ -16,7 +16,7 @@ export default class Dashboard extends React.Component {
     }
 
     let timeseriesCharts = this.props.data.map(series => (
-        <Grid item key={`${series.id}-stacked`} style={{height:300}} xs={12} sm={12} md={6}>
+        <Grid item key={`${series.id}-stacked`} style={{height:300}} sm={12} md={6}>
           <Typography variant="overline">
             {series.id}: {series.current}
           </Typography>
@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component {
     ));
 
     let subregionBreakdown = this.props.meta.subregions.length === 0 ? <div /> : this.props.data.map(series => (
-      <Grid item key={`${series.id}-date`} style={{height:300}} xs={12} sm={12} md={6}>
+      <Grid item key={`${series.id}-date`} style={{height:300}} sm={12} md={6}>
         <StackedBarChart
           title={series.id}
           keys={this.props.meta.subregions}
