@@ -40,19 +40,13 @@ const mapStateToProps = state => {
   // Sort on the region name
   subregionSeries.sort((a,b) => a.region < b.region);
 
-  // series name -> totals for series
-  let totals = {};
-  // day-to-day diffs
-  let diffs = {};
   // Stacked totals with day-to-day diffs
-  let stacked = {};
+  let statistics = {};
 
   let dateGroups = {};
 
   Object.keys(aggregateSeries).forEach(series => {
-    totals[series] = [];
-    diffs[series] = [];
-    stacked[series] = { total: [], daily: [] }
+    statistics[series] = { total: [], daily: [] }
     dateGroups[series] = [];
 
     aggregateSeries[series].forEach((value,idx) => {
@@ -60,13 +54,8 @@ const mapStateToProps = state => {
       let date = formatDate(Date.parse(dateString));
       let diff = idx > 0 ? value - aggregateSeries[series][idx - 1] : value;
 
-      let t = {x: date, y: value};
-      let d = {x: date, y: diff};
-
-      totals[series].push(t);
-      diffs[series].push(d);
-      stacked[series]['total'].push(t);
-      stacked[series]['daily'].push(d);
+      statistics[series]['total'].push({x: date, y: value});
+      statistics[series]['daily'].push({x: date, y: diff});
 
       if(subregionSeries.length > 0) {
         dateGroups[series].push({
@@ -89,9 +78,7 @@ const mapStateToProps = state => {
       return {
         id: series,
         current: aggregateSeries[series][length - 1],
-        totals: totals[series],
-        diffs: diffs[series],
-        stacked: stacked[series],
+        data: statistics[series],
         regions: dateGroups[series]
       };
     })

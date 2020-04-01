@@ -23,7 +23,7 @@ export default class Dashboard extends React.Component {
 
           <TimeSeriesLineChart
             title={series.id}
-            data={[{id: 'Total', data: series.stacked.total }, {id: 'Daily', data: series.stacked.daily }]} />
+            data={[{id: 'Total', data: series.data.total }, {id: 'Daily', data: series.data.daily }]} />
         </Grid>
     ));
 
