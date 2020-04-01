@@ -7,7 +7,7 @@ export default class TimeSeriesLineChart extends React.Component {
     if (this.props.data.length === 0) {
       return <div/>
     }
-    console.log(this.props.data);
+    
     return (
       <ResponsiveBarCanvas
         data={this.props.data}

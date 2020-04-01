@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 
 import SeriesDataTable from '../SeriesDataTable';
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
+import { formatDateKey } from '../TimeSeriesLineChart';
+
 import StackedBarChart from '../StackedBarChart';
 
 export default class Dashboard extends React.Component {
@@ -23,7 +25,27 @@ export default class Dashboard extends React.Component {
 
           <TimeSeriesLineChart
             title={series.id}
-            data={[{id: 'Total', data: series.data.total }, {id: 'Daily', data: series.data.daily }]} />
+            data={[
+              {
+                id: 'Total',
+                data: series.data.aggregates.total.map((val,idx) => {
+                  return {
+                    x: formatDateKey(this.props.meta.columns[idx]),
+                    y: val
+                  };
+                })
+              },
+              {
+                id: 'Daily',
+                data: series.data.aggregates.daily.map((val,idx) => {
+                  return {
+                    x: formatDateKey(this.props.meta.columns[idx]),
+                    y: val
+                  }
+                })
+              }
+            ]}
+          />
         </Grid>
     ));
 
@@ -32,9 +54,21 @@ export default class Dashboard extends React.Component {
         <StackedBarChart
           title={series.id}
           keys={this.props.meta.subregions}
-          data={series.regions} />
+          data={
+            this.props.meta.columns.map((date,idx) => {
+              return {
+                id: date,
+                ...Object.keys(series.data.regions).reduce((acc, region) => {
+                  acc[region] = series.data.regions[region].daily[idx];
+                  return acc;
+                }, {})
+              };
+            })
+          }
+        />
       </Grid>
     ));
+
 
     let dataTable = (
       <Grid item xs={6} sm={12}>

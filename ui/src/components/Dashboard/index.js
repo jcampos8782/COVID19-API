@@ -1,8 +1,6 @@
 import Dashboard from './Dashboard';
 import { connect } from 'react-redux';
 
-const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
-
 const mapStateToProps = state => {
   if (state.data.length === 0 || state.regions.current === null) {
     return { data: [] };
@@ -13,91 +11,65 @@ const mapStateToProps = state => {
   // There may be no item specific to the region. If thats the case, aggregate
   // the data manually.
   let aggregateDataItem = state.data.find(d => d.regions.length === 1);
+  let subregionDataItems = state.data.filter(d => d !== aggregateDataItem);
+
   let aggregateSeries = aggregateDataItem ?
       aggregateDataItem.data :
       aggregateData(state.data);
 
-  let subregionDataItems = state.data.filter(d => d !== aggregateDataItem);
-  let subregionSeries = subregionDataItems.map(r => {
-    // Regions are listed in hierarchical order. The first is the finest grained
-    let subregionId = r.regions[0];
-    let subregion = state.regions.current.subregions.find(s => s.id === subregionId);
-    let subregionName = subregion ? subregion.name : subregionId;
-
-    // If a data set includes a subregion not returned from the /regions/<id>
-    // This shouldn't happen, but this is precautionary.
-    if (subregion === null) {
-      console.log(`Unable to locate subregion ${subregionId}. Using ID as name`);
-    }
-
-    return {
-      id: subregionId,
-      region: subregionName,
-      series: r.data
-    }
-  });
-
-  // Sort on the region name
-  subregionSeries.sort((a,b) => a.region < b.region);
 
   // Stacked totals with day-to-day diffs
   let statistics = {};
 
-  let dateGroups = {};
-
   Object.keys(aggregateSeries).forEach(series => {
-    statistics[series] = { total: [], daily: [] }
-    dateGroups[series] = [];
+    statistics[series] = {};
+    statistics[series]['aggregates'] = { total: [], daily: [] }
+    statistics[series]['subregions'] = {}
 
     aggregateSeries[series].forEach((value,idx) => {
-      let dateString = currentSeries.columns[idx];
-      let date = formatDate(Date.parse(dateString));
       let diff = idx > 0 ? value - aggregateSeries[series][idx - 1] : value;
 
-      statistics[series]['total'].push({x: date, y: value});
-      statistics[series]['daily'].push({x: date, y: diff});
+      statistics[series]['aggregates']['total'].push(value);
+      statistics[series]['aggregates']['daily'].push(diff);
 
-      if(subregionSeries.length > 0) {
-        dateGroups[series].push({
-          id: dateString,
-          ...subregionSeries.reduce((obj,curr) => {
-            obj[curr.region] = idx > 0 ? curr.series[series][idx] - curr.series[series][idx - 1]: curr.series[series][idx];
-            return obj;
-          }, {})
+      subregionDataItems.forEach(r => {
+        let subregionId = r.regions[0];
+        let subregion = state.regions.current.subregions.find(s => s.id === subregionId);
+        let subregionName = subregion ? subregion.name : subregionId;
+
+        // If a data set includes a subregion not returned from the /regions/<id>
+        // This shouldn't happen, but this is precautionary.
+        if (subregion === null) {
+          console.log(`Unable to locate subregion ${subregionId}. Using ID as name`);
+        }
+
+        statistics[series]['subregions'][subregionName] = {}
+        statistics[series]['subregions'][subregionName]['total'] = r.data[series];
+        statistics[series]['subregions'][subregionName]['daily'] = r.data[series].map((val,idx) => {
+          return idx > 0 ? val - r.data[series][idx - 1] : val;
         });
-      }
+      });
     });
   });
 
   return {
     meta: {
-      subregions: state.regions.current.subregions.map(r => r.name)
+      subregions: state.regions.current.subregions.map(r => r.name),
+      columns: currentSeries.columns
     },
     data: Object.keys(aggregateSeries).map(series => {
       let length = aggregateSeries[series].length;
       return {
         id: series,
         current: aggregateSeries[series][length - 1],
-        data: statistics[series],
-        regions: dateGroups[series]
+        data: {
+          aggregates: statistics[series].aggregates,
+          regions: statistics[series].subregions
+        }
       };
     })
   };
 };
-
-let formatDate = (date) => {
-    let d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    let year = d.getFullYear();
-
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
 
 // Aggregates the series from all data series supplied. Combines based on the series name
 let aggregateData = (subregions) => {
