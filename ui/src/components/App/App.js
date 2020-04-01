@@ -3,12 +3,12 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import TimeSeriesLineChart from '../TimeSeriesLineChart';
-import SeriesDataTable from '../SeriesDataTable';
+import Dashboard from '../Dashboard';
 import Filters from '../Filters';
 
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -27,17 +27,18 @@ export default class App extends React.Component {
               <CssBaseline />
               <AppBar position='fixed'>
                 <Toolbar>
-                  <IconButton aria-label="github" onClick={() => window.open('http://github.com/jcampos8782/covid19-api')}>
-                      <Icon className='fab fa-github'  />
-                  </IconButton>
+                  <Grid container alignItems="center" justify="flex-end" spacing={1} >
+                    <IconButton aria-label="github" onClick={() => window.open('http://github.com/jcampos8782/covid19-api')}>
+                        <Icon className='fab fa-github'  />
+                    </IconButton>
+                  </Grid>
                 </Toolbar>
               </AppBar>
-              <Container maxwidth={1024} className={classes.body}>
+              <Container className={classes.body}>
                 <Filters />
-                <Container style={{height:300}}>
-                  <TimeSeriesLineChart />
+                <Container>
+                  <Dashboard />
                 </Container>
-                <SeriesDataTable />
               </Container>
             </ThemeProvider>
         );

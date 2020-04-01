@@ -76,7 +76,7 @@ with open(FILE_GEO_COORDINATES) as file:
         # same geocoordinates but one be a parent of the other.
         key = hashlib.md5(format("%s-%s" % ((default_mun.lower()), default_reg.lower())).encode()).hexdigest()
         location = db['locations'].find_one({'key': key})
-
+        print(location)
         if location:
             region = db['regions'].find_one({'_id': location["region_id"]})
             regions[key] = [region[k] for k in ["_id", "parent_id"] if k in region]

@@ -1,11 +1,6 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
 const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
 
 export default class TimeSeriesLineChart extends React.Component {
@@ -17,7 +12,7 @@ export default class TimeSeriesLineChart extends React.Component {
 
     return (
       <ResponsiveLine
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        margin={{ top: 0, right: 110, bottom: 80, left: 60 }}
         data={this.props.data}
         xScale={{
             type: 'time',
@@ -30,7 +25,7 @@ export default class TimeSeriesLineChart extends React.Component {
         }}
         xFormat={(d) => DATE_FORMAT.format(d)}
         enablePointLabel={false}
-
+        enableArea={true}
         axisBottom={{
             format: '%b %d',
             tickSize: 15,
