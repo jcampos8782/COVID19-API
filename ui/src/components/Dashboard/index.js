@@ -1,4 +1,5 @@
 import Dashboard from './Dashboard';
+import { selectDashboardTab } from '../../actions';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
@@ -53,6 +54,9 @@ const mapStateToProps = state => {
   });
 
   return {
+    view: {
+      selectedTabId: state.filters.selectedTabId
+    },
     meta: {
       subregions: state.regions.current.subregions.map(r => r.name),
       columns: currentSeries.columns
@@ -71,6 +75,10 @@ const mapStateToProps = state => {
   };
 };
 
+let mapDispatchToProps = dispatch => ({
+  selectTab: (e,t) => dispatch(selectDashboardTab(t))
+});
+
 // Aggregates the series from all data series supplied. Combines based on the series name
 let aggregateData = (subregions) => {
   return subregions.reduce((obj,curr) => {
@@ -87,4 +95,4 @@ let aggregateData = (subregions) => {
   }, {});
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -1,7 +1,10 @@
 import React from 'react';
 
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
@@ -17,7 +20,7 @@ export default class Dashboard extends React.Component {
     }
 
     let timeseriesCharts = this.props.data.map(series => (
-        <Grid item key={`${series.id}-stacked`} style={{height:300}} sm={12} md={6}>
+        <Grid item key={`${series.id}-stacked`} style={{height:300}} sm={12} md={12}>
           <Typography variant="overline">
             {series.id}: {series.current}
           </Typography>
@@ -49,7 +52,7 @@ export default class Dashboard extends React.Component {
     ));
 
     let subregionBreakdown = this.props.meta.subregions.length === 0 ? <div /> : this.props.data.map(series => (
-      <Grid item key={`${series.id}-date`} style={{height:300}} sm={12} md={6}>
+      <Grid item key={`${series.id}-stacked`} style={{height:300}} sm={12} md={12}>
         <StackedBarChart
           title={series.id}
           keys={this.props.meta.subregions}
@@ -70,11 +73,57 @@ export default class Dashboard extends React.Component {
 
     return (
       <Container>
+        <Tabs
+          value={this.props.view.selectedTabId}
+          onChange={this.props.selectTab}
+          variant="scrollable"
+          scrollButtons="on"
+          >
+          <Tab label="Overview" {...a11yProps(0)} />
+          <Tab label="Time Series" {...a11yProps(0)} />
+          <Tab label="Subregion Breakdown" {...a11yProps(1)} />
+        </Tabs>
         <Grid container >
-          { timeseriesCharts }
-          { subregionBreakdown }
+          <TabPanel
+            value={this.props.view.selectedTabId}
+            index={0}
+            children={<Typography variant="h6">Coming Soon!</Typography>}
+            />
+          <TabPanel
+            value={this.props.view.selectedTabId}
+            index={1}
+            children={timeseriesCharts}
+            />
+          <TabPanel
+            value={this.props.view.selectedTabId}
+            index={2}
+            children={subregionBreakdown}
+            />
         </Grid>
       </Container>
     );
   }
+}
+
+const TabPanel = props => {
+  const { children, value, index } = props;
+  return (
+    <Container
+      role="tabpanel"
+      style={{ display: value !== index ? 'none' : ''}}
+      id={`scrollable-force-tabpanel-${index}`}
+      aria-labelledby={`scrollable-force-tab-${index}`}
+    >
+      <Paper variant="outlined" elevation={3} style={{padding: 20 }}>
+        {children}
+      </Paper>
+    </Container>
+  );
+}
+
+const a11yProps = index => {
+  return {
+    id: `scrollable-force-tab-${index}`,
+    'aria-controls': `scrollable-force-tabpanel-${index}`,
+  };
 }

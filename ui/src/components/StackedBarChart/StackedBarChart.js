@@ -7,7 +7,6 @@ export default class TimeSeriesLineChart extends React.Component {
     if (this.props.data.length === 0) {
       return <div/>
     }
-    
     return (
       <ResponsiveBarCanvas
         data={this.props.data}
@@ -19,7 +18,6 @@ export default class TimeSeriesLineChart extends React.Component {
         labelSkipWidth={10}
         labelSkipHeight={25}
         axisBottom={null}
-        axisTop={null}
         axisLeft={{
             tickSize: 5,
             tickPadding: 5,
