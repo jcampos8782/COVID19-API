@@ -67,7 +67,6 @@ const mapStateToProps = state => {
   return {
     view: {
       selectedTabId: state.filters.selectedTabId,
-      selectedSubregionId: state.filters.selectedSubregionId,
       icons: {
         confirmed: { className: "fas fa-temperature-high", color: "blue" },
         deaths: { className: "fas fa-skull-crossbones", color: "red" }

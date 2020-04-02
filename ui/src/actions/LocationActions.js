@@ -13,9 +13,13 @@ export const fetchGeolocation = () => {
     return dispatch => {
       dispatch(requestGeolocation());
 
-      navigator.geolocation.getCurrentPosition((pos) => {
-        dispatch(receiveGeolocation(pos.coords));
-        dispatch(fetchGeocoding(pos.coords));
+      return new Promise(resolve => {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          Promise.all([
+            dispatch(receiveGeolocation(pos.coords)),
+            dispatch(fetchGeocoding(pos.coords))
+          ]).then(resolve)
+        });
       });
     }
 }
@@ -23,7 +27,7 @@ export const fetchGeolocation = () => {
 export const fetchGeocoding = (coords) => {
     return (dispatch, getState) => {
         dispatch(requestGeocoding());
-        fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&sensor=false&key=${GOOGLE_API_KEY}`)
+        return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&sensor=false&key=${GOOGLE_API_KEY}`)
             .then(response => response.json())
             .then(json => {
               dispatch(receiveGeocoding(json.results));

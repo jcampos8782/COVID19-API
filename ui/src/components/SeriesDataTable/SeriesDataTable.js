@@ -14,7 +14,6 @@ export default class SeriesDataTable extends React.Component {
 
     render() {
         const {data, meta} = this.props;
-        console.log(data);
         // Render an empty div if there is no data.
         if (this.props.data === null) {
           return <div></div>;

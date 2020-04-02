@@ -17,10 +17,19 @@ export function fetchSeriesList() {
     dispatch(requestSeriesList());
     return fetch(`${SERVER_URL}/api/series`)
       .then(response => response.json(), error => console.log('Error!', error))
-      .then(json => dispatch(receiveSeriesList(json)));
+      .then(json => dispatch(receiveSeriesList(json)))
+      .then(action => dispatch(selectSeries(action.series[0].id)));
   }
 }
 
+export function fetchDefaultSeries() {
+  return (dispatch,getState) => {
+    let { filters } = getState();
+    if (filters.selectedRegionId !== -1 && filters.selectedSeriesId !== -1) {
+      dispatch(fetchSeriesByRegion(filters.selectedSeriesId, filters.selectedRegionId));
+    };
+  }
+}
 export function fetchSeriesByGeolocation(seriesId, coords) {
     return dispatch => {
         dispatch(requestSeriesByGeolocation(seriesId, coords));

@@ -18,7 +18,13 @@ import { ThemeProvider } from '@material-ui/core/styles';
 export default class App extends React.Component {
     componentDidMount() {
         Promise.all([this.props.fetchRegions(), this.props.fetchSeriesList()])
-          .then(r => this.props.isGeolocationAvailable && this.props.fetchGeolocation());
+          .then(r => {
+            if(this.props.isGeolocationAvailable) {
+              this.props.fetchGeolocation().then(r => {
+                this.props.fetchDefaultSeries();
+              })
+            }
+          });
     }
 
     render() {

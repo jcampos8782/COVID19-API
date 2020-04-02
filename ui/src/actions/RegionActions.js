@@ -15,7 +15,7 @@ export const unselectSubregion = () => ({ type: Actions.UNSELECT_SUBREGION })
 export const selectSubregion = (id) => ({type: Actions.SELECT_SUBREGION, id })
 
 export const fetchRegion = (regionId) => {
-  return dispatch => {
+  return (dispatch,getState) => {
     dispatch(requestRegion(regionId));
     return fetch(`${SERVER_URL}/api/regions/${regionId}`)
       .then(response => response.json(), error => console.log('Error!', error))

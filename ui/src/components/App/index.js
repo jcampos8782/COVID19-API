@@ -1,15 +1,24 @@
 import App from './App';
 import { connect } from 'react-redux';
 import { geolocated } from 'react-geolocated';
-import { fetchGeolocation, fetchSeriesList, fetchRegions } from '../../actions';
 import {withStyles} from '@material-ui/core/styles';
 
-const mapStateToProps = state => ({ ...state });
+import {
+  fetchGeolocation,
+  fetchSeriesList,
+  fetchRegions,
+  fetchDefaultSeries
+} from '../../actions';
+
+const mapStateToProps = state => ({
+  filters: state.filters
+});
 
 const mapStateToDispatch = dispatch => ({
   fetchGeolocation: () => dispatch(fetchGeolocation()),
   fetchSeriesList: () => dispatch(fetchSeriesList()),
-  fetchRegions: () => dispatch(fetchRegions())
+  fetchRegions: () => dispatch(fetchRegions()),
+  fetchDefaultSeries: () => dispatch(fetchDefaultSeries())
 });
 
 const styles = theme => ({
