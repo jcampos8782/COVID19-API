@@ -18,7 +18,7 @@ import { formatDateKey } from '../TimeSeriesLineChart';
 export default class Dashboard extends React.Component {
 
   render() {
-    const { data, meta, view } = this.props;
+    const { data, meta, view, classes } = this.props;
 
     if (data.length === 0) {
       return <div/>;
@@ -64,8 +64,8 @@ export default class Dashboard extends React.Component {
               <Card variant="outlined" color="secondary">
                 <CardHeader
                    avatar={
-                     <Avatar>
-                       <Icon className={view.icons[series.id]} />
+                     <Avatar className={classes[series.id]}>
+                       <Icon className={view.icons[series.id].className}  />
                      </Avatar>
                    }
                    title=<Typography variant="h5"> {series.current} </Typography>
@@ -127,7 +127,7 @@ export default class Dashboard extends React.Component {
                 meta={{...meta}}
                 data={{
                   aggregate: data.map(series => ({ id: series.id, data: series.data.aggregates.total})),
-                  subregions: meta.selectedSubItemId !== -1 ? [] : meta.subregions.map(subregion => {
+                  subregions: meta.subregions.map(subregion => {
                     return {
                       id: subregion,
                       data: data.map(series => ({id: series.id, data: series.data.regions[subregion].total }))

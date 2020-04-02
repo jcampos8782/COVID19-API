@@ -18,6 +18,10 @@ const styles = theme => ({
     position: 'relative',
     display: 'inline-block',
     top: 75
+  },
+  navLink: {
+    width: 'fit-content',
+    color: theme.palette.primary.contrastText
   }
 });
 

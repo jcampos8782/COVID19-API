@@ -8,6 +8,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 
+import BottomNav from '../BottomNav';
 import Dashboard from '../Dashboard';
 import Filters from '../Filters';
 
@@ -28,8 +29,14 @@ export default class App extends React.Component {
               <AppBar position='fixed'>
                 <Toolbar>
                   <Grid container alignItems="center" justify="flex-end" spacing={1} >
-                    <IconButton aria-label="github" onClick={() => window.open('http://github.com/jcampos8782/covid19-api')}>
-                        <Icon className='fab fa-github'  />
+                    <IconButton className={classes.navLink} aria-label="github" onClick={() => window.open('http://github.com/jcampos8782/covid19-api')}>
+                        <Icon className="fab fa-github" />
+                    </IconButton>
+                    <IconButton className={classes.navLink} aria-label="linkedin" onClick={() => window.open('https://linkedin.com/in/json-campos')}>
+                        <Icon className="fab fa-linkedin" />
+                    </IconButton>
+                    <IconButton className={classes.navLink} aria-label="github" onClick={() => window.open('https://www.facebook.com/jcampos8782')}>
+                        <Icon className="fab fa-facebook-square" />
                     </IconButton>
                   </Grid>
                 </Toolbar>
@@ -40,6 +47,7 @@ export default class App extends React.Component {
                   <Dashboard />
                 </Container>
               </Container>
+              <BottomNav/>
             </ThemeProvider>
         );
     }

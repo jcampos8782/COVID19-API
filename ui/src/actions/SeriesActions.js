@@ -17,7 +17,7 @@ export function fetchSeriesList() {
     dispatch(requestSeriesList());
     return fetch(`${SERVER_URL}/api/series`)
       .then(response => response.json(), error => console.log('Error!', error))
-      .then(json => dispatch(receiveSeriesList(json)))
+      .then(json => dispatch(receiveSeriesList(json)));
   }
 }
 
