@@ -9,7 +9,7 @@ export default class TimeSeriesLineChart extends React.Component {
     if (this.props.data.length === 0) {
       return <div/>
     }
-
+    console.log(this.props.data);
     return (
       <ResponsiveLine
         margin={{ top: 0, right: 110, bottom: 80, left: 60 }}

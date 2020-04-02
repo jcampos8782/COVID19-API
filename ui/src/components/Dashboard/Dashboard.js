@@ -31,21 +31,19 @@ export default class Dashboard extends React.Component {
             data={[
               {
                 id: 'Total',
-                data: series.data.aggregates.total.map((val,idx) => {
-                  return {
-                    x: formatDateKey(this.props.meta.columns[idx]),
-                    y: val
-                  };
-                })
-              },
-              {
-                id: 'Daily',
-                data: series.data.aggregates.daily.map((val,idx) => {
-                  return {
+                data: series.data.aggregates.total.map((val,idx) => ({
                     x: formatDateKey(this.props.meta.columns[idx]),
                     y: val
                   }
-                })
+                ))
+              },
+              {
+                id: 'Daily',
+                data: series.data.aggregates.daily.map((val,idx) => ({
+                    x: formatDateKey(this.props.meta.columns[idx]),
+                    y: val
+                  }
+                ))
               }
             ]}
           />
@@ -53,20 +51,18 @@ export default class Dashboard extends React.Component {
     ));
 
     let subregionBreakdown = this.props.meta.subregions.length === 0 ? <div /> : this.props.data.map(series => (
-      <Grid item key={`${series.id}-stacked`} style={{height:300}} sm={12} md={12}>
-        <StackedBarChart
+      <Grid item key={`${series.id}-subregions`} style={{height:300}} sm={12} md={12}>
+        <TimeSeriesLineChart
           title={series.id}
-          keys={this.props.meta.subregions}
           data={
-            this.props.meta.columns.map((date,idx) => {
-              return {
-                id: date,
-                ...Object.keys(series.data.regions).reduce((acc, region) => {
-                  acc[region] = series.data.regions[region].daily[idx];
-                  return acc;
-                }, {})
-              };
-            })
+            Object.keys(series.data.regions).map(region => ({
+              id: region,
+              data: series.data.regions[region].daily.map((val,idx) => ({
+                  x: formatDateKey(this.props.meta.columns[idx]),
+                  y: val
+                }
+              ))
+            }))
           }
         />
       </Grid>
