@@ -13,39 +13,40 @@ import Typography from '@material-ui/core/Typography';
 export default class SeriesDataTable extends React.Component {
 
     render() {
+        const {data, meta} = this.props;
+        console.log(data);
         // Render an empty div if there is no data.
         if (this.props.data === null) {
           return <div></div>;
         }
 
-        let columnHeadings = this.props.meta.columns.map((heading,idx) => (
+        let columnHeadings = meta.columns.map((heading,idx) => (
           <TableCell key={idx}>{heading}</TableCell>
         ));
 
-        let selectedSubregionId = this.props.meta.selectedSubregionId;
-        let subregions = this.props.data.subregions
+        let selectedSubregionId = meta.selectedSubregionId;
+        let subregions = data.subregions
           .filter(s => selectedSubregionId === -1 || s.id === selectedSubregionId);
 
         let subregionRows = subregions.map((subregion,idx) => {
-          let seriesTitles = Object.keys(subregion.series);
-          let dataRows = seriesTitles.map(title => {
+          let dataRows = subregion.data.map((series, idx) => {
             return (
-              <TableRow key={title}>
-                <TableCell scope="row">{title}</TableCell>
+              <TableRow key={series.id}>
+                <TableCell scope="row">{series.id}</TableCell>
                 {
-                  subregion.series[title].map((data ,i)=> <TableCell key={i} component="td">{data}</TableCell>)
+                  series.data.map((data ,i)=> <TableCell key={i} component="td">{data}</TableCell>)
                 }
               </TableRow>
             );
           });
 
           return (
-            <TableRow key={`${subregion.region}-${idx}`}>
+            <TableRow key={`${subregion.id}-${idx}`}>
               <TableCell>
                 <Table size="small">
                   <TableHead>
                     <TableRow>
-                      <TableCell>{subregion.region}</TableCell>
+                      <TableCell>{subregion.id}</TableCell>
                       {columnHeadings}
                     </TableRow>
                   </TableHead>
@@ -75,7 +76,7 @@ export default class SeriesDataTable extends React.Component {
           </TableContainer>
         );
 
-        let aggregateContainer = this.props.data.aggregate.series.length === 0 ? <div></div> : (
+        let aggregateContainer = data.aggregate.length === 0 ? <div></div> : (
           <TableContainer>
             <Table size="small">
               <TableHead>
@@ -88,12 +89,12 @@ export default class SeriesDataTable extends React.Component {
               </TableHead>
               <TableBody>
                 {
-                  Object.keys(this.props.data.aggregate.series).map(title => {
+                  data.aggregate.map(series => {
                     return (
-                      <TableRow key={title}>
-                        <TableCell scope="row">{title}</TableCell>
+                      <TableRow key={series.id}>
+                        <TableCell scope="row">{series.id}</TableCell>
                         {
-                          this.props.data.aggregate.series[title].map((data ,i)=> <TableCell key={i} component="td">{data}</TableCell>)
+                          series.data.map((data ,i)=> <TableCell key={i} component="td">{data}</TableCell>)
                         }
                       </TableRow>
                     );
@@ -108,7 +109,7 @@ export default class SeriesDataTable extends React.Component {
             <Container>
               <Toolbar>
                 <Typography variant="h6" component="div">
-                  {this.props.title}
+                  {meta.region}
                 </Typography>
               </Toolbar>
               {aggregateContainer}

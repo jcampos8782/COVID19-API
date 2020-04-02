@@ -2,7 +2,6 @@ import React from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -61,7 +60,7 @@ export default class Dashboard extends React.Component {
         <Grid container spacing={5} style={{paddingBottom:30, paddingTop: 10}}>
         {
           data.map(series => (
-            <Grid item sm={3}>
+            <Grid key={series.id} item sm={3}>
               <Card variant="outlined" color="secondary">
                 <CardHeader
                    avatar={
@@ -124,11 +123,25 @@ export default class Dashboard extends React.Component {
     let rawDataTable = (
           <Grid item xs={6} sm={12}>
             <Container maxWidth="md">
-              <SeriesDataTable />
+              <SeriesDataTable
+                meta={{
+                  region: meta.region,
+                  columns: meta.columns,
+                  selectedSubregionId: -1 //TODO
+                }}
+                data={{
+                  aggregate: data.map(series => ({ id: series.id, data: series.data.aggregates.total})),
+                  subregions: meta.subregions.map(subregion => {
+                    return {
+                      id: subregion,
+                      data: data.map(series => ({id: series.id, data: series.data.regions[subregion].total }))
+                    };
+                  })
+                }}
+                />
             </Container>
           </Grid>
         );
-
     return (
       <Container maxWidth="xl">
         <Tabs

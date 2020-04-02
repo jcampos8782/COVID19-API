@@ -68,6 +68,7 @@ const mapStateToProps = state => {
       },
     },
     meta: {
+      region: state.regions.current.name,
       subregions: state.regions.current.subregions.map(r => r.name),
       columns: currentSeries.columns
     },
