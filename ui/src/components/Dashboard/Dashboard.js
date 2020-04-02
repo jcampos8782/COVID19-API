@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+import SeriesDataTable from '../SeriesDataTable';
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
 import { formatDateKey } from '../TimeSeriesLineChart';
 
@@ -71,6 +72,14 @@ export default class Dashboard extends React.Component {
       </Grid>
     ));
 
+    let rawDataTable = (
+          <Grid item xs={6} sm={12}>
+            <Container maxWidth="md">
+              <SeriesDataTable />
+            </Container>
+          </Grid>
+        );
+
     return (
       <Container>
         <Tabs
@@ -80,8 +89,9 @@ export default class Dashboard extends React.Component {
           scrollButtons="on"
           >
           <Tab label="Overview" {...a11yProps(0)} />
-          <Tab label="Time Series" {...a11yProps(0)} />
-          <Tab label="Subregion Breakdown" {...a11yProps(1)} />
+          <Tab label="Time Series" {...a11yProps(1)} />
+          <Tab label="Subregion Breakdown" {...a11yProps(2)} />
+          <Tab label="Raw Data" {...a11yProps(3)} />
         </Tabs>
         <Grid container >
           <TabPanel
@@ -98,6 +108,11 @@ export default class Dashboard extends React.Component {
             value={this.props.view.selectedTabId}
             index={2}
             children={subregionBreakdown}
+            />
+          <TabPanel
+            value={this.props.view.selectedTabId}
+            index={3}
+            children={rawDataTable}
             />
         </Grid>
       </Container>

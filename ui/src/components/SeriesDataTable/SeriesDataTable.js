@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -105,7 +105,7 @@ export default class SeriesDataTable extends React.Component {
         );
 
         return (
-            <Paper>
+            <Container>
               <Toolbar>
                 <Typography variant="h6" component="div">
                   {this.props.title}
@@ -113,7 +113,7 @@ export default class SeriesDataTable extends React.Component {
               </Toolbar>
               {aggregateContainer}
               {subregionContainer}
-            </Paper>
+            </Container>
         );
     }
 }
