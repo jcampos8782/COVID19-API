@@ -9,6 +9,7 @@ RUN apt-get install python3 -y
 RUN apt-get install python3-pip -y
 RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install pymongo
+RUN python3 -m pip install requests
 
 COPY download.sh download.sh
 COPY main.py main.py
