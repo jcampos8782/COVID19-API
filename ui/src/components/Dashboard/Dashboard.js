@@ -4,7 +4,6 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import SeriesDataTable from '../SeriesDataTable';
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
 import { formatDateKey } from '../TimeSeriesLineChart';
 
