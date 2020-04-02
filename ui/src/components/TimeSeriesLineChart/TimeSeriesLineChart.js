@@ -2,18 +2,32 @@ import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 
 const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
+const DEFAULT_COLOR_SCHEME = "nivo";
 
 export default class TimeSeriesLineChart extends React.Component {
 
   render() {
-    if (this.props.data.length === 0) {
+    const { data, view } = this.props;
+
+    if (data.length === 0) {
       return <div/>
     }
-    console.log(this.props.data);
+
+    const maxSeriesLength = data.reduce((max,series) =>
+      series.data.length > max ? series.data.length : max, 0);
+
+    let maxValue = data.reduce((max,series) => {
+      let localMax = series.data.reduce((local,val) => val.y > local ? val.y : local, 0);
+      return localMax > max ? localMax : max;
+    }, 0);
+
+    let yMax = maxValue + Math.ceil(maxValue/10);
+
     return (
       <ResponsiveLine
         margin={{ top: 0, right: 110, bottom: 80, left: 60 }}
-        data={this.props.data}
+        data={data}
+        colors={{ scheme: view && view.scheme ? view.scheme : DEFAULT_COLOR_SCHEME}}
         xScale={{
             type: 'time',
             format: '%Y-%m-%d',
@@ -22,6 +36,8 @@ export default class TimeSeriesLineChart extends React.Component {
         yScale={{
             type: 'linear',
             stacked: false,
+            max: yMax > 10 ? yMax : 10,
+            min: 0
         }}
         xFormat={(d) => DATE_FORMAT.format(d)}
         enablePointLabel={false}
@@ -29,7 +45,7 @@ export default class TimeSeriesLineChart extends React.Component {
         axisBottom={{
             format: '%b %d',
             tickSize: 15,
-            tickValues: 'every 7 days'
+            tickValues: maxSeriesLength > 7 ? 'every 7 days' : 'every day'
         }}
         pointSize={3}
         pointBorderWidth={1}

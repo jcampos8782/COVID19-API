@@ -12,7 +12,7 @@ const initialState = {
   selectedSeriesId: -1,
   selectedRegionId: -1,
   selectedSubregionId: -1,
-  selectedTabId: 1
+  selectedTabId: 0
 }
 
 export default (state = initialState, action) => {

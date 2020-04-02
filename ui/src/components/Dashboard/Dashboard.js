@@ -1,27 +1,32 @@
 import React from 'react';
 
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
+import Avatar from '@material-ui/core/Avatar';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 
 import SeriesDataTable from '../SeriesDataTable';
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
 import { formatDateKey } from '../TimeSeriesLineChart';
 
-import StackedBarChart from '../StackedBarChart';
-
 export default class Dashboard extends React.Component {
 
   render() {
-    if (this.props.data.length === 0) {
+    const { data, meta, view } = this.props;
+
+    if (data.length === 0) {
       return <div/>;
     }
 
-    let timeseriesCharts = this.props.data.map(series => (
-        <Grid item key={`${series.id}-stacked`} style={{height:300}} sm={12} md={12}>
+    let historyCharts = data.map(series => (
+        <Grid item key={`${series.id}-history`} style={{height:300}} sm={12} md={12}>
           <Typography variant="overline">
             {series.id}: {series.current}
           </Typography>
@@ -50,7 +55,55 @@ export default class Dashboard extends React.Component {
         </Grid>
     ));
 
-    let subregionBreakdown = this.props.meta.subregions.length === 0 ? <div /> : this.props.data.map(series => (
+    let recentCharts = (
+      <Container>
+        <Typography variant="h4">Current Totals</Typography>
+        <Grid container spacing={5} style={{paddingBottom:30, paddingTop: 10}}>
+        {
+          data.map(series => (
+            <Grid item sm={3}>
+              <Card variant="outlined" color="secondary">
+                <CardHeader
+                   avatar={
+                     <Avatar>
+                       <Icon className={view.icons[series.id]} />
+                     </Avatar>
+                   }
+                   title=<Typography variant="h5"> {series.current} </Typography>
+                   subheader={series.id}
+                 />
+              </Card>
+            </Grid>
+          ))
+        }
+        </Grid>
+
+        <Typography variant="h4">Last 7 Days</Typography>
+        <Grid container>
+        {
+          data.map(series => (
+            <Grid item key={`${series.id}-recent`} style={{height:300}} sm={12} md={6}>
+              <TimeSeriesLineChart
+                title={series.id}
+                data={[
+                  {
+                    id: series.id,
+                    data: series.data.recent.data.map((val,idx) => ({
+                        x: formatDateKey(this.props.meta.columns[this.props.meta.columns.length - 7 + idx ]),
+                        y: val
+                      }
+                    ))
+                  }
+                ]}
+              />
+            </Grid>
+          ))
+        }
+        </Grid>
+      </Container>
+    );
+
+    let subregionCharts = meta.subregions.length === 0 ? <div /> : data.map(series => (
       <Grid item key={`${series.id}-subregions`} style={{height:300}} sm={12} md={12}>
         <TimeSeriesLineChart
           title={series.id}
@@ -58,7 +111,7 @@ export default class Dashboard extends React.Component {
             Object.keys(series.data.regions).map(region => ({
               id: region,
               data: series.data.regions[region].daily.map((val,idx) => ({
-                  x: formatDateKey(this.props.meta.columns[idx]),
+                  x: formatDateKey(meta.columns[idx]),
                   y: val
                 }
               ))
@@ -77,40 +130,38 @@ export default class Dashboard extends React.Component {
         );
 
     return (
-      <Container>
+      <Container maxWidth="xl">
         <Tabs
-          value={this.props.view.selectedTabId}
+          value={view.selectedTabId}
           onChange={this.props.selectTab}
           variant="scrollable"
           scrollButtons="on"
           >
-          <Tab label="Overview" {...a11yProps(0)} />
-          <Tab label="Time Series" {...a11yProps(1)} />
-          <Tab label="Subregion Breakdown" {...a11yProps(2)} />
-          <Tab label="Raw Data" {...a11yProps(3)} />
+          <Tab label="Summary" {...a11yProps(0)} />
+          <Tab label="History" {...a11yProps(1)} />
+          <Tab label="Subregions" {...a11yProps(2)} disabled={meta.subregions.length === 0}/>
+          <Tab label="Data" {...a11yProps(3)} />
         </Tabs>
-        <Grid container >
-          <TabPanel
-            value={this.props.view.selectedTabId}
-            index={0}
-            children={<Typography variant="h6">Coming Soon!</Typography>}
-            />
-          <TabPanel
-            value={this.props.view.selectedTabId}
-            index={1}
-            children={timeseriesCharts}
-            />
-          <TabPanel
-            value={this.props.view.selectedTabId}
-            index={2}
-            children={subregionBreakdown}
-            />
-          <TabPanel
-            value={this.props.view.selectedTabId}
-            index={3}
-            children={rawDataTable}
-            />
-        </Grid>
+        <TabPanel
+          value={view.selectedTabId}
+          index={0}
+          children={recentCharts}
+          />
+        <TabPanel
+          value={view.selectedTabId}
+          index={1}
+          children={historyCharts}
+          />
+        <TabPanel
+          value={view.selectedTabId}
+          index={2}
+          children={subregionCharts}
+          />
+        <TabPanel
+          value={view.selectedTabId}
+          index={3}
+          children={rawDataTable}
+          />
       </Container>
     );
   }
@@ -119,16 +170,21 @@ export default class Dashboard extends React.Component {
 const TabPanel = props => {
   const { children, value, index } = props;
   return (
-    <Container
+    <Paper
+      variant="outlined"
+      elevation={3}
+      style={{
+        padding: 20,
+        display: value !== index ? 'none' : ''
+      }}>
+    <Grid
       role="tabpanel"
-      style={{ display: value !== index ? 'none' : ''}}
       id={`scrollable-force-tabpanel-${index}`}
       aria-labelledby={`scrollable-force-tab-${index}`}
-    >
-      <Paper variant="outlined" elevation={3} style={{padding: 20 }}>
+      >
         {children}
-      </Paper>
-    </Container>
+    </Grid>
+  </Paper>
   );
 }
 

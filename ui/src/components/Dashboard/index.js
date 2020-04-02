@@ -18,7 +18,6 @@ const mapStateToProps = state => {
       aggregateDataItem.data :
       aggregateData(state.data);
 
-
   // Stacked totals with day-to-day diffs
   let statistics = {};
 
@@ -51,11 +50,22 @@ const mapStateToProps = state => {
         });
       });
     });
+
+    // Calculate last 7 days of data from the diffs
+    let len = statistics[series].aggregates.total.length;
+    statistics[series]['recent'] = {
+        total: statistics[series].aggregates.total[len - 1] - statistics[series].aggregates.total[len - 8],
+        data: statistics[series].aggregates.daily.slice(len-7)
+    };
   });
 
   return {
     view: {
-      selectedTabId: state.filters.selectedTabId
+      selectedTabId: state.filters.selectedTabId,
+      icons: {
+        confirmed: "fas fa-temperature-high",
+        deaths: "fas fa-skull-crossbones"
+      },
     },
     meta: {
       subregions: state.regions.current.subregions.map(r => r.name),
@@ -68,6 +78,7 @@ const mapStateToProps = state => {
         current: aggregateSeries[series][length - 1],
         data: {
           aggregates: statistics[series].aggregates,
+          recent: statistics[series].recent,
           regions: statistics[series].subregions
         }
       };
