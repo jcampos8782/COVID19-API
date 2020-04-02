@@ -14,6 +14,10 @@ const mapStateToProps = state => {
   let aggregateDataItem = state.data.find(d => d.regions.length === 1);
   let subregionDataItems = state.data.filter(d => d !== aggregateDataItem);
 
+  if (state.filters.selectedSubregionId !== -1) {
+    aggregateDataItem = subregionDataItems.find(d => state.filters.selectedSubregionId === d.regions[0]);
+  }
+
   let aggregateSeries = aggregateDataItem ?
       aggregateDataItem.data :
       aggregateData(state.data);
@@ -62,6 +66,7 @@ const mapStateToProps = state => {
   return {
     view: {
       selectedTabId: state.filters.selectedTabId,
+      selectedSubregionId: state.filters.selectedSubregionId,
       icons: {
         confirmed: "fas fa-temperature-high",
         deaths: "fas fa-skull-crossbones"
