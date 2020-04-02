@@ -69,21 +69,11 @@ export default class Dashboard extends React.Component {
       </Grid>
     ));
 
-
-    let dataTable = (
-      <Grid item xs={6} sm={12}>
-        <Container maxWidth="md">
-          <SeriesDataTable />
-        </Container>
-      </Grid>
-    );
-
     return (
       <Container>
         <Grid container >
           { timeseriesCharts }
           { subregionBreakdown }
-          { dataTable }
         </Grid>
       </Container>
     );
