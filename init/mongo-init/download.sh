@@ -41,9 +41,9 @@ echo "------------------------"
 echo "PREPARING METADATA..."
 echo "------------------------"
 
-# The comma in "Korea, South" breaks the cut
-sed  's/"Korea, South"/South Korea/g' /tmp/confirmed.csv > imports/data/covid19/confirmed.csv
-sed  's/"Korea, South"/South Korea/g' /tmp/deaths.csv > imports/data/covid19/deaths.csv
+# Quoted strings with commas break
+sed  's/".*,.*"/Unknown/g' /tmp/confirmed.csv > imports/data/covid19/confirmed.csv
+sed  's/".*,.*"/Unknown/g' /tmp/deaths.csv > imports/data/covid19/deaths.csv
 
 echo "Extracting lat/lon coordinates..."
 cut -f1,2,3,4 -d','  imports/data/covid19/confirmed.csv | grep -iv "Lat,Long" > imports/meta/coordinates.csv

@@ -43,4 +43,5 @@ services:
     environment:
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
       - DB_HOST=mongo
