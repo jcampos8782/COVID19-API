@@ -1,7 +1,6 @@
 import React from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
-import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
@@ -47,12 +46,12 @@ export default class App extends React.Component {
                   </Grid>
                 </Toolbar>
               </AppBar>
-              <Container className={classes.body}>
+              <Grid container className={classes.body}>
                 <Filters />
-                <Container>
-                  <Dashboard />
-                </Container>
-              </Container>
+              </Grid>
+              <Grid container className={classes.body}>
+                <Dashboard />
+              </Grid>
               <BottomNav/>
             </ThemeProvider>
         );

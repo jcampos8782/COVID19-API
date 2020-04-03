@@ -30,6 +30,7 @@ export function fetchDefaultSeries() {
     };
   }
 }
+
 export function fetchSeriesByGeolocation(seriesId, coords) {
     return dispatch => {
         dispatch(requestSeriesByGeolocation(seriesId, coords));

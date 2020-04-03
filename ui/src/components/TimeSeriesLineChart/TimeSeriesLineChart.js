@@ -25,7 +25,7 @@ export default class TimeSeriesLineChart extends React.Component {
 
     return (
       <ResponsiveLine
-        margin={{ top: 0, right: 110, bottom: 80, left: 60 }}
+        margin={{ top: 0, right: 10, bottom:80, left: 10 }}
         data={data}
         colors={{ scheme: view && view.scheme ? view.scheme : DEFAULT_COLOR_SCHEME}}
         xScale={{
@@ -58,16 +58,16 @@ export default class TimeSeriesLineChart extends React.Component {
         enableCrosshair={true}
         legends={[
           {
-              anchor: 'bottom-right',
+              anchor: 'top-left',
               direction: 'column',
               justify: false,
-              translateX: 100,
-              translateY: 0,
+              translateX: 5,
+              translateY: 10,
               itemsSpacing: 0,
               itemDirection: 'left-to-right',
               itemWidth: 80,
-              itemHeight: 20,
-              itemOpacity: 0.75,
+              itemHeight: 15,
+              itemOpacity: 1.00,
               symbolSize: 12,
               symbolShape: 'circle',
               symbolBorderColor: 'rgba(0, 0, 0, .5)',

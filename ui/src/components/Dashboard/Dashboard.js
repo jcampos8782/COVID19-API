@@ -25,11 +25,13 @@ export default class Dashboard extends React.Component {
     }
 
     let historyCharts = data.map(series => (
-        <Grid item key={`${series.id}-history`} style={{height:300}} sm={12} md={12}>
+      <Grid key={`${series.id}-history`} container>
+        <Grid item xs={12} >
           <Typography variant="overline">
             {series.id}: {series.current}
           </Typography>
-
+        </Grid>
+        <Grid item style={{height:300}} xs={12}>
           <TimeSeriesLineChart
             title={series.id}
             data={[
@@ -52,15 +54,16 @@ export default class Dashboard extends React.Component {
             ]}
           />
         </Grid>
+      </Grid>
     ));
 
     let recentCharts = (
-      <Container>
+      <Grid container>
         <Typography variant="h4">Current Totals</Typography>
         <Grid container spacing={5} style={{paddingBottom:30, paddingTop: 10}}>
         {
           data.map(series => (
-            <Grid key={series.id} item sm={3}>
+            <Grid key={series.id} item xs={6} md={4} lg={3}>
               <Card variant="outlined" color="secondary">
                 <CardHeader
                    avatar={
@@ -81,7 +84,7 @@ export default class Dashboard extends React.Component {
         <Grid container>
         {
           data.map(series => (
-            <Grid item key={`${series.id}-recent`} style={{height:300}} sm={12} md={6}>
+            <Grid item key={`${series.id}-recent`} style={{height:300}} xs={12} md={12} lg={6}>
               <TimeSeriesLineChart
                 title={series.id}
                 data={[
@@ -99,7 +102,7 @@ export default class Dashboard extends React.Component {
           ))
         }
         </Grid>
-      </Container>
+      </Grid>
     );
 
     let subregionCharts = meta.subregions.length === 0 ? <div /> : data.map(series => (
@@ -139,18 +142,25 @@ export default class Dashboard extends React.Component {
           </Grid>
         );
     return (
-      <Container maxWidth="xl">
-        <Tabs
-          value={view.selectedTabId}
-          onChange={this.props.selectTab}
-          variant="scrollable"
-          scrollButtons="on"
-          >
-          <Tab label="Summary" {...a11yProps(0)} />
-          <Tab label="History" {...a11yProps(1)} />
-          <Tab label="Subregions" {...a11yProps(2)} disabled={meta.subregions.length === 0}/>
-          <Tab label="Data" {...a11yProps(3)} />
-        </Tabs>
+      <Grid
+        container
+        direction="row"
+        alignItems="flex-start"
+        justify="flex-start">
+         <Grid item xs={12}>
+          <Tabs
+            value={view.selectedTabId}
+            onChange={this.props.selectTab}
+            variant="scrollable"
+            scrollButtons="on"
+            >
+            <Tab label="Summary" {...a11yProps(0)} />
+            <Tab label="History" {...a11yProps(1)} />
+            <Tab label="Subregions" {...a11yProps(2)} disabled={meta.subregions.length === 0}/>
+            <Tab label="Data" {...a11yProps(3)} />
+          </Tabs>
+        </Grid>
+        <Grid item xs={12}>
         <TabPanel
           value={view.selectedTabId}
           index={0}
@@ -171,7 +181,8 @@ export default class Dashboard extends React.Component {
           index={3}
           children={rawDataTable}
           />
-      </Container>
+        </Grid>
+      </Grid>
     );
   }
 }
