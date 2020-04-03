@@ -31,8 +31,6 @@ export default class SeriesDataTable extends React.Component {
                     {meta.region}
                   </Typography>
                 </Toolbar>
-              </Grid>
-              <Grid item xs={12}>
                 <TableContainer>
                   <Table size="small">
                     <TableHead>
@@ -48,7 +46,7 @@ export default class SeriesDataTable extends React.Component {
                         data.map(series => {
                           return (
                             <TableRow key={series.id}>
-                              <TableCell scope="row">{series.id}</TableCell>
+                              <TableCell component="th" variant="head" scope="row">{series.id}</TableCell>
                               {
                                 series.data.map((data ,i)=> <TableCell key={i} component="td">{data}</TableCell>)
                               }

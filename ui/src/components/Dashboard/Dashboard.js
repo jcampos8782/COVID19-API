@@ -124,14 +124,10 @@ export default class Dashboard extends React.Component {
     ));
 
     let rawDataTable = (
-          <Grid item xs={6} sm={12}>
-            <Container maxWidth="md">
-              <SeriesDataTable
-                meta={{...meta}}
-                data={data.map(series => ({ id: series.id, data: series.data.aggregates.total}))}
-                />
-            </Container>
-          </Grid>
+            <SeriesDataTable
+              meta={{...meta}}
+              data={data.map(series => ({ id: series.id, data: series.data.aggregates.total}))}
+              />
         );
     return (
       <Grid
