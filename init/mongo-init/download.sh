@@ -1,7 +1,6 @@
-[ ! -e "imports" ] && mkdir imports
-[ ! -e "imports/meta" ] && mkdir imports/meta
-[ ! -e "imports/data" ] && mkdir imports/data
-[ ! -e "imports/data/covid19" ] && mkdir imports/data/covid19
+[ ! -e "imports/data/covid19" ] && mkdir -p imports/data/covid19
+[ ! -e "imports/raw" ] && mkdir -p imports/raw
+[ ! -e "imports/processed"] && mkdir -p imports/processed
 
 force=""
 
@@ -24,8 +23,26 @@ else
 fi
 
 if [[  "$force" || ! -e "imports/data/covid19/deaths.csv" ]]; then
-  echo "Downloading global confirmed cases data..."
+  echo "Downloading global deaths cases data..."
   wget -O /tmp/deaths.csv "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
+  echo "Complete!"
+  echo ""
+else
+  echo "File exists. Skipping download of confirmed data"
+fi
+
+if [[  "$force" || ! -e "imports/raw/confirmed_us.csv" ]]; then
+  echo "Downloading US confirmed cases data..."
+  wget -O ./imports/raw/confirmed.csv "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv"
+  echo "Complete!"
+  echo ""
+else
+  echo "File exists. Skipping download of confirmed data"
+fi
+
+if [[  "$force" || ! -e "imports/raw/deaths.csv" ]]; then
+  echo "Downloading US deaths data..."
+  wget -O ./imports/raw/deaths.csv "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv"
   echo "Complete!"
   echo ""
 else

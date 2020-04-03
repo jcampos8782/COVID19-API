@@ -11,7 +11,7 @@ GOOGLE_API_KEY or exit("GOOGLE_API_KEY must be set in environment")
 
 GOOGLE_GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false&key=%s"
 
-INPUT_FILE_COLUMNS = {'region': 6, 'data': 11}
+INPUT_FILE_COLUMNS = {'region': 6, 'data': {'confirmed': 11, 'deaths': 12}}
 INPUT_FILES = [("confirmed", "imports/raw/confirmed_us.csv"), ("deaths", "imports/raw/deaths_us.csv")]
 OUTPUT_FILE_DIR = "imports/processed"
 
@@ -24,7 +24,7 @@ for (series, filename) in INPUT_FILES:
     with open(filename) as file:
         for row in islice(csv.reader(file), 1, None):
             region = row[INPUT_FILE_COLUMNS['region']]
-            data = row[INPUT_FILE_COLUMNS['data']:]
+            data = row[INPUT_FILE_COLUMNS['data'][series]:]
 
             if region not in aggregates[series]:
                 aggregates[series][region] = [0] * len(data)
@@ -45,10 +45,5 @@ for (series, filename) in INPUT_FILES:
         for region in aggregates[series]:
             location = locations[region]
             file.write("%s,%s,%.3f,%.3f,%s\n" % (region, "United States", location['lat'], location['lng'], ",".join(str(s) for s in aggregates[series][region])))
-
-    with open("%s/%s.csv" % (OUTPUT_FILE_DIR, "locations.csv")) as file:
-        for region in aggregates[series]:
-            location = locations[region]
-            file.write("%s,%s,%.3f,%.3f\n" % (region, "United States", location['lat'], location['lng']))
 
 print("Import complete!")
