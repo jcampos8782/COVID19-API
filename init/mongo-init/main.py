@@ -70,6 +70,7 @@ regions = {}
 with open(FILE_GEO_COORDINATES) as file:
     found = 0
     created = 0
+
     for default_mun, default_reg, lat, lon in csv.reader(file):
         # Attempt to lookup in database. If no match, fetch from Google
         # Use a mashup of the sub-region and the region for lookups. This allows for two locations to have the
@@ -105,7 +106,7 @@ with open(FILE_GEO_COORDINATES) as file:
                 if municipality_component:
                     municipality = municipality_component[0]['address_components'][0]['long_name']
                 else:
-                    print("No municipality found. Defaulting to %s" % default_mun)
+                    print("No municipality found. Defaulting to %s" % default_mun.encode('utf-8'))
 
         # Check if region exists in database
         municipality_id, region_id = None, None
@@ -114,7 +115,7 @@ with open(FILE_GEO_COORDINATES) as file:
             if db_region:
                 region_id = db_region["_id"]
             else:
-                print("New region: %s" % region)
+                print("New region: %s" % region.encode('utf-8'))
                 db_region = db['regions'].insert_one({"name": region})
                 region_id = db_region.inserted_id
 
@@ -123,7 +124,7 @@ with open(FILE_GEO_COORDINATES) as file:
             if db_municipality:
                 municipality_id = db_municipality["_id"]
             else:
-                print("New municipality: %s for region %s" % (municipality, region))
+                print("New municipality: %s for region %s" % (municipality.encode('utf-8'), region.encode('utf-8')))
                 db_municipality = db['regions'].insert_one({"name": municipality, "parent_id": region_id})
                 municipality_id = db_municipality.inserted_id
 
