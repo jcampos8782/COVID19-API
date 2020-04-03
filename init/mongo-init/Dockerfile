@@ -14,12 +14,9 @@ RUN mkdir -p imports/meta
 RUN mkdir -p imports/data
 
 COPY series.csv imports/meta/series.csv
-COPY download.sh download.sh
+COPY imports/data imports/data
+COPY imports/meta imports/meta
 COPY main.py main.py
 
 RUN chmod +x main.py
-RUN chmod +x download.sh
-
-RUN bash download.sh -f
-
 CMD python3 main.py
