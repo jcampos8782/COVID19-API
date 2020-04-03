@@ -70,6 +70,7 @@ const mapDispatchToProps = dispatch => ({
 
 const styles = theme => ({
   filters: {
+    paddingLeft: 30,
     "& > div": {
       display: 'inline-block',
       paddingRight: 10

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import SelectFilter from './SelectFilter'
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -37,13 +37,13 @@ export default class Filters extends React.Component {
       );
 
       return (
-          <Container
+          <Grid item
             className={classes.filters}
             spacing={3}>
               {regionsFilter}
               {subregionsFilter}
               {seriesFilter}
-          </Container>
+          </Grid>
       );
   }
 }
