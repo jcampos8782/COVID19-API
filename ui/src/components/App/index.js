@@ -11,7 +11,8 @@ import {
 } from '../../actions';
 
 const mapStateToProps = state => ({
-  filters: state.filters
+  filters: state.filters,
+  loading: !state.view.regionOptionsLoaded || !state.view.seriesOptionsLoaded || !state.view.seriesForRegionLoaded
 });
 
 const mapStateToDispatch = dispatch => ({
