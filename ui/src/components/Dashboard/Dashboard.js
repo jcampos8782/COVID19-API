@@ -128,15 +128,7 @@ export default class Dashboard extends React.Component {
             <Container maxWidth="md">
               <SeriesDataTable
                 meta={{...meta}}
-                data={{
-                  aggregate: data.map(series => ({ id: series.id, data: series.data.aggregates.total})),
-                  subregions: meta.subregions.map(subregion => {
-                    return {
-                      id: subregion,
-                      data: data.map(series => ({id: series.id, data: series.data.regions[subregion].total }))
-                    };
-                  })
-                }}
+                data={data.map(series => ({ id: series.id, data: series.data.aggregates.total}))}
                 />
             </Container>
           </Grid>
