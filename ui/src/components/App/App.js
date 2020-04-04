@@ -2,6 +2,7 @@ import React from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Backdrop from '@material-ui/core/Backdrop';
+import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -35,7 +36,16 @@ export default class App extends React.Component {
               <CssBaseline />
               <AppBar position='fixed'>
                 <Toolbar>
-                  <Grid container alignItems="center" justify="flex-end" spacing={1} >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.navLink}
+                    aria-label="Donate"
+                    startIcon={<Icon class="fab fa-paypal" />}
+                    onClick={() => window.open('https://paypal.me/JasonCampos')}>
+                    Donate
+                  </Button>
+                  <Grid container alignItems="center" justify="flex-end" spacing={1} ><div id="paypal-button-container"></div>
                     <IconButton className={classes.navLink} aria-label="github" onClick={() => window.open('http://github.com/jcampos8782/covid19-api')}>
                         <Icon className="fab fa-github" />
                     </IconButton>
