@@ -25,6 +25,7 @@ export function fetchSeriesList() {
 export function fetchDefaultSeries() {
   return (dispatch,getState) => {
     let { filters } = getState();
+
     if (filters.selectedRegionId !== -1 && filters.selectedSeriesId !== -1) {
       dispatch(fetchSeriesByRegion(filters.selectedSeriesId, filters.selectedRegionId));
     }

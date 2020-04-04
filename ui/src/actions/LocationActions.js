@@ -26,8 +26,10 @@ export const fetchGeolocation = () => {
           Promise.all([
             dispatch(receiveGeolocation(pos.coords)),
             dispatch(fetchGeocoding(pos.coords))
-          ]).then(resolve)
-        }, (err) => {
+          ])
+          .then(resolve)
+          .catch(error => dispatch(geolocationError(error)));
+        }, err => {
           dispatch(geolocationError(err));
 
           // Load a default region if possible.
@@ -37,7 +39,9 @@ export const fetchGeolocation = () => {
             Promise.all([
               dispatch(selectRegion(region.id)),
               dispatch(fetchRegion(region.id))
-            ]).then(resolve);
+            ])
+            .then(resolve)
+            .catch(error => dispatch(geolocationError(error)));
           } else {
             resolve();
           }
@@ -51,10 +55,11 @@ export const fetchGeocoding = coords => {
     return (dispatch, getState) => {
         dispatch(requestGeocoding());
         return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&sensor=false&key=${GOOGLE_API_KEY}`)
-            .then(response => response.json())
+            .then(response => response.json(), error => dispatch(geolocationError))
             .then(json => {
               dispatch(receiveGeocoding(json.results));
               let region = getState().location.region;
+
               let matchingRegion = getState().regions.all.find(r => r.name === region.long_name || r.name === region.short_name);
 
               if (matchingRegion) {
@@ -75,6 +80,7 @@ export const fetchGeocoding = coords => {
               if (matchingMunicipality) {
                 dispatch(selectSubregion(matchingMunicipality.id));
               }
-            });
+            })
+            .catch(error => dispatch(geolocationError(error)));
     }
 }

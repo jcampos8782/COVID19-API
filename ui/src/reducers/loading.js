@@ -9,6 +9,7 @@ import {
   RECEIVE_REGIONS,
   RECEIVE_SERIES_LIST,
   ERROR_GEOLOCATION,
+  ERROR_LOADING,
   RECEIVE_GEOLOCATION,
   RECEIVE_GEOCODING
 } from '../actions/types';
@@ -28,6 +29,7 @@ export default (state = false, action) => {
         case RECEIVE_GEOLOCATION:
         case RECEIVE_GEOCODING:
         case ERROR_GEOLOCATION:
+        case ERROR_LOADING:
           return false;
         default:
             return state;

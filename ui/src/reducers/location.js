@@ -19,6 +19,7 @@ export default (state = {enabled: true}, action) => {
             let localeElement = action.components.filter(c => c.types.find(t => t === 'locality'));
             let municipalityElement = action.components.filter(c => c.types.find(t => t === 'administrative_area_level_1'));
             let regionElement = action.components.filter(c => c.types.find(t => t === 'country'));
+
             let location = {};
 
             if (localeElement) {
