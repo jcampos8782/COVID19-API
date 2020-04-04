@@ -24,6 +24,7 @@ const mapStateToProps = state => {
     series: state.series.all,
     regions: state.regions.all,
     subregions: subregions,
+    location: state.location,
     selectedSeriesId: state.filters.selectedSeriesId,
     selectedRegionId: state.filters.selectedRegionId,
     selectedSubregionId: state.filters.selectedSubregionId
@@ -75,6 +76,14 @@ const styles = theme => ({
       display: 'inline-block',
       paddingRight: 10
     }
+  },
+  success: {
+    color: theme.palette.success.main,
+    fontSize: 'inherit'
+  },
+  warning: {
+    color: theme.palette.warning.main,
+    fontSize: 'inherit'
   }
 });
 

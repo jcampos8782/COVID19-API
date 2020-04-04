@@ -11,7 +11,7 @@ import './styles/font-awesome/5.12.0/css/all.min.css';
 
 ReactDOM.render(
     <Provider store={configureStore()}>
-        <App />
+        <App defaultRegionName="United States" />
     </Provider>,
     document.getElementById('root'));
 

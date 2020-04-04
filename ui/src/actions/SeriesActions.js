@@ -27,7 +27,7 @@ export function fetchDefaultSeries() {
     let { filters } = getState();
     if (filters.selectedRegionId !== -1 && filters.selectedSeriesId !== -1) {
       dispatch(fetchSeriesByRegion(filters.selectedSeriesId, filters.selectedRegionId));
-    };
+    }
   }
 }
 
