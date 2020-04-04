@@ -104,23 +104,50 @@ export default class Dashboard extends React.Component {
       </Grid>
     );
 
-    let subregionCharts = meta.subregions.length === 0 ? <div /> : data.map(series => (
-      <Grid item key={`${series.id}-subregions`} style={{height:300}} sm={12} md={12}>
-        <TimeSeriesLineChart
-          title={series.id}
-          data={
-            Object.keys(series.data.regions).map(region => ({
-              id: region,
-              data: series.data.regions[region].daily.map((val,idx) => ({
-                  x: formatDateKey(meta.columns[idx]),
-                  y: val
-                }
-              ))
-            }))
-          }
-        />
-      </Grid>
-    ));
+    // For the charts, display up to 9 unique regions and then an "Others"
+    // Regions to show should have highest totals (last item in totals array)
+    let subregionCharts = meta.subregions.length === 0 ? <div /> : data.map(series => {
+      let regionTotals = Object.keys(series.data.regions).map(region => {
+        let len = series.data.regions[region].total.length;
+        return {region, total: series.data.regions[region].total[len -1]};
+      }).sort((a,b) => b.total - a.total);
+
+      let topRegionNames = regionTotals.slice(0,9).map(r => r.region);
+      let otherRegionNames = regionTotals.slice(9).map(r => r.region);
+
+      let regionData = topRegionNames.map(region => ({
+          id: region,
+          data: series.data.regions[region].daily.map((val,idx) => ({
+            x: formatDateKey(meta.columns[idx]),
+            y: val
+          }))
+      }));
+
+      regionData.sort((a,b) => a.id < b.id ? 1 : -1);
+
+      let otherRegionSums = Array.from({length: meta.columns.length}, n => 0);
+      otherRegionNames.forEach((region,idx) => {
+        otherRegionSums[idx] += series.data.regions[region].daily[idx]
+      })
+
+      // Add other to the front of the array
+      regionData.unshift({
+        id: "Other",
+        data: otherRegionSums.map((val,idx) => ({
+          x: formatDateKey(meta.columns[idx]),
+          y: val
+        }))
+      });
+
+      return (
+        <Grid item key={`${series.id}-subregions`} style={{height:300}} sm={12} md={12}>
+          <TimeSeriesLineChart
+            title={series.id}
+            data={regionData}
+          />
+        </Grid>
+      );
+    });
 
     let rawDataTable = (
             <SeriesDataTable
