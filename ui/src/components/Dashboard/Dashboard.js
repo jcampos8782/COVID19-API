@@ -59,18 +59,19 @@ export default class Dashboard extends React.Component {
     let recentCharts = (
       <Grid container>
         <Typography variant="h4">Current Totals</Typography>
-        <Grid container spacing={5} style={{paddingBottom:30, paddingTop: 10}}>
+        <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
         {
           data.map(series => (
-            <Grid key={series.id} item xs={6} md={4} lg={3}>
+            <Grid key={series.id} item xs={6} sm={3} md={2}>
               <Card variant="outlined" color="secondary">
                 <CardHeader
+                  style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
                    avatar={
-                     <Avatar className={classes[series.id]}>
+                     <Avatar className={classes[series.id]} style={{marginRight: -11}}>
                        <Icon className={view.icons[series.id].className}  />
                      </Avatar>
                    }
-                   title=<Typography variant="h5"> {series.current} </Typography>
+                   title=<Typography variant="h5" style={{fontSize: '1.25rem'}}> {series.current} </Typography>
                    subheader={series.id}
                  />
               </Card>

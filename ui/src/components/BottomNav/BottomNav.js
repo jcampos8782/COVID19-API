@@ -12,9 +12,9 @@ export default class BottomNav extends React.Component {
       <AppBar position='fixed' className={this.props.classes.root}>
         <Toolbar>
           <Grid container alignItems="center" justify="center" spacing={3} >
-            <Grid item xs={12}>
+            <Grid item xl={12}>
               <Typography variant="overline">
-                &copy; Copyright 2020 Jason Campos
+                &copy; 2020 Jason Campos
               </Typography>
             </Grid>
           </Grid>
