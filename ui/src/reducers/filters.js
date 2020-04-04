@@ -34,9 +34,11 @@ export default (state = initialState, action) => {
           selectedSubregionId: -1
         };
       case SELECT_SUBREGION:
+        // Hack: If the current tab is the subregions tab, change to summary
         return {
           ...state,
-          selectedSubregionId: action.id
+          selectedSubregionId: action.id,
+          selectedTabId: state.selectedTabId === 2 ? 0 : state.selectedTabId
         };
       case UNSELECT_SUBREGION:
         return {
