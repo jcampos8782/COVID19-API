@@ -77,7 +77,6 @@ with open(FILE_GEO_COORDINATES) as file:
         # same geocoordinates but one be a parent of the other.
         key = hashlib.md5(format("%s-%s" % ((default_mun.lower()), default_reg.lower())).encode()).hexdigest()
         location = db['locations'].find_one({'key': key})
-        print(location)
         if location:
             region = db['regions'].find_one({'_id': location["region_id"]})
             regions[key] = [region[k] for k in ["_id", "parent_id"] if k in region]
@@ -169,7 +168,9 @@ for source in series_datasources:
                 documents[series_key] = document
             documents[series_key]["data"][source.component] = [int(n) for n in data]
 
-print("Creating collection %s" % DB_COLL)
+
+print("Recreating collection %s" % DB_COLL)
+db.drop_collection(DB_COLL)
 for doc in documents.values():
     db[DB_COLL].insert_one(doc)
 

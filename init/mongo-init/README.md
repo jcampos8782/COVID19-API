@@ -14,6 +14,15 @@ the `data` field of the collection.
 For example, if the the series `confirmed` and `recovered` exist for a region, the document should contain fields 
 `{ data: { confirmed: [...], recovered: [...] }}`.
 
+# US State Loading
+To get the US state information loaded into the data set, there is a bit of preprocessing that is required. 
+```
+./download.sh -f 
+python3 GOOGLE_API_KEY=<key> ./us_file_processor.py
+./append_us_data.sh
+python3 GOOGLE_API_KEY=<key> DB_USER=<user> DB_PASS=<pass> ./main.py
+```
+
 # Environment Variables
  - `GOOGLE_API_KEY` (required) See [Prerequisites](#Prerequisites)
  - `DB_USER` (required) mongodb username
