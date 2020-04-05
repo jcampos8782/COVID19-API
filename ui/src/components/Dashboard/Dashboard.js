@@ -14,6 +14,8 @@ import SeriesDataTable from '../SeriesDataTable';
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
 import { formatDateKey } from '../TimeSeriesLineChart';
 
+const DATE_FORMAT = new Intl.DateTimeFormat('en-US', {weekday: 'short', month: 'short', day: 'numeric'});
+
 export default class Dashboard extends React.Component {
 
   render() {
@@ -55,29 +57,60 @@ export default class Dashboard extends React.Component {
         </Grid>
       </Grid>
     ));
-    console.log(meta.columns)
+    console.log(data)
     let recentCharts = (
       <Grid container>
-        <Typography variant="h4">Current Totals</Typography>
-        <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
-        {
-          data.map(series => (
-            <Grid key={series.id} item xs={6} sm={3} md={2}>
-              <Card variant="outlined" color="secondary">
-                <CardHeader
-                  style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
-                   avatar={
-                     <Avatar className={classes[series.id]} style={{marginRight: -11}}>
-                       <Icon className={view.icons[series.id].className}  />
-                     </Avatar>
-                   }
-                   title=<Typography variant="h5" style={{fontSize: '1.25rem'}}> {series.current} </Typography>
-                   subheader={series.id}
-                 />
-              </Card>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="h4">{DATE_FORMAT.format(new Date(meta.columns[meta.columns.length -1]))}</Typography>
+            <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
+              {
+                data.map(series => (
+                  <Grid key={series.id} item xs={12} sm={6}>
+                    <Card variant="outlined" color="secondary">
+                      <CardHeader
+                        style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
+                          avatar={
+                            <Avatar className={classes[series.id]} style={{marginRight: -11}}>
+                              <Icon className={view.icons[series.id].className}  />
+                            </Avatar>
+                          }
+                          title={
+                            <Typography variant="h5" style={{fontSize: '1.25rem'}}>
+                              {series.data.recent.data[series.data.recent.data.length - 1]}
+                            </Typography>
+                          }
+                          subheader={series.id}
+                       />
+                    </Card>
+                  </Grid>
+                ))
+              }
             </Grid>
-          ))
-        }
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="h4">Current Totals</Typography>
+            <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
+              {
+                data.map(series => (
+                  <Grid key={series.id} item xs={12} sm={6}>
+                    <Card variant="outlined" color="secondary">
+                      <CardHeader
+                        style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
+                         avatar={
+                           <Avatar className={classes[series.id]} style={{marginRight: -11}}>
+                             <Icon className={view.icons[series.id].className}  />
+                           </Avatar>
+                         }
+                         title=<Typography variant="h5" style={{fontSize: '1.25rem'}}> {series.current} </Typography>
+                         subheader={series.id}
+                       />
+                    </Card>
+                  </Grid>
+                ))
+              }
+            </Grid>
+          </Grid>
         </Grid>
 
         <Typography variant="h4">Last 7 Days</Typography>
