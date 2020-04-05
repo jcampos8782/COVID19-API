@@ -55,7 +55,7 @@ export default class Dashboard extends React.Component {
         </Grid>
       </Grid>
     ));
-
+    console.log(meta.columns)
     let recentCharts = (
       <Grid container>
         <Typography variant="h4">Current Totals</Typography>
@@ -91,7 +91,7 @@ export default class Dashboard extends React.Component {
                   {
                     id: series.id,
                     data: series.data.recent.data.map((val,idx) => ({
-                        x: formatDateKey(this.props.meta.columns[this.props.meta.columns.length - 7 + idx ]),
+                        x: formatDateKey(meta.columns[meta.columns.length - 7 + idx]),
                         y: val
                       }
                     ))

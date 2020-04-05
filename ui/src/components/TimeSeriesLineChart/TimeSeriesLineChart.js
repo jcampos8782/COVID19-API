@@ -25,7 +25,7 @@ export default class TimeSeriesLineChart extends React.Component {
 
     return (
       <ResponsiveLine
-        margin={{ top: 0, right: 10, bottom:80, left: 50 }}
+        margin={{ top: 0, right: 30, bottom:80, left: 50 }}
         data={data}
         colors={{ scheme: view && view.scheme ? view.scheme : DEFAULT_COLOR_SCHEME}}
         xScale={{
