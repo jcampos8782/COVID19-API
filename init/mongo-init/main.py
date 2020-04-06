@@ -1,10 +1,9 @@
 import pymongo
 import csv
 import requests
-from os import listdir, environ, walk
-from os.path import isfile, isdir, join
+from os import environ, walk
+from os.path import join
 import hashlib
-from itertools import islice
 from collections import namedtuple
 
 Index = namedtuple("Index", "collection field type")
