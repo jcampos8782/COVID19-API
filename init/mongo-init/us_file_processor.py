@@ -1,10 +1,7 @@
 import csv
 import requests
-from os import listdir, environ, walk
-from os.path import isfile, isdir, join
+from os import environ
 from itertools import islice
-import hashlib
-from collections import namedtuple
 
 GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY")
 GOOGLE_API_KEY or exit("GOOGLE_API_KEY must be set in environment")
