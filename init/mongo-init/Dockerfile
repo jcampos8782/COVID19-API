@@ -10,13 +10,12 @@ RUN apt-get install python3-pip -y
 RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install pymongo
 RUN python3 -m pip install requests
-RUN mkdir -p imports/meta
-RUN mkdir -p imports/data
+RUN mkdir data
+RUN mkdir python
 
-COPY series.csv imports/meta/series.csv
-COPY imports/data imports/data
-COPY imports/meta imports/meta
-COPY main.py main.py
+COPY data/meta data/meta
+COPY data/processed data/processed
+COPY py py
 
-RUN chmod +x main.py
-CMD python3 main.py
+RUN chmod +x py/import.py
+CMD python3 py/import.py

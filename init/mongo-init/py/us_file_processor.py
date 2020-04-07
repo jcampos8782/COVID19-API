@@ -1,33 +1,24 @@
 import csv
 import requests
-from os import environ
 from itertools import islice
+from config import *
 
-GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY")
-GOOGLE_API_KEY or exit("GOOGLE_API_KEY must be set in environment")
-
-GOOGLE_GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false&key=%s"
-
-INPUT_FILE_COLUMNS = {'region': 6, 'data': {'confirmed': 11, 'deaths': 12}}
-INPUT_FILES = [("confirmed", "imports/raw/confirmed.csv"), ("deaths", "imports/raw/deaths.csv")]
-OUTPUT_FILE_DIR = "imports/processed"
-
-print("Processing input files...")
-aggregates = {file[0]: {} for file in INPUT_FILES}
+print("Processing US data input files...")
+aggregates = {file[0]: {} for file in US_PROCESSOR_INPUT_FILES}
 locations = {}
 
-for (series, filename) in INPUT_FILES:
+for (series, filename) in US_PROCESSOR_INPUT_FILES:
     print("Processing %s" % filename)
     with open(filename) as file:
         for row in islice(csv.reader(file), 1, None):
-            region = row[INPUT_FILE_COLUMNS['region']]
-            data = row[INPUT_FILE_COLUMNS['data'][series]:]
+            region = row[US_PROCESSOR_COLUMN_DEFINITIONS['region']]
+            data = row[US_PROCESSOR_COLUMN_DEFINITIONS['data'][series]:]
             if region not in aggregates[series]:
                 aggregates[series][region] = [0] * len(data)
 
             if region not in locations:
                 print("Looking up location for %s" % region)
-                response = requests.get(GOOGLE_GEOCODE_URL % (region, GOOGLE_API_KEY))
+                response = requests.get(GEOCODE_ADDR_URL % (region, GOOGLE_API_KEY))
                 results = response.json()['results']
                 if results:
                     locations[region] = results[0]['geometry']['location']
@@ -40,7 +31,7 @@ for (series, filename) in INPUT_FILES:
             aggregates[series][region] += [0] * (len(data) - len(aggregates[series][region]))
             aggregates[series][region] = [aggregates[series][region][i] + int(data[i]) for i in range(len(data))]
 
-    with open("%s/%s.csv" % (OUTPUT_FILE_DIR, series), "w") as file:
+    with open("%s/%s_us.csv" % (US_PROCESSOR_OUTPUT_FILE_DIR, series), "w+") as file:
         for region in aggregates[series]:
             location = locations[region]
             file.write("%s,%s,%.3f,%.3f,%s\n" % (region, "United States", location['lat'], location['lng'], ",".join(str(s) for s in aggregates[series][region])))
