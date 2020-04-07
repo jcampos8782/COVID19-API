@@ -132,9 +132,6 @@ const styles = theme => ({
   },
   xsIcon: {
     fontSize: '1em'
-  },
-  cardActionIcon: {
-    color: theme.palette.info.light
   }
 })
 

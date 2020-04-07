@@ -9,7 +9,6 @@ import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import SeriesDataTable from '../SeriesDataTable';
@@ -66,7 +65,7 @@ export default class Dashboard extends React.Component {
         <Grid container spacing={1}>
 
           <Grid item xs={12} md={4}>
-            <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
+            <Grid container spacing={1} style={{paddingBottom:10, paddingTop: 10}}>
               {
                 data.map(series => (
                   <Grid key={series.id} item xs={6} sm={6}>
@@ -95,6 +94,14 @@ export default class Dashboard extends React.Component {
             <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
               {
                 data.map(series => {
+                  let recentData = series.data.recent.data;
+                  let last = recentData[recentData.length - 1];
+                  let previous = recentData[recentData.length - 2];
+
+                  let recentDiff = last - previous;
+                  let iconClass = recentDiff >= 0 ? `${classes.red} fas fa-arrow-up xs` : `${classes.green} fas fa-arrow-down xs`;
+                  let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
+
                   return (
                     <Grid key={series.id} item xs={6} sm={6}>
                       <Card variant="outlined" color="secondary">
@@ -115,48 +122,10 @@ export default class Dashboard extends React.Component {
                                 {DATE_FORMAT.format(new Date(meta.columns[meta.columns.length -1]))}
                               </Typography>
                             }
+                            action={
+                              <Typography variant="caption" style={{fontSize: '0.75rem'}}> {recentDiff} {diffIcon}</Typography>
+                            }
                         />
-                        <CardContent className={classes.cardBody}>
-                          <Typography variant="overline">{series.id}</Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  );
-                })
-              }
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
-              {
-                data.map(series => {
-                  let recentData = series.data.recent.data;
-                  let last = recentData[recentData.length - 1];
-                  let previous = recentData[recentData.length - 2];
-
-                  let recentDiff = last - previous;
-                  let iconClass = recentDiff >= 0 ? `${classes.red} fas fa-arrow-up xs` : `${classes.green} fas fa-arrow-down xs`;
-                  let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
-
-                  return (
-                    <Grid key={series.id} item xs={6} sm={6}>
-                      <Card variant="outlined" color="secondary">
-                        <CardHeader
-                          style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
-                           avatar={
-                             <Avatar style={{marginRight: -11, backgroundColor: '#FFFFFF'}}>
-                               {diffIcon}
-                             </Avatar>
-                           }
-                           title=<Typography variant="h5" style={{fontSize: '1.25rem'}}> {recentDiff} </Typography>
-                           subheader="24-hr Change"
-                           action={
-                            <Tooltip title="24-hour rate of change" placement="top-end">
-                              <Icon className={`${classes.xsIcon} ${classes.cardActionIcon} fas fa-info-circle xs`} />
-                            </Tooltip>
-                           }
-                         />
                         <CardContent className={classes.cardBody}>
                           <Typography variant="overline">{series.id}</Typography>
                         </CardContent>
