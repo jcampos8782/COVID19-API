@@ -1,11 +1,12 @@
 # Mongo-Init
 
+## Overview
 This initialization script is designed for collections of time-series data which are bound to geographic locations. The
 scripts creates three collections: 
 
  - regions: A collection of regions names with an optional `parent_id` which references a parent region.
- - locations: A geographic point associated with a region. 
- - series: A collection of data series with denormalized location information
+ - locations: A geographic point associated with a region. Enables Geolocation lookups of regions
+ - series: Series data associated with one or more regions
 
 Entries into the `series` collection are aggregated by region. In other words, there is only one entry in the `series` 
 collection per region. However, there can be multiple series associated with a region. The series are collected into
@@ -14,41 +15,47 @@ the `data` field of the collection.
 For example, if the the series `confirmed` and `recovered` exist for a region, the document should contain fields 
 `{ data: { confirmed: [...], recovered: [...] }}`.
 
-# US State Loading
-To get the US state information loaded into the data set, there is a bit of preprocessing that is required. 
-```
-./download.sh -f 
-python3 GOOGLE_API_KEY=<key> ./us_file_processor.py
-./append_us_data.sh
-python3 GOOGLE_API_KEY=<key> DB_USER=<user> DB_PASS=<pass> ./main.py
+## Execution
+### Prerequisites
+This script uses [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro) to create
+consistent regions names across data files. You must have a developer account with Google and an API key with permission 
+access the geocoding service. 
+
+### Updating the data files
+```shell script
+cd scripts
+./update_data.sh
 ```
 
-# Environment Variables
+### Updating MongoDB
+```shell script
+python3 py/import.py
+```
+
+Alternatively, you can build this as a Docker image and then run the container. 
+```shell script
+docker build . -
+docker run <image>
+```
+
+### Environment Variables
  - `GOOGLE_API_KEY` (required) See [Prerequisites](#Prerequisites)
  - `DB_USER` (required) mongodb username
  - `DB_PASS` (required) mongodb password
  - `DB_HOST` mongodb host (default `localhost`)
  - `DB_PORT` mongodb port (default `27017`)
  - `DB_NAME` database name (default `cvd19`)
+
  
-# To-Dos
- - Use the data series files for region/location creation and lookup
- 
-# Prerequisites
+## Conventions
 
-This script uses [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro) to create
-consistent regions names across data files. You must have a developer account with Google and an API key with permission 
-access the geocoding service. 
+### CSV Files
 
-# Conventions
-
-## CSV Files
-
-### imports/series/\<name>/\<component>.csv
-The `series` directory contains series data aggregated by series name. The `.csv` files contain data which describes
+#### data/processed/\<name>/\<component>.csv
+The `processed` directory contains series data aggregated by series name. The `.csv` files contain data which describes
 one component of the series.
 
-For example, `imports/series/covid19/confirmed_cases.csv` would contain time series data for confirmed COVID-19 cases.
+For example, `data/processed/covid19/confirmed.csv` would contain time series data for confirmed COVID-19 cases.
 
 These series files should be in the following format:
 
@@ -59,10 +66,10 @@ These series files should be in the following format:
 The sub-region and region names will be used as defaults if Google's geocoding APIs fail to resolve the latitude and 
 longitude coordinates. 
 
-The filename will be used as a key in the associated Mongo document as the series type. For example, `data/series/confirmed.csv`
-will have a `{ data: { confirmed: [...] }}` entry.
+The filename will be used as a key in the associated Mongo document as the series type. For example, `/covid19/confirmed.csv`
+will have a `{ data: { confirmed: [...] }}` entry in the `covid19` series.
 
-#### imports/meta/coordinates.csv
+#### data/meta/coordinates.csv
 This file should contain every region and set of coordinates contained within the individual series files. 
 
 The coordinates file should be in the following format:
@@ -71,19 +78,19 @@ The coordinates file should be in the following format:
 <sub-region name>, <region name>, <latitude>, <longitude>
 ```
 
-### `series.csv`
+#### `series.csv`
 
 ```
-<collection-name>,<formatted-name>
+<series-name>,<formatted-name>
 ```
 
-Contains series metadata. The directory name should match the collection name in MongoDB. For example, a `imports/series/covid19`
-directory should have a corresponding `imports/meta/series.csv` entry of `covid19,COVID-19`. If a series name is not found,
+Contains series metadata. The directory name should match the collection name in MongoDB. For example, a `data/processed/covid19`
+directory should have a corresponding `data/meta/series.csv` entry of `covid19,COVID-19`. If a series name is not found,
 it will be defaulted to the directory name.
 
-# Schema
+## Schema
 
-## `series`
+### `data`
 
  - `data` An array of data series for a location. Series are referenced by name within this data collection. 
  - `regions` (required) List of regions associated with this series.
@@ -98,7 +105,7 @@ it will be defaulted to the directory name.
     }
 ```
 
-## `regions`
+### `regions`
 
  - `name` Name of the region
  - `parent_id` (optional) A parent region's ID. 
@@ -110,7 +117,7 @@ it will be defaulted to the directory name.
     }
 ```
 
-## `locations`
+### `locations`
  - `key` A hashed key for quick lookups. This key should use a consistent hash function to resolve the same location to 
  the same document. For example, looking up "California, USA" should always resolve to the same
  location.
