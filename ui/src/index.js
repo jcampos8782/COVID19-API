@@ -7,7 +7,7 @@ import configureStore from './store';
 import './styles/index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
-import './styles/font-awesome/5.12.0/css/all.min.css';
+import './styles/font-awesome/5.13.0/css/all.min.css';
 
 ReactDOM.render(
     <Provider store={configureStore()}>
