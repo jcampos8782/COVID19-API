@@ -1,15 +1,8 @@
 import hashlib
 import pymongo
-from os import environ
+from config import MONGO_CONNECTION_STR, DB_NAME
 
-DB_USER = environ.get("DB_USER")
-DB_PASS = environ.get("DB_PASS")
-DB_HOST = environ.get("DB_HOST", "localhost")
-DB_PORT = environ.get("DB_PORT",  "27017")
-DB_NAME = environ.get("DB_NAME", "cvd19")
-(DB_USER and DB_PASS) or exit("DB_USER and DB_PASS must be set in environment")
-
-db = pymongo.MongoClient("mongodb://%s:%s@%s:%s" % (DB_USER, DB_PASS, DB_HOST, DB_PORT))[DB_NAME]
+db = pymongo.MongoClient(MONGO_CONNECTION_STR)[DB_NAME]
 
 
 def find_or_create_series(key: str, name: str) -> dict:
@@ -78,7 +71,7 @@ def recreate_collection(collection: str, documents: [dict]) -> int:
     for doc in documents.values():
         db[collection].insert_one(doc)
         inserted += 1
-    print("Inserted %d documents")
+    print("Inserted %d documents" % inserted)
     return inserted
 
 

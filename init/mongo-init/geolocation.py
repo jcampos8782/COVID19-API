@@ -1,12 +1,6 @@
 import requests
-from collections import namedtuple
-from os import environ
-
-Location = namedtuple("Location", "lat lon region municipality")
-GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY") or exit("GOOGLE_API_KEY must be set in environment")
-
-BY_COORD_URL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false&key=%s"
-BY_ADDR_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false&key=%s"
+from models import Location
+from config import GOOGLE_API_KEY, GEOCODE_ADDR_URL, GEOCODE_COORD_URL
 
 
 def resolve_location_by_coordinates(lat: float, lon: float) -> Location:
@@ -35,7 +29,7 @@ def resolve_location_by_address(address: str) -> Location:
 
 def __fetch_location_by_address(address: str) -> dict:
     print("Fetching location for address: %s" % address)
-    response = requests.get(BY_ADDR_URL)
+    response = requests.get(GEOCODE_ADDR_URL)
     if not response:
         raise Exception("Error fetching geolocation")
     return response.json()['results']
@@ -43,7 +37,7 @@ def __fetch_location_by_address(address: str) -> dict:
 
 def __fetch_location_by_coordinates(lat: float, lon: float) -> dict:
     print("Fetching location for lat: %s lon: %s" % (lat, lon))
-    response = requests.get(BY_COORD_URL % (lat, lon, GOOGLE_API_KEY))
+    response = requests.get(GEOCODE_COORD_URL % (lat, lon, GOOGLE_API_KEY))
     if not response:
         raise Exception("Error fetching geolocation")
     return response.json()['results']
