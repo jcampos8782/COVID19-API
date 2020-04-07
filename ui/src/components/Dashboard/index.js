@@ -68,7 +68,7 @@ const mapStateToProps = state => {
     view: {
       selectedTabId: state.filters.selectedTabId,
       icons: {
-        confirmed: { className: "fas fa-temperature-high", color: "blue" },
+        confirmed: { className: "fas fa-head-side-cough", color: "white" },
         deaths: { className: "fas fa-skull-crossbones", color: "red" }
       },
     },
@@ -114,10 +114,27 @@ let aggregateData = (subregions) => {
 
 const styles = theme => ({
   confirmed: {
-    backgroundColor: theme.palette.info.dark
+    backgroundColor: theme.palette.warning.dark
   },
   deaths: {
     backgroundColor: theme.palette.error.dark
+  },
+  cardBody: {
+    backgroundColor: theme.palette.background.default,
+    paddingBottom: '0 !important',
+    paddingTop:0
+  },
+  green: {
+    color: theme.palette.success.light
+  },
+  red: {
+    color: theme.palette.error.dark
+  },
+  xsIcon: {
+    fontSize: '1em'
+  },
+  cardActionIcon: {
+    color: theme.palette.info.light
   }
 })
 

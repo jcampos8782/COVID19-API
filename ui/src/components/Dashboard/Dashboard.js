@@ -2,12 +2,14 @@ import React from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import SeriesDataTable from '../SeriesDataTable';
@@ -57,43 +59,17 @@ export default class Dashboard extends React.Component {
         </Grid>
       </Grid>
     ));
-    console.log(data)
+
+
     let recentCharts = (
       <Grid container>
-        <Grid container spacing={3}>
+        <Grid container spacing={1}>
+
           <Grid item xs={12} md={4}>
-            <Typography variant="h4">{DATE_FORMAT.format(new Date(meta.columns[meta.columns.length -1]))}</Typography>
             <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
               {
                 data.map(series => (
-                  <Grid key={series.id} item xs={12} sm={6}>
-                    <Card variant="outlined" color="secondary">
-                      <CardHeader
-                        style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
-                          avatar={
-                            <Avatar className={classes[series.id]} style={{marginRight: -11}}>
-                              <Icon className={view.icons[series.id].className}  />
-                            </Avatar>
-                          }
-                          title={
-                            <Typography variant="h5" style={{fontSize: '1.25rem'}}>
-                              {series.data.recent.data[series.data.recent.data.length - 1]}
-                            </Typography>
-                          }
-                          subheader={series.id}
-                       />
-                    </Card>
-                  </Grid>
-                ))
-              }
-            </Grid>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h4">Current Totals</Typography>
-            <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
-              {
-                data.map(series => (
-                  <Grid key={series.id} item xs={12} sm={6}>
+                  <Grid key={series.id} item xs={6} sm={6}>
                     <Card variant="outlined" color="secondary">
                       <CardHeader
                         style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
@@ -103,11 +79,91 @@ export default class Dashboard extends React.Component {
                            </Avatar>
                          }
                          title=<Typography variant="h5" style={{fontSize: '1.25rem'}}> {series.current} </Typography>
-                         subheader={series.id}
+                         subheader="Total"
                        />
+                      <CardContent className={classes.cardBody}>
+                        <Typography variant="overline">{series.id}</Typography>
+                      </CardContent>
                     </Card>
                   </Grid>
                 ))
+              }
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
+              {
+                data.map(series => {
+                  return (
+                    <Grid key={series.id} item xs={6} sm={6}>
+                      <Card variant="outlined" color="secondary">
+                        <CardHeader
+                          style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
+                            avatar={
+                              <Avatar className={classes[series.id]} style={{marginRight: -11}}>
+                                <Icon className={view.icons[series.id].className}  />
+                              </Avatar>
+                            }
+                            title={
+                                <Typography variant="h5" style={{fontSize: '1.25rem'}}>
+                                  {series.data.recent.data[series.data.recent.data.length - 1]}
+                                </Typography>
+                            }
+                            subheader={
+                              <Typography variant="caption">
+                                {DATE_FORMAT.format(new Date(meta.columns[meta.columns.length -1]))}
+                              </Typography>
+                            }
+                        />
+                        <CardContent className={classes.cardBody}>
+                          <Typography variant="overline">{series.id}</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  );
+                })
+              }
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
+              {
+                data.map(series => {
+                  let recentData = series.data.recent.data;
+                  let last = recentData[recentData.length - 1];
+                  let previous = recentData[recentData.length - 2];
+
+                  let recentDiff = last - previous;
+                  let iconClass = recentDiff >= 0 ? `${classes.red} fas fa-arrow-up xs` : `${classes.green} fas fa-arrow-down xs`;
+                  let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
+
+                  return (
+                    <Grid key={series.id} item xs={6} sm={6}>
+                      <Card variant="outlined" color="secondary">
+                        <CardHeader
+                          style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
+                           avatar={
+                             <Avatar style={{marginRight: -11, backgroundColor: '#FFFFFF'}}>
+                               {diffIcon}
+                             </Avatar>
+                           }
+                           title=<Typography variant="h5" style={{fontSize: '1.25rem'}}> {recentDiff} </Typography>
+                           subheader="24-hr Change"
+                           action={
+                            <Tooltip title="24-hour rate of change" placement="top-end">
+                              <Icon className={`${classes.xsIcon} ${classes.cardActionIcon} fas fa-info-circle xs`} />
+                            </Tooltip>
+                           }
+                         />
+                        <CardContent className={classes.cardBody}>
+                          <Typography variant="overline">{series.id}</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  );
+                })
               }
             </Grid>
           </Grid>
