@@ -3,17 +3,12 @@ import csv
 from hashlib import md5
 from bs4 import BeautifulSoup
 from bs4.element import Tag
-from os.path import dirname, join
 from util.geolocation import resolve_location_by_address
-from models import Location, DataSource
-from datetime import date
+from models import Location
 from config import *
 
 
 def main():
-    # To recreate the data templates, uncomment this line
-    __recreate_mexico_data_from_base() and exit(0)
-
     # Ensure the data has change
     print("Loading html from %s" % MX_SCRAPER_URL)
     html = __scrape(MX_SCRAPER_URL)
@@ -65,11 +60,6 @@ def __load_data() -> dict:
                     }
                 locations[state]['series'][source.component] = data
     return locations
-
-
-def __load_states_with_iso_codes_from_file() -> [str]:
-    with open(MX_STATES_FILE, encoding="utf8") as file:
-        return {__get_formatted_state_name(state): iso for state, iso in csv.reader(file)}
 
 
 def __scrape(address: str) -> dict:
@@ -139,64 +129,5 @@ def __format_location(location: Location) -> str:
     return format("%s,%s,%s,%s" % (location.municipality, location.region, location.lat, location.lon))
 
 
-def __get_formatted_state_name(name: str) -> str:
-    return name if name not in GOOGLE_API_LOCATION_TEXT_FOR else GOOGLE_API_LOCATION_TEXT_FOR[name]
-
-
-def __recreate_mexico_data_from_base() -> bool:
-    states_to_iso = __load_states_with_iso_codes_from_file()
-    locations = [__lookup_location(state) for state in states_to_iso]
-
-    base_data = __load_base_data(states_to_iso)
-    days_to_pad = (MX_PROCESSOR_DATA_START_DATE - SERIES_START_DATE).days - 1
-
-    for source in MX_PROCESSOR_DATA_SOURCES:
-        print("Creating data file %s" % source.file)
-        with open(source.file, 'w+') as file:
-            for location in locations:
-                iso = states_to_iso[location.municipality]
-                data = (['0'] * days_to_pad) + base_data[iso][source.component]
-                file.write(format("%s,%s\n" % (__format_location(location), ",".join(data))))
-
-    return True
-
-
-def __lookup_location(state: str, cache={}) -> Location:
-    # Try to find this location in the file
-    if not cache:
-        with open(FILE_GEO_COORDINATES, encoding="utf8") as file:
-            reader = csv.reader(file)
-            for state, region, lat, lon in reader:
-                cache[state] = Location(lat, lon, region, state)
-
-    # Some lookups resolve to a different name
-    cached_name = __get_formatted_state_name(state)
-    if cached_name in cache:
-        return cache[cached_name]
-
-    location = resolve_location_by_address("%s, %s" % (state, 'Mexico'))
-    cache[cached_name] = location
-    return location
-
-
-def __load_base_data(state_to_iso: dict) -> dict:
-    # Rows in the base data file are by date, not by country. Convert this to series data of state -> [data]
-    # The date is implied by its position in the list
-    base_data = {iso: {'confirmed': [], 'deaths': []} for iso in state_to_iso.values()}
-    with open(MX_PROCESSOR_DATA_FILE, encoding="utf8") as file:
-        # Map the codes to indices in the csv file
-        reader = csv.reader(file)
-        headings = next(reader)
-        headings_idx = {headings[idx]: idx for idx in range(len(headings))}
-
-        for [*data] in reader:
-            for iso in base_data:
-                c_key = format("%s%s" % (iso, MX_PROCESSOR_COLUMN_SUFFIXES['confirmed']))
-                d_key = format("%s%s" % (iso, MX_PROCESSOR_COLUMN_SUFFIXES['deaths']))
-                base_data[iso]['confirmed'].append(data[headings_idx[c_key]] or '0')
-                base_data[iso]['deaths'].append(data[headings_idx[d_key]] or '0')
-
-    return base_data
-
-
-main()
+if __name__ == '__main__':
+    main()

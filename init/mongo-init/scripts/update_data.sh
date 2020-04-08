@@ -61,25 +61,15 @@ echo "DOWNLOADS COMPLETE!"
 echo "------------------------"
 echo ""
 
-echo "------------------------"
-echo "PREPARING METADATA..."
-echo "------------------------"
-
 # Quoted strings with commas break
 sed 's/".*,.*"/Unknown/g' ../data/downloads/github/CSSEGISandData/confirmed_global.csv  | sed 1d > ../data/processed/covid19/confirmed.csv
 sed 's/".*,.*"/Unknown/g' ../data/downloads/github/CSSEGISandData/deaths_global.csv | sed 1d > ../data/processed/covid19/deaths.csv
-
-echo "Extracting lat/lon coordinates..."
-cut -f1,2,3,4 -d','  ../data/processed/covid19/confirmed.csv | grep -iv "Lat,Long" > ../data/meta/coordinates.csv
-
-echo "Extracting COVID-19 columns"
-cut -d ',' -f 5- ../data/downloads/github/CSSEGISandData/confirmed_global.csv | head -n 1 > ../data/meta/covid19.csv
 
 echo "------------------------"
 echo "PROCESSING US DATA"
 echo "------------------------"
 
-PYTHONPATH=../py/:$PYTHONPATH python3  ../py/preprocessors/united_states/processor.py
+PYTHONPATH=../py/:$PYTHONPATH python3  ../py/preprocessors/us.py
 cut -d',' -f1,2,3,4 ../data/processed/covid19/confirmed_us.csv >> ../data/meta/coordinates.csv
 cat ../data/processed/covid19/confirmed_us.csv >> ../data/processed/covid19/confirmed.csv
 cat ../data/processed/covid19/deaths_us.csv >> ../data/processed/covid19/deaths.csv
@@ -94,7 +84,7 @@ echo "------------------------"
 echo "PROCESSING MEXICO DATA"
 echo "------------------------"
 
-PYTHONPATH=../py/:$PYTHONPATH python3  ../py/scrapers/mexico/scraper.py
+PYTHONPATH=../py/:$PYTHONPATH python3  ../py/preprocessors/mx.py
 cut -d',' -f1,2,3,4 ../data/processed/covid19/confirmed_mx.csv >> ../data/meta/coordinates.csv
 cat ../data/processed/covid19/confirmed_mx.csv >> ../data/processed/covid19/confirmed.csv
 cat ../data/processed/covid19/deaths_mx.csv >> ../data/processed/covid19/deaths.csv
@@ -103,6 +93,19 @@ rm ../data/processed/covid19/confirmed_mx.csv ../data/processed/covid19/deaths_m
 echo "------------------------"
 echo "MEXICO DATA PROCESSING COMPLETE"
 echo "------------------------"
+
+
+echo "------------------------"
+echo "PREPARING METADATA..."
+echo "------------------------"
+
+echo "Extracting lat/lon coordinates..."
+cut -d',' -f1,2,3,4 ../data/processed/covid19/confirmed.csv | grep -iv "Lat,Long" > ../data/meta/coordinates.csv
+cut -d',' -f1,2,3,4 ../data/processed/covid19/confirmed_us.csv >> ../data/meta/coordinates.csv
+cut -d',' -f1,2,3,4 ../data/processed/covid19/confirmed_mx.csv >> ../data/meta/coordinates.csv
+
+echo "Extracting COVID-19 columns"
+cut -d ',' -f 5- ../data/downloads/github/CSSEGISandData/confirmed_global.csv | head -n 1 > ../data/meta/covid19.csv
 
 
 echo "------------------------"

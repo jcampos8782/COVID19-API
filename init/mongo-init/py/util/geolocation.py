@@ -1,6 +1,7 @@
 import requests
+import csv
 from models import Location
-from config import GOOGLE_API_KEY, GOOGLE_API_GEOCODE_ADDR_URL, GOOGLE_API_GEOCODE_COORD_URL
+from config import *
 
 
 def resolve_location_by_coordinates(lat: float, lon: float) -> Location:
@@ -16,20 +17,20 @@ def resolve_location_by_coordinates(lat: float, lon: float) -> Location:
     return Location(lat, lon, region, municipality)
 
 
-def resolve_location_by_address(address: str) -> Location:
-    response = __fetch_location_by_address(address)
-    if not response:
-        return None
+def resolve_location_by_address(state: str, region: str, cache={}) -> Location:
+    if not cache:
+        with open(FILE_GEO_COORDINATES, encoding="utf8") as file:
+            reader = csv.reader(file)
+            for s, r, lat, lon in reader:
+                cache[s] = Location(lat, lon, r, s)
 
-    coords = __parse_coords_from_response(response)
-    region = __parse_region_from_response(response)
-    municipality = __parse_municipality_from_response(response)
+    g_state = __get_google_name(state)
+    if g_state in cache:
+        return cache[g_state]
 
-    return Location(coords['lat'], coords['lng'], region, municipality)
+    address = "%s, %s" % (state, region) if region else state
 
-
-def __fetch_location_by_address(address: str) -> dict:
-    print("Fetching location for address: %s" % address)
+    print("Requesting location from Google API: %s" % address)
     response = requests.get(GOOGLE_API_GEOCODE_ADDR_URL % (address, GOOGLE_API_KEY))
     if not response:
         raise Exception("Error fetching geolocation")
@@ -37,12 +38,19 @@ def __fetch_location_by_address(address: str) -> dict:
     json = response.json()
     if json['status'] == 'ZERO_RESULTS':
         print("Failed to resolve location.")
-        return []
+        cache[g_state] = None
+        return None
 
     if json['status'] == 'REQUEST_DENIED':
         raise Exception("Geolocation API request denied. %s" % json['error_message'])
 
-    return json['results'][0]
+    result = json['results'][0]
+    coords = __parse_coords_from_response(result)
+    region = __parse_region_from_response(result)
+    municipality = __parse_municipality_from_response(result)
+    location = Location(coords['lat'], coords['lng'], region, municipality)
+    cache[g_state] = location
+    return location
 
 
 def __fetch_location_by_coordinates(lat: float, lon: float) -> dict:
@@ -54,7 +62,7 @@ def __fetch_location_by_coordinates(lat: float, lon: float) -> dict:
     json = response.json()
     if json['status'] == 'ZERO_RESULTS':
         print("Failed to resolve location.")
-        return []
+        return None
 
     if json['status'] == 'REQUEST_DENIED':
         raise Exception("Geolocation API request denied. %s" % json['error_message'])
@@ -78,3 +86,7 @@ def __parse_municipality_from_response(response: dict) -> str:
     municipality_component = [loc for loc in address_components if "administrative_area_level_1" in loc['types']]
     if municipality_component:
         return municipality_component[0]['long_name']
+
+
+def __get_google_name(name: str) -> str:
+    return name if name not in GOOGLE_API_LOCATION_TEXT_FOR else GOOGLE_API_LOCATION_TEXT_FOR[name]

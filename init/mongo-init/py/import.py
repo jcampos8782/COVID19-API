@@ -103,4 +103,5 @@ def __import_data_from_sources(sources: [DataSource]) -> None:
     repository.recreate_collection("data", documents)
 
 
-main()
+if __name__ == '__main__':
+    main()
