@@ -104,7 +104,7 @@ def __load_data() -> dict:
 
 
 def __load_states_from_file(filename: str) -> [str]:
-    with open(filename) as file:
+    with open(filename, encoding="utf8") as file:
         reader = csv.reader(file)
         return next(reader)
 
@@ -154,7 +154,7 @@ def __ensure_data_has_changed_or_quit(html: BeautifulSoup) -> str:
         raise AssertionError("Expected to find 'As of <date>' in element but found '%s'" % tags[0].text)
 
     update_hash = md5(tags[0].text.encode()).hexdigest()
-    with open(hash_file, 'r') as file:
+    with open(hash_file, encoding="utf8") as file:
         existing_hash = file.readline()
         if existing_hash == update_hash:
             print("Data has not been updated. Last update: %s" % tags[0].text)

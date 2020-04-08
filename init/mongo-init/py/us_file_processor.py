@@ -9,7 +9,7 @@ locations = {}
 
 for (series, filename) in US_PROCESSOR_INPUT_FILES:
     print("Processing %s" % filename)
-    with open(filename) as file:
+    with open(filename, encoding="utf8") as file:
         for row in islice(csv.reader(file), 1, None):
             region = row[US_PROCESSOR_COLUMN_DEFINITIONS['region']]
             data = row[US_PROCESSOR_COLUMN_DEFINITIONS['data'][series]:]

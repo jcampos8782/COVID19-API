@@ -13,11 +13,11 @@ def main():
     (GOOGLE_API_KEY and DB_USER and DB_PASS) or exit("GOOGLE_API_KEY, DB_USER, and DB_PASS must be set in env")
 
     print("Checking MongoDB for existing series metadata")
-    with open(FILE_SERIES_DEFINITIONS) as file:
+    with open(FILE_SERIES_DEFINITIONS, encoding="utf8") as file:
         [repository.find_or_create_series(key, name) for key, name in csv.reader(file)]
 
     print("Importing coordinates from %s" % FILE_GEO_COORDINATES)
-    with open(FILE_GEO_COORDINATES) as file:
+    with open(FILE_GEO_COORDINATES, encoding="utf8") as file:
         __import_locations_from_coordinates_file(file)
 
     print("Importing data from files")
@@ -80,7 +80,7 @@ def __import_data_from_sources(sources: [DataSource]) -> None:
     documents = {}
     for source in sources:
         print("Processing data file %s" % source.file)
-        with open(source.file) as file:
+        with open(source.file, encoding="utf8") as file:
             reader = csv.reader(file)
 
             # Update column data for series

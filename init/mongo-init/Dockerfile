@@ -17,5 +17,7 @@ COPY data/meta data/meta
 COPY data/processed data/processed
 COPY py py
 
+ENV PYTHONIOENCODING=utf-8
+
 RUN chmod +x py/import.py
 CMD python3 py/import.py
