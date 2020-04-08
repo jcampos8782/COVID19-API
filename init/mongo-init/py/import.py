@@ -66,7 +66,7 @@ def __import_locations_from_coordinates_file(file) -> None:
         # Some municipalities do not resolve via Google API (eg: Grand Princess). Default to file value
         municipality_id = repository.find_or_create_subregion(municipality, region_id) if municipality else None
 
-        location_id = repository.create_location(
+        repository.create_location(
             region, municipality,
             float(location.lat), float(location.lon),
             (municipality_id or region_id))
