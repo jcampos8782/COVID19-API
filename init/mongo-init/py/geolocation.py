@@ -37,7 +37,10 @@ def __fetch_location_by_address(address: str) -> dict:
     json = response.json()
     if json['status'] == 'ZERO_RESULTS':
         print("Failed to resolve location.")
-        return []
+
+    if json['status'] == 'REQUEST_DENIED':
+        raise Exception("Geolocation API request denied. %s" % json['error_message'])
+
     return json['results'][0]
 
 
@@ -51,6 +54,10 @@ def __fetch_location_by_coordinates(lat: float, lon: float) -> dict:
     if json['status'] == 'ZERO_RESULTS':
         print("Failed to resolve location.")
         return []
+
+    if json['status'] == 'REQUEST_DENIED':
+        raise Exception("Geolocation API request denied. %s" % json['error_message'])
+
     return json['results'][0]
 
 
