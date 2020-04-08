@@ -29,7 +29,7 @@ def resolve_location_by_address(address: str) -> Location:
 
 def __fetch_location_by_address(address: str) -> dict:
     print("Fetching location for address: %s" % address)
-    response = requests.get(GEOCODE_ADDR_URL)
+    response = requests.get(GEOCODE_ADDR_URL % (address, GOOGLE_API_KEY))
     if not response:
         raise Exception("Error fetching geolocation")
     return response.json()['results']
