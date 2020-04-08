@@ -24,7 +24,8 @@ def resolve_location_by_address(address: str) -> Location:
     coords = __parse_coords_from_response(response)
     region = __parse_region_from_response(response)
     municipality = __parse_municipality_from_response(response)
-    return Location(coords.lat, coords.lng, region, municipality)
+
+    return Location(coords['lat'], coords['lng'], region, municipality)
 
 
 def __fetch_location_by_address(address: str) -> dict:
@@ -32,7 +33,7 @@ def __fetch_location_by_address(address: str) -> dict:
     response = requests.get(GEOCODE_ADDR_URL % (address, GOOGLE_API_KEY))
     if not response:
         raise Exception("Error fetching geolocation")
-    return response.json()['results']
+    return response.json()['results'][0]
 
 
 def __fetch_location_by_coordinates(lat: float, lon: float) -> dict:
@@ -40,20 +41,22 @@ def __fetch_location_by_coordinates(lat: float, lon: float) -> dict:
     response = requests.get(GEOCODE_COORD_URL % (lat, lon, GOOGLE_API_KEY))
     if not response:
         raise Exception("Error fetching geolocation")
-    return response.json()['results']
+    return response.json()['results'][0]
 
 
 def __parse_coords_from_response(response: dict) -> dict:
-    return response[0]['geometry']['location']
+    return response['geometry']['location']
 
 
 def __parse_region_from_response(response: dict) -> str:
-    region_component = [loc for loc in response if "country" in loc['types']]
+    address_components = response["address_components"]
+    region_component = [loc for loc in address_components if "country" in loc['types']]
     if region_component:
-        return region_component[0]['address_components'][0]['long_name']
+        return region_component[0]['long_name']
 
 
 def __parse_municipality_from_response(response: dict) -> str:
-    municipality_component = [loc for loc in response if "administrative_area_level_1" in loc['types']]
+    address_components = response["address_components"]
+    municipality_component = [loc for loc in address_components if "administrative_area_level_1" in loc['types']]
     if municipality_component:
-        return municipality_component[0]['address_components'][0]['long_name']
+        return municipality_component[0]['long_name']
