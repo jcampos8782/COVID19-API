@@ -1,65 +1,13 @@
 import requests
 import csv
 from hashlib import md5
-from bs4 import BeautifulSoup, element
+from bs4 import BeautifulSoup
 from bs4.element import Tag
 from os.path import dirname, join
-from geolocation import resolve_location_by_address
+from util.geolocation import resolve_location_by_address
 from models import Location, DataSource
 from datetime import date
-
-script_dir = dirname(__file__)
-series_start_date = date(2020, 1, 21)
-
-file_dir = join(script_dir, "../../../data/downloads/wikipedia/mexico")
-base_data_file = join(script_dir, '../../../data/downloads/github/carranco-sga/mx_data.csv')
-output_dir = join(script_dir, '../../../data/processed/covid19')
-
-hash_file = join(script_dir, "hash.txt")
-state_file = join(script_dir, "states.csv")
-locations_file = join(script_dir, "locations.csv")
-parser = "lxml"
-url = "https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Mexico"
-
-data_sources = [
-    DataSource("covid19", "confirmed", join(output_dir, "confirmed_mx.csv")),
-    DataSource("covid19", "deaths", join(output_dir, "deaths_mx.csv"))
-]
-
-base_data_file_start_date = date(2020, 1, 23)
-base_data_column_suffixes = {
-    'confirmed': '',
-    'deaths': '_D'
-}
-
-# Information on each location for helping parse the page. Includes replacement text for
-# name to heading mismatches, the expected number of rows containing data, and any offsets into the row
-# results in order to properly process the data. No key means defaults are all expected.
-misspellings = {
-    'San Luis Potosi': 'San Luis Potosí',
-    'Nuevo Leon': 'Nuevo León'
-}
-
-# Take the nth row
-offsets = {
-    'default': 0,
-    'Mexico City': 1
-}
-
-# Baja California Sur makes 'Baja California' come up twice
-expected_result_count = {
-    'default': 2,
-    'Mexico City': 3,
-    'Baja California': 4
-}
-
-# Google APIs sometimes resolve to slight differences in name
-location_replacements = {
-    'Yucatán': 'Yucatan',
-    'Nuevo León': 'Nuevo Leon',
-    'Michoacan': 'Michoacán',
-    'Queretaro': 'Querétaro'
-}
+from config import *
 
 
 def main():
@@ -67,8 +15,8 @@ def main():
     __recreate_mexico_data_from_base() and exit(0)
 
     # Ensure the data has change
-    print("Loading html from %s" % url)
-    html = __scrape(url)
+    print("Loading html from %s" % MX_SCRAPER_URL)
+    html = __scrape(MX_SCRAPER_URL)
 
     print("Checking for updates...")
     new_hash = __ensure_data_has_changed_or_quit(html)
@@ -92,7 +40,7 @@ def main():
 
 
 def __update_data_files(data):
-    for source in data_sources:
+    for source in MX_PROCESSOR_DATA_SOURCES:
         with open(source.file, 'w') as file:
             for location in data:
                 formatted_location = __format_location(data[location]['location'])
@@ -100,13 +48,13 @@ def __update_data_files(data):
 
 
 def __update_hash_text(new_hash: str) -> None:
-    with open(hash_file, 'w') as file:
+    with open(MX_SCRAPER_VERSION_HASH, 'w') as file:
         file.write(new_hash)
 
 
 def __load_data() -> dict:
     locations = {}
-    for source in data_sources:
+    for source in MX_PROCESSOR_DATA_SOURCES:
         with open(source.file, encoding="utf8") as file:
             reader = csv.reader(file)
             for state, region, lat, lon, *data in reader:
@@ -120,7 +68,7 @@ def __load_data() -> dict:
 
 
 def __load_states_with_iso_codes_from_file() -> [str]:
-    with open(state_file, encoding="utf8") as file:
+    with open(MX_STATES_FILE, encoding="utf8") as file:
         return {__get_formatted_state_name(state): iso for state, iso in csv.reader(file)}
 
 
@@ -129,10 +77,10 @@ def __scrape(address: str) -> dict:
     if not response:
         raise AssertionError("No response from %s" % address)
 
-    with open(join(file_dir, "index.html"), 'w') as file:
+    with open(join(MX_SCRAPER_DOWNLOAD_DIRECTORY, "index.html"), 'w') as file:
         file.write(response.text)
 
-    soup = BeautifulSoup(response.text, parser)
+    soup = BeautifulSoup(response.text, MX_SCRAPER_PARSER)
     return soup
 
 
@@ -148,7 +96,7 @@ def __parse_data_from_rows(rows: Tag) -> dict:
 
 
 def __find_row_for_location(location: str, html: BeautifulSoup) -> []:
-    name = location if location not in misspellings else misspellings[location]
+    name = location if location not in MX_SCRAPER_WIKI_TEXT else MX_SCRAPER_WIKI_TEXT[location]
     expected = __get_expected_results_for_location(location)
     offset = __get_offset_into_result_set_for_location(location)
 
@@ -169,7 +117,7 @@ def __ensure_data_has_changed_or_quit(html: BeautifulSoup) -> str:
         raise AssertionError("Expected to find 'As of <date>' in element but found '%s'" % tags[0].text)
 
     update_hash = md5(tags[0].text.encode()).hexdigest()
-    with open(hash_file, encoding="utf8") as file:
+    with open(MX_SCRAPER_VERSION_HASH, encoding="utf8") as file:
         existing_hash = file.readline()
         if existing_hash == update_hash:
             print("Data has not been updated. Last update: %s" % tags[0].text)
@@ -180,11 +128,11 @@ def __ensure_data_has_changed_or_quit(html: BeautifulSoup) -> str:
 
 
 def __get_expected_results_for_location(loc: str) -> int:
-    return expected_result_count['default'] if loc not in expected_result_count else expected_result_count[loc]
+    return MX_SCRAPER_EXPECTED_ROWS['default'] if loc not in MX_SCRAPER_EXPECTED_ROWS else MX_SCRAPER_EXPECTED_ROWS[loc]
 
 
 def __get_offset_into_result_set_for_location(loc: str) -> int:
-    return offsets['default'] if loc not in offsets else offsets[loc]
+    return MX_SCRAPER_ROW_OFFSET['default'] if loc not in MX_SCRAPER_ROW_OFFSET else MX_SCRAPER_ROW_OFFSET[loc]
 
 
 def __format_location(location: Location) -> str:
@@ -192,21 +140,17 @@ def __format_location(location: Location) -> str:
 
 
 def __get_formatted_state_name(name: str) -> str:
-    return name if name not in location_replacements else location_replacements[name]
+    return name if name not in GOOGLE_API_LOCATION_TEXT_FOR else GOOGLE_API_LOCATION_TEXT_FOR[name]
 
 
 def __recreate_mexico_data_from_base() -> bool:
     states_to_iso = __load_states_with_iso_codes_from_file()
     locations = [__lookup_location(state) for state in states_to_iso]
 
-    with open(locations_file, 'w+') as file:
-        for location in locations:
-            file.write(format("%s\n" % __format_location(location)))
-
     base_data = __load_base_data(states_to_iso)
-    days_to_pad = (base_data_file_start_date - series_start_date).days - 1
+    days_to_pad = (MX_PROCESSOR_DATA_START_DATE - SERIES_START_DATE).days - 1
 
-    for source in data_sources:
+    for source in MX_PROCESSOR_DATA_SOURCES:
         print("Creating data file %s" % source.file)
         with open(source.file, 'w+') as file:
             for location in locations:
@@ -220,7 +164,7 @@ def __recreate_mexico_data_from_base() -> bool:
 def __lookup_location(state: str, cache={}) -> Location:
     # Try to find this location in the file
     if not cache:
-        with open(locations_file, encoding="utf8") as file:
+        with open(FILE_GEO_COORDINATES, encoding="utf8") as file:
             reader = csv.reader(file)
             for state, region, lat, lon in reader:
                 cache[state] = Location(lat, lon, region, state)
@@ -239,7 +183,7 @@ def __load_base_data(state_to_iso: dict) -> dict:
     # Rows in the base data file are by date, not by country. Convert this to series data of state -> [data]
     # The date is implied by its position in the list
     base_data = {iso: {'confirmed': [], 'deaths': []} for iso in state_to_iso.values()}
-    with open(base_data_file, encoding="utf8") as file:
+    with open(MX_PROCESSOR_DATA_FILE, encoding="utf8") as file:
         # Map the codes to indices in the csv file
         reader = csv.reader(file)
         headings = next(reader)
@@ -247,8 +191,8 @@ def __load_base_data(state_to_iso: dict) -> dict:
 
         for [*data] in reader:
             for iso in base_data:
-                c_key = format("%s%s" % (iso, base_data_column_suffixes['confirmed']))
-                d_key = format("%s%s" % (iso, base_data_column_suffixes['deaths']))
+                c_key = format("%s%s" % (iso, MX_PROCESSOR_COLUMN_SUFFIXES['confirmed']))
+                d_key = format("%s%s" % (iso, MX_PROCESSOR_COLUMN_SUFFIXES['deaths']))
                 base_data[iso]['confirmed'].append(data[headings_idx[c_key]] or '0')
                 base_data[iso]['deaths'].append(data[headings_idx[d_key]] or '0')
 

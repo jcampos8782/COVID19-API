@@ -1,12 +1,9 @@
 import csv
 from os import walk
-from os.path import join
 import hashlib
-
-from models import DataSource
-from config import DATA_DIRECTORY, META_DIRECTORY, FILE_SERIES_DEFINITIONS, FILE_GEO_COORDINATES, MONGO_INDEXES, DB_USER, DB_PASS, GOOGLE_API_KEY
-from geolocation import resolve_location_by_coordinates, Location
-import repository
+from config import *
+from util.geolocation import resolve_location_by_coordinates, Location
+from util import repository
 
 
 def main():

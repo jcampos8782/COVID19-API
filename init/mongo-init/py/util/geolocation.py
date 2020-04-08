@@ -1,6 +1,6 @@
 import requests
 from models import Location
-from config import GOOGLE_API_KEY, GEOCODE_ADDR_URL, GEOCODE_COORD_URL
+from config import GOOGLE_API_KEY, GOOGLE_API_GEOCODE_ADDR_URL, GOOGLE_API_GEOCODE_COORD_URL
 
 
 def resolve_location_by_coordinates(lat: float, lon: float) -> Location:
@@ -30,13 +30,14 @@ def resolve_location_by_address(address: str) -> Location:
 
 def __fetch_location_by_address(address: str) -> dict:
     print("Fetching location for address: %s" % address)
-    response = requests.get(GEOCODE_ADDR_URL % (address, GOOGLE_API_KEY))
+    response = requests.get(GOOGLE_API_GEOCODE_ADDR_URL % (address, GOOGLE_API_KEY))
     if not response:
         raise Exception("Error fetching geolocation")
 
     json = response.json()
     if json['status'] == 'ZERO_RESULTS':
         print("Failed to resolve location.")
+        return []
 
     if json['status'] == 'REQUEST_DENIED':
         raise Exception("Geolocation API request denied. %s" % json['error_message'])
@@ -46,7 +47,7 @@ def __fetch_location_by_address(address: str) -> dict:
 
 def __fetch_location_by_coordinates(lat: float, lon: float) -> dict:
     print("Fetching location for lat: %s lon: %s" % (lat, lon))
-    response = requests.get(GEOCODE_COORD_URL % (lat, lon, GOOGLE_API_KEY))
+    response = requests.get(GOOGLE_API_GEOCODE_COORD_URL % (lat, lon, GOOGLE_API_KEY))
     if not response:
         raise Exception("Error fetching geolocation")
 

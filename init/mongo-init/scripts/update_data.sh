@@ -79,7 +79,7 @@ echo "------------------------"
 echo "PROCESSING US DATA"
 echo "------------------------"
 
-python3  ../py/us_file_processor.py
+PYTHONPATH=../py/:$PYTHONPATH python3  ../py/preprocessors/united_states/processor.py
 cut -d',' -f1,2,3,4 ../data/processed/covid19/confirmed_us.csv >> ../data/meta/coordinates.csv
 cat ../data/processed/covid19/confirmed_us.csv >> ../data/processed/covid19/confirmed.csv
 cat ../data/processed/covid19/deaths_us.csv >> ../data/processed/covid19/deaths.csv
