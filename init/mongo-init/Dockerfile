@@ -13,8 +13,8 @@ RUN python3 -m pip install requests
 RUN mkdir data
 RUN mkdir python
 
-COPY data/meta data/meta
-COPY data/processed data/processed
+COPY ../../data/meta data/meta
+COPY ../../data/processed data/processed
 COPY py py
 
 ENV PYTHONIOENCODING=utf-8

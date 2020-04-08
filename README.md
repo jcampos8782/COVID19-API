@@ -1,16 +1,16 @@
 # COVID19-API
 
-This project contains some simple APIs for querying and searching COVID-19 data published by the 
-[John Hopkins School of Health](https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases). I make no 
-guarantees as to the accuracy of this data.
+This project includes components for downloading, indexing, querying, and browsing time series data.
+The data sets currently being downloaded pertain to the COVID-19 pandemic. The set contains global data
+indexed into MongoDB with geospatial indexes to allow for querying by location.
 
 # UI
 
-Includes a minimalistic React/Redux UI which enables searching by the user's location or by a selected region.
+A React/Redux UI with [Nivo](http://nivo.rocks) chats. I use [Material-UI](http://material-ui.com) for component styling.
 
 # API
 
-The web API generates swagger documentation which is accessible at /swagger-ui.html
+A REST API using Java/SpringBoot with a Mongo connector. Generates swagger documentation.
 
 # Database
 
@@ -23,8 +23,7 @@ See the [MongoDB](init/mongo-init) README for additional documentation
 
 # Build
 
-    For now, manually set the mongodb username and password in the app/src/main/resources/application.properties file.
-    Then run
+  All components can be built using docker-compose.
 
     ```
     DB_USER=<user> DB_PASS=<pass> docker-compose up -d
@@ -32,19 +31,20 @@ See the [MongoDB](init/mongo-init) README for additional documentation
 
 ## Containers
 
-This project creates three containers:
+This project creates five containers:
 
- 1. A SpringBoot application which provides services over the dataset
- 2. MongoDB database (container name `mongo`)
- 3. A `mongo-init` container which downloads the latest published data from the source and creates (or recreates) the 
- `cvd19` database. This container will shut down upon completion.
+ 1. An Nginx proxy serving as an API gateway and reverse proxy to the UI and API containers
+ 2. The React/Redux UI
+ 3. A SpringBoot REST API  which provides services over the dataset
+ 4. MongoDB database (container name `mongo`)
+ 5. A `mongo-init` which will populate the mongo instance
 
 ## Updating the database
 
-To update your database with the most up-to-date published data, rebuild the mongo-init container and then run the 
-container.
+To update the database, run the provided update script and then rebuild and run the mongo-init container
 
 ```
+./update_data.sh
 docker-compose build mongo-init
 DB_USER=<user> DB_PASS=<pass> docker-compose up mongo-init
 ```

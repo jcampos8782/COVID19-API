@@ -14,9 +14,10 @@ SERIES_START_DATE = date(2020, 1, 21)
 """
 DIRECTORIES
 """
-META_DIRECTORY = join(script_dir, "../data/meta")
-DATA_DIRECTORY = join(script_dir, "../data/processed")
-DOWNLOADS_DIRECTORY = join(script_dir, "../data/downloads")
+ROOT_DIR = join(script_dir, "../../../")
+META_DIRECTORY = join(ROOT_DIR, "data/meta")
+DATA_DIRECTORY = join(ROOT_DIR, "data/processed")
+DOWNLOADS_DIRECTORY = join(ROOT_DIR, "data/downloads")
 GITHUB_DIRECTORY = join(DOWNLOADS_DIRECTORY, "github")
 OUTPUT_DIRECTORY = join(DATA_DIRECTORY, "covid19")
 
@@ -51,7 +52,7 @@ MONGO_INDEXES = [
 ]
 
 """
-GOOGLE API 
+GOOGLE API
 """
 GOOGLE_API_GEOCODE_COORD_URL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false&key=%s"
 GOOGLE_API_GEOCODE_ADDR_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false&key=%s"
