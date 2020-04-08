@@ -4,7 +4,7 @@ from os.path import join
 import hashlib
 
 from models import DataSource
-from config import DATA_DIRECTORY, FILE_SERIES_DEFINITIONS, FILE_GEO_COORDINATES, MONGO_INDEXES, DB_USER, DB_PASS, GOOGLE_API_KEY
+from config import DATA_DIRECTORY, META_DIRECTORY, FILE_SERIES_DEFINITIONS, FILE_GEO_COORDINATES, MONGO_INDEXES, DB_USER, DB_PASS, GOOGLE_API_KEY
 from geolocation import resolve_location_by_coordinates, Location
 import repository
 
@@ -12,9 +12,9 @@ import repository
 def main():
     (GOOGLE_API_KEY and DB_USER and DB_PASS) or exit("GOOGLE_API_KEY, DB_USER, and DB_PASS must be set in env")
 
-    print("Checking MongoDB for existing series metadata")
+    print("Loading series and updating metadata...")
     with open(FILE_SERIES_DEFINITIONS, encoding="utf8") as file:
-        [repository.find_or_create_series(key, name) for key, name in csv.reader(file)]
+        [__create_or_update_series(key, name) for key, name in csv.reader(file)]
 
     print("Importing coordinates from %s" % FILE_GEO_COORDINATES)
     with open(FILE_GEO_COORDINATES, encoding="utf8") as file:
@@ -75,6 +75,12 @@ def __import_locations_from_coordinates_file(file) -> None:
     print("Location lookups complete. Existing: %d, Created: %d" % (found, created))
 
 
+def __create_or_update_series(key: str, name: str) -> None:
+    with open(join(META_DIRECTORY, format("%s.csv" % key)), encoding='utf8') as metadata:
+        cols = next(csv.reader(metadata))
+        repository.create_or_update_series(key, name, cols)
+
+
 # Process the data files.
 def __import_data_from_sources(sources: [DataSource]) -> None:
     documents = {}
@@ -82,16 +88,8 @@ def __import_data_from_sources(sources: [DataSource]) -> None:
         print("Processing data file %s" % source.file)
         with open(source.file, encoding="utf8") as file:
             reader = csv.reader(file)
-
-            # Update column data for series
-            # TODO: This should only have to happen once per series. Move to metadata file?
-            series = repository.find_series_by_key(source.series)
-            if not series:
-                exit("Failed to located series %s" % source.series)
-
-            repository.update_series(series, {"$set": {"cols": next(reader)[4:]}})
-
             for municipality, region, lat, lon, *data in reader:
+                series = repository.find_series_by_key(source.series)
                 location = repository.find_location(region, municipality)
                 series_key = hashlib.md5(format("%s-%s" % (source.series, location["_id"])).encode()).hexdigest()
 

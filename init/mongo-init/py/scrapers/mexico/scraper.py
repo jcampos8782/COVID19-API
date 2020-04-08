@@ -12,6 +12,8 @@ script_dir = dirname(__file__)
 series_start_date = date(2020, 1, 21)
 
 file_dir = join(script_dir, "../../../data/downloads/wikipedia/mexico")
+base_data_file = join(script_dir, '../../../data/downloads/github/carranco-sga/mx_data.csv')
+output_dir = join(script_dir, '../../../data/processed/covid19')
 
 hash_file = join(script_dir, "hash.txt")
 state_file = join(script_dir, "states.csv")
@@ -20,9 +22,15 @@ parser = "lxml"
 url = "https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Mexico"
 
 data_sources = [
-    DataSource("covid19", "confirmed", join(file_dir, "confirmed_mx.csv")),
-    DataSource("covid19", "deaths", join(file_dir, "deaths_mx.csv"))
+    DataSource("covid19", "confirmed", join(output_dir, "confirmed_mx.csv")),
+    DataSource("covid19", "deaths", join(output_dir, "deaths_mx.csv"))
 ]
+
+base_data_file_start_date = date(2020, 1, 23)
+base_data_column_suffixes = {
+    'confirmed': '',
+    'deaths': '_D'
+}
 
 # Information on each location for helping parse the page. Includes replacement text for
 # name to heading mismatches, the expected number of rows containing data, and any offsets into the row
@@ -45,14 +53,22 @@ expected_result_count = {
     'Baja California': 4
 }
 
+# Google APIs sometimes resolve to slight differences in name
+location_replacements = {
+    'Yucatán': 'Yucatan',
+    'Nuevo León': 'Nuevo Leon',
+    'Michoacan': 'Michoacán',
+    'Queretaro': 'Querétaro'
+}
+
 
 def main():
     # To recreate the data templates, uncomment this line
-    # __create_mexico_templates() and exit(0)
+    __recreate_mexico_data_from_base() and exit(0)
 
     # Ensure the data has change
     print("Loading html from %s" % url)
-    html = __scrape_page(url)
+    html = __scrape(url)
 
     print("Checking for updates...")
     new_hash = __ensure_data_has_changed_or_quit(html)
@@ -91,7 +107,7 @@ def __update_hash_text(new_hash: str) -> None:
 def __load_data() -> dict:
     locations = {}
     for source in data_sources:
-        with open(source.file) as file:
+        with open(source.file, encoding="utf8") as file:
             reader = csv.reader(file)
             for state, region, lat, lon, *data in reader:
                 if state not in locations:
@@ -103,13 +119,12 @@ def __load_data() -> dict:
     return locations
 
 
-def __load_states_from_file(filename: str) -> [str]:
-    with open(filename, encoding="utf8") as file:
-        reader = csv.reader(file)
-        return next(reader)
+def __load_states_with_iso_codes_from_file() -> [str]:
+    with open(state_file, encoding="utf8") as file:
+        return {__get_formatted_state_name(state): iso for state, iso in csv.reader(file)}
 
 
-def __scrape_page(address: str) -> dict:
+def __scrape(address: str) -> dict:
     response = requests.get(address)
     if not response:
         raise AssertionError("No response from %s" % address)
@@ -176,21 +191,68 @@ def __format_location(location: Location) -> str:
     return format("%s,%s,%s,%s" % (location.municipality, location.region, location.lat, location.lon))
 
 
-def __create_mexico_templates() -> bool:
-    locations = [resolve_location_by_address("%s, %s" % (state, 'Mexico')) for state in __load_states_from_file(state_file)]
+def __get_formatted_state_name(name: str) -> str:
+    return name if name not in location_replacements else location_replacements[name]
+
+
+def __recreate_mexico_data_from_base() -> bool:
+    states_to_iso = __load_states_with_iso_codes_from_file()
+    locations = [__lookup_location(state) for state in states_to_iso]
+
     with open(locations_file, 'w+') as file:
         for location in locations:
             file.write(format("%s\n" % __format_location(location)))
 
-    days_to_fabricate = (date.today() - series_start_date).days - 1
+    base_data = __load_base_data(states_to_iso)
+    days_to_pad = (base_data_file_start_date - series_start_date).days - 1
 
     for source in data_sources:
-        print("Creating template file %s" % source.file)
+        print("Creating data file %s" % source.file)
         with open(source.file, 'w+') as file:
             for location in locations:
-                file.write(format("%s,%s\n" % (__format_location(location), ",".join(["0"] * days_to_fabricate))))
+                iso = states_to_iso[location.municipality]
+                data = (['0'] * days_to_pad) + base_data[iso][source.component]
+                file.write(format("%s,%s\n" % (__format_location(location), ",".join(data))))
 
     return True
+
+
+def __lookup_location(state: str, cache={}) -> Location:
+    # Try to find this location in the file
+    if not cache:
+        with open(locations_file, encoding="utf8") as file:
+            reader = csv.reader(file)
+            for state, region, lat, lon in reader:
+                cache[state] = Location(lat, lon, region, state)
+
+    # Some lookups resolve to a different name
+    cached_name = __get_formatted_state_name(state)
+    if cached_name in cache:
+        return cache[cached_name]
+
+    location = resolve_location_by_address("%s, %s" % (state, 'Mexico'))
+    cache[cached_name] = location
+    return location
+
+
+def __load_base_data(state_to_iso: dict) -> dict:
+    # Rows in the base data file are by date, not by country. Convert this to series data of state -> [data]
+    # The date is implied by its position in the list
+    base_data = {iso: {'confirmed': [], 'deaths': []} for iso in state_to_iso.values()}
+    with open(base_data_file, encoding="utf8") as file:
+        # Map the codes to indices in the csv file
+        reader = csv.reader(file)
+        headings = next(reader)
+        headings_idx = {headings[idx]: idx for idx in range(len(headings))}
+
+        for [*data] in reader:
+            for iso in base_data:
+                c_key = format("%s%s" % (iso, base_data_column_suffixes['confirmed']))
+                d_key = format("%s%s" % (iso, base_data_column_suffixes['deaths']))
+                base_data[iso]['confirmed'].append(data[headings_idx[c_key]] or '0')
+                base_data[iso]['deaths'].append(data[headings_idx[d_key]] or '0')
+
+    return base_data
 
 
 main()

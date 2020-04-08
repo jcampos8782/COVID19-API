@@ -22,6 +22,7 @@ MONGO_INDEXES = [
 
 GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY")
 
+META_DIRECTORY = join(script_dir, "../data/meta")
 DATA_DIRECTORY = join(script_dir, "../data/processed")
 FILE_GEO_COORDINATES = join(script_dir, "../data/meta/coordinates.csv")
 FILE_SERIES_DEFINITIONS = join(script_dir, "../data/meta/series.csv")
@@ -32,5 +33,5 @@ GEOCODE_ADDR_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=%s
 US_PROCESSOR_COLUMN_DEFINITIONS = {'region': 6, 'data': {'confirmed': 11, 'deaths': 12}}
 US_PROCESSOR_OUTPUT_FILE_DIR = join(script_dir, "../data/processed/covid19")
 US_PROCESSOR_INPUT_FILES = [
-    ("confirmed", join(script_dir, "../data/downloads/jhu/covid19/confirmed_us.csv")),
-    ("deaths", join(script_dir, "../data/downloads/jhu/covid19/deaths_us.csv"))]
+    ("confirmed", join(script_dir, "../data/downloads/github/CSSEGISandData/confirmed_us.csv")),
+    ("deaths", join(script_dir, "../data/downloads/github/CSSEGISandData/deaths_us.csv"))]

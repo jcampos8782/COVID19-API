@@ -5,21 +5,26 @@ from config import MONGO_CONNECTION_STR, DB_NAME
 db = pymongo.MongoClient(MONGO_CONNECTION_STR)[DB_NAME]
 
 
-def find_or_create_series(key: str, name: str) -> dict:
+def create_or_update_series(key: str, name: str, cols: []) -> int:
     series = db["series"].find_one({"key": __generate_series_key(key)})
     if series:
+        update_series(series, {"$set": {"cols": cols, 'name': name}})
         return series["_id"]
 
     print("Creating new series %s" % name)
+    return create_series(key, name, cols)
+
+
+def find_series_by_key(key: str) -> dict:
+    return db["series"].find_one({"key": __generate_series_key(key)})
+
+
+def create_series(key: str, name: str, cols: []) -> int:
     return db['series'].insert_one({
         "key": __generate_series_key(key),
         "name": name,
         "cols": []
     }).inserted_id
-
-
-def find_series_by_key(key: str) -> dict:
-    return db["series"].find_one({"key": __generate_series_key(key)})
 
 
 def update_series(series: dict, query: dict) -> None:
