@@ -33,7 +33,12 @@ def __fetch_location_by_address(address: str) -> dict:
     response = requests.get(GEOCODE_ADDR_URL % (address, GOOGLE_API_KEY))
     if not response:
         raise Exception("Error fetching geolocation")
-    return response.json()['results'][0]
+
+    json = response.json()
+    if json['status'] == 'ZERO_RESULTS':
+        print("Failed to resolve location.")
+        return []
+    return json['results'][0]
 
 
 def __fetch_location_by_coordinates(lat: float, lon: float) -> dict:
@@ -41,7 +46,12 @@ def __fetch_location_by_coordinates(lat: float, lon: float) -> dict:
     response = requests.get(GEOCODE_COORD_URL % (lat, lon, GOOGLE_API_KEY))
     if not response:
         raise Exception("Error fetching geolocation")
-    return response.json()['results'][0]
+
+    json = response.json()
+    if json['status'] == 'ZERO_RESULTS':
+        print("Failed to resolve location.")
+        return []
+    return json['results'][0]
 
 
 def __parse_coords_from_response(response: dict) -> dict:

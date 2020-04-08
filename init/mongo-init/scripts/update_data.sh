@@ -81,6 +81,20 @@ echo "------------------------"
 
 
 echo "------------------------"
+echo "PROCESSING MEXICO DATA"
+echo "------------------------"
+
+PYTHONPATH=../py/:$PYTHONPATH python3  ../py/scrapers/mexico/scraper.py
+cut -d',' -f1,2,3,4 ../data/downloads/wikipedia/mexico/confirmed_mx.csv >> ../data/meta/coordinates.csv
+cat ../data/downloads/wikipedia/mexico/confirmed_mx.csv >> ../data/processed/covid19/confirmed.csv
+cat ../data/downloads/wikipedia/mexico/deaths_mx.csv >> ../data/processed/covid19/deaths.csv
+
+echo "------------------------"
+echo "MEXICO DATA PROCESSING COMPLETE"
+echo "------------------------"
+
+
+echo "------------------------"
 echo "COMPLETE!"
 echo "------------------------"
 echo ""
