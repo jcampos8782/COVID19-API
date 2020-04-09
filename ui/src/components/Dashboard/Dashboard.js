@@ -187,10 +187,12 @@ export default class Dashboard extends React.Component {
       regionData.sort((a,b) => a.id < b.id ? 1 : -1);
 
       let otherRegionSums = Array.from({length: meta.columns.length}, n => 0);
-      otherRegionNames.forEach((region,idx) => {
-        otherRegionSums[idx] += series.data.regions[region].daily[idx]
+      otherRegionNames.forEach((region) => {
+        series.data.regions[region].daily.forEach((val,idx) => {
+          otherRegionSums[idx] += val;
+        })
       })
-
+      
       // Add other to the front of the array
       regionData.unshift({
         id: "Other",
