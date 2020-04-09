@@ -66,6 +66,7 @@ const mapStateToProps = state => {
 
   return {
     view: {
+      theme: state.theme,
       selectedTabId: state.filters.selectedTabId,
       icons: {
         confirmed: { className: "fas fa-head-side-cough", color: "white" },

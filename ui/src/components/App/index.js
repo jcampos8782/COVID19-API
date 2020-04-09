@@ -7,20 +7,23 @@ import {
   fetchGeolocation,
   fetchSeriesList,
   fetchRegions,
-  fetchDefaultSeries
+  fetchDefaultSeries,
+  toggleTheme
 } from '../../actions';
 
 const mapStateToProps = state => ({
   filters: state.filters,
   loading: state.loading,
-  location: state.location
+  location: state.location,
+  theme: state.theme
 });
 
 const mapStateToDispatch = dispatch => ({
   fetchGeolocation: () => dispatch(fetchGeolocation()),
   fetchSeriesList: () => dispatch(fetchSeriesList()),
   fetchRegions: () => dispatch(fetchRegions()),
-  fetchDefaultSeries: () => dispatch(fetchDefaultSeries())
+  fetchDefaultSeries: () => dispatch(fetchDefaultSeries()),
+  toggleTheme: () => dispatch(toggleTheme())
 });
 
 const styles = theme => ({
@@ -30,10 +33,19 @@ const styles = theme => ({
     display: 'inline-block',
     top: 75
   },
+  appbar: {
+    backgroundColor: theme.palette.background.dark
+  },
   navLink: {
     width: 'fit-content',
     color: theme.palette.primary.contrastText
+  },
+  navButton: {
+    color: theme.palette.secondary.contrastText,
+    "&:hover": {
+      background: theme.palette.secondary.light
+    }
   }
 });
 
-export default connect(mapStateToProps, mapStateToDispatch)(withStyles(styles)(geolocated()(App)));
+export default withStyles(styles)(connect(mapStateToProps, mapStateToDispatch)(geolocated()(App)));

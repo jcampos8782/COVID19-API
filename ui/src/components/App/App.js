@@ -14,8 +14,8 @@ import BottomNav from '../BottomNav';
 import Dashboard from '../Dashboard';
 import Filters from '../Filters';
 
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { light, dark } from '../../styles/themes';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 export default class App extends React.Component {
     componentDidMount() {
@@ -30,22 +30,26 @@ export default class App extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, theme } = this.props;
+        let themeIconClass = theme === 'light' ? 'far fa-lightbulb' : 'fas fa-lightbulb';
         return (
-            <ThemeProvider theme={createMuiTheme({ palette: { type: 'light'  }})}>
+            <MuiThemeProvider theme={theme === 'light' ? light : dark}>
               <CssBaseline />
-              <AppBar position='fixed'>
+              <AppBar className={classes.appbar} position='fixed'>
                 <Toolbar>
                   <Button
                     variant="contained"
-                    color="primary"
-                    className={classes.navLink}
+                    color="secondary"
+                    className={classes.navButton}
                     aria-label="Donate"
                     startIcon={<Icon class="fab fa-paypal" />}
                     onClick={() => window.open('https://paypal.me/JasonCampos')}>
                     Donate
                   </Button>
                   <Grid container alignItems="center" justify="flex-end" spacing={1} ><div id="paypal-button-container"></div>
+                    <IconButton className={classes.navLink} aria-label="theme" onClick={this.props.toggleTheme}>
+                        <Icon className={themeIconClass} />
+                    </IconButton>
                     <IconButton className={classes.navLink} aria-label="github" onClick={() => window.open('http://github.com/jcampos8782/covid19-api')}>
                         <Icon className="fab fa-github" />
                     </IconButton>
@@ -68,7 +72,7 @@ export default class App extends React.Component {
                 <Dashboard />
               </Grid>
               <BottomNav/>
-            </ThemeProvider>
+            </MuiThemeProvider>
         );
     }
 }

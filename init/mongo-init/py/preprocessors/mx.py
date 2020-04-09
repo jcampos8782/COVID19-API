@@ -45,6 +45,7 @@ def __load_base_data(state_to_iso: dict) -> dict:
 
     return base_data
 
+
 def __load_states_with_iso_codes_from_file() -> [str]:
     with open(MX_STATES_FILE, encoding="utf8") as file:
         return {__get_formatted_state_name(state): iso for state, iso in csv.reader(file)}

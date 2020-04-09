@@ -35,6 +35,7 @@ export default class Dashboard extends React.Component {
         </Grid>
         <Grid item style={{height:300}} xs={12}>
           <TimeSeriesLineChart
+            theme={view.theme}
             title={series.id}
             data={[
               {
@@ -144,6 +145,7 @@ export default class Dashboard extends React.Component {
           data.map(series => (
             <Grid item key={`${series.id}-recent`} style={{height:300}} xs={12} md={12} lg={6}>
               <TimeSeriesLineChart
+                theme={view.theme}
                 title={series.id}
                 data={[
                   {
@@ -201,6 +203,7 @@ export default class Dashboard extends React.Component {
       return (
         <Grid item key={`${series.id}-subregions`} style={{height:300}} sm={12} md={12}>
           <TimeSeriesLineChart
+            theme={view.theme}
             title={series.id}
             data={regionData}
           />

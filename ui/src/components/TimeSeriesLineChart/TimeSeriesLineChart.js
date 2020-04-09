@@ -1,13 +1,30 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
+import Icon from '@material-ui/core/Icon';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
-const DEFAULT_COLOR_SCHEME = "nivo";
+
+const themes = {
+  light: {
+    colors: 'category10',
+    text: 'black'
+  },
+  dark: {
+    colors: 'spectral',
+    text: 'white'
+  }
+};
 
 export default class TimeSeriesLineChart extends React.Component {
 
   render() {
-    const { data, view } = this.props;
+    const { data, theme } = this.props;
 
     if (data.length === 0) {
       return <div/>
@@ -27,11 +44,43 @@ export default class TimeSeriesLineChart extends React.Component {
       <ResponsiveLine
         margin={{ top: 0, right: 30, bottom:80, left: 50 }}
         data={data}
-        colors={{ scheme: view && view.scheme ? view.scheme : DEFAULT_COLOR_SCHEME}}
+        colors={{scheme: themes[theme].colors}}
+        theme={{
+          axis: {
+            ticks: {
+              text: {
+                fill: themes[theme].text
+              }
+            }
+          }
+        }}
+        sliceTooltip={({slice}) => {
+          // All dates for a slice are the same
+          let date = slice.points[0].data.xFormatted;
+          return (
+            <Paper style={{padding: 3}}>
+              <Typography variant='button' display="block">{date}</Typography>
+              <List dense style={{padding:0}}>
+              {
+                slice.points.map(point => (
+                  <ListItem key={point.id} style={{padding: 0}}alignItems="flex-start" justify="flex-start">
+                    <ListItemIcon style={{marginTop: 10, minWidth:15}}>
+                      <Icon fontSize="small" className="fas fa-circle xs" style={{color: point.serieColor, fontSize: ".75em", paddingRight: 0}}/>
+                    </ListItemIcon>
+                    <ListItemText>
+                        <strong>{point.serieId}</strong>: {point.data.yFormatted}
+                    </ListItemText>
+                  </ListItem>
+                ))
+              }
+              </List>
+            </Paper>
+          )
+        }}
         xScale={{
             type: 'time',
             format: '%Y-%m-%d',
-            precision: 'day',
+            precision: 'day'
         }}
         yScale={{
             type: 'linear',
@@ -45,17 +94,19 @@ export default class TimeSeriesLineChart extends React.Component {
         axisBottom={{
             format: '%b %d',
             tickSize: 15,
-            tickValues: maxSeriesLength > 7 ? 'every 7 days' : 'every day'
+            tickValues: maxSeriesLength > 7 ? 'every 7 days' : 'every day',
+            itemTextColor: themes[theme].text
         }}
-        pointSize={3}
+        pointSize={5}
         pointBorderWidth={1}
         pointBorderColor={{
             from: 'color',
-            modifiers: [['darker', 0.3]],
+            modifiers: [['darker', 0.5]],
         }}
         useMesh={true}
-        enableSlices={false}
-        enableCrosshair={true}
+        enableSlices="x"
+        enableCrosshair="x"
+        animate={true}
         legends={[
           {
               anchor: 'top-left',
@@ -71,6 +122,7 @@ export default class TimeSeriesLineChart extends React.Component {
               symbolSize: 12,
               symbolShape: 'circle',
               symbolBorderColor: 'rgba(0, 0, 0, .5)',
+              itemTextColor: themes[theme].text,
               effects: [
                   {
                       on: 'hover',
