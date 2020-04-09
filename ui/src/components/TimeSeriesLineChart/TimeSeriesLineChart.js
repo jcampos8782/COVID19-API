@@ -16,7 +16,7 @@ const themes = {
     text: 'black'
   },
   dark: {
-    colors: 'spectral',
+    colors: 'set3',
     text: 'white'
   }
 };

@@ -6,11 +6,11 @@ import orange from '@material-ui/core/colors/orange'
 export const light = createMuiTheme({
   palette: {
     type: 'light',
-    secondary: {
-      main: orange[400]
-    },
     primary: {
       main: blueGrey[600]
+    },
+    secondary: {
+      main: orange[400]
     }
   }
 });
@@ -21,14 +21,9 @@ export const dark = createMuiTheme({
     type: 'dark',
     primary: {
       main: blueGrey[800],
-      action: {
-        main: '#ff7f50'
-      },
-      cards: {
-        secondary: {
-          main: '#696969'
-        }
-      }
+    },
+    secondary: {
+      main: orange[600]
     }
   }
 });
