@@ -73,7 +73,6 @@ PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/prepr
 cut -d',' -f1,2,3,4 ./data/processed/covid19/confirmed_us.csv >> ./data/meta/coordinates.csv
 cat ./data/processed/covid19/confirmed_us.csv >> ./data/processed/covid19/confirmed.csv
 cat ./data/processed/covid19/deaths_us.csv >> ./data/processed/covid19/deaths.csv
-rm ./data/processed/covid19/confirmed_us.csv ./data/processed/covid19/deaths_us.csv
 
 echo "------------------------"
 echo "US DATA PROCESSING COMPLETE"
@@ -88,7 +87,6 @@ PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/prepr
 cut -d',' -f1,2,3,4 ./data/processed/covid19/confirmed_mx.csv >> ./data/meta/coordinates.csv
 cat ./data/processed/covid19/confirmed_mx.csv >> ./data/processed/covid19/confirmed.csv
 cat ./data/processed/covid19/deaths_mx.csv >> ./data/processed/covid19/deaths.csv
-rm ./data/processed/covid19/confirmed_mx.csv ./data/processed/covid19/deaths_mx.csv
 
 echo "------------------------"
 echo "MEXICO DATA PROCESSING COMPLETE"
@@ -107,6 +105,12 @@ cut -d',' -f1,2,3,4 ./data/processed/covid19/confirmed_mx.csv >> ./data/meta/coo
 echo "Extracting COVID-19 columns"
 cut -d ',' -f 5- ./data/downloads/github/CSSEGISandData/confirmed_global.csv | head -n 1 > ./data/meta/covid19.csv
 
+echo "------------------------"
+echo "CLEANING UP..."
+echo "------------------------"
+
+rm ./data/processed/covid19/confirmed_us.csv ./data/processed/covid19/deaths_us.csv
+rm ./data/processed/covid19/confirmed_mx.csv ./data/processed/covid19/deaths_mx.csv
 
 echo "------------------------"
 echo "COMPLETE!"
