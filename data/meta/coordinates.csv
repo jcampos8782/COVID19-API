@@ -32,14 +32,14 @@ Western Australia,Australia,-31.9505,115.8605
 ,Burkina Faso,12.2383,-1.5616
 ,Cabo Verde,16.5388,-23.0418
 ,Cambodia,11.55,104.9167
-,Cameroon,3.8480000000000003,11.5021
+,Cameroon,3.848,11.5021
 Alberta,Canada,53.9333,-116.5765
 British Columbia,Canada,49.2827,-123.1207
 Grand Princess,Canada,37.6489,-122.6655
 Manitoba,Canada,53.7609,-98.8139
 New Brunswick,Canada,46.5653,-66.4619
 Newfoundland and Labrador,Canada,53.1355,-57.6604
-Nova Scotia,Canada,44.681999999999995,-63.7443
+Nova Scotia,Canada,44.682,-63.7443
 Ontario,Canada,51.2538,-85.3232
 Prince Edward Island,Canada,46.5107,-63.4168
 Quebec,Canada,52.9399,-73.5491
@@ -57,8 +57,8 @@ Guangxi,China,23.8298,108.7881
 Guizhou,China,26.8154,106.8748
 Hainan,China,19.1959,109.7453
 Hebei,China,39.549,116.1306
-Heilongjiang,China,47.861999999999995,127.7615
-Henan,China,33.882,113.61399999999999
+Heilongjiang,China,47.862,127.7615
+Henan,China,33.882,113.614
 Hong Kong,China,22.3,114.2
 Hubei,China,30.9756,112.2707
 Hunan,China,27.6104,111.7088
@@ -72,13 +72,13 @@ Ningxia,China,37.2692,106.1655
 Qinghai,China,35.7452,95.9956
 Shaanxi,China,35.1917,108.8701
 Shandong,China,36.3427,118.1498
-Shanghai,China,31.201999999999998,121.4491
+Shanghai,China,31.202,121.4491
 Shanxi,China,37.5777,112.2922
 Sichuan,China,30.6171,102.7103
 Tianjin,China,39.3054,117.323
 Tibet,China,31.6927,88.0924
 Xinjiang,China,41.1129,85.2401
-Yunnan,China,24.974,101.48700000000001
+Yunnan,China,24.974,101.487
 Zhejiang,China,29.1832,120.0934
 ,Colombia,4.5709,-74.2973
 ,Congo (Brazzaville),-4.0383,21.7587
@@ -89,7 +89,7 @@ Zhejiang,China,29.1832,120.0934
 ,Diamond Princess,0.0,0.0
 ,Cuba,22.0,-80.0
 ,Cyprus,35.1264,33.4299
-,Czechia,49.8175,15.472999999999999
+,Czechia,49.8175,15.473
 Faroe Islands,Denmark,61.8926,-6.9118
 Greenland,Denmark,71.7069,-42.6043
 ,Denmark,56.2639,9.5018
@@ -231,17 +231,17 @@ Montserrat,United Kingdom,16.7425,-62.1874
 ,Zimbabwe,-20.0,30.0
 Diamond Princess,Canada,0.0,0.0
 ,Dominica,15.415,-61.371
-,Grenada,12.1165,-61.678999999999995
+,Grenada,12.1165,-61.679
 ,Mozambique,-18.665695,35.529562
-,Syria,34.802075,38.996815000000005
+,Syria,34.802075,38.99681500000001
 ,Timor-Leste,-8.874217,125.727539
 ,Belize,13.1939,-59.5432
 Recovered,Canada,0.0,0.0
-,Laos,19.856270000000002,102.495496
+,Laos,19.85627,102.495496
 ,Libya,26.3351,17.228331
 ,West Bank and Gaza,31.9522,35.2332
 ,Guinea-Bissau,11.8037,-15.1804
-,Mali,17.570692,-3.9961660000000006
+,Mali,17.570692,-3.996166000000001
 ,Saint Kitts and Nevis,17.357822,-62.782998
 Northwest Territories,Canada,64.8255,-124.8457
 Yukon,Canada,64.2823,-135.0
@@ -249,7 +249,7 @@ Yukon,Canada,64.2823,-135.0
 ,Burma,21.9162,95.956
 Anguilla,United Kingdom,18.2206,-63.0686
 British Virgin Islands,United Kingdom,18.4207,-64.64
-Turks and Caicos Islands,United Kingdom,21.694000000000003,-71.7979
+Turks and Caicos Islands,United Kingdom,21.694000000000006,-71.7979
 ,MS Zaandam,0.0,0.0
 ,Botswana,-22.3285,24.6849
 ,Burundi,-3.3731,29.9189
@@ -258,9 +258,99 @@ Unknown,Netherlands,12.1784,-68.2385
 ,Malawi,-13.254307999999998,34.301525
 Falkland Islands (Malvinas),United Kingdom,-51.7963,-59.5236
 Saint Pierre and Miquelon,France,46.8852,-56.3159
-,South Sudan,6.877000000000001,31.307
+,South Sudan,6.877000000000002,31.307
 ,Western Sahara,24.2155,-12.8858
 ,Sao Tome and Principe,0.18636,6.613081
+American Samoa,United States,-14.270972,-170.132217
+Guam,United States,13.4769474,144.7425932
+Northern Mariana Islands,United States,15.0979,145.6739
+Puerto Rico,United States,18.4238478,-66.0648787
+Virgin Islands,United States,18.335765,-64.896335
+Alabama,United States,32.3182314,-86.902298
+Alaska,United States,64.2008413,-149.4936733
+Arizona,United States,34.0489281,-111.0937311
+Arkansas,United States,35.20105,-91.8318334
+California,United States,36.778261,-119.4179324
+Colorado,United States,39.5500507,-105.7820674
+Connecticut,United States,41.6032207,-73.087749
+Delaware,United States,38.9108325,-75.52766989999999
+District of Columbia,United States,38.9071923,-77.0368707
+Florida,United States,27.6648274,-81.5157535
+Georgia,United States,32.1656221,-82.9000751
+Hawaii,United States,19.8967662,-155.5827818
+Idaho,United States,44.0682019,-114.7420408
+Illinois,United States,40.6331249,-89.3985283
+Indiana,United States,40.2671941,-86.1349019
+Iowa,United States,41.8780025,-93.097702
+Kansas,United States,39.011902,-98.4842465
+Kentucky,United States,37.8393332,-84.2700179
+Louisiana,United States,30.9842977,-91.96233269999999
+Maine,United States,45.253783,-69.4454689
+Maryland,United States,39.0457549,-76.64127119999999
+Massachusetts,United States,42.4072107,-71.3824374
+Michigan,United States,44.3148443,-85.60236429999999
+Minnesota,United States,46.729553,-94.6858998
+Mississippi,United States,32.3546679,-89.3985283
+Missouri,United States,37.9642529,-91.8318334
+Montana,United States,46.8796822,-110.3625658
+Nebraska,United States,41.4925374,-99.9018131
+Nevada,United States,38.8026097,-116.419389
+New Hampshire,United States,43.1938516,-71.5723953
+New Jersey,United States,40.0583238,-74.4056612
+New Mexico,United States,34.5199402,-105.8700901
+New York,United States,40.7127753,-74.0059728
+North Carolina,United States,35.7595731,-79.01929969999999
+North Dakota,United States,47.5514926,-101.0020119
+Ohio,United States,40.4172871,-82.90712300000001
+Oklahoma,United States,35.0077519,-97.092877
+Oregon,United States,43.8041334,-120.5542012
+Pennsylvania,United States,41.2033216,-77.1945247
+Rhode Island,United States,41.5800945,-71.4774291
+South Carolina,United States,33.836081,-81.1637245
+South Dakota,United States,43.9695148,-99.9018131
+Tennessee,United States,35.5174913,-86.5804473
+Texas,United States,31.9685988,-99.9018131
+Utah,United States,39.3209801,-111.0937311
+Vermont,United States,44.5588028,-72.57784149999999
+Virginia,United States,37.4315734,-78.6568942
+Washington,United States,47.7510741,-120.7401385
+West Virginia,United States,38.5976262,-80.4549026
+Wisconsin,United States,43.7844397,-88.7878678
+Wyoming,United States,43.0759678,-107.2902839
+Diamond Princess,United States,0.0,0.0
+Grand Princess,United States,37.6489,-122.6655
+Aguascalientes,Mexico,21.8852562,-102.2915677
+Baja California,Mexico,30.8406338,-115.2837585
+Baja California Sur,Mexico,26.0444446,-111.6660725
+Campeche,Mexico,19.8301251,-90.5349087
+Coahuila,Mexico,27.058676,-101.7068294
+Colima,Mexico,19.2452342,-103.7240868
+Chiapas,Mexico,16.7569318,-93.12923529999999
+Chihuahua,Mexico,28.6329957,-106.0691004
+Durango,Mexico,24.0277202,-104.6531759
+Mexico City,Mexico,19.4326077,-99.133208
+Guanajuato,Mexico,21.0190145,-101.2573586
+Guerrero,Mexico,17.4391926,-99.54509739999999
+Hidalgo,Mexico,20.0910963,-98.7623874
+Jalisco,Mexico,20.6595382,-103.3494376
+State of Mexico,Mexico,19.4968732,-99.72326729999999
+Michoacán,Mexico,19.5665192,-101.7068294
+Morelos,Mexico,18.6813049,-99.1013498
+Nayarit,Mexico,21.7513844,-104.8454619
+Nuevo Leon,Mexico,25.592172,-99.99619469999999
+Oaxaca,Mexico,17.0731842,-96.7265889
+Puebla,Mexico,19.0414398,-98.2062727
+Querétaro,Mexico,20.5887932,-100.3898881
+Quintana Roo,Mexico,19.1817393,-88.4791376
+San Luis Potosi,Mexico,22.1564699,-100.9855409
+Sinaloa,Mexico,25.1721091,-107.4795173
+Sonora,Mexico,29.2972247,-110.3308814
+Tabasco,Mexico,17.8409173,-92.6189273
+Tamaulipas,Mexico,24.26694,-98.8362755
+Tlaxcala,Mexico,19.318154,-98.2374954
+Veracruz,Mexico,19.173773,-96.1342241
+Yucatan,Mexico,20.7098786,-89.0943377
+Zacatecas,Mexico,22.7708555,-102.5832426
 American Samoa,United States,-14.270972,-170.132217
 Guam,United States,13.4769474,144.7425932
 Northern Mariana Islands,United States,15.0979,145.6739
