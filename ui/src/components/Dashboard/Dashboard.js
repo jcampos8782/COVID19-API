@@ -68,25 +68,37 @@ export default class Dashboard extends React.Component {
           <Grid item xs={12} md={4}>
             <Grid container spacing={1} style={{paddingBottom:10, paddingTop: 10}}>
               {
-                data.map(series => (
-                  <Grid key={series.id} item xs={6} sm={6}>
-                    <Card variant="outlined" color="secondary">
-                      <CardHeader
-                        style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
-                         avatar={
-                           <Avatar className={classes[series.id]} style={{marginRight: -11}}>
-                             <Icon className={view.icons[series.id].className}  />
-                           </Avatar>
-                         }
-                         title=<Typography variant="h5" style={{fontSize: '1.25rem'}}> {series.current} </Typography>
-                         subheader="Total"
-                       />
-                      <CardContent className={classes.cardBody}>
-                        <Typography variant="overline">{series.id}</Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))
+                data.map(series => {
+                  let last = series.current;
+                  let previous = series.data.aggregates.total[series.data.aggregates.total.length - 2];
+                  let d = previous === 0 ? 1 : previous;
+                  let percentChange = ((last - previous)/d * 100).toFixed(1);
+                  let iconClass = percentChange >= 0 ? `${classes.red} fas fa-arrow-up xs` : `${classes.green} fas fa-arrow-down xs`;
+                  let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
+
+                  return (
+                      <Grid key={series.id} item xs={6} sm={6}>
+                      <Card variant="outlined" color="secondary">
+                        <CardHeader
+                          style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
+                           avatar={
+                             <Avatar className={classes[series.id]} style={{marginRight: -11}}>
+                               <Icon className={view.icons[series.id].className}  />
+                             </Avatar>
+                           }
+                           title=<Typography variant="h5" style={{fontSize: '1.25rem'}}> {series.current} </Typography>
+                           subheader="Total"
+                           action={
+                             <Typography variant="caption" style={{fontSize: '0.75rem'}}> {percentChange}% {diffIcon}</Typography>
+                           }
+                         />
+                        <CardContent className={classes.cardBody}>
+                          <Typography variant="overline">{series.id}</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  )
+                })
               }
             </Grid>
           </Grid>
@@ -98,9 +110,9 @@ export default class Dashboard extends React.Component {
                   let recentData = series.data.recent.data;
                   let last = recentData[recentData.length - 1];
                   let previous = recentData[recentData.length - 2];
-
-                  let recentDiff = last - previous;
-                  let iconClass = recentDiff >= 0 ? `${classes.red} fas fa-arrow-up xs` : `${classes.green} fas fa-arrow-down xs`;
+                  let d = previous === 0 ? 1 : previous;
+                  let percentChange = ((last - previous)/d * 100).toFixed(1);
+                  let iconClass = percentChange >= 0 ? `${classes.red} fas fa-arrow-up xs` : `${classes.green} fas fa-arrow-down xs`;
                   let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
 
                   return (
@@ -124,7 +136,7 @@ export default class Dashboard extends React.Component {
                               </Typography>
                             }
                             action={
-                              <Typography variant="caption" style={{fontSize: '0.75rem'}}> {recentDiff} {diffIcon}</Typography>
+                              <Typography variant="caption" style={{fontSize: '0.75rem'}}> {percentChange}% {diffIcon}</Typography>
                             }
                         />
                         <CardContent className={classes.cardBody}>
@@ -192,7 +204,7 @@ export default class Dashboard extends React.Component {
           otherRegionSums[idx] += val;
         })
       })
-      
+
       // Add other to the front of the array
       regionData.unshift({
         id: "Other",
