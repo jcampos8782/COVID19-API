@@ -8,7 +8,9 @@ services:
       - api
       - ui
   api:
-    build: ./app
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
     container_name: api
     ports:
       - 8080
@@ -20,7 +22,8 @@ services:
       - DB_NAME=cvd19
   ui:
     build:
-      context: ./ui
+      context: .
+      dockerfile: ./docker/ui/Dockerfile
       args:
         - SERVER_URL=${SERVER_URL}
         - GOOGLE_API_KEY=${GOOGLE_API_KEY}
@@ -36,7 +39,9 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
   mongo-init:
-    build: ./init/mongo-init
+    build:
+      context: .
+      dockerfile: ./docker/mongo-init/Dockerfile
     container_name: mongo-init
     depends_on:
       - mongo
