@@ -65,8 +65,8 @@ export default class App extends React.Component {
               <Backdrop open={this.props.loading}>
                 <CircularProgress color="inherit" />
               </Backdrop>
-              <Grid container className={classes.body} alignItems="flex-start" justify="flex-start">
-                <Filters />
+              <Grid container className={classes.body} style={{zIndex:10}} alignItems="flex-start" justify="flex-start">
+                <Filters/>
               </Grid>
               <Grid container className={classes.body}>
                 <Dashboard />

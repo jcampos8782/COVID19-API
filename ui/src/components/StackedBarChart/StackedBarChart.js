@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResponsiveBarCanvas } from '@nivo/bar';
+import { ResponsiveBar} from '@nivo/bar';
 
 export default class TimeSeriesLineChart extends React.Component {
 
@@ -8,7 +8,7 @@ export default class TimeSeriesLineChart extends React.Component {
       return <div/>
     }
     return (
-      <ResponsiveBarCanvas
+      <ResponsiveBar
         data={this.props.data}
         keys={this.props.keys}
         margin={{ top: 100, right: 130, bottom: 50, left: 60 }}

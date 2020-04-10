@@ -14,7 +14,7 @@ const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
 export default class TimeSeriesLineChart extends React.Component {
 
   render() {
-    const { data, theme } = this.props;
+    const { data, theme, curve } = this.props;
     let palette = theme === 'light' ? light.palette : dark.palette;
 
     if (data.length === 0) {
@@ -36,6 +36,7 @@ export default class TimeSeriesLineChart extends React.Component {
         margin={{ top: 0, right: 30, bottom:80, left: 50 }}
         data={data}
         colors={{scheme: palette.nivo.line.colors}}
+        curve={ curve ? curve : "linear"}
         theme={{
           axis: {
             ticks: {
@@ -86,7 +87,8 @@ export default class TimeSeriesLineChart extends React.Component {
             format: '%b %d',
             tickSize: 15,
             tickValues: maxSeriesLength > 7 ? 'every 7 days' : 'every day',
-            itemTextColor: palette.nivo.line.text
+            itemTextColor: palette.nivo.line.text,
+            tickRotation: 30
         }}
         pointSize={5}
         pointBorderWidth={1}

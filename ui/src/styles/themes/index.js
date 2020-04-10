@@ -17,6 +17,18 @@ export const light = createMuiTheme(lightBase, {
       main: orange[400]
     },
     nivo: {
+      heatmap: {
+        colors: {
+          emptyColor: lightBase.palette.background.default,
+          spectrum: [
+            '#66c2a5',
+            '#3977b4',
+            '#fcff99',
+            '#f5c086',
+            '#d9241e'
+          ]
+        }
+      },
       line: {
         colors: 'category10',
         text: 'black'
@@ -49,6 +61,18 @@ export const dark = createMuiTheme(darkBase, {
       main: orange[600]
     },
     nivo: {
+      heatmap: {
+        colors: {
+          emptyColor: darkBase.palette.background.default,
+          spectrum: [
+            '#66c2a5',
+            '#8dd3c7',
+            '#fcffb3',
+            '#f3b462',
+            '#f08072'
+          ]
+        }
+      },
       line: {
         colors: 'set3',
         text: 'white'

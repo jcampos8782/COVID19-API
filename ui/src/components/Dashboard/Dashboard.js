@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import SeriesDataTable from '../SeriesDataTable';
 import HeatCalendar from '../HeatCalendar';
+import TimeSeriesHeatMap from '../TimeSeriesHeatMap';
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
 import { formatDateKey } from '../TimeSeriesLineChart';
 
@@ -72,9 +73,38 @@ export default class Dashboard extends React.Component {
       </Grid>
     ));
 
+    let trends = (
+      <Grid container>
+        <Typography variant="h4">Trend</Typography>
+        <Grid item style={{height:30, marginTop: 15, marginBottom: 20}} xs={12} md={12} lg={12}>
+          <TimeSeriesHeatMap
+            keys={meta.columns}
+            theme={view.theme}
+            data={
+              //[{series: "series", "date":"value"...}]
+              data.map(series => (
+              {
+                series: series.id,
+                ...meta.columns.reduce((obj,date,idx) => {
+                  let values = series.data.aggregates.daily;
+                  let current = values[idx];
+                  let lastWeek = idx > 7 ? values[idx - 7] : values[0];
+                  let difference = current - lastWeek;
+                  let denom = lastWeek === 0 ? 1 : lastWeek;
+                  let percentChange = ((difference / denom) * 100).toFixed(2);
+                  obj[date] = parseFloat(percentChange)
+                  return obj;
+                },{})
+              }))
+            }
+            />
+        </Grid>
+      </Grid>
+    );
 
     let recentCharts = (
       <Grid container>
+        {trends}
         <Grid container spacing={1}>
           <Grid item xs={12} md={4}>
             <Grid container spacing={1} style={{paddingBottom:10, paddingTop: 10}}>
@@ -160,7 +190,6 @@ export default class Dashboard extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        {console.log(data)}
         <Typography variant="h4">Last 7 Days</Typography>
         <Grid container>
         {
@@ -247,7 +276,7 @@ export default class Dashboard extends React.Component {
         direction="row"
         alignItems="flex-start"
         justify="flex-start">
-         <Grid item xs={12}>
+         <Grid item xs={12} style={{zIndex: 10}}>
           <Tabs
             value={view.selectedTabId}
             onChange={this.props.selectTab}
@@ -261,26 +290,26 @@ export default class Dashboard extends React.Component {
           </Tabs>
         </Grid>
         <Grid item xs={12}>
-        <TabPanel
-          value={view.selectedTabId}
-          index={0}
-          children={recentCharts}
-          />
-        <TabPanel
-          value={view.selectedTabId}
-          index={1}
-          children={historyCharts}
-          />
-        <TabPanel
-          value={view.selectedTabId}
-          index={2}
-          children={subregionCharts}
-          />
-        <TabPanel
-          value={view.selectedTabId}
-          index={3}
-          children={rawDataTable}
-          />
+          <TabPanel
+            value={view.selectedTabId}
+            index={0}
+            children={recentCharts}
+            />
+          <TabPanel
+            value={view.selectedTabId}
+            index={1}
+            children={historyCharts}
+            />
+          <TabPanel
+            value={view.selectedTabId}
+            index={2}
+            children={subregionCharts}
+            />
+          <TabPanel
+            value={view.selectedTabId}
+            index={3}
+            children={rawDataTable}
+            />
         </Grid>
       </Grid>
     );
