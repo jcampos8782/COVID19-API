@@ -7,24 +7,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import {light, dark} from '../../styles/themes';
 
 const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
-
-const themes = {
-  light: {
-    colors: 'category10',
-    text: 'black'
-  },
-  dark: {
-    colors: 'set3',
-    text: 'white'
-  }
-};
 
 export default class TimeSeriesLineChart extends React.Component {
 
   render() {
     const { data, theme } = this.props;
+    let palette = theme === 'light' ? light.palette : dark.palette;
 
     if (data.length === 0) {
       return <div/>
@@ -44,12 +35,12 @@ export default class TimeSeriesLineChart extends React.Component {
       <ResponsiveLine
         margin={{ top: 0, right: 30, bottom:80, left: 50 }}
         data={data}
-        colors={{scheme: themes[theme].colors}}
+        colors={{scheme: palette.nivo.line.colors}}
         theme={{
           axis: {
             ticks: {
               text: {
-                fill: themes[theme].text
+                fill: palette.nivo.line.text
               }
             }
           }
@@ -95,7 +86,7 @@ export default class TimeSeriesLineChart extends React.Component {
             format: '%b %d',
             tickSize: 15,
             tickValues: maxSeriesLength > 7 ? 'every 7 days' : 'every day',
-            itemTextColor: themes[theme].text
+            itemTextColor: palette.nivo.line.text
         }}
         pointSize={5}
         pointBorderWidth={1}
@@ -122,7 +113,7 @@ export default class TimeSeriesLineChart extends React.Component {
               symbolSize: 12,
               symbolShape: 'circle',
               symbolBorderColor: 'rgba(0, 0, 0, .5)',
-              itemTextColor: themes[theme].text,
+              itemTextColor: palette.nivo.line.text,
               effects: [
                   {
                       on: 'hover',
