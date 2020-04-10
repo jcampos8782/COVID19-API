@@ -42,7 +42,7 @@ export default class App extends React.Component {
                     color="secondary"
                     className={classes.navButton}
                     aria-label="Donate"
-                    startIcon={<Icon class="fab fa-paypal" />}
+                    startIcon={<Icon className="fab fa-paypal" />}
                     onClick={() => window.open('https://paypal.me/JasonCampos')}>
                     Donate
                   </Button>

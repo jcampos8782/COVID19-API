@@ -12,6 +12,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 
 import SeriesDataTable from '../SeriesDataTable';
+import HeatCalendar from '../HeatCalendar';
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
 import { formatDateKey } from '../TimeSeriesLineChart';
 
@@ -32,6 +33,17 @@ export default class Dashboard extends React.Component {
           <Typography variant="overline">
             {series.id}: {series.current}
           </Typography>
+        </Grid>
+        <Grid item style={{height:150}} xs={12}>
+          <HeatCalendar theme={view.theme} data={
+              series.data.aggregates.daily.map((cnt, idx) => {
+                return {
+                  day: formatDateKey(meta.columns[idx]),
+                  value: cnt
+                }
+              })
+          }
+          />
         </Grid>
         <Grid item style={{height:300}} xs={12}>
           <TimeSeriesLineChart
@@ -64,7 +76,6 @@ export default class Dashboard extends React.Component {
     let recentCharts = (
       <Grid container>
         <Grid container spacing={1}>
-
           <Grid item xs={12} md={4}>
             <Grid container spacing={1} style={{paddingBottom:10, paddingTop: 10}}>
               {
@@ -102,7 +113,6 @@ export default class Dashboard extends React.Component {
               }
             </Grid>
           </Grid>
-
           <Grid item xs={12} md={4}>
             <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
               {
@@ -150,7 +160,7 @@ export default class Dashboard extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-
+        {console.log(data)}
         <Typography variant="h4">Last 7 Days</Typography>
         <Grid container>
         {
