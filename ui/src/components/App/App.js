@@ -46,10 +46,10 @@ export default class App extends React.Component {
                     onClick={() => window.open('https://paypal.me/JasonCampos')}>
                     Donate
                   </Button>
-                  <Grid container alignItems="center" justify="flex-end" spacing={1} ><div id="paypal-button-container"></div>
-                    <IconButton className={classes.navLink} aria-label="theme" onClick={this.props.toggleTheme}>
-                        <Icon className={themeIconClass} />
-                    </IconButton>
+                  <IconButton className={classes.navLink} aria-label="theme" onClick={this.props.toggleTheme}>
+                      <Icon className={themeIconClass} />
+                  </IconButton>
+                  <Grid container alignItems="center" justify="flex-end" spacing={1} >
                     <IconButton className={classes.navLink} aria-label="github" onClick={() => window.open('http://github.com/jcampos8782/covid19-api')}>
                         <Icon className="fab fa-github" />
                     </IconButton>

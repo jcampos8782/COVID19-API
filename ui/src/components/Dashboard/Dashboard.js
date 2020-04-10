@@ -75,7 +75,7 @@ export default class Dashboard extends React.Component {
 
     let trends = (
       <Grid container>
-        <Typography variant="h4">Trend</Typography>
+        <Typography variant="h4">Trends</Typography>
         <Grid item style={{height:30, marginTop: 15, marginBottom: 20}} xs={12} md={12} lg={12}>
           <TimeSeriesHeatMap
             keys={meta.columns}

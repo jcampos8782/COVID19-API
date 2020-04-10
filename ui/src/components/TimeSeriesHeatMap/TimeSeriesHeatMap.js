@@ -77,7 +77,7 @@ export default class TimeSeriesHeatMap extends React.Component {
           let lastWeek = new Date(date.getTime() - 1000 * 60 * 60 * 24 * 7);
           return (
             <Paper style={{padding: 3}}>
-              <Typography variant="overline" display="block">{DATE_FORMAT.format(date)}</Typography>
+              <Typography variant="button" display="block">{DATE_FORMAT.format(date)}</Typography>
               <Icon className={`${iconClass} ${classes.xsIcon} ${iconColor}`}/> {value}% from {DATE_FORMAT.format(lastWeek)}
             </Paper>
           )
