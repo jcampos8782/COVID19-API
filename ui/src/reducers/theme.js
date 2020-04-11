@@ -1,11 +1,11 @@
-import { TOGGLE_THEME } from '../actions/types';
+import { SELECT_THEME } from '../actions/types';
 
 const initialState = 'light'
 
 export default (state = initialState, action) => {
     switch(action.type) {
-        case TOGGLE_THEME:
-          return state === 'light' ? 'dark': 'light'
+        case SELECT_THEME:
+          return action.theme;
         default:
             return state;
     }

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { CookiesProvider } from 'react-cookie';
+
 import { Provider } from 'react-redux';
 import configureStore from './store';
 
@@ -10,9 +12,11 @@ import * as serviceWorker from './serviceWorker';
 import './styles/font-awesome/5.13.0/css/all.min.css';
 
 ReactDOM.render(
-    <Provider store={configureStore()}>
-        <App defaultRegionName="United States" />
-    </Provider>,
+    <CookiesProvider>
+      <Provider store={configureStore()}>
+          <App defaultRegionName="United States" />
+      </Provider>
+    </CookiesProvider>,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
