@@ -1,275 +1,19 @@
 import React from 'react';
 
-import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
-import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import Typography from '@material-ui/core/Typography';
 
-import SeriesDataTable from '../SeriesDataTable';
-import HeatCalendar from '../HeatCalendar';
-import TimeSeriesHeatMap from '../TimeSeriesHeatMap';
-import TimeSeriesLineChart from '../TimeSeriesLineChart';
-import { formatDateKey } from '../TimeSeriesLineChart';
-
-const DATE_FORMAT = new Intl.DateTimeFormat('en-US', {weekday: 'short', month: 'short', day: 'numeric'});
+import * as Panes from '../Panes';
 
 export default class Dashboard extends React.Component {
 
   render() {
-    const { data, meta, view, classes } = this.props;
-
+    const { data, meta, view } = this.props;
     if (data.length === 0) {
       return <div/>;
     }
 
-    let historyCharts = data.map(series => (
-      <Grid key={`${series.id}-history`} container>
-        <Grid item xs={12} >
-          <Typography variant="overline">
-            {series.id}: {series.current}
-          </Typography>
-        </Grid>
-        <Grid item style={{height:150}} xs={12}>
-          <HeatCalendar theme={view.theme} data={
-              series.data.aggregates.daily.map((cnt, idx) => {
-                return {
-                  day: formatDateKey(meta.columns[idx]),
-                  value: cnt
-                }
-              })
-          }
-          />
-        </Grid>
-        <Grid item style={{height:300}} xs={12}>
-          <TimeSeriesLineChart
-            theme={view.theme}
-            title={series.id}
-            data={[
-              {
-                id: 'Total',
-                data: series.data.aggregates.total.map((val,idx) => ({
-                    x: formatDateKey(this.props.meta.columns[idx]),
-                    y: val
-                  }
-                ))
-              },
-              {
-                id: 'Daily',
-                data: series.data.aggregates.daily.map((val,idx) => ({
-                    x: formatDateKey(this.props.meta.columns[idx]),
-                    y: val
-                  }
-                ))
-              }
-            ]}
-          />
-        </Grid>
-      </Grid>
-    ));
-
-    let trends = (
-      <Grid container>
-        <Typography variant="h4">Trends</Typography>
-        <Grid item style={{height:30, marginTop: 15, marginBottom: 20}} xs={12} md={12} lg={12}>
-          <TimeSeriesHeatMap
-            keys={meta.columns}
-            theme={view.theme}
-            data={
-              //[{series: "series", "date":"value"...}]
-              data.map(series => (
-              {
-                series: series.id,
-                ...meta.columns.reduce((obj,date,idx) => {
-                  let values = series.data.aggregates.daily;
-                  let current = values[idx];
-                  let lastWeek = idx > 7 ? values[idx - 7] : values[0];
-                  let difference = current - lastWeek;
-                  let denom = lastWeek === 0 ? 1 : lastWeek;
-                  let percentChange = ((difference / denom) * 100).toFixed(2);
-                  obj[date] = parseFloat(percentChange)
-                  return obj;
-                },{})
-              }))
-            }
-            />
-        </Grid>
-      </Grid>
-    );
-
-    let recentCharts = (
-      <Grid container>
-        {trends}
-        <Grid container spacing={1}>
-          <Grid item xs={12} md={4}>
-            <Grid container spacing={1} style={{paddingBottom:10, paddingTop: 10}}>
-              {
-                data.map(series => {
-                  let last = series.current;
-                  let previous = series.data.aggregates.total[series.data.aggregates.total.length - 2];
-                  let d = previous === 0 ? 1 : previous;
-                  let percentChange = ((last - previous)/d * 100).toFixed(1);
-                  let iconClass = percentChange >= 0 ? `${classes.red} fas fa-arrow-up xs` : `${classes.green} fas fa-arrow-down xs`;
-                  let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
-
-                  return (
-                      <Grid key={series.id} item xs={6} sm={6}>
-                      <Card variant="outlined" color="secondary">
-                        <CardHeader
-                          style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
-                           avatar={
-                             <Avatar className={classes[series.id]} style={{marginRight: -11}}>
-                               <Icon className={view.icons[series.id].className}  />
-                             </Avatar>
-                           }
-                           title=<Typography variant="h5" style={{fontSize: '1.25rem'}}> {series.current} </Typography>
-                           subheader="Total"
-                           action={
-                             <Typography variant="caption" style={{fontSize: '0.75rem'}}> {percentChange}% {diffIcon}</Typography>
-                           }
-                         />
-                        <CardContent className={classes.cardBody}>
-                          <Typography variant="overline">{series.id}</Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  )
-                })
-              }
-            </Grid>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
-              {
-                data.map(series => {
-                  let recentData = series.data.recent.data;
-                  let last = recentData[recentData.length - 1];
-                  let previous = recentData[recentData.length - 2];
-                  let d = previous === 0 ? 1 : previous;
-                  let percentChange = ((last - previous)/d * 100).toFixed(1);
-                  let iconClass = percentChange >= 0 ? `${classes.red} fas fa-arrow-up xs` : `${classes.green} fas fa-arrow-down xs`;
-                  let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
-
-                  return (
-                    <Grid key={series.id} item xs={6} sm={6}>
-                      <Card variant="outlined" color="secondary">
-                        <CardHeader
-                          style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
-                            avatar={
-                              <Avatar className={classes[series.id]} style={{marginRight: -11}}>
-                                <Icon className={view.icons[series.id].className}  />
-                              </Avatar>
-                            }
-                            title={
-                                <Typography variant="h5" style={{fontSize: '1.25rem'}}>
-                                  {series.data.recent.data[series.data.recent.data.length - 1]}
-                                </Typography>
-                            }
-                            subheader={
-                              <Typography variant="caption">
-                                {DATE_FORMAT.format(new Date(meta.columns[meta.columns.length -1]))}
-                              </Typography>
-                            }
-                            action={
-                              <Typography variant="caption" style={{fontSize: '0.75rem'}}> {percentChange}% {diffIcon}</Typography>
-                            }
-                        />
-                        <CardContent className={classes.cardBody}>
-                          <Typography variant="overline">{series.id}</Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  );
-                })
-              }
-            </Grid>
-          </Grid>
-        </Grid>
-        <Typography variant="h4">Last 7 Days</Typography>
-        <Grid container>
-        {
-          data.map(series => (
-            <Grid item key={`${series.id}-recent`} style={{height:300}} xs={12} md={12} lg={6}>
-              <TimeSeriesLineChart
-                theme={view.theme}
-                title={series.id}
-                data={[
-                  {
-                    id: series.id,
-                    data: series.data.recent.data.map((val,idx) => ({
-                        x: formatDateKey(meta.columns[meta.columns.length - 7 + idx]),
-                        y: val
-                      }
-                    ))
-                  }
-                ]}
-              />
-            </Grid>
-          ))
-        }
-        </Grid>
-      </Grid>
-    );
-
-    // For the charts, display up to 9 unique regions and then an "Others"
-    // Regions to show should have highest totals (last item in totals array)
-    let subregionCharts = meta.subregions.length === 0 ? <div /> : data.map(series => {
-      let regionTotals = Object.keys(series.data.regions).map(region => {
-        let len = series.data.regions[region].total.length;
-        return {region, total: series.data.regions[region].total[len -1]};
-      }).sort((a,b) => b.total - a.total);
-
-      let topRegionNames = regionTotals.slice(0,9).map(r => r.region);
-      let otherRegionNames = regionTotals.slice(9).map(r => r.region);
-
-      let regionData = topRegionNames.map(region => ({
-          id: region,
-          data: series.data.regions[region].daily.map((val,idx) => ({
-            x: formatDateKey(meta.columns[idx]),
-            y: val
-          }))
-      }));
-
-      regionData.sort((a,b) => a.id < b.id ? 1 : -1);
-
-      let otherRegionSums = Array.from({length: meta.columns.length}, n => 0);
-      otherRegionNames.forEach((region) => {
-        series.data.regions[region].daily.forEach((val,idx) => {
-          otherRegionSums[idx] += val;
-        })
-      })
-
-      // Add other to the front of the array
-      regionData.unshift({
-        id: "Other",
-        data: otherRegionSums.map((val,idx) => ({
-          x: formatDateKey(meta.columns[idx]),
-          y: val
-        }))
-      });
-
-      return (
-        <Grid item key={`${series.id}-subregions`} style={{height:300}} sm={12} md={12}>
-          <TimeSeriesLineChart
-            theme={view.theme}
-            title={series.id}
-            data={regionData}
-          />
-        </Grid>
-      );
-    });
-
-    let rawDataTable = (
-            <SeriesDataTable
-              meta={{...meta}}
-              data={data.map(series => ({ id: series.id, data: series.data.aggregates.total}))}
-              />
-        );
     return (
       <Grid
         container
@@ -290,51 +34,26 @@ export default class Dashboard extends React.Component {
           </Tabs>
         </Grid>
         <Grid item xs={12}>
-          <TabPanel
+          <Panes.SummaryPane {...this.props}
             value={view.selectedTabId}
             index={0}
-            children={recentCharts}
             />
-          <TabPanel
+          <Panes.HistoryPane {...this.props}
             value={view.selectedTabId}
             index={1}
-            children={historyCharts}
             />
-          <TabPanel
+          <Panes.SubregionPane {...this.props}
             value={view.selectedTabId}
             index={2}
-            children={subregionCharts}
             />
-          <TabPanel
+          <Panes.DataPane {...this.props}
             value={view.selectedTabId}
             index={3}
-            children={rawDataTable}
             />
         </Grid>
       </Grid>
     );
   }
-}
-
-const TabPanel = props => {
-  const { children, value, index } = props;
-  return (
-    <Paper
-      variant="outlined"
-      elevation={3}
-      style={{
-        padding: 20,
-        display: value !== index ? 'none' : ''
-      }}>
-    <Grid
-      role="tabpanel"
-      id={`scrollable-force-tabpanel-${index}`}
-      aria-labelledby={`scrollable-force-tab-${index}`}
-      >
-        {children}
-    </Grid>
-  </Paper>
-  );
 }
 
 const a11yProps = index => {

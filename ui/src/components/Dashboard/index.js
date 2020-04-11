@@ -1,7 +1,7 @@
 import Dashboard from './Dashboard';
 import { selectDashboardTab } from '../../actions';
 import { connect } from 'react-redux';
-import {withStyles} from '@material-ui/core/styles';
+import {styled} from '../../styles';
 
 const mapStateToProps = state => {
   if (state.data.length === 0 || state.regions.current === null) {
@@ -75,6 +75,7 @@ const mapStateToProps = state => {
     },
     meta: {
       region: state.regions.current.name,
+      currentSubregion:  state.regions.current.subregions.find(s => s.id === state.filters.selectedSubregionId),
       subregions: state.regions.current.subregions.map(r => r.name),
       columns: currentSeries.columns
     },
@@ -113,27 +114,4 @@ let aggregateData = (subregions) => {
   }, {});
 }
 
-const styles = theme => ({
-  confirmed: {
-    backgroundColor: theme.palette.warning.dark
-  },
-  deaths: {
-    backgroundColor: theme.palette.error.dark
-  },
-  cardBody: {
-    backgroundColor: theme.palette.background.default,
-    paddingBottom: '0 !important',
-    paddingTop:0
-  },
-  green: {
-    color: theme.palette.success.light
-  },
-  red: {
-    color: theme.palette.error.dark
-  },
-  xsIcon: {
-    fontSize: '1em'
-  }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Dashboard));
+export default styled()(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

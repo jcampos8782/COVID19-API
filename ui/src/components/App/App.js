@@ -14,19 +14,19 @@ import BottomNav from '../BottomNav';
 import Dashboard from '../Dashboard';
 import Filters from '../Filters';
 
-import { light, dark } from '../../styles/themes';
+import { light, dark } from '../../styles';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
 export default class App extends React.Component {
     componentDidMount() {
-        Promise.all([this.props.fetchRegions(), this.props.fetchSeriesList()])
-          .then(r => {
-            if(this.props.isGeolocationAvailable) {
-              this.props.fetchGeolocation().then(r => {
-                this.props.fetchDefaultSeries();
-              })
-            }
-          });
+      Promise.all([this.props.fetchRegions(), this.props.fetchSeriesList()])
+        .then(r => {
+          if(this.props.isGeolocationAvailable) {
+            this.props.fetchGeolocation().then(r => {
+              this.props.fetchDefaultSeries();
+            })
+          }
+        });
     }
 
     render() {
@@ -62,10 +62,10 @@ export default class App extends React.Component {
                   </Grid>
                 </Toolbar>
               </AppBar>
-              <Backdrop open={this.props.loading}>
+              <Backdrop open={this.props.loading} className={classes.backdrop}>
                 <CircularProgress color="inherit" />
               </Backdrop>
-              <Grid container className={classes.body} style={{zIndex:10}} alignItems="flex-start" justify="flex-start">
+              <Grid container className={classes.body} alignItems="flex-start" justify="flex-start">
                 <Filters/>
               </Grid>
               <Grid container className={classes.body}>

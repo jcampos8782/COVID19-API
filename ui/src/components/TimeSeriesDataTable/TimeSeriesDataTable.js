@@ -10,11 +10,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-export default class SeriesDataTable extends React.Component {
+export default class TimeSeriesDataTable extends React.Component {
 
     render() {
         const {data, meta} = this.props;
-        // Render an empty div if there is no data.
         if (this.props.data === null) {
           return <div></div>;
         }
@@ -28,16 +27,14 @@ export default class SeriesDataTable extends React.Component {
               <Grid item xs={12}>
                 <Toolbar>
                   <Typography variant="h6" component="div">
-                    {meta.region}
+                    {meta.title}
                   </Typography>
                 </Toolbar>
                 <TableContainer>
                   <Table size="small">
                     <TableHead>
                         <TableRow>
-                          <TableCell>
-                            <Typography variant="h6">Aggregate</Typography>
-                          </TableCell>
+                          <TableCell />
                           {columnHeadings}
                         </TableRow>
                     </TableHead>

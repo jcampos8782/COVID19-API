@@ -1,2 +1,3 @@
 import StackedBarChart from './StackedBarChart';
-export default StackedBarChart;
+import { styled } from '../../styles';
+export default styled()(StackedBarChart);

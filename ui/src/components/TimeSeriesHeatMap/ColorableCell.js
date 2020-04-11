@@ -38,6 +38,6 @@ const ColorableCell = ({
         strokeOpacity={opacity}/>
     </g>
     );
-    };
+  };
 
 export default ColorableCell;

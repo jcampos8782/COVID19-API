@@ -10,18 +10,17 @@ const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
 export default class HeatCalendar extends React.Component {
 
   render() {
-    const {data, theme} = this.props;
+    const {from, to, data, theme} = this.props;
     let { palette } = theme === 'light' ? light : dark;
 
     // find average
     let max = data.reduce((max,d) => d.value > max ? d.value : max, 0)
     return (
       <ResponsiveCalendar
-        from="2020-1-01"
-        to="2020-12-31"
+        from={from}
+        to={to}
         colors={palette.nivo.calendar.colors}
         monthLegendPosition="before"
-        textColor="white"
         align='left'
         margin={{left:40, top:20, bottom:20, right:40}}
         monthLegendOffset={3}

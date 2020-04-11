@@ -1,2 +1,3 @@
 import HeatCalendar from './HeatCalendar.js';
-export default HeatCalendar;
+import {styled} from '../../styles';
+export default styled()(HeatCalendar);

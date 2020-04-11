@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import ColorableCell from './ColorableCell';
 
 import { ResponsiveHeatMap } from '@nivo/heatmap'
-import {light, dark} from '../../styles/themes';
+import {light, dark} from '../../styles';
 
 const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
 
