@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.jsoncampos.seriesapi.controllers.responses.GetAllRegionsResponse;
 import com.jsoncampos.seriesapi.controllers.responses.GetRegionResponse;
+import com.jsoncampos.seriesapi.controllers.responses.GetSubregionsResponse;
 import com.jsoncampos.seriesapi.dto.mappers.Mappers;
 import com.jsoncampos.seriesapi.models.Region;
 import com.jsoncampos.seriesapi.services.RegionSearchService;
@@ -49,4 +50,17 @@ public class RegionController {
 				Mappers.convertToDto(region),
 				subregions.stream().map(Mappers::convertToDto).collect(Collectors.toList()));
 	}
+	
+	@GetMapping("/{id}/subregions")
+	public GetSubregionsResponse getSubregions(@PathVariable("id") String regionId) {
+		Region region = searchSvc.find(regionId);
+		
+		if(region == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Region not found");
+		}
+		
+		List<Region> subregions = searchSvc.findSubRegions(regionId);
+		return new GetSubregionsResponse(subregions.stream().map(Mappers::convertToDto).collect(Collectors.toList()));
+	}
+	
 }
