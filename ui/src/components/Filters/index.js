@@ -7,6 +7,8 @@ import {
   unselectRegion,
   selectSubregion,
   unselectSubregion,
+  selectLocale,
+  unselectLocale,
   selectSeries,
   unselectSeries,
   fetchRegion,
@@ -26,7 +28,8 @@ const mapStateToProps = state => {
     location: state.location,
     selectedSeriesId: state.filters.selectedSeriesId,
     selectedRegionId: state.filters.selectedRegionId,
-    selectedSubregionId: state.filters.selectedSubregionId
+    selectedSubregionId: state.filters.selectedSubregionId,
+    selectedLocaleId: state.filters.selectedLocaleId
   };
 };
 
@@ -65,6 +68,14 @@ const mapDispatchToProps = dispatch => ({
         return;
       }
       dispatch(selectSubregion(id));
+    },
+
+    selectLocale:(id) => {
+      if (id === "-1") {
+        dispatch(unselectLocale());
+        return;
+      }
+      dispatch(selectLocale(id));
     }
 });
 

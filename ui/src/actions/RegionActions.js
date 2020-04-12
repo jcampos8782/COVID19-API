@@ -14,6 +14,9 @@ export const receiveRegions = (regions) => ({ type: Actions.RECEIVE_REGIONS, reg
 export const unselectSubregion = () => ({ type: Actions.UNSELECT_SUBREGION })
 export const selectSubregion = (id) => ({type: Actions.SELECT_SUBREGION, id })
 
+export const unselectLocale = () => ({ type: Actions.UNSELECT_LOCALE })
+export const selectLocale = (id) => ({type: Actions.SELECT_LOCALE, id })
+
 export const fetchRegion = (regionId) => {
   return (dispatch,getState) => {
     dispatch(requestRegion(regionId));

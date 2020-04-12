@@ -3,6 +3,8 @@ import {
   UNSELECT_REGION,
   SELECT_SUBREGION,
   UNSELECT_SUBREGION,
+  SELECT_LOCALE,
+  UNSELECT_LOCALE,
   SELECT_SERIES,
   UNSELECT_SERIES,
   SELECT_DASHBOARD_TAB
@@ -12,6 +14,7 @@ const initialState = {
   selectedSeriesId: -1,
   selectedRegionId: -1,
   selectedSubregionId: -1,
+  selectedLocaleId: -1,
   selectedTabId: 0
 }
 
@@ -45,6 +48,16 @@ export default (state = initialState, action) => {
           ...state,
           selectedSubregionId: -1
         };
+      case SELECT_LOCALE:
+        return {
+          ...state,
+          selectedLocaleId: -1
+        };
+      case UNSELECT_LOCALE:
+        return {
+          ...state,
+          selectedLocaleId: action.id
+        }
       case SELECT_SERIES:
         return {
           ...state,
