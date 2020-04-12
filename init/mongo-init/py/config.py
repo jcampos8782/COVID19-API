@@ -27,6 +27,7 @@ SHARED FILES
 FILE_GEO_COORDINATES = join(META_DIRECTORY, "coordinates.csv")
 FILE_SERIES_DEFINITIONS = join(META_DIRECTORY, "series.csv")
 MX_STATES_FILE = join(META_DIRECTORY, "mx_states_and_iso_codes.csv")
+FILE_US_COUNTIES = join(META_DIRECTORY, "us_counties.csv")
 
 """
 ENVIRONMENT VARIABLES
