@@ -32,14 +32,14 @@ Western Australia,Australia,-31.9505,115.8605
 ,Burkina Faso,12.2383,-1.5616
 ,Cabo Verde,16.5388,-23.0418
 ,Cambodia,11.55,104.9167
-,Cameroon,3.8480000000000003,11.5021
+,Cameroon,3.848,11.5021
 Alberta,Canada,53.9333,-116.5765
 British Columbia,Canada,49.2827,-123.1207
 Grand Princess,Canada,37.6489,-122.6655
 Manitoba,Canada,53.7609,-98.8139
 New Brunswick,Canada,46.5653,-66.4619
 Newfoundland and Labrador,Canada,53.1355,-57.6604
-Nova Scotia,Canada,44.681999999999995,-63.7443
+Nova Scotia,Canada,44.682,-63.7443
 Ontario,Canada,51.2538,-85.3232
 Prince Edward Island,Canada,46.5107,-63.4168
 Quebec,Canada,52.9399,-73.5491
@@ -57,8 +57,8 @@ Guangxi,China,23.8298,108.7881
 Guizhou,China,26.8154,106.8748
 Hainan,China,19.1959,109.7453
 Hebei,China,39.549,116.1306
-Heilongjiang,China,47.861999999999995,127.7615
-Henan,China,33.882,113.61399999999999
+Heilongjiang,China,47.862,127.7615
+Henan,China,33.882,113.614
 Hong Kong,China,22.3,114.2
 Hubei,China,30.9756,112.2707
 Hunan,China,27.6104,111.7088
@@ -72,13 +72,13 @@ Ningxia,China,37.2692,106.1655
 Qinghai,China,35.7452,95.9956
 Shaanxi,China,35.1917,108.8701
 Shandong,China,36.3427,118.1498
-Shanghai,China,31.201999999999998,121.4491
+Shanghai,China,31.202,121.4491
 Shanxi,China,37.5777,112.2922
 Sichuan,China,30.6171,102.7103
 Tianjin,China,39.3054,117.323
 Tibet,China,31.6927,88.0924
 Xinjiang,China,41.1129,85.2401
-Yunnan,China,24.974,101.48700000000001
+Yunnan,China,24.974,101.487
 Zhejiang,China,29.1832,120.0934
 ,Colombia,4.5709,-74.2973
 ,Congo (Brazzaville),-4.0383,21.7587
@@ -89,7 +89,7 @@ Zhejiang,China,29.1832,120.0934
 ,Diamond Princess,0.0,0.0
 ,Cuba,22.0,-80.0
 ,Cyprus,35.1264,33.4299
-,Czechia,49.8175,15.472999999999999
+,Czechia,49.8175,15.473
 Faroe Islands,Denmark,61.8926,-6.9118
 Greenland,Denmark,71.7069,-42.6043
 ,Denmark,56.2639,9.5018
@@ -231,13 +231,13 @@ Montserrat,United Kingdom,16.7425,-62.1874
 ,Zimbabwe,-20.0,30.0
 Diamond Princess,Canada,0.0,0.0
 ,Dominica,15.415,-61.371
-,Grenada,12.1165,-61.678999999999995
+,Grenada,12.1165,-61.679
 ,Mozambique,-18.665695,35.529562
 ,Syria,34.802075,38.99681500000001
 ,Timor-Leste,-8.874217,125.727539
 ,Belize,13.1939,-59.5432
 Recovered,Canada,0.0,0.0
-,Laos,19.856270000000002,102.495496
+,Laos,19.85627,102.495496
 ,Libya,26.3351,17.228331
 ,West Bank and Gaza,31.9522,35.2332
 ,Guinea-Bissau,11.8037,-15.1804
@@ -258,10 +258,10 @@ Unknown,Netherlands,12.1784,-68.2385
 ,Malawi,-13.254307999999998,34.301525
 Falkland Islands (Malvinas),United Kingdom,-51.7963,-59.5236
 Saint Pierre and Miquelon,France,46.8852,-56.3159
-,South Sudan,6.8770000000000024,31.307
+,South Sudan,6.877000000000002,31.307
 ,Western Sahara,24.2155,-12.8858
 ,Sao Tome and Principe,0.18636,6.613081
-,Yemen,15.552726999999999,48.516388
+,Yemen,15.552727,48.516388
 American Samoa,United States,-14.270972,-170.132217
 Guam,United States,13.4769474,144.7425932
 Northern Mariana Islands,United States,15.0979,145.6739
