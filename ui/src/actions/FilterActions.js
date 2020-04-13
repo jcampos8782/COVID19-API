@@ -30,6 +30,7 @@ export const loadRegion = (index, id) => {
           // Reset all filters upon load
           for(let i = index + 1; i < filters.regionFilters.length; i++) {
             dispatch(selectRegion(i, -1));
+            dispatch(setFilterOptions(i, []));
           }
 
           // Set subregion options
