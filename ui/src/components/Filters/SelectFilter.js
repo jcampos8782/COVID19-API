@@ -11,8 +11,7 @@ export default class SelectFilter extends React.Component {
       label,
       options,
       selected,
-      onChange,
-      disabled
+      onChange
     } = this.props;
       return (
           <div>
@@ -22,7 +21,8 @@ export default class SelectFilter extends React.Component {
                 label={label}
                 value={selected}
                 onChange={onChange}
-                disabled={disabled}
+                style={{visibility: options.length === 0 ? 'none' : ''}}
+                disabled={options.length === 0}
               >
                   {this.props.default && this.props.default}
                   {

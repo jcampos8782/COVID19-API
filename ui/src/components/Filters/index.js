@@ -3,11 +3,9 @@ import {styled} from '../../styles';
 import { connect } from 'react-redux';
 
 import {
-  selectRegion,
-  unselectRegion,
+  loadRegion,
   selectSeries,
   unselectSeries,
-  fetchRegion,
   fetchSeriesByRegion,
 } from '../../actions';
 
@@ -34,20 +32,7 @@ const mapDispatchToProps = dispatch => ({
       }
     },
 
-    selectRegion: (selectedRegionId, index, selectedSeriesId) => {
-
-      if (selectedRegionId === "-1") {
-        dispatch(unselectRegion(index));
-        return;
-      }
-
-      dispatch(selectRegion(selectedRegionId, index));
-      dispatch(fetchRegion(selectedRegionId));
-
-      if (selectedSeriesId !== -1) {
-        dispatch(fetchSeriesByRegion(selectedSeriesId, selectedRegionId));
-      }
-    },
+    selectRegion: (index, selectedRegionId) => dispatch(loadRegion(index, selectedRegionId))
 });
 
 export default styled()(connect(mapStateToProps, mapDispatchToProps)(Filters));

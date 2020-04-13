@@ -30,7 +30,7 @@ export default class Filters extends React.Component {
           key={idx}
           label=<div>{ idx === 0 && locationIcon} {filter.label}</div>
           selected={filter.selectedId}
-          onChange={(e) => selectRegion(e.target.value, idx, selectedSeriesId)}
+          onChange={(e) => selectRegion(idx, e.target.value)}
           default=<MenuItem value="-1" selected><em>None</em></MenuItem>
           options={filter.options} />
       ));
