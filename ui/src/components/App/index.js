@@ -10,6 +10,7 @@ import {
   selectTheme,
   fetchRegions,
   fetchDefaultSeries,
+  setFilterOptions,
   toggleTheme
 } from '../../actions';
 
@@ -27,7 +28,8 @@ const mapStateToDispatch = dispatch => ({
   fetchRegions: () => dispatch(fetchRegions()),
   fetchDefaultSeries: () => dispatch(fetchDefaultSeries()),
   toggleTheme: cookies => dispatch(toggleTheme(cookies)),
-  selectTheme: theme => dispatch(selectTheme(theme))
+  selectTheme: theme => dispatch(selectTheme(theme)),
+  setRegions: regions => dispatch(setFilterOptions(0, regions.map(r => ({id: r.id, name: r.name}))))
 });
 
 export default styled()(withCookies(connect(mapStateToProps, mapStateToDispatch)(geolocated()(App))));

@@ -8,13 +8,12 @@ import org.springframework.http.ResponseEntity;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.jsoncampos.seriesapi.dto.RegionDto;
 
-public class GetRegionResponse extends ResponseEntity<GetRegionResponse.Dto>{
-
-	public GetRegionResponse(RegionDto region, List<RegionDto> parents, List<RegionDto> subregions) {
+public class GetNearestRegionResponse extends ResponseEntity<GetNearestRegionResponse.Dto> {
+	public GetNearestRegionResponse(RegionDto region, List<RegionDto> parents, List<RegionDto> subregions) {
 		super(new Dto(region, parents, subregions), HttpStatus.OK);
 	}
 	
-	@JsonPropertyOrder({ "id", "name", "parentId", "parents", "subregions" })
+	@JsonPropertyOrder({ "id", "name", "parents", "subregions" })
 	static class Dto {
 		private RegionDto region;
 		private List<RegionDto> parents;
@@ -34,12 +33,6 @@ public class GetRegionResponse extends ResponseEntity<GetRegionResponse.Dto>{
 			return region.getName();
 		}
 		
-		// TODO: Remove after new UI updates
-		@Deprecated
-		public String getParentId() {
-			return region.getParentId();
-		}
-
 		public List<RegionDto> getParents() {
 			return parents;
 		}

@@ -15,6 +15,7 @@ import BottomNav from '../BottomNav';
 import Dashboard from '../Dashboard';
 import Filters from '../Filters';
 
+import { RECEIVE_REGIONS } from '../../actions/types';
 import { light, dark } from '../../styles';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
@@ -26,7 +27,10 @@ export default class App extends React.Component {
       }
 
       Promise.all([this.props.fetchRegions(), this.props.fetchSeriesList()])
-        .then(r => {
+        .then(results => {
+          let regionsAction = results.find(r => r.type === RECEIVE_REGIONS);
+          this.props.setRegions(regionsAction.regions.map(r => ({id: r.id, name: r.name})));
+
           if(this.props.isGeolocationAvailable) {
             this.props.fetchGeolocation().then(r => {
               this.props.fetchDefaultSeries();

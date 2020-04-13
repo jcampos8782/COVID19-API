@@ -2,7 +2,7 @@ import {
   RECEIVE_REGION,
   RECEIVE_REGIONS,
   REQUEST_REGION,
-  UNSELECT_REGION,
+  UNSELECT_REGION
 } from '../actions/types';
 
 export default (state = {all: [], current: null}, action) => {

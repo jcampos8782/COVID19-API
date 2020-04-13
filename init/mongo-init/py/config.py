@@ -2,6 +2,7 @@ from os import environ
 from datetime import date
 from models import Index, DataSource
 import pymongo
+import re
 from os.path import dirname, join
 
 script_dir = dirname(__file__)
@@ -27,6 +28,7 @@ SHARED FILES
 FILE_GEO_COORDINATES = join(META_DIRECTORY, "coordinates.csv")
 FILE_SERIES_DEFINITIONS = join(META_DIRECTORY, "series.csv")
 MX_STATES_FILE = join(META_DIRECTORY, "mx_states_and_iso_codes.csv")
+FILE_US_COUNTIES = join(META_DIRECTORY, "us_counties.csv")
 
 """
 ENVIRONMENT VARIABLES
@@ -69,11 +71,12 @@ US PREPROCESSOR
  - US_PROCESSOR_COLUMN_DEFINITIONS: The columns in the data files is inconsistent. This defines the fields for each file
  - US_PROCESSOR_DATA_SOURCES: series component and file location tuple
 """
-US_PROCESSOR_COLUMN_DEFINITIONS = {'state': 6, 'data': {'confirmed': 11, 'deaths': 12}}
+US_PROCESSOR_COLUMN_DEFINITIONS = {'county': 5, 'state': 6, 'lat': 8, 'lon': 9, 'data': {'confirmed': 11, 'deaths': 12}}
+US_PROCESSOR_FILTERED_COUNTIES = [re.compile(s) for s in ["Unassigned", "^Out of"]]
 US_PROCESSOR_DATA_SOURCES = [
     DataSource("covid19", "confirmed", join(GITHUB_DIRECTORY, "CSSEGISandData/confirmed_us.csv")),
-    DataSource("covid19", "deaths", join(GITHUB_DIRECTORY, "CSSEGISandData/deaths_us.csv"))]
-
+    DataSource("covid19", "deaths", join(GITHUB_DIRECTORY, "CSSEGISandData/deaths_us.csv"))
+]
 
 """
 MX PREPROCESSOR

@@ -3,30 +3,19 @@ import {styled} from '../../styles';
 import { connect } from 'react-redux';
 
 import {
-  selectRegion,
-  unselectRegion,
-  selectSubregion,
-  unselectSubregion,
+  loadRegion,
   selectSeries,
   unselectSeries,
-  fetchRegion,
   fetchSeriesByRegion,
 } from '../../actions';
 
 const mapStateToProps = state => {
-  let subregions = [];
-  if (state.regions.current !== null) {
-    subregions = state.regions.current.subregions;
-  }
-
   return {
     series: state.series.all,
-    regions: state.regions.all,
-    subregions: subregions,
+    regions: state.filters.regionFilters,
     location: state.location,
     selectedSeriesId: state.filters.selectedSeriesId,
-    selectedRegionId: state.filters.selectedRegionId,
-    selectedSubregionId: state.filters.selectedSubregionId
+    selectedRegionId: state.regions.current ? state.regions.current.id : -1
   };
 };
 
@@ -43,29 +32,7 @@ const mapDispatchToProps = dispatch => ({
       }
     },
 
-    selectRegion: (selectedRegionId, selectedSeriesId) => {
-      dispatch(unselectSubregion());
-
-      if (selectedRegionId === "-1") {
-        dispatch(unselectRegion());
-        return;
-      }
-
-      dispatch(selectRegion(selectedRegionId));
-      dispatch(fetchRegion(selectedRegionId));
-
-      if (selectedSeriesId !== -1) {
-        dispatch(fetchSeriesByRegion(selectedSeriesId, selectedRegionId));
-      }
-    },
-
-    selectSubregion:(id) => {
-      if (id === "-1") {
-        dispatch(unselectSubregion());
-        return;
-      }
-      dispatch(selectSubregion(id));
-    }
+    selectRegion: (index, selectedRegionId) => dispatch(loadRegion(index, selectedRegionId))
 });
 
 export default styled()(connect(mapStateToProps, mapDispatchToProps)(Filters));

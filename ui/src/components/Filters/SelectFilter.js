@@ -7,19 +7,25 @@ import Select from '@material-ui/core/Select';
 export default class SelectFilter extends React.Component {
 
   render() {
+    let {
+      label,
+      options,
+      selected,
+      onChange
+    } = this.props;
       return (
-          <div>
+          <div style={{display: options.length === 0 ? 'none' : ''}}>
               <InputLabel>{this.props.label}</InputLabel>
               <Select
                 variant="outlined"
-                label={this.props.label}
-                value={this.props.selected}
-                onChange={this.props.onChange}
-                disabled={this.props.disabled}
+                label={label}
+                value={selected}
+                onChange={onChange}
+                disabled={options.length === 0}
               >
-                  {this.props.default ? this.props.default : "" }
+                  {this.props.default && this.props.default}
                   {
-                      this.props.options.map(o => <MenuItem key={o.id} value={o.id}>{o.text}</MenuItem>)
+                      options.map(o => <MenuItem key={o.id} value={o.id}>{o.name}</MenuItem>)
                   }
               </Select>
           </div>

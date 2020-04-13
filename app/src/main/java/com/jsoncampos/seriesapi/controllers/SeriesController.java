@@ -25,7 +25,7 @@ import com.jsoncampos.seriesapi.models.Series;
 import com.jsoncampos.seriesapi.services.SeriesSearchService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000" )
+@CrossOrigin(origins = "*" )
 @RequestMapping(path = "/api/series")
 public class SeriesController {
 	
