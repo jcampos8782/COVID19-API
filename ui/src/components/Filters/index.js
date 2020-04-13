@@ -5,10 +5,6 @@ import { connect } from 'react-redux';
 import {
   selectRegion,
   unselectRegion,
-  selectSubregion,
-  unselectSubregion,
-  selectLocale,
-  unselectLocale,
   selectSeries,
   unselectSeries,
   fetchRegion,
@@ -16,20 +12,12 @@ import {
 } from '../../actions';
 
 const mapStateToProps = state => {
-  let subregions = [];
-  if (state.regions.current !== null) {
-    subregions = state.regions.current.subregions;
-  }
-
   return {
     series: state.series.all,
-    regions: state.regions.all,
-    subregions: subregions,
+    regions: state.filters.regionFilters,
     location: state.location,
     selectedSeriesId: state.filters.selectedSeriesId,
-    selectedRegionId: state.filters.selectedRegionId,
-    selectedSubregionId: state.filters.selectedSubregionId,
-    selectedLocaleId: state.filters.selectedLocaleId
+    selectedRegionId: state.regions.current ? state.regions.current.id : -1
   };
 };
 
@@ -46,37 +34,20 @@ const mapDispatchToProps = dispatch => ({
       }
     },
 
-    selectRegion: (selectedRegionId, selectedSeriesId) => {
-      dispatch(unselectSubregion());
+    selectRegion: (selectedRegionId, index, selectedSeriesId) => {
 
       if (selectedRegionId === "-1") {
-        dispatch(unselectRegion());
+        dispatch(unselectRegion(index));
         return;
       }
 
-      dispatch(selectRegion(selectedRegionId));
+      dispatch(selectRegion(selectedRegionId, index));
       dispatch(fetchRegion(selectedRegionId));
 
       if (selectedSeriesId !== -1) {
         dispatch(fetchSeriesByRegion(selectedSeriesId, selectedRegionId));
       }
     },
-
-    selectSubregion:(id) => {
-      if (id === "-1") {
-        dispatch(unselectSubregion());
-        return;
-      }
-      dispatch(selectSubregion(id));
-    },
-
-    selectLocale:(id) => {
-      if (id === "-1") {
-        dispatch(unselectLocale());
-        return;
-      }
-      dispatch(selectLocale(id));
-    }
 });
 
 export default styled()(connect(mapStateToProps, mapDispatchToProps)(Filters));

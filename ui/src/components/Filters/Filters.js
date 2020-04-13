@@ -12,16 +12,10 @@ export default class Filters extends React.Component {
         classes,
         location,
         regions,
-        subregions,
-        locales,
         series,
-        selectedRegionId,
-        selectedSubregionId,
-        selectedLocaleId,
         selectedSeriesId,
+        selectedRegionId,
         selectRegion,
-        selectSubregion,
-        selectLocale,
         selectSeries,
       } = this.props;
 
@@ -31,34 +25,15 @@ export default class Filters extends React.Component {
           </Tooltip>
       );
 
-      let regionsFilter = (
+      let regionFilters = regions.map((filter,idx) => (
         <SelectFilter
-          label=<div>{locationIcon} Region</div>
-          selected={selectedRegionId}
-          onChange={(e) => selectRegion(e.target.value, selectedSeriesId)}
+          key={idx}
+          label=<div>{ idx === 0 && locationIcon} {filter.label}</div>
+          selected={filter.selectedId}
+          onChange={(e) => selectRegion(e.target.value, idx, selectedSeriesId)}
           default=<MenuItem value="-1" selected><em>None</em></MenuItem>
-          options={regions.map(r => ({ id: r.id, text: r.name }))} />
-      );
-
-      let subregionsFilter = (
-        <SelectFilter
-          label="Subregion"
-          selected={selectedSubregionId}
-          disabled={subregions.length === 0}
-          onChange={(e) => selectSubregion(e.target.value)}
-          default=<MenuItem value="-1" selected><em>None</em></MenuItem>
-          options={subregions.map(r => ({ id: r.id, text: r.name }))} />
-      );
-
-      let localesFilter = locales && (
-        <SelectFilter
-          label="County"
-          selected={selectedLocaleId}
-          disabled={subregions.length === 0}
-          onChange={(e) => selectLocale(e.target.value)}
-          default=<MenuItem value="-1" selected><em>None</em></MenuItem>
-          options={locales.map(r => ({ id: r.id, text: r.name }))} />
-      );
+          options={filter.options} />
+      ));
 
       let seriesFilter = (
         <SelectFilter
@@ -66,15 +41,13 @@ export default class Filters extends React.Component {
           selected={selectedSeriesId}
           onChange={(e) => selectSeries(e.target.value, selectedRegionId)}
           default=<MenuItem value="-1" selected><em>None</em></MenuItem>
-          options={series.map(r => ({ id: r.id, text: r.name }))} />
+          options={series} />
       )
 
       return (
           <Grid item
             className={classes.filters}>
-              {regionsFilter}
-              {subregionsFilter}
-              {localesFilter}
+              {regionFilters}
               {seriesFilter}
           </Grid>
       );

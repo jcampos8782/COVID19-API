@@ -1,7 +1,6 @@
 import {
   RECEIVE_SERIES,
-  REQUEST_SERIES_BY_REGION_ID,
-  REQUEST_SERIES_BY_GEOLOCATION
+  REQUEST_SERIES_BY_REGION_ID
 } from '../actions/types';
 
 export default (state = [], action) => {
@@ -18,7 +17,6 @@ export default (state = [], action) => {
             });
         // Clear data when a new region is requested.
         case REQUEST_SERIES_BY_REGION_ID:
-        case REQUEST_SERIES_BY_GEOLOCATION:
             return [];
         default:
             return state;
