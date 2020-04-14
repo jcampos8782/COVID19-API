@@ -9,13 +9,8 @@ const mapStateToProps = state => {
   }
 
   let currentSeries = state.series.current;
-
   let aggregateDataItem = state.data.find(d => d.regions[0] === state.regions.current.id);
-  let subregionDataItems = state.data.filter(d => d !== aggregateDataItem);
-
-  if (state.filters.selectedSubregionId !== -1) {
-    aggregateDataItem = subregionDataItems.find(d => state.filters.selectedSubregionId === d.regions[0]);
-  }
+  let subregionDataItems = state.data.filter(d => d.regions[0] !== state.regions.current.id);
 
   let aggregateSeries = aggregateDataItem ?
       aggregateDataItem.data :
@@ -23,7 +18,6 @@ const mapStateToProps = state => {
 
   // Stacked totals with day-to-day diffs
   let statistics = {};
-
   Object.keys(aggregateSeries).forEach(series => {
     statistics[series] = {};
     statistics[series]['aggregates'] = { total: [], daily: [] }
@@ -42,7 +36,7 @@ const mapStateToProps = state => {
 
         // If a data set includes a subregion not returned from the /regions/<id>
         // This shouldn't happen, but this is precautionary.
-        if (subregion === null) {
+        if (subregion === null || subregion === undefined) {
           console.log(`Unable to locate subregion ${subregionId}. Skipping`);
           return;
         }
