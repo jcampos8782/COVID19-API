@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 
   // There may be no item specific to the region. If thats the case, aggregate
   // the data manually.
-  let aggregateDataItem = state.data.find(d => d.regions.length === 1);
+  let aggregateDataItem = state.data.find(d => d.regions.length === 1 || d.regions[0] === state.regions.current.id);
   let subregionDataItems = state.data.filter(d => d !== aggregateDataItem);
 
   if (state.filters.selectedSubregionId !== -1) {
