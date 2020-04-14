@@ -43,7 +43,8 @@ const mapStateToProps = state => {
         // If a data set includes a subregion not returned from the /regions/<id>
         // This shouldn't happen, but this is precautionary.
         if (subregion === null) {
-          console.log(`Unable to locate subregion ${subregionId}. Using ID as name`);
+          console.log(`Unable to locate subregion ${subregionId}. Skipping`);
+          return;
         }
 
         statistics[series]['subregions'][subregionName] = {}
