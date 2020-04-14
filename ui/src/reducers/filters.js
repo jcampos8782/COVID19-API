@@ -44,6 +44,7 @@ export default (state = initialState, action) => {
       case SELECT_REGION:
         return {
           ...state,
+          selectedTabId: 0,
           regionFilters: state.regionFilters.map((filter, idx) =>
             Object.assign(filter, {selectedId: idx === action.index ? action.id : filter.selectedId}))
         };
