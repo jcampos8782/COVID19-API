@@ -1,6 +1,7 @@
 import csv
 from os import walk
 import hashlib
+import preprocessors.us_county_importer as county_importer
 from config import *
 from util.geolocation import resolve_location_by_coordinates, Location
 from util import repository
@@ -12,6 +13,9 @@ def main():
     print("Loading series and updating metadata...")
     with open(FILE_SERIES_DEFINITIONS, encoding="utf8") as file:
         [__create_or_update_series(key, name) for key, name in csv.reader(file)]
+
+    print("Creating US Counties")
+    county_importer.create_us_counties()
 
     print("Importing coordinates from %s" % FILE_GEO_COORDINATES)
     with open(FILE_GEO_COORDINATES, encoding="utf8") as file:

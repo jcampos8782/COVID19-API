@@ -4,6 +4,10 @@ from config import *
 
 
 def main():
+    create_us_counties()
+
+
+def create_us_counties():
     created = 0
     # Ensure US exists
     us_region = repository.find_or_create_region("United States");
