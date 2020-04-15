@@ -53,7 +53,7 @@ def find_or_create_region(name: str) -> str:
 
 
 def find_or_create_subregion(name: str, parent_id: str) -> int:
-    region = find_region({"name": name})
+    region = find_region({"name": name, "parent_id": parent_id})
     if region:
         return region["_id"]
     else:
