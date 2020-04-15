@@ -10,7 +10,7 @@ def main():
 def create_us_counties():
     created = 0
     # Ensure US exists
-    us_region = repository.find_or_create_region("United States");
+    us_region = repository.find_or_create_region("United States")
 
     with open(FILE_US_COUNTIES) as file:
         states = {}
