@@ -35,6 +35,8 @@ export default class App extends React.Component {
             })
           }
         });
+
+      this.props.fetchHeadlines();
     }
 
     render() {

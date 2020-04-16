@@ -9,6 +9,7 @@ import {
   fetchSeriesList,
   selectTheme,
   fetchRegions,
+  fetchHeadlines,
   fetchDefaultSeries,
   setFilterOptions,
   toggleTheme
@@ -18,6 +19,7 @@ const mapStateToProps = (state, own) => ({
     filters: state.filters,
     loading: state.loading,
     location: state.location,
+    headlines: state.headlines,
     theme: state.theme,
     cookies: own.cookies
 });
@@ -26,6 +28,7 @@ const mapStateToDispatch = dispatch => ({
   fetchGeolocation: () => dispatch(fetchGeolocation()),
   fetchSeriesList: () => dispatch(fetchSeriesList()),
   fetchRegions: () => dispatch(fetchRegions()),
+  fetchHeadlines: () => dispatch(fetchHeadlines()),
   fetchDefaultSeries: () => dispatch(fetchDefaultSeries()),
   toggleTheme: cookies => dispatch(toggleTheme(cookies)),
   selectTheme: theme => dispatch(selectTheme(theme)),

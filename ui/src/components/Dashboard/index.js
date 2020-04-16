@@ -78,6 +78,7 @@ const mapStateToProps = state => {
       subregions: state.regions.current.subregions.map(r => r.name),
       columns: currentSeries.columns
     },
+    headlines: state.headlines,
     data: Object.keys(aggregateSeries).map(series => {
       let length = aggregateSeries[series].length;
       return {

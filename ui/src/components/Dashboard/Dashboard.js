@@ -17,10 +17,12 @@ import LocationBreadcrumb from '../LocationBreadcrumb';
 import Filters from '../Filters';
 import * as Panes from '../Panes';
 
+import { formatDateString } from '../../util';
+
 export default class Dashboard extends React.Component {
 
   render() {
-    const { data, meta, view, classes } = this.props;
+    const { data, meta, view, headlines, classes } = this.props;
     if (data.length === 0) {
       return <div/>;
     }
@@ -58,8 +60,36 @@ export default class Dashboard extends React.Component {
                       className={classes.cardHeader}
                       title="Headlines"
                       />
-                    <CardContent>
-                      <Typography variant="overline">Coming soon!</Typography>
+                    <CardContent className={classes.paneCard}>
+                      {
+                        headlines.error ?
+                        <Card variant="outlined">
+                          <CardContent>
+                            <Typography variant="body2">Error fetching headlines. Perhaps my quota was reached. Consider donating so I can upgrade my license to unlimited requests.</Typography>
+                          </CardContent>
+                          <CardActions>
+                            <Button
+                              className={classes.actionButton}
+                              variant="contained"
+                              aria-label="Donate"
+                              startIcon={<Icon className="fab fa-paypal" />}
+                              onClick={() => window.open('https://paypal.me/JasonCampos')}>
+                              Donate
+                            </Button>
+                          </CardActions>
+                        </Card>
+                          :
+                          headlines.articles.map(headline => {
+                            return (
+                              <Card variant="outlined">
+                                <CardContent>
+                                  <Typography variant="body2"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
+                                  <Typography variant="caption"> Published on {formatDateString(new Date(headline.publishedAt))} by {headline.source}</Typography>
+                                </CardContent>
+                              </Card>
+                            )
+                          })
+                      }
                     </CardContent>
                   </Card>
                 </Grid>

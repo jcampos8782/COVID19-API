@@ -13,7 +13,6 @@ export default (state = {all: [], current: null}, action) => {
             all: action.regions
           };
         case RECEIVE_REGION:
-          console.log(action.region);
           return {
             ...state,
             current: action.region
