@@ -36,8 +36,11 @@ export default class Dashboard extends React.Component {
         justify="flex-start">
         <Grid item xs={12} md={9}>
           <Grid container>
-            <Grid item xs={12}>
-              <Filters />
+            <Grid item xs={12} style={{paddingLeft:30}}>
+              <LocationBreadcrumb
+                locations={meta.locations}
+                loadRegion={this.props.loadRegion}
+                />
             </Grid>
             <Grid item xs={12}>
               <Tabs
@@ -98,10 +101,7 @@ export default class Dashboard extends React.Component {
                     <CardHeader
                       className={classes.cardHeader}
                       title={
-                        <LocationBreadcrumb
-                          locations={meta.locations}
-                          loadRegion={this.props.loadRegion}
-                          />
+                        <Filters />
                         }
                       />
                     <CardContent className={classes.paneCard}>
