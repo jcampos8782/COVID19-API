@@ -20,6 +20,9 @@ const css = theme => ({
   filterLabel: {
     paddingBottom: 6
   },
+  link: {
+    color: theme.palette.primary.linkText
+  },
   navButton: {
     color: theme.palette.secondary.contrastText,
     "&:hover": {
@@ -55,6 +58,10 @@ const css = theme => ({
       display: 'inline-block',
       paddingRight: 10
     }
+  },
+  actionButton: {
+    color: theme.palette.secondary.contrastText,
+    backgroundColor: theme.palette.secondary.main
   },
   success: {
     color: theme.palette.success.main,

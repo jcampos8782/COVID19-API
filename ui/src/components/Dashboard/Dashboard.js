@@ -87,9 +87,8 @@ export default class Dashboard extends React.Component {
                 </CardContent>
                 <CardActions>
                   <Button
+                    className={classes.actionButton}
                     variant="contained"
-                    color="primary"
-                    className={classes.navButton}
                     aria-label="Donate"
                     startIcon={<Icon className="fab fa-paypal" />}
                     onClick={() => window.open('https://paypal.me/JasonCampos')}>
@@ -97,8 +96,8 @@ export default class Dashboard extends React.Component {
                   </Button>
 
                   <Button
+                    className={classes.actionButton}
                     variant="contained"
-                    color="primary"
                     aria-label="GitHub"
                     startIcon={<Icon className="fab fa-github" />}
                     onClick={() => window.open('https://github.com/jcampos8782/COVID19-API')}>
@@ -111,9 +110,10 @@ export default class Dashboard extends React.Component {
               <Card variant="outlined">
                 <CardHeader
                   className={classes.cardHeader}
-                  title=<Typography variant="h6">Headlines</Typography>
+                  title="Headlines"
                   />
                 <CardContent>
+                  <Typography variant="overline">Coming Soon!</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -121,17 +121,26 @@ export default class Dashboard extends React.Component {
               <Card variant="outlined">
                 <CardHeader
                   className={classes.cardHeader}
-                  title=<Typography variant="h6">Other Resources</Typography>
+                  title="Links"
                   />
                 <CardContent>
+                  <Typography variant="h6">Resources</Typography>
                   <Typography variant="body2">
-                    <Link href="https://coronavirus.jhu.edu/" rel="noopener">Johns Hopkin's University</Link>
+                    <Link className={classes.link} href="https://coronavirus.jhu.edu/" rel="noopener">Johns Hopkin's University</Link>
                   </Typography>
                   <Typography variant="body2">
-                    <Link href="https://www.cdc.gov/" rel="noopener">Centers for Disease Control (CDC)</Link>
+                    <Link className={classes.link} href="https://www.cdc.gov/" rel="noopener">Centers for Disease Control (CDC)</Link>
                   </Typography>
                   <Typography variant="body2">
-                    < Link href="https://www.who.int/" rel="noopener">World Health Organization</Link>
+                    < Link className={classes.link} href="https://www.who.int/" rel="noopener">World Health Organization</Link>
+                  </Typography>
+                  <Divider light style={{marginTop: 10, marginBottom: 10}}/>
+                  <Typography variant="h6">Data Sources</Typography>
+                  <Typography variant="body2">
+                    <Link className={classes.link} href="https://github.com/CSSEGISandData/COVID-19" rel="noopener">John's Hopkins University Data</Link>
+                  </Typography>
+                  <Typography variant="body2">
+                    < Link className={classes.link} href="https://github.com/carranco-sga/Mexico-COVID-19" rel="noopener">Mexico State Data</Link>
                   </Typography>
                 </CardContent>
               </Card>
@@ -140,19 +149,16 @@ export default class Dashboard extends React.Component {
               <Card variant="outlined">
                 <CardHeader
                   className={classes.cardHeader}
-                  title=<Typography variant="h6">Sources &amp; Contributors</Typography>
+                  title="About"
                   />
                 <CardContent>
                   <Typography variant="body" align="justify">
-                    This project is made possible thanks to the wonders of the Open Source community. In turn, this project's
-                    source code has also been made open source for anyone wishing to contribute.
+                    This is an Open Source project available on <Link className={classes.link} href="https://github.com/jcampos8782/COVID19-API">GitHub</Link>.
+                    A special thank you to others making open source contributions that have made this project possible.
                   </Typography>
-                  <Divider light style={{marginTop: 10, marginBottom: 10}}/>
-                  <Typography variant="body2">
-                    <Link href="https://github.com/CSSEGISandData/COVID-19" rel="noopener">John's Hopkins University Data</Link>
-                  </Typography>
-                  <Typography variant="body2">
-                    < Link href="https://github.com/carranco-sga/Mexico-COVID-19" rel="noopener">Mexico State Data</Link>
+                  <Typography variant="body" align="justify">
+                    If there is a particular feature you would like to see, have encountered an error, or would like to discuss how you could
+                    contribute me, connect with me over email, LinkedIn, or Facebook.
                   </Typography>
                 </CardContent>
               </Card>

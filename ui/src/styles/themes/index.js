@@ -11,7 +11,7 @@ export const light = createMuiTheme(lightBase, {
   palette: {
     type: 'light',
     primary: {
-      main: blueGrey[600]
+      main: blueGrey[600],
     },
     secondary: {
       main: orange[400]
@@ -56,6 +56,7 @@ export const dark = createMuiTheme(darkBase, {
     type: 'dark',
     primary: {
       main: blueGrey[800],
+      linkText: '#8dd3c7'
     },
     secondary: {
       main: orange[600]

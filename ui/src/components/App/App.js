@@ -52,6 +52,9 @@ export default class App extends React.Component {
                   onChange={() => this.props.toggleTheme(this.props.cookies)}
                   />
                 <Grid container alignItems="center" justify="flex-end" spacing={1} >
+                  <IconButton className={classes.navLink} aria-label="github" onClick={() => window.open('mailto:jason@jsoncampos.com')}>
+                      <Icon className="far fa-envelope" />
+                  </IconButton>
                   <IconButton className={classes.navLink} aria-label="github" onClick={() => window.open('http://github.com/jcampos8782/covid19-api')}>
                       <Icon className="fab fa-github" />
                   </IconButton>
