@@ -1,9 +1,11 @@
 package com.jsoncampos.seriesapi.dto.mappers;
 
 import com.jsoncampos.seriesapi.dto.DataDto;
+import com.jsoncampos.seriesapi.dto.HeadlineDto;
 import com.jsoncampos.seriesapi.dto.RegionDto;
 import com.jsoncampos.seriesapi.dto.SeriesDto;
 import com.jsoncampos.seriesapi.models.Data;
+import com.jsoncampos.seriesapi.models.HeadlinesResponse.Article;
 import com.jsoncampos.seriesapi.models.Region;
 import com.jsoncampos.seriesapi.models.Series;
 
@@ -29,5 +31,14 @@ public class Mappers {
 				.withName(model.getName())
 				.withColumns(model.getColumns())
 				.build();
+	}
+	
+	public static HeadlineDto convertToDto(Article article) {
+		HeadlineDto dto = new HeadlineDto();
+		dto.setPublishedAt(article.getPublishedAt());
+		dto.setSource(article.getSource().getName());
+		dto.setTitle(article.getTitle());
+		dto.setUrl(article.getTitle());
+		return dto;
 	}
 }

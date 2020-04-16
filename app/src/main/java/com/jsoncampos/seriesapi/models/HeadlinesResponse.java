@@ -1,17 +1,15 @@
 package com.jsoncampos.seriesapi.models;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import com.jsoncampos.seriesapi.dto.HeadlineDto;
-
 
 public  class HeadlinesResponse {
-	 String status;
-	 int totalResults;
-	 List<Article> articles;
-	 Source source;
+	 private String status;
+	 private String message;
+	 private int totalResults;
+	 private List<Article> articles;
+	 private Source source;
 
 	public String getStatus() {
 		return status;
@@ -19,6 +17,14 @@ public  class HeadlinesResponse {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public String getMessage() {
+		return this.message;
+	}
+	
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public int getTotalResults() {

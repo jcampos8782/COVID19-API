@@ -6,18 +6,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.google.gson.Gson;
 import com.jsoncampos.seriesapi.models.HeadlinesResponse;
 
+@Service
 public class HeadlinesServiceImpl implements HeadlinesService {
 
+	@Value("${newsapi.baseUrl}")
 	private String baseUrl;
-	private String apiKey;
 	
-	public HeadlinesServiceImpl(String baseUrl, String apiKey) {
-		this.baseUrl = baseUrl;
-		this.apiKey = apiKey;
-	}
+	@Value("${newsapi.apikey}")
+	private String apiKey;
 	
 	@Override
 	public HeadlinesResponse getTopHeadlines(String query, String regionCode) throws IOException {

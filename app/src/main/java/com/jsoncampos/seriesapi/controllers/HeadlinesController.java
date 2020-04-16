@@ -1,46 +1,59 @@
 package com.jsoncampos.seriesapi.controllers;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-import com.jsoncampos.seriesapi.dto.HeadlineDto;
+import com.jsoncampos.seriesapi.controllers.responses.GetHeadlinesResponse;
+import com.jsoncampos.seriesapi.dto.mappers.Mappers;
 import com.jsoncampos.seriesapi.models.HeadlinesResponse;
-import com.jsoncampos.seriesapi.models.HeadlinesResponse.Article;
 import com.jsoncampos.seriesapi.services.HeadlinesService;
-import com.jsoncampos.seriesapi.services.HeadlinesServiceImpl;
 
 @RestController
 @CrossOrigin(origins = "*" )
 @RequestMapping(path="/api/headlines")
 public class HeadlinesController {
 	
+	@Value("${newsapi.defaultQuery}")
+	private String defaultQuery;
+	
+	@Value("${newsapi.defaultRegion}")
+	private String defaultRegion;
+	
+	private HeadlinesService svc;
+	
+	@Autowired
+	public HeadlinesController(HeadlinesService svc) {
+		this.svc = svc;
+	}
+	
 	@GetMapping
-	public ResponseEntity<List<HeadlineDto>> getHeadlines() throws IOException {
-		HeadlinesService svc = new HeadlinesServiceImpl("https://newsapi.org/v2/", "049eb37fc0d847aeb42338f014abe761");
-		HeadlinesResponse response = svc.getTopHeadlines("coronavirus", "us");
+	public GetHeadlinesResponse getHeadlines(
+			@RequestParam Optional<String> query, 
+			@RequestParam Optional<String> region) throws IOException {
+			
+		try {
+		HeadlinesResponse response = svc.getTopHeadlines(
+				query.orElse(defaultQuery), 
+				region.orElse(defaultRegion));
+				
+		if (response.getStatus() == "error") {
+			return new GetHeadlinesResponse(response.getMessage());
+		}
 		
-		return new ResponseEntity<List<HeadlineDto>>(
-				response.getArticles().stream().map(HeadlinesController::mapToDto).collect(Collectors.toList()), 
-				HttpStatus.OK);
+		return new GetHeadlinesResponse(
+				response.getArticles().stream().map(Mappers::convertToDto).collect(Collectors.toList()));
+		
+		} catch (IOException e) {
+			return new GetHeadlinesResponse(e.getMessage());
+		}
 	}
-	
-	private static HeadlineDto mapToDto(Article article) {
-		HeadlineDto dto = new HeadlineDto();
-		dto.setPublishedAt(article.getPublishedAt());
-		dto.setSource(article.getSource().getName());
-		dto.setTitle(article.getTitle());
-		dto.setUrl(article.getTitle());
-		return dto;
-	}
-	
-	
 }

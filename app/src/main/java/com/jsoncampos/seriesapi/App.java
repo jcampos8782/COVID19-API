@@ -15,6 +15,7 @@ public class App {
 		Preconditions.checkNotNull(env.get("DB_NAME"), "Required environment variable DB_NAME not set");
 		Preconditions.checkNotNull(env.get("DB_HOST"), "Required environment variable DB_HOST not set");
 		Preconditions.checkNotNull(env.get("DB_PORT"), "Required environment variable DB_PORT not set");
+		Preconditions.checkNotNull(env.get("NEWSAPI_API_KEY"), "Required environment variable NEWSAPI_API_KEY is not set");
 		SpringApplication.run(App.class, args);
 	}
 }
