@@ -3,7 +3,6 @@ import React from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Backdrop from '@material-ui/core/Backdrop';
-import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -11,9 +10,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import BottomNav from '../BottomNav';
 import Dashboard from '../Dashboard';
-import Filters from '../Filters';
 
 import { RECEIVE_REGIONS } from '../../actions/types';
 import { light, dark } from '../../styles';
@@ -48,15 +45,6 @@ export default class App extends React.Component {
             <CssBaseline />
             <AppBar className={classes.appbar} position='fixed'>
               <Toolbar>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  className={classes.navButton}
-                  aria-label="Donate"
-                  startIcon={<Icon className="fab fa-paypal" />}
-                  onClick={() => window.open('https://paypal.me/JasonCampos')}>
-                  Donate
-                </Button>
                 <IconButton className={classes.navLink} aria-label="theme" onClick={() => this.props.toggleTheme(this.props.cookies)}>
                     <Icon className={themeIconClass} />
                 </IconButton>
@@ -76,13 +64,9 @@ export default class App extends React.Component {
             <Backdrop open={this.props.loading} className={classes.backdrop}>
               <CircularProgress color="inherit" />
             </Backdrop>
-            <Grid container className={classes.body} alignItems="flex-start" justify="flex-start">
-              <Filters/>
-            </Grid>
             <Grid container className={classes.body}>
               <Dashboard />
             </Grid>
-            <BottomNav/>
           </MuiThemeProvider>
         );
     }

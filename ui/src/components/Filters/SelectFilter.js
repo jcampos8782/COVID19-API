@@ -1,5 +1,6 @@
 import React from 'react';
 
+import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -11,14 +12,16 @@ export default class SelectFilter extends React.Component {
       label,
       options,
       selected,
-      onChange
+      onChange,
+      key
     } = this.props;
       return (
-          <div style={{display: options.length === 0 ? 'none' : ''}}>
-              <InputLabel>{this.props.label}</InputLabel>
+          <FormControl style={{display: options.length === 0 ? 'none' : ''}}>
+              <InputLabel shrink id={key}>{label}</InputLabel>
               <Select
-                variant="outlined"
-                label={label}
+                variant="standard"
+                margin="dense"
+                labelId={key}
                 value={selected}
                 onChange={onChange}
                 disabled={options.length === 0}
@@ -28,7 +31,7 @@ export default class SelectFilter extends React.Component {
                       options.map(o => <MenuItem key={o.id} value={o.id}>{o.name}</MenuItem>)
                   }
               </Select>
-          </div>
+          </FormControl>
       );
   }
 }

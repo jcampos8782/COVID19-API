@@ -20,7 +20,7 @@ export default class SummaryPane extends React.Component {
 
     let trends = (
       <Grid container>
-        <Typography variant="h4">Trends</Typography>
+        <Typography variant="h6">Trends</Typography>
         <Grid item style={{height:30, marginTop: 15, marginBottom: 20}} xs={12} md={12} lg={12}>
           <TimeSeriesHeatMap
             keys={meta.columns}
@@ -48,7 +48,7 @@ export default class SummaryPane extends React.Component {
     );
 
     let totalCards = (
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={6}>
         <Grid container spacing={1} style={{paddingBottom:10, paddingTop: 10}}>
           {
             data.map(series => {
@@ -60,7 +60,7 @@ export default class SummaryPane extends React.Component {
               let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
 
               return (
-                <Grid key={series.id} item xs={6} sm={6}>
+                <Grid key={series.id} item xs={12} sm={12}>
                   <Card variant="outlined" color="secondary">
                     <CardHeader
                       style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
@@ -88,7 +88,7 @@ export default class SummaryPane extends React.Component {
     );
 
     let dailyCards = (
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={6}>
         <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
         {
           data.map(series => {
@@ -101,7 +101,7 @@ export default class SummaryPane extends React.Component {
             let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
 
             return (
-              <Grid key={series.id} item xs={6} sm={6}>
+              <Grid key={series.id} item xs={12} sm={12}>
                 <Card variant="outlined" color="secondary">
                   <CardHeader
                     style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
@@ -160,7 +160,7 @@ export default class SummaryPane extends React.Component {
       }
       </Grid>
     );
-    
+
     return (
       <TabPanel
         value={value}
@@ -172,7 +172,7 @@ export default class SummaryPane extends React.Component {
               {totalCards}
               {dailyCards}
             </Grid>
-            <Typography variant="h4">Last 7 Days</Typography>
+            <Typography variant="h6">Last 7 Days</Typography>
             {lastSeven}
           </Grid>
         }

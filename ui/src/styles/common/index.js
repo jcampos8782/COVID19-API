@@ -17,6 +17,9 @@ const css = theme => ({
     width: 'fit-content',
     color: theme.palette.primary.contrastText
   },
+  filterLabel: {
+    paddingBottom: 6
+  },
   navButton: {
     color: theme.palette.secondary.contrastText,
     "&:hover": {
@@ -28,6 +31,9 @@ const css = theme => ({
   },
   deaths: {
     backgroundColor: theme.palette.error.dark
+  },
+  cardHeader: {
+    backgroundColor: theme.palette.background.default
   },
   cardBody: {
     backgroundColor: theme.palette.background.default,
