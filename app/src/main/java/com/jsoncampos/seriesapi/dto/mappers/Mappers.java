@@ -38,7 +38,7 @@ public class Mappers {
 		dto.setPublishedAt(article.getPublishedAt());
 		dto.setSource(article.getSource().getName());
 		dto.setTitle(article.getTitle());
-		dto.setUrl(article.getTitle());
+		dto.setUrl(article.getUrl());
 		return dto;
 	}
 }

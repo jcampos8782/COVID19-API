@@ -36,7 +36,7 @@ public class HeadlinesServiceImpl implements HeadlinesService {
 		    	responseBuilder.append(responseLine.trim());
 		    }
 		}
-		
+
 		return new Gson().fromJson(responseBuilder.toString(), HeadlinesResponse.class);
 	}
 }
