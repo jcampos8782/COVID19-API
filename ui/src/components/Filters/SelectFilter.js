@@ -12,16 +12,14 @@ export default class SelectFilter extends React.Component {
       label,
       options,
       selected,
-      onChange,
-      key
+      onChange
     } = this.props;
       return (
           <FormControl style={{display: options.length === 0 ? 'none' : ''}}>
-              <InputLabel shrink id={key}>{label}</InputLabel>
+              <InputLabel shrink>{label}</InputLabel>
               <Select
                 variant="standard"
                 margin="dense"
-                labelId={key}
                 value={selected}
                 onChange={onChange}
                 disabled={options.length === 0}

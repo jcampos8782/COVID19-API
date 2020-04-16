@@ -11,7 +11,13 @@ export function fetchHeadlines() {
     dispatch(requestHeadlines("us"));
     return fetch(`${SERVER_URL}/api/headlines`)
       .then(response => response.json(), error => dispatch(headlinesError(error)))
-      .then(json => dispatch(receiveHeadlines(json)))
+      .then(json => {
+        if (json.error) {
+          dispatch(headlinesError(json.error));
+        } else {
+          dispatch(receiveHeadlines(json.headlines));
+        }
+      })
       .catch(error => dispatch(headlinesError(error)));
   }
 }

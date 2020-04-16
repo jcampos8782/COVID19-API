@@ -53,8 +53,8 @@ export default class Dashboard extends React.Component {
               </Tabs>
             </Grid>
             <Grid item xs={12}>
-              <Grid container xs={12} spacing={1}>
-                <Grid item xs={12} sm={12} lg={4} >
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={12} md={4} lg={4} >
                   <Card variant="outlined">
                     <CardHeader
                       className={classes.cardHeader}
@@ -79,9 +79,9 @@ export default class Dashboard extends React.Component {
                           </CardActions>
                         </Card>
                           :
-                          headlines.articles.map(headline => {
+                          headlines.articles.map((headline,idx) => {
                             return (
-                              <Card variant="outlined">
+                              <Card variant="outlined" key={idx}>
                                 <CardContent>
                                   <Typography variant="body2"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
                                   <Typography variant="caption"> Published on {formatDateString(new Date(headline.publishedAt))} by {headline.source}</Typography>
@@ -93,7 +93,7 @@ export default class Dashboard extends React.Component {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} sm={12} lg={8}>
+                <Grid item xs={12} sm={12} md={8} lg={8}>
                   <Card variant="outlined" >
                     <CardHeader
                       className={classes.cardHeader}
@@ -198,11 +198,11 @@ export default class Dashboard extends React.Component {
                   title="About"
                   />
                 <CardContent>
-                  <Typography variant="body" align="justify">
+                  <Typography variant="body2" align="justify">
                     This is an Open Source project available on <Link className={classes.link} href="https://github.com/jcampos8782/COVID19-API">GitHub</Link>.
                     A special thank you to others making open source contributions that have made this project possible.
                   </Typography>
-                  <Typography variant="body" align="justify">
+                  <Typography variant="body2" align="justify">
                     If there is a particular feature you would like to see, have encountered an error, or would like to discuss how you could
                     contribute me, connect with me over email, LinkedIn, or Facebook.
                   </Typography>

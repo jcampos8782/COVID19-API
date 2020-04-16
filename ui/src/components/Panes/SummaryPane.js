@@ -168,7 +168,7 @@ export default class SummaryPane extends React.Component {
         children={
           <Grid container>
             {trends}
-            <Grid item xs={12} spacing={1}>
+            <Grid item xs={12}>
               <Grid container>
                 {totalCards}
                 {dailyCards}
