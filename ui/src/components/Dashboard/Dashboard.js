@@ -129,7 +129,7 @@ export default class Dashboard extends React.Component {
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Grid container xs={12} spacing={1}>
+          <Grid container spacing={1}>
             <Grid item xs={12}>
               <Card variant="outlined">
                 <CardHeader
