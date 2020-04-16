@@ -8,6 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
+import Switch from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import Dashboard from '../Dashboard';
@@ -45,9 +46,11 @@ export default class App extends React.Component {
             <CssBaseline />
             <AppBar className={classes.appbar} position='fixed'>
               <Toolbar>
-                <IconButton className={classes.navLink} aria-label="theme" onClick={() => this.props.toggleTheme(this.props.cookies)}>
-                    <Icon className={themeIconClass} />
-                </IconButton>
+                <Icon className={themeIconClass} />
+                <Switch
+                  checked={theme === 'light'}
+                  onChange={() => this.props.toggleTheme(this.props.cookies)}
+                  />
                 <Grid container alignItems="center" justify="flex-end" spacing={1} >
                   <IconButton className={classes.navLink} aria-label="github" onClick={() => window.open('http://github.com/jcampos8782/covid19-api')}>
                       <Icon className="fab fa-github" />
