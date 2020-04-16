@@ -52,7 +52,7 @@ export default class Dashboard extends React.Component {
             </Grid>
             <Grid item xs={12}>
               <Grid container xs={12} spacing={1}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} sm={12} lg={4} >
                   <Card variant="outlined">
                     <CardHeader
                       className={classes.cardHeader}
@@ -63,7 +63,7 @@ export default class Dashboard extends React.Component {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} md={9}>
+                <Grid item xs={12} sm={12} lg={8}>
                   <Card variant="outlined" >
                     <CardHeader
                       className={classes.cardHeader}
