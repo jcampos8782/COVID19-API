@@ -20,6 +20,7 @@ services:
       - DB_HOST=mongo
       - DB_PORT=27017
       - DB_NAME=cvd19
+      - NEWSAPI_API_KEY=${NEWSAPI_API_KEY}
   ui:
     build:
       context: .
