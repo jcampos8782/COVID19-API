@@ -102,7 +102,7 @@ def __import_data_from_sources(sources: [DataSource]) -> None:
                         "regions": [region[k] for k in ["_id", "parent_id"] if k in region]
                     }
                     documents[series_key] = document
-                documents[series_key]["data"][source.component] = [int(n) for n in data]
+                documents[series_key]["data"][source.component] = [int(n.split('.')[0]) for n in data]
 
     repository.recreate_collection("data", documents)
 

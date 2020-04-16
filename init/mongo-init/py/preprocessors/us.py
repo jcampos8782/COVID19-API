@@ -38,7 +38,7 @@ def main():
                     # Inconsistencies in timliness of reporting mean some municipalities don't report at the same interval
                     # Need to extend array if one municipality has reported more recent data than any others.
                     aggregates[component][state] += [0] * (len(data) - len(aggregates[component][state]))
-                    aggregates[component][state] = [aggregates[component][state][i] + int(data[i]) for i in range(len(data))]
+                    aggregates[component][state] = [aggregates[component][state][i] + int(data[i].split('.')[0]) for i in range(len(data))]
 
             for state in aggregates[component]:
                 location = locations[state]
