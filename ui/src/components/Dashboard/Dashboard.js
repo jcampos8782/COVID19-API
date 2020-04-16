@@ -31,7 +31,7 @@ export default class Dashboard extends React.Component {
         direction="row"
         alignItems="flex-start"
         justify="flex-start">
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} md={7} lg={9}>
             <Grid container>
               <Grid item xs={12}>
                 <Filters />
@@ -71,7 +71,7 @@ export default class Dashboard extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={5} >
+        <Grid item xs={12} md={5} lg={3}>
           <Grid container xs={12} spacing={1}>
             <Grid item xs={12}>
               <Card variant="outlined">
