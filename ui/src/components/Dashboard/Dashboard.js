@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
+import LocationBreadcrumb from '../LocationBreadcrumb';
 import Filters from '../Filters';
 import * as Panes from '../Panes';
 
@@ -31,7 +32,7 @@ export default class Dashboard extends React.Component {
         direction="row"
         alignItems="flex-start"
         justify="flex-start">
-        <Grid item xs={12} md={7} lg={9}>
+        <Grid item xs={12} md={9}>
           <Grid container>
             <Grid item xs={12}>
               <Filters />
@@ -66,7 +67,12 @@ export default class Dashboard extends React.Component {
                   <Card variant="outlined" >
                     <CardHeader
                       className={classes.cardHeader}
-                      title={meta.region}
+                      title={
+                        <LocationBreadcrumb
+                          locations={meta.locations}
+                          loadRegion={this.props.loadRegion}
+                          />
+                        }
                       />
                     <CardContent className={classes.paneCard}>
                       <Panes.SummaryPane {...this.props}
@@ -92,7 +98,7 @@ export default class Dashboard extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={5} lg={3}>
+        <Grid item xs={12} md={3}>
           <Grid container xs={12} spacing={1}>
             <Grid item xs={12}>
               <Card variant="outlined">

@@ -1,5 +1,5 @@
 import Dashboard from './Dashboard';
-import { selectDashboardTab } from '../../actions';
+import { selectDashboardTab, loadRegion } from '../../actions';
 import { connect } from 'react-redux';
 import {styled} from '../../styles';
 
@@ -57,6 +57,10 @@ const mapStateToProps = state => {
     };
   });
 
+  let locationTree = state.regions.current.parents.slice(0);
+  locationTree.reverse();
+  locationTree.push(state.regions.current);
+
   return {
     view: {
       theme: state.theme,
@@ -67,7 +71,9 @@ const mapStateToProps = state => {
       },
     },
     meta: {
+      locations: locationTree,
       region: state.regions.current.name,
+      currentRegion: state.regions.current,
       currentSubregion:  state.regions.current.subregions.find(s => s.id === state.filters.selectedSubregionId),
       subregions: state.regions.current.subregions.map(r => r.name),
       columns: currentSeries.columns
@@ -88,7 +94,8 @@ const mapStateToProps = state => {
 };
 
 let mapDispatchToProps = dispatch => ({
-  selectTab: (e,t) => dispatch(selectDashboardTab(t))
+  selectTab: (e,t) => dispatch(selectDashboardTab(t)),
+  loadRegion: (index, selectedRegionId) => dispatch(loadRegion(index, selectedRegionId))
 });
 
 // Aggregates the series from all data series supplied. Combines based on the series name

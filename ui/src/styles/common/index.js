@@ -61,6 +61,7 @@ const css = theme => ({
   filters: {
     paddingLeft: 30,
     "& > div": {
+      minWidth: 120,
       display: 'inline-block',
       paddingRight: 10
     }
