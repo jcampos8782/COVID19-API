@@ -48,7 +48,7 @@ export default class SummaryPane extends React.Component {
     );
 
     let totalCards = (
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <Grid container spacing={1} style={{paddingBottom:10, paddingTop: 10}}>
           {
             data.map(series => {
@@ -60,7 +60,7 @@ export default class SummaryPane extends React.Component {
               let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
 
               return (
-                <Grid key={series.id} item xs={12} sm={12}>
+                <Grid key={series.id} item xs={12} md={6}>
                   <Card variant="outlined" color="secondary">
                     <CardHeader
                       style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
@@ -88,7 +88,7 @@ export default class SummaryPane extends React.Component {
     );
 
     let dailyCards = (
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
         {
           data.map(series => {
@@ -101,7 +101,7 @@ export default class SummaryPane extends React.Component {
             let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
 
             return (
-              <Grid key={series.id} item xs={12} sm={12}>
+              <Grid key={series.id} item xs={12} md={6}>
                 <Card variant="outlined" color="secondary">
                   <CardHeader
                     style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
@@ -168,9 +168,11 @@ export default class SummaryPane extends React.Component {
         children={
           <Grid container>
             {trends}
-            <Grid container spacing={1}>
-              {totalCards}
-              {dailyCards}
+            <Grid item xs={12} spacing={1}>
+              <Grid container>
+                {totalCards}
+                {dailyCards}
+              </Grid>
             </Grid>
             <Typography variant="h6">Last 7 Days</Typography>
             {lastSeven}

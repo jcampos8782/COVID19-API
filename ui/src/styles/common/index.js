@@ -29,6 +29,12 @@ const css = theme => ({
       background: theme.palette.secondary.light
     }
   },
+  paneCard: {
+    '& > div': {
+      border: 0,
+      padding: '0 !important'
+    }
+  },
   confirmed: {
     backgroundColor: theme.palette.warning.dark
   },

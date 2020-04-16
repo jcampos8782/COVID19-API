@@ -27,46 +27,67 @@ export default class Dashboard extends React.Component {
     return (
       <Grid
         container
-        spacing={3}
+        spacing={1}
         direction="row"
         alignItems="flex-start"
         justify="flex-start">
-          <Grid item xs={12} md={7} lg={9}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Filters />
-              </Grid>
-              <Grid item xs={12} style={{zIndex: 10}}>
-               <Grid container xs={12}>
-                <Tabs
-                  value={view.selectedTabId}
-                  onChange={this.props.selectTab}
-                  variant="scrollable"
-                  scrollButtons="on"
-                  >
-                  <Tab label="Summary" {...a11yProps(0)} />
-                  <Tab label="History" {...a11yProps(1)} />
-                  <Tab label="Subregions" {...a11yProps(2)} disabled={meta.subregions.length === 0}/>
-                  <Tab label="Data" {...a11yProps(3)} />
-                </Tabs>
-              </Grid>
-              <Grid item xs={12}>
-                <Panes.SummaryPane {...this.props}
-                  value={view.selectedTabId}
-                  index={0}
-                  />
-                <Panes.HistoryPane {...this.props}
-                  value={view.selectedTabId}
-                  index={1}
-                  />
-                <Panes.SubregionPane {...this.props}
-                  value={view.selectedTabId}
-                  index={2}
-                  />
-                <Panes.DataPane {...this.props}
-                  value={view.selectedTabId}
-                  index={3}
-                  />
+        <Grid item xs={12} md={7} lg={9}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Filters />
+            </Grid>
+            <Grid item xs={12}>
+              <Tabs
+                value={view.selectedTabId}
+                onChange={this.props.selectTab}
+                variant="scrollable"
+                scrollButtons="on"
+                >
+                <Tab label="Summary" {...a11yProps(0)} />
+                <Tab label="History" {...a11yProps(1)} />
+                <Tab label="Subregions" {...a11yProps(2)} disabled={meta.subregions.length === 0}/>
+                <Tab label="Data" {...a11yProps(3)} />
+              </Tabs>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container xs={12} spacing={1}>
+                <Grid item xs={12} md={3}>
+                  <Card variant="outlined">
+                    <CardHeader
+                      className={classes.cardHeader}
+                      title="Headlines"
+                      />
+                    <CardContent>
+                      <Typography variant="overline">Coming soon!</Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={9}>
+                  <Card variant="outlined" >
+                    <CardHeader
+                      className={classes.cardHeader}
+                      title={meta.region}
+                      />
+                    <CardContent className={classes.paneCard}>
+                      <Panes.SummaryPane {...this.props}
+                        value={view.selectedTabId}
+                        index={0}
+                        />
+                      <Panes.HistoryPane {...this.props}
+                        value={view.selectedTabId}
+                        index={1}
+                        />
+                      <Panes.SubregionPane {...this.props}
+                        value={view.selectedTabId}
+                        index={2}
+                        />
+                      <Panes.DataPane {...this.props}
+                        value={view.selectedTabId}
+                        index={3}
+                        />
+                    </CardContent>
+                  </Card>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -104,17 +125,6 @@ export default class Dashboard extends React.Component {
                     GitHub
                   </Button>
                 </CardActions>
-              </Card>
-            </Grid>
-            <Grid item xs={12}>
-              <Card variant="outlined">
-                <CardHeader
-                  className={classes.cardHeader}
-                  title="Headlines"
-                  />
-                <CardContent>
-                  <Typography variant="overline">Coming Soon!</Typography>
-                </CardContent>
               </Card>
             </Grid>
             <Grid item xs={12}>
