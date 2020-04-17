@@ -2,7 +2,11 @@ import HeadlinesCard from './HeadlinesCard.js';
 import {styled} from '../../../styles';
 import { connect } from 'react-redux';
 
-import { changeHeadlinesPage, changeHeadlinesRowsPerPage } from '../../../actions';
+import {
+  fetchHeadlines,
+  changeHeadlinesPage,
+  changeHeadlinesRowsPerPage
+} from '../../../actions';
 
 const mapStateToProps = state => (
   {
@@ -12,6 +16,7 @@ const mapStateToProps = state => (
 
 const mapDispatchToProps = dispatch => (
   {
+    fetchHeadlines: query => dispatch(fetchHeadlines(query)),
     changePage: (e,page) => dispatch(changeHeadlinesPage(page)),
     changeRowsPerPage: (e,rows) => dispatch(changeHeadlinesRowsPerPage(rows))
   }

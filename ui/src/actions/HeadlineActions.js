@@ -9,10 +9,11 @@ export const headlinesError = error => ({type: Actions.ERROR_HEADLINES, error})
 export const changeHeadlinesPage = page => ({type: Actions.CHANGE_HEADLINES_PAGE, page })
 export const changeHeadlinesRowsPerPage = rows => ({type: Actions.CHANGE_HEADLINES_ROWS_PER_PAGE, rows})
 
-export function fetchHeadlines() {
+export function fetchHeadlines(query) {
   return dispatch => {
-    dispatch(requestHeadlines("us"));
-    return fetch(`${SERVER_URL}/api/headlines`)
+    dispatch(requestHeadlines(query));
+    let queryString = query ? `q=${query}` : '';
+    return fetch(`${SERVER_URL}/api/headlines?${queryString}`)
       .then(response => response.json(), e => { throw new Error("Failed to retrieve series")} )
       .then(json => {
         if (json.error) {

@@ -19,7 +19,7 @@ export const fetchGeolocation = () => {
       return;
     }
 
-    return new Promise(resolve => {
+    return new Promise((resolve,reject) => {
       navigator.geolocation.getCurrentPosition(
         pos => {
           let {coords} = pos;
@@ -63,11 +63,11 @@ export const fetchGeolocation = () => {
             .then(resolve)
             .catch(error => dispatch(geolocationError(error)));
           } else {
-            resolve();
+            reject();
           }
         }
       )
     },
-    {timeout: 10000});
+    {timeout: 3000});
   }
 }

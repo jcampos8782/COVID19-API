@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Link from '@material-ui/core/Link';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,13 +11,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-
 import Typography from '@material-ui/core/Typography';
 
 import ErrorCard from '../ErrorCard';
 import { formatDateString } from '../../../util';
 
 export default class HeadlinesCard extends React.Component {
+  componentDidMount() {
+    this.props.fetchHeadlines();
+  }
 
   render() {
     const {
@@ -32,16 +35,20 @@ export default class HeadlinesCard extends React.Component {
       rowsPerPageOptions
     } = headlines.paging;
 
+    if (headlines.error) {
+      return <ErrorCard message={headlines.error} />
+    }
+
     return (
       <Card variant="outlined">
         <CardHeader
           className={classes.cardHeader}
           title="Headlines"
-          />
+        />
         <CardContent className={classes.paneCard}>
           {
-            headlines.error ?
-              <ErrorCard message={headlines.error} /> :
+            headlines.loading ?
+              <LinearProgress variant="query" /> :
               <div>
                 <TableContainer>
                   <Table>

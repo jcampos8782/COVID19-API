@@ -31,17 +31,15 @@ export default class App extends React.Component {
             this.props.setRegions(regionsAction.regions.map(r => ({id: r.id, name: r.name})));
 
             if(this.props.isGeolocationAvailable) {
-              this.props.fetchGeolocation().then(r => {
-                this.props.fetchDefaultSeries();
-              })
+              this.props.fetchGeolocation()
+              .then(r => this.props.fetchDefaultSeries())
+              .catch(e => this.props.error("Error during geolocation lookup"));
             }
           },
           error => {
             throw new Error(error.message);
           })
         .catch(e => this.props.error("Failed to load dashboard."));
-
-      this.props.fetchHeadlines();
     }
 
     render() {
