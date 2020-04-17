@@ -20,8 +20,9 @@ export const fetchClosestRegion = (lat,lon) => {
   return (dispatch,getState) => {
     dispatch(requestRegionByGeoCoords(lat,lon));
     return fetch(`${SERVER_URL}/api/regions/geo?lat=${lat}&lon=${lon}`)
-      .then(response => response.json(), e => dispatch(error(e)))
-      .then(json => dispatch(receiveRegion(json)));
+      .then(response => response.json(), e => dispatch(error("Failed to fetch your region")))
+      .then(json => dispatch(receiveRegion(json)))
+      .catch(e => dispatch(error("Failed to fetch your region")));
   }
 }
 
@@ -29,8 +30,9 @@ export const fetchSubregions = regionId => {
     return dispatch => {
       dispatch(requestSubregions(regionId));
       return fetch(`${SERVER_URL}/api/regions/${regionId}/subregions`)
-        .then(response => response.json(), e => dispatch(error(e)))
-        .then(json => dispatch(receiveSubregions(regionId, json)));
+        .then(response => response.json(), e => dispatch(error("Failed to fetch subregions")))
+        .then(json => dispatch(receiveSubregions(regionId, json)))
+        .catch(e => dispatch(error("Failed to fetch subregions")));
     }
 }
 
@@ -38,8 +40,9 @@ export const fetchRegion = (regionId) => {
   return (dispatch,getState) => {
     dispatch(requestRegion(regionId));
     return fetch(`${SERVER_URL}/api/regions/${regionId}`)
-      .then(response => response.json(), e => dispatch(error(e)))
-      .then(json => dispatch(receiveRegion(json)));
+      .then(response => response.json(), e => dispatch(error("Failed to fetch region")))
+      .then(json => dispatch(receiveRegion(json)))
+      .catch(e => dispatch(error("Failed to fetch region")));
   }
 }
 
@@ -47,7 +50,8 @@ export const fetchRegions = () => {
     return dispatch => {
         dispatch(requestRegions());
         return fetch(`${SERVER_URL}/api/regions`)
-            .then(response => response.json(), e => dispatch(error(e)))
-            .then(json => dispatch(receiveRegions(json)));
+            .then(response => response.json(), e => dispatch(error("Count not retreive regions")))
+            .then(json => dispatch(receiveRegions(json)))
+            .catch(e => dispatch(error("Count not retreive regions")));
     }
 }

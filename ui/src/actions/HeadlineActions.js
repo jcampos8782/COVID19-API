@@ -10,7 +10,7 @@ export function fetchHeadlines() {
   return dispatch => {
     dispatch(requestHeadlines("us"));
     return fetch(`${SERVER_URL}/api/headlines`)
-      .then(response => response.json(), error => dispatch(headlinesError(error)))
+      .then(response => response.json(), error => dispatch(headlinesError("Failed to retrieve headlines")))
       .then(json => {
         if (json.error) {
           dispatch(headlinesError(json.error));
@@ -18,6 +18,6 @@ export function fetchHeadlines() {
           dispatch(receiveHeadlines(json.headlines));
         }
       })
-      .catch(error => dispatch(headlinesError(error)));
+      .catch(error => dispatch(headlinesError("Failed to retrieve headlines")));
   }
 }

@@ -25,6 +25,7 @@ const mapStateToProps = (state, own) => ({
 });
 
 const mapStateToDispatch = dispatch => ({
+  error: error => dispatch({type: "ERROR_LOADING", error}),
   fetchGeolocation: () => dispatch(fetchGeolocation()),
   fetchSeriesList: () => dispatch(fetchSeriesList()),
   fetchRegions: () => dispatch(fetchRegions()),

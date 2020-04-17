@@ -25,7 +25,7 @@ export default class App extends React.Component {
       }
 
       Promise.all([this.props.fetchRegions(), this.props.fetchSeriesList()])
-        .then(results => {
+        .then((results,e) => {
           let regionsAction = results.find(r => r.type === RECEIVE_REGIONS);
           this.props.setRegions(regionsAction.regions.map(r => ({id: r.id, name: r.name})));
 
@@ -34,7 +34,7 @@ export default class App extends React.Component {
               this.props.fetchDefaultSeries();
             })
           }
-        });
+        }).catch(e => this.props.error(e));
 
       this.props.fetchHeadlines();
     }
