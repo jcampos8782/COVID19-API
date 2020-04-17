@@ -1,4 +1,5 @@
 export * from './DashboardActions';
+export * from './ErrorActions';
 export * from './FilterActions';
 export * from './HeadlineActions';
 export * from './LocationActions';

@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import AppBar from '@material-ui/core/AppBar';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -12,6 +11,7 @@ import Switch from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import Dashboard from '../Dashboard';
+import Errors from '../Errors';
 
 import { RECEIVE_REGIONS } from '../../actions/types';
 import { light, dark } from '../../styles';
@@ -78,6 +78,7 @@ export default class App extends React.Component {
               <CircularProgress color="inherit" />
             </Backdrop>
             <Grid container className={classes.body}>
+              <Errors />
               <Dashboard />
             </Grid>
           </MuiThemeProvider>

@@ -12,7 +12,8 @@ import {
   fetchHeadlines,
   fetchDefaultSeries,
   setFilterOptions,
-  toggleTheme
+  toggleTheme,
+  error
 } from '../../actions';
 
 const mapStateToProps = (state, own) => ({
@@ -25,7 +26,7 @@ const mapStateToProps = (state, own) => ({
 });
 
 const mapStateToDispatch = dispatch => ({
-  error: error => dispatch({type: "ERROR_LOADING", error}),
+  error: e => error(e),
   fetchGeolocation: () => dispatch(fetchGeolocation()),
   fetchSeriesList: () => dispatch(fetchSeriesList()),
   fetchRegions: () => dispatch(fetchRegions()),

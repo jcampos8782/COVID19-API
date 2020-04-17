@@ -1,4 +1,5 @@
 import * as Actions from './types';
+import { error } from './ErrorActions';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -13,8 +14,6 @@ export const receiveSubregions = (regionId, subregions) => ({ type: Actions.RECE
 
 export const requestRegionByGeoCoords = (lat,lon) =>  ({ type: Actions.REQUEST_REGION_BY_GEOLOCATION, lat, lon })
 export const receiveRegionByGeoCoords = region =>  ({ type: Actions.RECEIVE_REGION, region })
-
-const error = e => ({type: Actions.ERROR_LOADING, error: e })
 
 export const fetchClosestRegion = (lat,lon) => {
   return (dispatch,getState) => {

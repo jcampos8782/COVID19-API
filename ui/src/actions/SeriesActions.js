@@ -1,4 +1,6 @@
 import * as Actions from './types';
+import { error } from './ErrorActions';
+
 import { selectSeries } from './FilterActions';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
@@ -8,8 +10,6 @@ export const requestSeriesByRegion = (seriesId, regionId) => ({ type: Actions.RE
 
 export const receiveSeries = (series) => ({ type: Actions.RECEIVE_SERIES, series })
 export const receiveSeriesList = (series) => ({ type: Actions.RECEIVE_SERIES_LIST, series })
-
-const error = e => ({type: Actions.ERROR_LOADING, error: e })
 
 export function fetchSeriesList() {
   return dispatch => {

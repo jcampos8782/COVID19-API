@@ -1,4 +1,4 @@
-import { ERROR_LOADING, CLEAR_ERROR } from '../actions/types';
+import { ERROR_LOADING, CLEAR_ERRORS } from '../actions/types';
 
 export default (state = [], action ) => {
   switch (action.type) {
@@ -6,7 +6,7 @@ export default (state = [], action ) => {
       let errors = state.slice(0);
       errors.push(action.error);
       return errors;
-    case CLEAR_ERROR:
+    case CLEAR_ERRORS:
       return [];
     default:
       return state;
