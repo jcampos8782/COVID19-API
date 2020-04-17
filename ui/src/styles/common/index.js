@@ -7,6 +7,11 @@ const css = theme => ({
     display: 'inline-block',
     top: 75
   },
+  breadcrumbs: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
+  },
   backdrop: {
     zIndex:1000
   },
@@ -59,7 +64,6 @@ const css = theme => ({
     fontSize: '1em'
   },
   filters: {
-    paddingLeft: 30,
     "& > div": {
       minWidth: 120,
       display: 'inline-block',

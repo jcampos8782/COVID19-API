@@ -36,8 +36,9 @@ export default class Dashboard extends React.Component {
         justify="flex-start">
         <Grid item xs={12} md={9}>
           <Grid container>
-            <Grid item xs={12} style={{paddingLeft:30}}>
+            <Grid className={classes.breadcrumbs} item xs={12} style={{paddingLeft:30}}>
               <LocationBreadcrumb
+                className={classes.breadcrumbs}
                 locations={meta.locations}
                 loadRegion={this.props.loadRegion}
                 />
@@ -56,7 +57,35 @@ export default class Dashboard extends React.Component {
               </Tabs>
             </Grid>
             <Grid item xs={12}>
-              <Grid container spacing={1}>
+              <Grid container direction="row-reverse" spacing={1}>
+                <Grid item xs={12} sm={12} md={8} lg={8} href="statistics">
+                  <Card variant="outlined" >
+                    <CardHeader
+                      className={classes.cardHeader}
+                      title={
+                        <Filters />
+                        }
+                      />
+                    <CardContent className={classes.paneCard}>
+                      <Panes.SummaryPane {...this.props}
+                        value={view.selectedTabId}
+                        index={0}
+                        />
+                      <Panes.HistoryPane {...this.props}
+                        value={view.selectedTabId}
+                        index={1}
+                        />
+                      <Panes.SubregionPane {...this.props}
+                        value={view.selectedTabId}
+                        index={2}
+                        />
+                      <Panes.DataPane {...this.props}
+                        value={view.selectedTabId}
+                        index={3}
+                        />
+                    </CardContent>
+                  </Card>
+                </Grid>
                 <Grid item xs={12} sm={12} md={4} lg={4} >
                   <Card variant="outlined">
                     <CardHeader
@@ -64,6 +93,7 @@ export default class Dashboard extends React.Component {
                       title="Headlines"
                       />
                     <CardContent className={classes.paneCard}>
+
                       {
                         headlines.error ?
                         <Card variant="outlined">
@@ -93,34 +123,6 @@ export default class Dashboard extends React.Component {
                             )
                           })
                       }
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} sm={12} md={8} lg={8}>
-                  <Card variant="outlined" >
-                    <CardHeader
-                      className={classes.cardHeader}
-                      title={
-                        <Filters />
-                        }
-                      />
-                    <CardContent className={classes.paneCard}>
-                      <Panes.SummaryPane {...this.props}
-                        value={view.selectedTabId}
-                        index={0}
-                        />
-                      <Panes.HistoryPane {...this.props}
-                        value={view.selectedTabId}
-                        index={1}
-                        />
-                      <Panes.SubregionPane {...this.props}
-                        value={view.selectedTabId}
-                        index={2}
-                        />
-                      <Panes.DataPane {...this.props}
-                        value={view.selectedTabId}
-                        index={3}
-                        />
                     </CardContent>
                   </Card>
                 </Grid>
