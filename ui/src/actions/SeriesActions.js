@@ -15,10 +15,10 @@ export function fetchSeriesList() {
   return dispatch => {
     dispatch(requestSeriesList());
     return fetch(`${SERVER_URL}/api/series`)
-      .then(response => response.json(), e => dispatch(error("Failed to retrieve series list")))
+      .then(response => response.json(), e => { throw new Error("Failed to retrieve series list")})
       .then(json => dispatch(receiveSeriesList(json)))
       .then(action => dispatch(selectSeries(action.series[0].id)))
-      .catch(e => dispatch(error("Failed to retrieve series list")));
+      .catch(e => dispatch(error(e.message)));
   }
 }
 
@@ -35,8 +35,8 @@ export function fetchSeriesByRegion(seriesId, regionId) {
     return dispatch => {
         dispatch(requestSeriesByRegion(seriesId, regionId));
         return fetch(`${SERVER_URL}/api/series/${seriesId}/regions/${regionId}`)
-            .then(response => response.json(), error => dispatch(error("Failed to retrieve series")))
+            .then(response => response.json(), e => { throw new Error("Failed to retrieve series")})
             .then(json => dispatch(receiveSeries(json)))
-            .catch(e => dispatch(error("Failed to retrieve series")));;
+            .catch(e => dispatch(error(e.message)));;
     }
 }

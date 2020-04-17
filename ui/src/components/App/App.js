@@ -25,16 +25,21 @@ export default class App extends React.Component {
       }
 
       Promise.all([this.props.fetchRegions(), this.props.fetchSeriesList()])
-        .then((results,e) => {
-          let regionsAction = results.find(r => r.type === RECEIVE_REGIONS);
-          this.props.setRegions(regionsAction.regions.map(r => ({id: r.id, name: r.name})));
+        .then(
+          results => {
+            let regionsAction = results.find(r => r.type === RECEIVE_REGIONS);
+            this.props.setRegions(regionsAction.regions.map(r => ({id: r.id, name: r.name})));
 
-          if(this.props.isGeolocationAvailable) {
-            this.props.fetchGeolocation().then(r => {
-              this.props.fetchDefaultSeries();
-            })
-          }
-        }).catch(e => this.props.error(e));
+            if(this.props.isGeolocationAvailable) {
+              this.props.fetchGeolocation().then(r => {
+                this.props.fetchDefaultSeries();
+              })
+            }
+          },
+          error => {
+            throw new Error(error.message);
+          })
+        .catch(e => this.props.error("Failed to load dashboard."));
 
       this.props.fetchHeadlines();
     }

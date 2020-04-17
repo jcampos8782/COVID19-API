@@ -10,14 +10,14 @@ export function fetchHeadlines() {
   return dispatch => {
     dispatch(requestHeadlines("us"));
     return fetch(`${SERVER_URL}/api/headlines`)
-      .then(response => response.json(), error => dispatch(headlinesError("Failed to retrieve headlines")))
+      .then(response => response.json(), e => { throw new Error("Failed to retrieve series")} )
       .then(json => {
         if (json.error) {
-          dispatch(headlinesError(json.error));
+          throw new Error(json.error);
         } else {
           dispatch(receiveHeadlines(json.headlines));
         }
       })
-      .catch(error => dispatch(headlinesError("Failed to retrieve headlines")));
+      .catch(e => dispatch(headlinesError(e.message)));
   }
 }
