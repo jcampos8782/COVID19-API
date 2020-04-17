@@ -1,54 +1,26 @@
 import {withStyles} from '@material-ui/core/styles';
 
 const css = theme => ({
+  actionButton: {
+    color: theme.palette.secondary.contrastText,
+    backgroundColor: theme.palette.secondary.main
+  },
+  appbar: {
+    backgroundColor: theme.palette.background.dark
+  },
+  backdrop: {
+    zIndex:1000
+  },
   body: {
-    // The AppBar needs to be position: fixed so offset this by the bar's height
     position: 'relative',
     display: 'inline-block',
     top: 75
   },
   breadcrumbs: {
+    // Hide on small screens
     [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
-  },
-  backdrop: {
-    zIndex:1000
-  },
-  appbar: {
-    backgroundColor: theme.palette.background.dark
-  },
-  navLink: {
-    width: 'fit-content',
-    color: theme.palette.primary.contrastText
-  },
-  filterLabel: {
-    paddingBottom: 6
-  },
-  link: {
-    color: theme.palette.primary.linkText
-  },
-  navButton: {
-    color: theme.palette.secondary.contrastText,
-    "&:hover": {
-      background: theme.palette.secondary.light
-    }
-  },
-  paneCard: {
-    '& > div': {
-      border: 0,
-      padding: '0 !important'
-    }
-  },
-  tabsContainer: {
-    position: 'relative',
-    left: -25
-  },
-  confirmed: {
-    backgroundColor: theme.palette.warning.dark
-  },
-  deaths: {
-    backgroundColor: theme.palette.error.dark
   },
   cardHeader: {
     backgroundColor: theme.palette.background.default
@@ -58,17 +30,15 @@ const css = theme => ({
     paddingBottom: '0 !important',
     paddingTop:0
   },
-  green: {
-    color: theme.palette.success.light
+  confirmed: {
+    backgroundColor: theme.palette.warning.dark
   },
-  red: {
-    color: theme.palette.error.dark
+  deaths: {
+    backgroundColor: theme.palette.error.dark
   },
-  xsIcon: {
-    fontSize: '1em'
-  },
-  filterControl: {
 
+  filterLabel: {
+    paddingBottom: 6
   },
   filters: {
     [theme.breakpoints.up('sm')]: {
@@ -86,17 +56,8 @@ const css = theme => ({
       }
     }
   },
-  actionButton: {
-    color: theme.palette.secondary.contrastText,
-    backgroundColor: theme.palette.secondary.main
-  },
-  success: {
-    color: theme.palette.success.main,
-    fontSize: 'inherit'
-  },
-  warning: {
-    color: theme.palette.warning.main,
-    fontSize: 'inherit'
+  green: {
+    color: theme.palette.success.light
   },
   historyCalendar: {
     height: 150
@@ -104,10 +65,42 @@ const css = theme => ({
   lineChartContainer: {
     height: 300
   },
-  bottomNav: {
-    width: '100%',
-    position: 'fixed',
-    bottom: '0%'
+  link: {
+    color: theme.palette.primary.linkText
+  },
+  navLink: {
+    width: 'fit-content',
+    color: theme.palette.primary.contrastText
+  },
+  navButton: {
+    color: theme.palette.secondary.contrastText,
+    "&:hover": {
+      background: theme.palette.secondary.light
+    }
+  },
+  paneCard: {
+    '& > div': {
+      border: 0,
+      padding: '0 !important'
+    }
+  },
+  red: {
+    color: theme.palette.error.dark
+  },
+  success: {
+    color: theme.palette.success.main,
+    fontSize: 'inherit'
+  },
+  tabsContainer: {
+    position: 'relative',
+    left: -25
+  },
+  warning: {
+    color: theme.palette.warning.main,
+    fontSize: 'inherit'
+  },
+  xsIcon: {
+    fontSize: '1em'
   }
 })
 
