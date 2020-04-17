@@ -57,10 +57,6 @@ const mapStateToProps = state => {
     };
   });
 
-  let locationTree = state.regions.current.parents.slice(0);
-  locationTree.reverse();
-  locationTree.push(state.regions.current);
-
   return {
     view: {
       theme: state.theme,
@@ -71,7 +67,6 @@ const mapStateToProps = state => {
       },
     },
     meta: {
-      locations: locationTree,
       region: state.regions.current.name,
       currentRegion: state.regions.current,
       currentSubregion:  state.regions.current.subregions.find(s => s.id === state.filters.selectedSubregionId),
