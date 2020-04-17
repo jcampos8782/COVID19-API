@@ -45,6 +45,7 @@ export default class Dashboard extends React.Component {
             </Grid>
             <Grid item xs={12}>
               <Tabs
+                className={classes.tabsContainer}
                 value={view.selectedTabId}
                 onChange={this.props.selectTab}
                 variant="scrollable"

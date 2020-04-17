@@ -40,6 +40,10 @@ const css = theme => ({
       padding: '0 !important'
     }
   },
+  tabsContainer: {
+    position: 'relative',
+    left: -25
+  },
   confirmed: {
     backgroundColor: theme.palette.warning.dark
   },
