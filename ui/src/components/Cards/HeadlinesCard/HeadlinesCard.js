@@ -3,8 +3,15 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+
+import Typography from '@material-ui/core/Typography';
 
 import ErrorCard from '../ErrorCard';
 import { formatDateString } from '../../../util';
@@ -12,7 +19,18 @@ import { formatDateString } from '../../../util';
 export default class HeadlinesCard extends React.Component {
 
   render() {
-    const { classes, headlines } = this.props;
+    const {
+      classes,
+      headlines,
+      changePage,
+      changeRowsPerPage
+    } = this.props;
+
+    const {
+      currentPage,
+      rowsPerPage,
+      rowsPerPageOptions
+    } = headlines.paging;
 
     return (
       <Card variant="outlined">
@@ -24,17 +42,33 @@ export default class HeadlinesCard extends React.Component {
           {
             headlines.error ?
               <ErrorCard message={headlines.error} /> :
-
-              headlines.articles.map((headline,idx) => {
-                return (
-                  <Card variant="outlined" key={idx}>
-                    <CardContent>
-                      <Typography variant="body2"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
-                      <Typography variant="caption"> Published on {formatDateString(new Date(headline.publishedAt))} by {headline.source}</Typography>
-                    </CardContent>
-                  </Card>
-                )
-              })
+              <div>
+                <TableContainer>
+                  <Table>
+                    <TableBody>
+                      {
+                        headlines.articles.slice(currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((headline,idx) => (
+                          <TableRow key={idx}>
+                            <TableCell>
+                              <Typography variant="body2"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
+                              <Typography variant="caption"> Published on {formatDateString(new Date(headline.publishedAt))} by {headline.source}</Typography>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      }
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <TablePagination
+                  rowsPerPageOptions={rowsPerPageOptions}
+                  component="div"
+                  count={headlines.articles.length}
+                  rowsPerPage={rowsPerPage}
+                  page={currentPage}
+                  onChangePage={changePage}
+                  onChangeRowsPerPage={changeRowsPerPage}
+                  />
+                </div>
           }
         </CardContent>
       </Card>

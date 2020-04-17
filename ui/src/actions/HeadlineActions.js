@@ -6,6 +6,9 @@ export const requestHeadlines = region => ({ type: Actions.REQUEST_HEADLINES, re
 export const receiveHeadlines = headlines => ({ type: Actions.RECEIVE_HEADLINES, headlines })
 export const headlinesError = error => ({type: Actions.ERROR_HEADLINES, error})
 
+export const changeHeadlinesPage = page => ({type: Actions.CHANGE_HEADLINES_PAGE, page })
+export const changeHeadlinesRowsPerPage = rows => ({type: Actions.CHANGE_HEADLINES_ROWS_PER_PAGE, rows})
+
 export function fetchHeadlines() {
   return dispatch => {
     dispatch(requestHeadlines("us"));

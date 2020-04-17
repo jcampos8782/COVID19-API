@@ -1,34 +1,59 @@
 import {
   REQUEST_HEADLINES,
   RECEIVE_HEADLINES,
-  ERROR_HEADLINES
+  ERROR_HEADLINES,
+  CHANGE_HEADLINES_PAGE,
 } from '../actions/types';
 
-const initialState = { articles: [], error: null, loading: false };
+const initialState = {
+  articles: [],
+  error: null,
+  loading: false,
+  paging: {
+    rowsPerPage: 5,
+    rowsPerPageOptions: [5],
+    currentPage: 0
+  }
+};
 export default (state = initialState, action) => {
     switch(action.type) {
         case RECEIVE_HEADLINES:
-          // limit 5 for now
-          let headlines = action.headlines.slice(0);
-          if (headlines.length > 5) {
-            headlines = headlines.slice(0, 5);
-          }
           return {
-            articles: headlines,
+            articles: action.headlines,
             error: null,
-            loading: false
+            loading: false,
+            paging: {
+              ...state.paging,
+              currentPage: 0
+            }
           };
         case REQUEST_HEADLINES:
           return {
             articles: [],
             error: null,
-            loading: true
+            loading: true,
+            paging: {
+              ...state.paging,
+              currentPage: 0
+            }
           }
+        case CHANGE_HEADLINES_PAGE:
+          return {
+            ...state,
+            paging: {
+              ...state.paging,
+              currentPage: action.page
+            }
+          };
         case ERROR_HEADLINES:
           return {
             articles: [],
             error: action.error,
-            loading: false
+            loading: false,
+            paging: {
+              ...state.paging,
+              currentPage: 0
+            }
           }
         default:
           return state;
