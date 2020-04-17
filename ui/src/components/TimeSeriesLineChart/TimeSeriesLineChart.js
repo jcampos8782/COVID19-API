@@ -72,7 +72,8 @@ export default class TimeSeriesLineChart extends React.Component {
         xScale={{
             type: 'time',
             format: '%Y-%m-%d',
-            precision: 'day'
+            precision: 'day',
+            useUTC: false
         }}
         yScale={{
             type: 'linear',
