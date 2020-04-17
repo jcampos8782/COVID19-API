@@ -67,11 +67,23 @@ const css = theme => ({
   xsIcon: {
     fontSize: '1em'
   },
+  filterControl: {
+
+  },
   filters: {
-    "& > div": {
-      minWidth: 120,
-      display: 'inline-block',
-      paddingRight: 10
+    [theme.breakpoints.up('sm')]: {
+      "& > div": {
+        minWidth: 120,
+        display: 'inline-block',
+        paddingRight: 10
+      },
+    },
+    [theme.breakpoints.down('xs')]: {
+      "& > div": {
+        display: 'inline-flex',
+        width: 110,
+        paddingRight: 10
+      }
     }
   },
   actionButton: {
