@@ -191,6 +191,9 @@ export default class Dashboard extends React.Component {
                   <Typography variant="body2">
                     < Link className={classes.link} href="https://github.com/carranco-sga/Mexico-COVID-19" rel="noopener">Mexico State Data</Link>
                   </Typography>
+                  <Typography variant="body2">
+                    < Link className={classes.link} href="https://newsapi.org" rel="noopener">News Feed</Link>
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
