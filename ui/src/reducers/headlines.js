@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
     switch(action.type) {
         case RECEIVE_HEADLINES:
           return {
-            articles: action.headlines,
+            articles: action.headlines.map(h => ({ ...h, publishedAt: new Date(h.publishedAt.substring(0,10))})),
             error: null,
             loading: false,
             paging: {
