@@ -47,9 +47,9 @@ else
   echo "File exists. Skipping download of confirmed data"
 fi
 
-if [[  "$force" || ! -e "./data/downloads/github/carranco-sga/mx_data.csv" ]]; then
+if [[  "$force" || ! -e "./data/downloads/github/carranco-sga/Mexico_COVID19_CTD.csv" ]]; then
   echo "Downloading MX data..."
-  wget -O ./data/downloads/github/carranco-sga/mx_data.csv "https://raw.githubusercontent.com/carranco-sga/Mexico-COVID-19/master/Mexico_COVID19.csv"
+  wget -O ./data/downloads/github/carranco-sga/mx_data.csv "https://raw.githubusercontent.com/carranco-sga/Mexico-COVID-19/master/Mexico_COVID19_CTD.csv"
   echo "Complete!"
   echo ""
 else
