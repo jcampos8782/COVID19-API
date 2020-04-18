@@ -20,6 +20,12 @@ export default class LinksCard extends React.Component {
         <CardContent>
           <Typography variant="h6">Resources</Typography>
           <Typography variant="body2">
+            <Link className={classes.link} href="https://www.coronavirus.gov/" rel="noopener">coronavirus.gov</Link>
+          </Typography>
+          <Typography variant="body2">
+            <Link className={classes.link} href="https://www.niaid.nih.gov/diseases-conditions/covid-19-clinical-research" rel="noopener">NIH Clinical Research</Link>
+          </Typography>
+          <Typography variant="body2">
             <Link className={classes.link} href="https://coronavirus.jhu.edu/" rel="noopener">Johns Hopkin's University</Link>
           </Typography>
           <Typography variant="body2">
