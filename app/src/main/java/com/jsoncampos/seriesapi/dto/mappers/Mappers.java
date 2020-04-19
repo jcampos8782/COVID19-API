@@ -1,10 +1,12 @@
 package com.jsoncampos.seriesapi.dto.mappers;
 
 import com.jsoncampos.seriesapi.dto.DataDto;
+import com.jsoncampos.seriesapi.dto.DemographicsDto;
 import com.jsoncampos.seriesapi.dto.HeadlineDto;
 import com.jsoncampos.seriesapi.dto.RegionDto;
 import com.jsoncampos.seriesapi.dto.SeriesDto;
 import com.jsoncampos.seriesapi.models.Data;
+import com.jsoncampos.seriesapi.models.Demographics;
 import com.jsoncampos.seriesapi.models.HeadlinesResponse.Article;
 import com.jsoncampos.seriesapi.models.Region;
 import com.jsoncampos.seriesapi.models.Series;
@@ -39,6 +41,12 @@ public class Mappers {
 		dto.setSource(article.getSource().getName());
 		dto.setTitle(article.getTitle());
 		dto.setUrl(article.getUrl());
+		return dto;
+	}
+	
+	public static DemographicsDto convertToDto(Demographics demographics) {
+		DemographicsDto dto = new DemographicsDto();
+		dto.setPopulation(demographics.getPopulation());
 		return dto;
 	}
 }

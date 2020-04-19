@@ -16,11 +16,14 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.jsoncampos.seriesapi.controllers.responses.GetAllRegionsResponse;
 import com.jsoncampos.seriesapi.controllers.responses.GetNearestRegionResponse;
+import com.jsoncampos.seriesapi.controllers.responses.GetRegionDemographicsResponse;
 import com.jsoncampos.seriesapi.controllers.responses.GetRegionResponse;
 import com.jsoncampos.seriesapi.controllers.responses.GetSubregionsResponse;
 import com.jsoncampos.seriesapi.dto.mappers.Mappers;
+import com.jsoncampos.seriesapi.models.Demographics;
 import com.jsoncampos.seriesapi.models.Location;
 import com.jsoncampos.seriesapi.models.Region;
+import com.jsoncampos.seriesapi.services.DemographicsService;
 import com.jsoncampos.seriesapi.services.LocationSearchService;
 import com.jsoncampos.seriesapi.services.RegionSearchService;
 
@@ -31,11 +34,13 @@ public class RegionController {
 	
 	private RegionSearchService searchSvc;
 	private LocationSearchService locationSvc;
-
+	private DemographicsService demographicsSvc;
+	
 	@Autowired
-	public RegionController(RegionSearchService searchSvc, LocationSearchService locationSvc) {
+	public RegionController(RegionSearchService searchSvc, LocationSearchService locationSvc, DemographicsService demographicsSvc) {
 		this.searchSvc = searchSvc;
 		this.locationSvc = locationSvc;
+		this.demographicsSvc = demographicsSvc;
 	}
 
 	@GetMapping
@@ -107,6 +112,22 @@ public class RegionController {
 
 		List<Region> subregions = searchSvc.findSubRegions(regionId);
 		return new GetSubregionsResponse(subregions.stream().map(Mappers::convertToDto).collect(Collectors.toList()));
+	}
+	
+	@GetMapping("/{id}/demographics")
+	public GetRegionDemographicsResponse getRegionDemographics(@PathVariable("id") String regionId) {
+		Region region = searchSvc.find(regionId);
+
+		if(region == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Region not found");
+		}
+		
+		Demographics demographics = demographicsSvc.getDemographicsForRegion(regionId);
+		if (demographics == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No demographics for this region");
+		}
+		
+		return new GetRegionDemographicsResponse(Mappers.convertToDto(demographics));
 	}
 	
 }
