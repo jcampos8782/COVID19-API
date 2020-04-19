@@ -50,7 +50,8 @@ MONGO_INDEXES = [
         Index("locations", "region_id", pymongo.HASHED),
         Index("locations", "geo", pymongo.GEOSPHERE),
         Index("series", "name", pymongo.HASHED),
-        Index("data", "location.regions", pymongo.ASCENDING)
+        Index("data", "location.regions", pymongo.ASCENDING),
+        Index("demographics", "region_id", pymongo.HASHED)
 ]
 
 """

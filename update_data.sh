@@ -70,7 +70,7 @@ echo "PROCESSING US DATA"
 echo "------------------------"
 
 echo "Extracting US counties"
-cut -d ',' -f6,7,9,10 ./data/downloads/github/CSSEGISandData/confirmed_us.csv | grep -v 'Out of' | grep -v 'Unassigned' | grep -v '^,' | grep -v '^Admin2' | sort | uniq > ./data/meta/us_counties.csv
+cut -d ',' -f6,7,9,10,12 ./data/downloads/github/CSSEGISandData/confirmed_us.csv | grep -v 'Out of' | grep -v 'Unassigned' | grep -v '^,' | grep -v '^Admin2' | sort | uniq > ./data/meta/us_counties.csv
 
 echo "Importing US data"
 PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/us.py

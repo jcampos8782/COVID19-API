@@ -52,13 +52,22 @@ def find_or_create_region(name: str) -> str:
         return create_region({"name": name})
 
 
-def find_or_create_subregion(name: str, parent_id: str) -> int:
+def find_or_create_subregion(name: str, parent_id: str) -> str:
     region = find_region({"name": name, "parent_id": parent_id})
     if region:
         return region["_id"]
     else:
         print("Creating subregion: %s for parent: %s" % (name.encode('utf-8'), parent_id))
         return create_region({"name": name, "parent_id": parent_id})
+
+
+def create_or_update_demographics(region_id: str, demographics: dict) -> str:
+    d = db["demographics"].find_one({"region_id": region_id})
+    if not d:
+        return db["demographics"].insert_one({"region_id": region_id, **demographics}).inserted_id
+    else:
+        db["demographics"].update_one(d, {"$set": {**demographics}})
+        return d["_id"]
 
 
 def create_region(document: dict) -> str:
