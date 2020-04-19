@@ -74,6 +74,10 @@ def create_region(document: dict) -> str:
     return db['regions'].insert_one(document).inserted_id
 
 
+def update_region(region: dict, data: dict) -> None:
+    db["regions"].update_one(region, {"$set": {**data}})
+
+
 def find_region(criteria: dict) -> dict:
     return db["regions"].find_one(criteria)
 

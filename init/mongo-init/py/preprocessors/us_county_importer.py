@@ -4,10 +4,6 @@ from config import *
 
 
 def main():
-    create_us_counties()
-
-
-def create_us_counties():
     created = 0
     # Ensure US exists
     us_region = repository.find_or_create_region("United States")
@@ -40,14 +36,23 @@ def create_us_counties():
                 created += 1
                 repository.create_location(state, county, float(lat), float(lon), county_region_id)
 
+        print("Updating demographics")
         us_population = 0
         for state in state_populations:
-            print(state_populations[state])
             population = state_populations[state]
             us_population += population
             repository.create_or_update_demographics(state, {"population": int(population)})
 
         repository.create_or_update_demographics(us_region, {"population": int(us_population)})
+
+    print("Updating state ISO codes")
+    with open(FILE_US_STATES) as file:
+        for name, iso in csv.reader(file):
+            state = repository.find_region({"name": name})
+            if not state:
+                print("No region for %s. Skipping ISO update" % name)
+                continue
+            repository.update_region(state, {"iso_code": iso})
 
     print("Created %s new locations" % str(created))
 
