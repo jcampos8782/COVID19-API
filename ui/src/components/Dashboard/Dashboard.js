@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component {
         direction="row"
         alignItems="flex-start"
         justify="flex-start">
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={12} lg={9}>
           <Grid container>
             <Grid className={classes.breadcrumbs} item xs={12} style={{paddingLeft:30}}>
               <LocationBreadcrumb
@@ -82,21 +82,28 @@ export default class Dashboard extends React.Component {
                   </Card>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4} lg={4} >
-                    <Cards.HeadlinesCard />
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Cards.LocalCard />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Cards.HeadlinesCard />
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={12} lg={3}>
           <Grid container spacing={1}>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={4} lg={12}>
               <Cards.LinksCard />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={4} lg={12}>
               <Cards.AboutCard />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12}md={4} lg={12}>
               <Cards.ContributeCard />
             </Grid>
           </Grid>

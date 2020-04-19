@@ -1,6 +1,5 @@
 import * as Actions from './types';
-import { error } from './ErrorActions';
-
+import { error } from './ErrorActions'
 import { selectSeries } from './FilterActions';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
