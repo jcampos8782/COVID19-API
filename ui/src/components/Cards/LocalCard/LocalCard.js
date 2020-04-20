@@ -94,7 +94,7 @@ export default class LocalCard extends React.Component {
                   <Typography variant="caption">Ventilator</Typography>
                 </Grid>
                 <Grid item xs={4} sm={2} lg={4}>
-                  <Icon color="error" style={{paddingRight: 10}} className={`${classes.icon} fas fa-procedures`}/>
+                  <Icon color="error" style={{paddingRight: 10}} className={`${classes.icon} fas fa-lungs-virus`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} lg={8}>
                   <Typography variant="button">120 (&lt; .01%)</Typography>
