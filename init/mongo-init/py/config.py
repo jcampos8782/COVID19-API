@@ -22,20 +22,22 @@ DOWNLOADS_DIRECTORY = join(ROOT_DIR, "data/downloads")
 GITHUB_DIRECTORY = join(DOWNLOADS_DIRECTORY, "github")
 OUTPUT_DIRECTORY = join(DATA_DIRECTORY, "covid19")
 
-
 """
 DOWNLOADS
 """
 FILE_JHU_REGIONS = join(GITHUB_DIRECTORY, "CSSEGISandData/regions.csv")
 FILE_MX_REGIONS = join(META_DIRECTORY, "mx_regions.csv")
 
-
 """
 DOWNLOADS_PROCESSOR
 """
-DOWNLOADS_PROCESSOR_NAME_FILTER = [re.compile(s) for s in ["Unassigned", "^Out of"]]
+DOWNLOADS_PROCESSOR_NAME_FILTER = [re.compile(s) for s in ["Unassigned", "^Out of", "Recovered"]]
 DOWNLOADS_PROCESSOR_NAME_REPLACEMENTS = {
-    'US': 'United States'
+    'US': 'United States',
+    'Korea, South': 'South Korea',
+    'Taiwan*': 'Taiwan',
+    'Bonaire, Sint Eustatius and Saba': 'Bonaire/Sint Eustatius/Saba',
+    'District of Columbia, District of Columbia': 'District of Columbia'
 }
 
 """
@@ -47,6 +49,7 @@ MX_STATES_FILE = join(META_DIRECTORY, "mx_states_and_iso_codes.csv")
 FILE_US_STATES = join(META_DIRECTORY, "us_states_and_iso_codes.csv")
 FILE_US_COUNTIES = join(META_DIRECTORY, "us_counties.csv")
 FILE_REGIONS = join(META_DIRECTORY, "regions.csv")
+FILE_LOCATIONS = join(META_DIRECTORY, "locations.csv")
 FILE_DEMOGRAPHICS = join(META_DIRECTORY, "demographics.csv")
 
 """

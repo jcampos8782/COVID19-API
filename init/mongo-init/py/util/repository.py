@@ -19,7 +19,7 @@ def find_series_by_key(key: str) -> dict:
     return db["series"].find_one({"key": __generate_series_key(key)})
 
 
-def create_series(key: str, name: str, cols: []) -> int:
+def create_series(key: str, name: str) -> int:
     return db['series'].insert_one({
         "key": __generate_series_key(key),
         "name": name,
@@ -31,34 +31,12 @@ def update_series(series: dict, query: dict) -> None:
     db["series"].update_one(series, query)
 
 
-def create_location(region: str, municipality: str, lat: float, lon: float, region_id: str) -> str:
-    return db['locations'].insert_one({
-            "key": __generate_location_key(region, municipality),
-            "geo": __generate_point(lat, lon),
-            "region_id": region_id
-        }).inserted_id
-
-
-def find_location(region: str, municipality: str) -> dict:
-    return db['locations'].find_one({'key': __generate_location_key(region, municipality)})
-
-
-def find_or_create_region(name: str) -> str:
-    region = find_region({"name": name})
-    if region:
-        return region["_id"]
+def create_or_update_location(region_id: str, lat: float, lon:float) -> None:
+    location = db['locations'].find_one({'region_id': region_id})
+    if location:
+        db['locations'].update_one(location, { "$set": { "geo": __generate_point(lat, lon) }})
     else:
-        print("Creating region: %s" % name.encode('utf-8'))
-        return create_region({"name": name})
-
-
-def find_or_create_subregion(name: str, parent_id: str) -> str:
-    region = find_region({"name": name, "parent_id": parent_id})
-    if region:
-        return region["_id"]
-    else:
-        print("Creating subregion: %s for parent: %s" % (name.encode('utf-8'), parent_id))
-        return create_region({"name": name, "parent_id": parent_id})
+        db['locations'].insert_one({ 'region_id': region_id, 'geo': __generate_point(lat,lon)})
 
 
 def create_or_update_demographics(region_id: str, demographics: dict) -> str:
@@ -101,10 +79,6 @@ def create_indices(indices: tuple) -> None:
 
 def __generate_series_key(key: str) -> str:
     return hashlib.md5(key.encode()).hexdigest()
-
-
-def __generate_location_key(region: str, municipality: str) -> str:
-    return hashlib.md5(format("%s-%s" % ((municipality.lower()), region.lower())).encode()).hexdigest()
 
 
 def __generate_point(lat: float, lon: float) -> dict:

@@ -65,9 +65,21 @@ def __generate_region_keys__(key: str) -> {}:
         key = key.replace(to_replace, replacement)
 
     return {
-        'region': key.replace(', ', ',').replace(' ', '_').replace(',', '-').lower(),
-        'parent': (key[key.index(',') + 1:] if ',' in key else '').replace(', ', ',').replace(' ', '_').replace(',', '-').lower()
+        'region': __keyify__(key),
+        'parent': __keyify__(key[key.index(',') + 1:] if ',' in key else '')
     }
+
+
+# TODO: regex
+def __keyify__(key: str) -> str:
+    return key.replace(', ', ',')\
+        .strip()\
+        .replace(' ', '_')\
+        .replace('/', '_')\
+        .replace(',', '-')\
+        .replace('(', '')\
+        .replace(')', '')\
+        .lower()
 
 
 if __name__ == '__main__':
