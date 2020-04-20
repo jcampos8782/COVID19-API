@@ -1,6 +1,5 @@
 import csv
-from util.geolocation import resolve_location_by_address
-from models import Location
+import util.repository as repo
 from config import *
 
 
@@ -11,17 +10,22 @@ def main():
 
 def __recreate_mexico_data_from_base() -> bool:
     states_to_iso = __load_states_with_iso_codes_from_file()
-    locations = [resolve_location_by_address(state=state, region="Mexico") for state in states_to_iso]
     base_data = __load_base_data(states_to_iso)
     days_to_pad = (MX_PROCESSOR_DATA_START_DATE - SERIES_START_DATE).days - 1
 
     for source in MX_PROCESSOR_DATA_SOURCES:
         print("Creating data file %s" % source.file)
         with open(source.file, 'w+') as file:
-            for location in locations:
-                iso = states_to_iso[location.municipality]
+            for state, iso in states_to_iso.items():
                 data = (['0'] * days_to_pad) + base_data[iso][source.component]
-                file.write(format("%s,%s\n" % (__format_location(location), ",".join(data))))
+                keys = __generate_region_keys__("%s,%s" % (state, "Mexico"))
+                region = repo.find_region({"key": keys["region"]})
+
+                if not region:
+                    print("Could not locate region %s" % state)
+                    continue
+
+                file.write(format("%s,%s\n" % (keys["region"], ",".join(data))))
 
     return True
 
@@ -48,15 +52,30 @@ def __load_base_data(state_to_iso: dict) -> dict:
 
 def __load_states_with_iso_codes_from_file() -> [str]:
     with open(MX_STATES_FILE, encoding="utf8") as file:
-        return {__get_formatted_state_name(state): iso for state, iso in csv.reader(file)}
+        return {state: iso for state, iso in csv.reader(file)}
 
 
-def __get_formatted_state_name(name: str) -> str:
-    return name if name not in GOOGLE_API_LOCATION_TEXT_FOR else GOOGLE_API_LOCATION_TEXT_FOR[name]
+def __generate_region_keys__(key: str) -> {}:
+    # Replace crap in the keys
+    for to_replace, replacement in DOWNLOADS_PROCESSOR_NAME_REPLACEMENTS.items():
+        key = key.replace(to_replace, replacement)
+
+    return {
+        'region': __keyify__(key),
+        'parent': __keyify__(key[key.index(',') + 1:] if ',' in key else '')
+    }
 
 
-def __format_location(location: Location) -> str:
-    return format("%s,%s,%s,%s" % (location.municipality, location.region, location.lat, location.lon))
+# TODO: regex
+def __keyify__(key: str) -> str:
+    return key.replace(', ', ',')\
+        .strip()\
+        .replace(' ', '_')\
+        .replace('/', '_')\
+        .replace(',', '-')\
+        .replace('(', '')\
+        .replace(')', '')\
+        .lower()
 
 
 if __name__ == '__main__':
