@@ -16,10 +16,11 @@ def import_regions():
             if not __import_row__(row):
                 retries.append(row)
 
-    print("Retrying failed imports")
-    for row in retries:
-        if not __import_row__(row):
-            print("Could not import region %s (key=%s)" % (row[0], row[1]))
+    if retries:
+        print("Retrying failed imports")
+        for row in retries:
+            if not __import_row__(row):
+                print("Could not import region %s (key=%s)" % (row[0], row[1]))
 
     print("Region import complete!")
 

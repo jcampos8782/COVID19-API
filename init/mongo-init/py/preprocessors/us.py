@@ -1,8 +1,7 @@
 import csv
-import util.geolocation as geo
 from itertools import islice
-from models import Location
 from config import *
+import util.repository as repo
 
 
 def main():
@@ -16,35 +15,65 @@ def main():
         with open("%s/%s_us.csv" % (OUTPUT_DIRECTORY, source.component), "w+") as out:
             with open(source.file, encoding="utf8") as file:
                 for row in islice(csv.reader(file), 1, None):
-                    county = row[US_PROCESSOR_COLUMN_DEFINITIONS['county']]
-                    county_lat = row[US_PROCESSOR_COLUMN_DEFINITIONS['lat']]
-                    county_lon = row[US_PROCESSOR_COLUMN_DEFINITIONS['lon']]
-                    state = row[US_PROCESSOR_COLUMN_DEFINITIONS['state']]
-                    data = row[US_PROCESSOR_COLUMN_DEFINITIONS['data'][component]:]
-                    if state not in aggregates[component]:
-                        aggregates[component][state] = [0] * len(data)
+                    name = row[US_PROCESSOR_COLUMN_DEFINITIONS[component]['name']]
+                    for regex in DOWNLOADS_PROCESSOR_NAME_FILTER:
+                        if regex.match(name):
+                            break
+                    else:
+                        raw_key = row[US_PROCESSOR_COLUMN_DEFINITIONS[component]['key']]
+                        data = row[US_PROCESSOR_COLUMN_DEFINITIONS[component]['data']:]
+                        keys = __generate_region_keys__(raw_key)
+                        parent_key = keys["parent"]
 
-                    if state not in locations:
-                        location = geo.resolve_location_by_address(state=state, region="United States")
-                        if location:
-                            locations[state] = location
-                        else:
-                            print("Could not determine location for %s" % state)
-                            locations[state] = Location(0.0, 0.0, state, "United States")
+                        # Ensure region exists
+                        region = repo.find_region({"key": keys["region"]})
 
-                    if county and not [county for regex in US_PROCESSOR_FILTERED_COUNTIES if regex.match(county)]:
-                        out.write("%s,%s,%s,%s,%s\n" % (county, state, county_lat, county_lon, ",".join(data)))
+                        if not region:
+                            print("Could not locate region for key %s" % keys["region"])
+                            continue
 
-                    # Inconsistencies in timliness of reporting mean some municipalities don't report at the same interval
-                    # Need to extend array if one municipality has reported more recent data than any others.
-                    aggregates[component][state] += [0] * (len(data) - len(aggregates[component][state]))
-                    aggregates[component][state] = [aggregates[component][state][i] + int(data[i].split('.')[0]) for i in range(len(data))]
+                        parent = repo.find_region({"key": keys["parent"]})
+                        if not parent:
+                            print("Count not locate parent region %s for key %s" % (keys["parent"], keys["region"]))
+                            continue
 
-            for state in aggregates[component]:
-                location = locations[state]
-                out.write("%s,%s,%s,%s,%s\n" % (state, "United States", location.lat, location.lon, ",".join(str(s) for s in aggregates[component][state])))
+                        if parent_key not in aggregates[component]:
+                            aggregates[component][parent_key] = [0] * len(data)
+
+                        out.write("%s,%s\n" % (keys["region"], ",".join(data)))
+
+                        # Inconsistencies in timliness of reporting mean some municipalities don't report at the same interval
+                        # Need to extend array if one municipality has reported more recent data than any others.
+                        aggregates[component][parent_key] += [0] * (len(data) - len(aggregates[component][parent_key]))
+                        aggregates[component][parent_key] = [aggregates[component][parent_key][i] + int(data[i].split('.')[0]) for i in range(len(data))]
+
+            for parent_key in aggregates[component]:
+                out.write("%s,%s,\n" % (parent_key,  ",".join(str(s) for s in aggregates[component][parent_key])))
 
     print("Import complete!")
+
+
+def __generate_region_keys__(key: str) -> {}:
+    # Replace crap in the keys
+    for to_replace, replacement in DOWNLOADS_PROCESSOR_NAME_REPLACEMENTS.items():
+        key = key.replace(to_replace, replacement)
+
+    return {
+        'region': __keyify__(key),
+        'parent': __keyify__(key[key.index(',') + 1:] if ',' in key else '')
+    }
+
+
+# TODO: regex
+def __keyify__(key: str) -> str:
+    return key.replace(', ', ',')\
+        .strip()\
+        .replace(' ', '_')\
+        .replace('/', '_')\
+        .replace(',', '-')\
+        .replace('(', '')\
+        .replace(')', '')\
+        .lower()
 
 
 if __name__ == '__main__':

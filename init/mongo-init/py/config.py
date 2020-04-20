@@ -37,7 +37,8 @@ DOWNLOADS_PROCESSOR_NAME_REPLACEMENTS = {
     'Korea, South': 'South Korea',
     'Taiwan*': 'Taiwan',
     'Bonaire, Sint Eustatius and Saba': 'Bonaire/Sint Eustatius/Saba',
-    'District of Columbia, District of Columbia': 'District of Columbia'
+    'District of Columbia, District of Columbia': 'District of Columbia',
+    'District of Columbia,District of Columbia': 'District of Columbia'
 }
 
 """
@@ -94,8 +95,7 @@ US PREPROCESSOR
  - US_PROCESSOR_COLUMN_DEFINITIONS: The columns in the data files is inconsistent. This defines the fields for each file
  - US_PROCESSOR_DATA_SOURCES: series component and file location tuple
 """
-US_PROCESSOR_COLUMN_DEFINITIONS = {'county': 5, 'state': 6, 'lat': 8, 'lon': 9, 'data': {'confirmed': 11, 'deaths': 12}}
-US_PROCESSOR_FILTERED_COUNTIES = [re.compile(s) for s in ["Unassigned", "^Out of"]]
+US_PROCESSOR_COLUMN_DEFINITIONS = {'confirmed': {'name': 5, 'key': 10, 'data': 11}, 'deaths': {'name': 5, 'key': 10, 'data': 12}}
 US_PROCESSOR_DATA_SOURCES = [
     DataSource("covid19", "confirmed", join(GITHUB_DIRECTORY, "CSSEGISandData/confirmed_us.csv")),
     DataSource("covid19", "deaths", join(GITHUB_DIRECTORY, "CSSEGISandData/deaths_us.csv"))
