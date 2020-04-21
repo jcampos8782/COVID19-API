@@ -3,6 +3,7 @@ from itertools import islice
 from config import *
 import util.key_generator as keygen
 
+
 def main():
     print("Processing US data input files...")
     aggregates = {source.component: {} for source in GLOBAL_PROCESSOR_DATA_SOURCES}

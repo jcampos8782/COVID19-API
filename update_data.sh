@@ -99,58 +99,53 @@ echo "DOWNLOADS COMPLETE!"
 echo "------------------------"
 echo ""
 
-# Quoted strings with commas break
-sed 's/".*,.*"/Unknown/g' ./data/downloads/github/CSSEGISandData/confirmed_global.csv  | sed 1d > ./data/processed/covid19/confirmed.csv
-sed 's/".*,.*"/Unknown/g' ./data/downloads/github/CSSEGISandData/deaths_global.csv | sed 1d > ./data/processed/covid19/deaths.csv
-
 echo "------------------------"
-echo "PROCESSING US DATA"
+echo "PROCESSING DOWNLOADS"
 echo "------------------------"
-
-echo "Extracting US counties"
-cut -d ',' -f6,7,9,10,12 ./data/downloads/github/CSSEGISandData/confirmed_us.csv | grep -v 'Out of' | grep -v 'Unassigned' | grep -v '^,' | grep -v '^Admin2' | sort | uniq > ./data/meta/us_counties.csv
-
-echo "Importing US data"
-PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/us.py
-cut -d',' -f1,2,3,4 ./data/processed/covid19/confirmed_us.csv >> ./data/meta/coordinates.csv
-cat ./data/processed/covid19/confirmed_us.csv >> ./data/processed/covid19/confirmed.csv
-cat ./data/processed/covid19/deaths_us.csv >> ./data/processed/covid19/deaths.csv
-
-echo "------------------------"
-echo "US DATA PROCESSING COMPLETE"
-echo "------------------------"
-
-
-echo "------------------------"
-echo "PROCESSING MEXICO DATA"
-echo "------------------------"
-
-PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/mx.py
-cut -d',' -f1,2,3,4 ./data/processed/covid19/confirmed_mx.csv >> ./data/meta/coordinates.csv
-cat ./data/processed/covid19/confirmed_mx.csv >> ./data/processed/covid19/confirmed.csv
-cat ./data/processed/covid19/deaths_mx.csv >> ./data/processed/covid19/deaths.csv
-
-echo "------------------------"
-echo "MEXICO DATA PROCESSING COMPLETE"
-echo "------------------------"
-
-
-echo "------------------------"
-echo "PREPARING METADATA..."
-echo "------------------------"
-
-echo "Extracting lat/lon coordinates..."
-cut -d',' -f1,2,3,4 ./data/processed/covid19/confirmed.csv | grep -iv "Lat,Long" > ./data/meta/coordinates.csv
-cut -d',' -f1,2,3,4 ./data/processed/covid19/confirmed_us.csv >> ./data/meta/coordinates.csv
-cut -d',' -f1,2,3,4 ./data/processed/covid19/confirmed_mx.csv >> ./data/meta/coordinates.csv
 
 echo "Extracting COVID-19 columns"
 cut -d ',' -f 5- ./data/downloads/github/CSSEGISandData/confirmed_global.csv | head -n 1 > ./data/meta/covid19.csv
+
+PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/meta.py
+PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/global.py
+PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/us.py
+PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/mx.py
+
+echo "------------------------"
+echo "PROCESSING COMPLETE"
+echo "------------------------"
+
+echo "------------------------"
+echo "AGGREGATING DATA FILES"
+echo "------------------------"
+
+if [[ -e "./data/processed/covid19/confirmed.csv" ]]; then
+  rm ./data/processed/covid19/confirmed.csv
+fi
+
+touch ./data/processed/covid19/confirmed.csv
+cat ./data/processed/covid19/confirmed_global.csv >> ./data/processed/covid19/confirmed.csv
+cat ./data/processed/covid19/confirmed_us.csv >> ./data/processed/covid19/confirmed.csv
+cat ./data/processed/covid19/confirmed_mx.csv >> ./data/processed/covid19/confirmed.csv
+
+if [[ -e "./data/processed/covid19/deaths.csv" ]]; then
+  rm ./data/processed/covid19/deaths.csv
+fi
+
+touch ./data/processed/covid19/deaths.csv
+cat ./data/processed/covid19/deaths_global.csv >> ./data/processed/covid19/deaths.csv
+cat ./data/processed/covid19/deaths_us.csv >> ./data/processed/covid19/deaths.csv
+cat ./data/processed/covid19/deaths_mx.csv >> ./data/processed/covid19/deaths.csv
+
+echo "------------------------"
+echo "AGGREGATION COMPLETE"
+echo "------------------------"
 
 echo "------------------------"
 echo "CLEANING UP..."
 echo "------------------------"
 
+rm ./data/processed/covid19/confirmed_global.csv ./data/processed/covid19/deaths_global.csv
 rm ./data/processed/covid19/confirmed_us.csv ./data/processed/covid19/deaths_us.csv
 rm ./data/processed/covid19/confirmed_mx.csv ./data/processed/covid19/deaths_mx.csv
 
