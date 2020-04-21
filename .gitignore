@@ -1,3 +1,11 @@
+# Intermediate data files
+data/processed/covid19/confirmed_global.csv
+data/processed/covid19/confirmed_mx.csv
+data/processed/covid19/confirmed_us.csv
+data/processed/covid19/deaths_global.csv
+data/processed/covid19/deaths_mx.csv
+data/processed/covid19/deaths_us.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
