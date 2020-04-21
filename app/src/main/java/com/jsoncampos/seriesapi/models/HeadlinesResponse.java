@@ -53,14 +53,23 @@ public  class HeadlinesResponse {
 
 	public static class Article {
 		Source source;
+		String author;
 		String title;
 		String url;
+		String urlToImage;
 		Date publishedAt;
 		public Source getSource() {
 			return source;
 		}
+		
 		public void setSource(Source source) {
 			this.source = source;
+		}
+		public String getAuthor() {
+			return this.author;
+		}
+		public void setAuthor(String author) {
+			this.author = author;
 		}
 		public String getTitle() {
 			return title;
@@ -73,6 +82,12 @@ public  class HeadlinesResponse {
 		}
 		public void setUrl(String url) {
 			this.url = url;
+		}
+		public String getUrlToImage() {
+			return this.urlToImage;
+		}
+		public void setUrlToImage(String urlToImage) {
+			this.urlToImage = urlToImage;
 		}
 		public Date getPublishedAt() {
 			return publishedAt;

@@ -43,8 +43,10 @@ public class Mappers {
 		HeadlineDto dto = new HeadlineDto();
 		dto.setPublishedAt(article.getPublishedAt());
 		dto.setSource(article.getSource().getName());
+		dto.setAuthor(article.getAuthor());
 		dto.setTitle(article.getTitle());
 		dto.setUrl(article.getUrl());
+		dto.setImgSrc(article.getUrlToImage());
 		return dto;
 	}
 	

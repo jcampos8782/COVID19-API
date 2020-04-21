@@ -3,6 +3,8 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Link from '@material-ui/core/Link';
 import Table from '@material-ui/core/Table';
@@ -57,8 +59,15 @@ export default class HeadlinesCard extends React.Component {
                         headlines.articles.slice(currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((headline,idx) => (
                           <TableRow key={idx}>
                             <TableCell>
-                              <Typography variant="body2"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
-                              <Typography variant="caption"> Published on {formatDateString(new Date(headline.publishedAt))} by {headline.source}</Typography>
+                              <Grid container spacing={1}>
+                                <Grid item xs={4}>
+                                  <CardMedia component="img" image={headline.imgSrc} />
+                                </Grid>
+                                <Grid item xs={8}>
+                                  <Typography variant="body2" align="justify"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
+                                  <Typography variant="caption"> Published on {formatDateString(new Date(headline.publishedAt))} by {headline.source}</Typography>
+                                </Grid>
+                              </Grid>
                             </TableCell>
                           </TableRow>
                         ))
