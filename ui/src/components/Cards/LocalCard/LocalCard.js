@@ -6,12 +6,15 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import { ResponsivePie } from '@nivo/pie';
 
 export default class LocalCard extends React.Component {
+  componentDidMount() {
+    this.props.fetchData("5e9e413a3e607406eb5e588d");
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -58,7 +61,7 @@ export default class LocalCard extends React.Component {
                   <Icon color="secondary" style={{paddingRight: 10}} className={`${classes.icon} fas fa-head-side-cough`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} lg={8}>
-                  <Typography variant="button">26,000 (.06%)</Typography>
+                  <Typography variant="button">26,000</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -71,7 +74,7 @@ export default class LocalCard extends React.Component {
                   <Icon color="error" style={{paddingRight: 10}} className={`${classes.icon} fas fa-clinic-medical`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} lg={8}>
-                  <Typography variant="button">3,000 (&lt; .01%)</Typography>
+                  <Typography variant="button">3,000</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -84,7 +87,7 @@ export default class LocalCard extends React.Component {
                   <Icon color="error" style={{paddingRight: 10}} className={`${classes.icon} fas fa-procedures`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} lg={8}>
-                  <Typography variant="button">120 (&lt; .01%)</Typography>
+                  <Typography variant="button">120</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -97,7 +100,7 @@ export default class LocalCard extends React.Component {
                   <Icon color="error" style={{paddingRight: 10}} className={`${classes.icon} fas fa-lungs-virus`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} lg={8}>
-                  <Typography variant="button">120 (&lt; .01%)</Typography>
+                  <Typography variant="button">120</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -106,7 +109,7 @@ export default class LocalCard extends React.Component {
           <Grid item xs={12}>
             <Typography variant="overline">Tests Administered</Typography>
           </Grid>
-          <Grid item xs={12} style={{height: 150}}>
+          <Grid item xs={12} style={{height: 200}}>
             <ResponsivePie
                 data={
                   [
@@ -115,7 +118,7 @@ export default class LocalCard extends React.Component {
                     { id: "pending", label: "Pending", value: 7200 }
                   ]
                 }
-        margin={{ top: 10, right: 30 }}
+                margin={{ top: 30, left: 40}}
                 innerRadius={0.7}
                 startAngle={270}
                 padAngle={2}
@@ -174,7 +177,7 @@ export default class LocalCard extends React.Component {
                 ]}
                 legends={[
                     {
-                        anchor: 'top-right',
+                        anchor: 'bottom-right',
                         direction: 'column',
                         translateX: 30,
                         translateY: 0,

@@ -60,12 +60,14 @@ export default class HeadlinesCard extends React.Component {
                           <TableRow key={idx}>
                             <TableCell>
                               <Grid container spacing={1}>
-                                <Grid item xs={4}>
+                                <Grid item xs={4} md={3} lg={6}>
                                   <CardMedia component="img" image={headline.imgSrc} />
                                 </Grid>
-                                <Grid item xs={8}>
-                                  <Typography variant="body2" align="justify"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
-                                  <Typography variant="caption"> Published on {formatDateString(new Date(headline.publishedAt))} by {headline.source}</Typography>
+                                <Grid item xs={8} md={9} lg={6}>
+                                  <Typography variant="body2" align="left"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <Typography variant="caption">{formatDateString(new Date(headline.publishedAt))} - {headline.source}</Typography>
                                 </Grid>
                               </Grid>
                             </TableCell>
