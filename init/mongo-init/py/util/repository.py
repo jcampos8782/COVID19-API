@@ -48,6 +48,24 @@ def create_or_update_demographics(region_id: str, demographics: dict) -> str:
         return d["_id"]
 
 
+def create_or_update_facts(region_id: str, facts: dict) -> str:
+    d = db["facts"].find_one({"region_id": region_id})
+    if not d:
+        return db["facts"].insert_one({"region_id": region_id, **facts}).inserted_id
+    else:
+        db["facts"].update_one(d, {"$set": {**facts}})
+        return d["_id"]
+
+
+def create_or_update_contacts(region_id: str, contacts: dict) -> str:
+    d = db["contacts"].find_one({"region_id": region_id})
+    if not d:
+        return db["contacts"].insert_one({"region_id": region_id, **contacts}).inserted_id
+    else:
+        db["contacts"].update_one(d, {"$set": {**contacts}})
+        return d["_id"]
+
+
 def create_region(document: dict) -> str:
     return db['regions'].insert_one(document).inserted_id
 

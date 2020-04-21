@@ -2,7 +2,8 @@ import csv
 from config import *
 import util.key_generator as keygen
 
-def main():
+
+def process_downloads():
     __recreate_mexico_data_from_base()
     print("Complete!")
 
@@ -49,4 +50,4 @@ def __load_states_with_iso_codes_from_file() -> [str]:
 
 
 if __name__ == '__main__':
-    main()
+    process_downloads()

@@ -4,7 +4,7 @@ from config import *
 from util.key_generator import generate_region_keys
 
 
-def main():
+def process_downloads():
     with open(FILE_US_STATES_AND_ISO_CODES, encoding="utf8") as state_codes:
         reader = csv.reader(state_codes)
         state_codes = {iso: generate_region_keys("%s,%s" % (state, "United States")) for state, iso in reader}
@@ -16,7 +16,8 @@ def main():
 
     print("Updating US facts from file %s" % FILE_COVID_TRACKER_US_CURRENT)
     with open(FILE_COVID_TRACKER_US_CURRENT, encoding="utf8") as us_current:
-        facts += __extract_us_facts(json.load(us_current)[0])
+        facts.append(__extract_us_facts(json.load(us_current)[0]))
+
 
     print("Creating facts file %s" % FILE_FACTS)
     with open(FILE_FACTS, 'w+') as out_facts:
@@ -32,8 +33,8 @@ def __extract_state_facts(key: str, data: dict) -> dict:
 
 
 def __extract_facts(key: str, data: dict, fields: list) -> dict:
-    return {'key': key, **{field: data[field] for field in fields}}
+    return {'key': key, 'facts': {field: data[field] for field in fields}}
 
 
 if __name__ == '__main__':
-    main()
+    process_downloads()

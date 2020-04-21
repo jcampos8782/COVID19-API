@@ -78,7 +78,9 @@ MONGO_INDEXES = [
         Index("locations", "geo", pymongo.GEOSPHERE),
         Index("series", "name", pymongo.HASHED),
         Index("data", "location.regions", pymongo.ASCENDING),
-        Index("demographics", "region_id", pymongo.HASHED)
+        Index("demographics", "region_id", pymongo.HASHED),
+        Index("facts", "region_id", pymongo.HASHED),
+        Index("contacts", "region_id", pymongo.HASHED)
 ]
 
 """
@@ -135,7 +137,7 @@ COVID_TRACKING_PROCESSOR_US_FIELDS = [
     "inIcuCurrently", "inIcuCumulative", "onVentilatorCurrently", "onVentilatorCumulative", "lastModified"
 ]
 
-COVID_TRACKING_PROCESSOR_META_FIELDS = ["covid19Site", "twitter"]
+COVID_TRACKING_PROCESSOR_META_FIELDS = {"covid19Site": "www", "twitter": "twitter"}
 
 """
 MX SCRAPER

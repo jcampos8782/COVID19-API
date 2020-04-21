@@ -1,11 +1,6 @@
 import csv
 from os import walk
-
-import importers.demographics as demographics
-import importers.locations as locations
-import importers.regions as regions
-import importers.series as series
-
+from importers import *
 from config import *
 from util import repository
 
@@ -17,6 +12,8 @@ def main():
     regions.import_regions()
     locations.import_locations()
     demographics.import_demographics()
+    contacts.import_contacts()
+    facts.import_facts()
 
     print("Importing data from files")
     __import_data_from_sources(__create_data_sources())

@@ -105,11 +105,7 @@ echo "------------------------"
 
 echo "Extracting COVID-19 columns"
 echo "covid19,COVID-19,$(head -n 1 ./data/downloads/github/CSSEGISandData/confirmed_global.csv | cut -d ',' -f 5-)" > ./data/meta/series.csv
-
-PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/meta.py
-PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/global.py
-PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/us.py
-PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/mx.py
+PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors.py
 
 echo "------------------------"
 echo "PROCESSING COMPLETE"

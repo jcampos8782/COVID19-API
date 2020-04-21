@@ -4,7 +4,7 @@ from config import *
 import util.key_generator as keygen
 
 
-def main():
+def process_downloads():
     print("Processing US data input files...")
     aggregates = {source.component: {} for source in GLOBAL_PROCESSOR_DATA_SOURCES}
 
@@ -40,4 +40,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    process_downloads()
