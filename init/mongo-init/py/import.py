@@ -1,7 +1,11 @@
 import csv
 from os import walk
 import hashlib
-import preprocessors.us_county_importer as county_importer
+
+import importers.demographics as demographics
+import importers.locations as locations
+import importers.regions as regions
+
 from config import *
 from util.geolocation import resolve_location_by_coordinates, Location
 from util import repository
@@ -14,12 +18,14 @@ def main():
     with open(FILE_SERIES_DEFINITIONS, encoding="utf8") as file:
         [__create_or_update_series(key, name) for key, name in csv.reader(file)]
 
-    print("Creating US Counties")
-    county_importer.create_us_counties()
+    print("Importing regions")
+    regions.import_regions()
 
-    print("Importing coordinates from %s" % FILE_GEO_COORDINATES)
-    with open(FILE_GEO_COORDINATES, encoding="utf8") as file:
-        __import_locations_from_coordinates_file(file)
+    print("Importing locations")
+    locations.import_locations()
+
+    print("Importing demographics")
+    demographics.import_demographics()
 
     print("Importing data from files")
     __import_data_from_sources(__create_data_sources())

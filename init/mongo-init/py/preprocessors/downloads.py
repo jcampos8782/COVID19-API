@@ -9,6 +9,7 @@ import config as cfg
 import csv
 from itertools import islice
 from collections import namedtuple
+import util.key_generator as keygen
 
 Region = namedtuple("Region", "name level iso2 iso3 fips lat lon key parent population")
 
@@ -25,7 +26,7 @@ def main():
             # Level is how far down the hierarchy the location exists
             name = county or state or country
             level = len([s for s in [county, state, country] if s])
-            keys = __generate_region_keys__(key)
+            keys = keygen.generate_region_keys(key)
 
             # Avoid filtered locations
             for regex in cfg.DOWNLOADS_PROCESSOR_NAME_FILTER:
@@ -40,7 +41,7 @@ def main():
     print("Loading MX regions from %s" % cfg.FILE_MX_REGIONS)
     with open(cfg.FILE_MX_REGIONS, encoding="utf8") as mx_regions:
         for name, iso, lat, lon, population in csv.reader(mx_regions):
-            keys = __generate_region_keys__(("%s,%s" % (name, "Mexico")))
+            keys = keygen.generate_region_keys(("%s,%s" % (name, "Mexico")))
             regions.append(Region(name, 2, '', iso, '', lat, lon, keys["region"], keys["parent"], population))
 
     print("Updating regions file %s" % cfg.FILE_REGIONS)
@@ -57,29 +58,6 @@ def main():
     with open(cfg.FILE_DEMOGRAPHICS, 'w+') as out_demographics:
         for region in regions:
             out_demographics.write("%s,%s\n" % (region.key, region.population))
-
-
-def __generate_region_keys__(key: str) -> {}:
-    # Replace crap in the keys
-    for to_replace, replacement in cfg.DOWNLOADS_PROCESSOR_NAME_REPLACEMENTS.items():
-        key = key.replace(to_replace, replacement)
-
-    return {
-        'region': __keyify__(key),
-        'parent': __keyify__(key[key.index(',') + 1:] if ',' in key else '')
-    }
-
-
-# TODO: regex
-def __keyify__(key: str) -> str:
-    return key.replace(', ', ',')\
-        .strip()\
-        .replace(' ', '_')\
-        .replace('/', '_')\
-        .replace(',', '-')\
-        .replace('(', '')\
-        .replace(')', '')\
-        .lower()
 
 
 if __name__ == '__main__':

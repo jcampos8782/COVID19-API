@@ -5,22 +5,21 @@ import util.key_generator as keygen
 
 def main():
     print("Processing US data input files...")
-    aggregates = {source.component: {} for source in US_PROCESSOR_DATA_SOURCES}
+    aggregates = {source.component: {} for source in GLOBAL_PROCESSOR_DATA_SOURCES}
 
-    for source in US_PROCESSOR_DATA_SOURCES:
+    for source in GLOBAL_PROCESSOR_DATA_SOURCES:
         print("Processing %s" % source.file)
         component = source.component
-        with open("%s/%s_us.csv" % (OUTPUT_DIRECTORY, source.component), "w+") as out:
+        with open("%s/%s_global.csv" % (OUTPUT_DIRECTORY, source.component), "w+") as out:
             with open(source.file, encoding="utf8") as file:
-                for row in islice(csv.reader(file), 1, None):
-                    name = row[US_PROCESSOR_COLUMN_DEFINITIONS[component]['name']]
+                for subregion, region, lat, lon, *data in islice(csv.reader(file), 1, None):
+                    name = ",".join([s for s in (subregion, region) if s])
+
                     for regex in DOWNLOADS_PROCESSOR_NAME_FILTER:
                         if regex.match(name):
                             break
                     else:
-                        raw_key = row[US_PROCESSOR_COLUMN_DEFINITIONS[component]['key']]
-                        data = row[US_PROCESSOR_COLUMN_DEFINITIONS[component]['data']:]
-                        keys = keygen.generate_region_keys(raw_key)
+                        keys = keygen.generate_region_keys(name)
                         parent_key = keys["parent"]
 
                         if parent_key not in aggregates[component]:

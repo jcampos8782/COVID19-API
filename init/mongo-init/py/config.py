@@ -44,11 +44,8 @@ DOWNLOADS_PROCESSOR_NAME_REPLACEMENTS = {
 """
 SHARED FILES
 """
-FILE_GEO_COORDINATES = join(META_DIRECTORY, "coordinates.csv")
 FILE_SERIES_DEFINITIONS = join(META_DIRECTORY, "series.csv")
 MX_STATES_FILE = join(META_DIRECTORY, "mx_states_and_iso_codes.csv")
-FILE_US_STATES = join(META_DIRECTORY, "us_states_and_iso_codes.csv")
-FILE_US_COUNTIES = join(META_DIRECTORY, "us_counties.csv")
 FILE_REGIONS = join(META_DIRECTORY, "regions.csv")
 FILE_LOCATIONS = join(META_DIRECTORY, "locations.csv")
 FILE_DEMOGRAPHICS = join(META_DIRECTORY, "demographics.csv")
@@ -114,6 +111,15 @@ MX_PROCESSOR_COLUMN_SUFFIXES = {
     'confirmed': '',
     'deaths': '_D'
 }
+
+""" 
+GLOBAL PREPROCESSOR
+"""
+GLOBAL_PROCESSOR_COLUMN_DEFINITIONS = {'confirmed': {'name': 5, 'data': 11}, 'deaths': {'name': 5, 'data': 12}}
+GLOBAL_PROCESSOR_DATA_SOURCES = [
+    DataSource("covid19", "confirmed", join(GITHUB_DIRECTORY, "CSSEGISandData/confirmed_global.csv")),
+    DataSource("covid19", "deaths", join(GITHUB_DIRECTORY, "CSSEGISandData/deaths_global.csv"))
+]
 
 """
 MX SCRAPER
