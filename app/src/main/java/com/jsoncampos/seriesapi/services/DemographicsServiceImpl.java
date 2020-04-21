@@ -19,7 +19,6 @@ public class DemographicsServiceImpl implements DemographicsService {
 	
 	@Override
 	public Demographics getDemographicsForRegion(String regionId) {
-		System.out.println(regionId);
 		return repository.findOneByRegionId(new ObjectId(regionId));
 	}
 
