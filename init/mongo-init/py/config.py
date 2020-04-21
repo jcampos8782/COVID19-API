@@ -18,9 +18,29 @@ DIRECTORIES
 ROOT_DIR = join(script_dir, "../../../")
 META_DIRECTORY = join(ROOT_DIR, "data/meta")
 DATA_DIRECTORY = join(ROOT_DIR, "data/processed")
+LOOKUPS_DIRECTORY = join(ROOT_DIR, "data/lookups")
 DOWNLOADS_DIRECTORY = join(ROOT_DIR, "data/downloads")
 GITHUB_DIRECTORY = join(DOWNLOADS_DIRECTORY, "github")
 OUTPUT_DIRECTORY = join(DATA_DIRECTORY, "covid19")
+
+"""
+SHARED FILES
+"""
+FILE_SERIES_DEFINITIONS = join(META_DIRECTORY, "series.csv")
+FILE_REGIONS = join(META_DIRECTORY, "regions.csv")
+FILE_LOCATIONS = join(META_DIRECTORY, "locations.csv")
+FILE_DEMOGRAPHICS = join(META_DIRECTORY, "demographics.csv")
+MX_STATES_FILE = join(LOOKUPS_DIRECTORY, "mx_states_and_iso_codes.csv")
+
+"""
+ENVIRONMENT VARIABLES
+"""
+DB_USER = environ.get("DB_USER")
+DB_PASS = environ.get("DB_PASS")
+DB_HOST = environ.get("DB_HOST", "localhost")
+DB_PORT = environ.get("DB_PORT",  "27017")
+DB_NAME = environ.get("DB_NAME", "cvd19")
+
 
 """
 DOWNLOADS
@@ -40,24 +60,6 @@ DOWNLOADS_PROCESSOR_NAME_REPLACEMENTS = {
     'District of Columbia, District of Columbia': 'District of Columbia',
     'District of Columbia,District of Columbia': 'District of Columbia'
 }
-
-"""
-SHARED FILES
-"""
-FILE_SERIES_DEFINITIONS = join(META_DIRECTORY, "series.csv")
-MX_STATES_FILE = join(META_DIRECTORY, "mx_states_and_iso_codes.csv")
-FILE_REGIONS = join(META_DIRECTORY, "regions.csv")
-FILE_LOCATIONS = join(META_DIRECTORY, "locations.csv")
-FILE_DEMOGRAPHICS = join(META_DIRECTORY, "demographics.csv")
-
-"""
-ENVIRONMENT VARIABLES
-"""
-DB_USER = environ.get("DB_USER")
-DB_PASS = environ.get("DB_PASS")
-DB_HOST = environ.get("DB_HOST", "localhost")
-DB_PORT = environ.get("DB_PORT",  "27017")
-DB_NAME = environ.get("DB_NAME", "cvd19")
 
 
 """
@@ -80,12 +82,7 @@ GOOGLE API
 GOOGLE_API_GEOCODE_COORD_URL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false&key=%s"
 GOOGLE_API_GEOCODE_ADDR_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false&key=%s"
 GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY")
-GOOGLE_API_LOCATION_TEXT_FOR = {
-    'Yucatán': 'Yucatan',
-    'Nuevo León': 'Nuevo Leon',
-    'Michoacan': 'Michoacán',
-    'Queretaro': 'Querétaro'
-}
+
 
 """
 US PREPROCESSOR
@@ -97,6 +94,7 @@ US_PROCESSOR_DATA_SOURCES = [
     DataSource("covid19", "confirmed", join(GITHUB_DIRECTORY, "CSSEGISandData/confirmed_us.csv")),
     DataSource("covid19", "deaths", join(GITHUB_DIRECTORY, "CSSEGISandData/deaths_us.csv"))
 ]
+
 
 """
 MX PREPROCESSOR
@@ -120,6 +118,7 @@ GLOBAL_PROCESSOR_DATA_SOURCES = [
     DataSource("covid19", "confirmed", join(GITHUB_DIRECTORY, "CSSEGISandData/confirmed_global.csv")),
     DataSource("covid19", "deaths", join(GITHUB_DIRECTORY, "CSSEGISandData/deaths_global.csv"))
 ]
+
 
 """
 MX SCRAPER

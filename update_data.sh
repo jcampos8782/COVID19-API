@@ -104,7 +104,7 @@ echo "PROCESSING DOWNLOADS"
 echo "------------------------"
 
 echo "Extracting COVID-19 columns"
-cut -d ',' -f 5- ./data/downloads/github/CSSEGISandData/confirmed_global.csv | head -n 1 > ./data/meta/covid19.csv
+echo "covid19,COVID-19,$(head -n 1 ./data/downloads/github/CSSEGISandData/confirmed_global.csv | cut -d ',' -f 5-)" > ./data/meta/series.csv
 
 PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/meta.py
 PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessors/global.py

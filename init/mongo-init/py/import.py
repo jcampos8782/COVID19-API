@@ -4,6 +4,7 @@ from os import walk
 import importers.demographics as demographics
 import importers.locations as locations
 import importers.regions as regions
+import importers.series as series
 
 from config import *
 from util import repository
@@ -12,10 +13,7 @@ from util import repository
 def main():
     (DB_USER and DB_PASS) or exit("GOOGLE_API_KEY, DB_USER, and DB_PASS must be set in env")
 
-    print("Loading series and updating metadata...")
-    with open(FILE_SERIES_DEFINITIONS, encoding="utf8") as file:
-        [__create_or_update_series(key, name) for key, name in csv.reader(file)]
-
+    series.import_series()
     regions.import_regions()
     locations.import_locations()
     demographics.import_demographics()
@@ -45,12 +43,6 @@ def __create_data_sources() -> [DataSource]:
     for source in sources:
         print("Found component '%s' for series '%s' in file %s" % (source.component, source.series, source.file))
     return sources
-
-
-def __create_or_update_series(key: str, name: str) -> None:
-    with open(join(META_DIRECTORY, format("%s.csv" % key)), encoding='utf8') as metadata:
-        cols = next(csv.reader(metadata))
-        repository.create_or_update_series(key, name, cols)
 
 
 # Process the data files.
