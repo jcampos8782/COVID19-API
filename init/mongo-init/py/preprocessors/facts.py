@@ -18,7 +18,6 @@ def process_downloads():
     with open(FILE_COVID_TRACKER_US_CURRENT, encoding="utf8") as us_current:
         facts.append(__extract_us_facts(json.load(us_current)[0]))
 
-
     print("Creating facts file %s" % FILE_FACTS)
     with open(FILE_FACTS, 'w+') as out_facts:
         json.dump(facts, out_facts)
@@ -33,7 +32,11 @@ def __extract_state_facts(key: str, data: dict) -> dict:
 
 
 def __extract_facts(key: str, data: dict, fields: list) -> dict:
-    return {'key': key, 'facts': {field: data[field] for field in fields}}
+    return {'key': key, 'facts': {__get_field_name(field): data[field] for field in fields}}
+
+
+def __get_field_name(fld: str) -> str:
+    return fld if fld not in COVID_TRACKING_FACT_FIELDS else COVID_TRACKING_FACT_FIELDS[fld]
 
 
 if __name__ == '__main__':

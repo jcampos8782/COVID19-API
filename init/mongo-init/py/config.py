@@ -136,7 +136,7 @@ COVID_TRACKING_PROCESSOR_US_FIELDS = [
     "positive", "negative", "pending", "recovered", "hospitalizedCurrently", "hospitalizedCumulative",
     "inIcuCurrently", "inIcuCumulative", "onVentilatorCurrently", "onVentilatorCumulative", "lastModified"
 ]
-
+COVID_TRACKING_FACT_FIELDS = {"lastModified": "dateModified"}
 COVID_TRACKING_PROCESSOR_META_FIELDS = {"covid19Site": "www", "twitter": "twitter"}
 
 """
