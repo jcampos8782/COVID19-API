@@ -22,16 +22,16 @@ def main():
                     else:
                         keys = keygen.generate_region_keys(name)
                         parent_key = keys["parent"]
-
-                        if parent_key not in aggregates[component]:
-                            aggregates[component][parent_key] = [0] * len(data)
-
                         out.write("%s,%s\n" % (keys["region"], ",".join(data)))
 
-                        # Inconsistencies in timliness of reporting mean some municipalities don't report at the same interval
-                        # Need to extend array if one municipality has reported more recent data than any others.
-                        aggregates[component][parent_key] += [0] * (len(data) - len(aggregates[component][parent_key]))
-                        aggregates[component][parent_key] = [aggregates[component][parent_key][i] + int(data[i].split('.')[0]) for i in range(len(data))]
+                        if parent_key:
+                            if parent_key not in aggregates[component]:
+                                aggregates[component][parent_key] = [0] * len(data)
+
+                            # Inconsistencies in timliness of reporting mean some municipalities don't report at the same interval
+                            # Need to extend array if one municipality has reported more recent data than any others.
+                            aggregates[component][parent_key] += [0] * (len(data) - len(aggregates[component][parent_key]))
+                            aggregates[component][parent_key] = [aggregates[component][parent_key][i] + int(data[i].split('.')[0]) for i in range(len(data))]
 
             for parent_key in aggregates[component]:
                 out.write("%s,%s,\n" % (parent_key,  ",".join(str(s) for s in aggregates[component][parent_key])))

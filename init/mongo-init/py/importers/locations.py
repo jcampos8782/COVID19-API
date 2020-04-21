@@ -13,7 +13,7 @@ def import_locations():
                 print("Could not find region %s" % key)
                 continue
 
-            repo.create_or_update_location(region["_id"], lat, lon)
+            repo.create_or_update_location(region["_id"], float(lat), float(lon))
 
     print("Location import complete!")
 
