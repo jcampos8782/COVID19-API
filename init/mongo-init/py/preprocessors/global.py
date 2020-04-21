@@ -34,7 +34,7 @@ def main():
                             aggregates[component][parent_key] = [aggregates[component][parent_key][i] + int(data[i].split('.')[0]) for i in range(len(data))]
 
             for parent_key in aggregates[component]:
-                out.write("%s,%s,\n" % (parent_key,  ",".join(str(s) for s in aggregates[component][parent_key])))
+                out.write("%s,%s\n" % (parent_key,  ",".join(str(s) for s in aggregates[component][parent_key])))
 
     print("Import complete!")
 
