@@ -67,27 +67,27 @@ else
   echo "File exists. Skipping download of confirmed data"
 fi
 
-if [[  "$force" || ! -e "./data/downloads/covidtracking/us_current.csv" ]]; then
+if [[  "$force" || ! -e "./data/downloads/covidtracking/us_current.json" ]]; then
   echo "Downloading CovidTracking.com current US data..."
-  wget -O ./data/downloads/covidtracking/us_current.csv "https://covidtracking.com/api/v1/us/current.csv"
+  wget -O ./data/downloads/covidtracking/us_current.json "https://covidtracking.com/api/v1/us/current.json"
   echo "Complete!"
   echo ""
 else
   echo "File exists. Skipping download of confirmed data"
 fi
 
-if [[  "$force" || ! -e "./data/downloads/covidtracking/states_current.csv" ]]; then
+if [[  "$force" || ! -e "./data/downloads/covidtracking/states_current.json" ]]; then
   echo "Downloading CovidTracking.com current State data..."
-  wget -O ./data/downloads/covidtracking/states_current.csv "https://covidtracking.com/api/v1/states/current.csv"
+  wget -O ./data/downloads/covidtracking/states_current.json "https://covidtracking.com/api/v1/states/current.json"
   echo "Complete!"
   echo ""
 else
   echo "File exists. Skipping download of confirmed data"
 fi
 
-if [[  "$force" || ! -e "./data/downloads/covidtracking/states_meta.csv" ]]; then
+if [[  "$force" || ! -e "./data/downloads/covidtracking/states_meta.json" ]]; then
   echo "Downloading CovidTracking.com current US data..."
-  wget -O ./data/downloads/covidtracking/states_meta.csv "https://covidtracking.com/api/v1/states/info.json"
+  wget -O ./data/downloads/covidtracking/states_meta.json "https://covidtracking.com/api/v1/states/info.json"
   echo "Complete!"
   echo ""
 else

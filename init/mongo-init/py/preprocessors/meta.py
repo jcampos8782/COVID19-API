@@ -7,6 +7,7 @@ Outputs:
 """
 import config as cfg
 import csv
+import json
 from itertools import islice
 from collections import namedtuple
 import util.key_generator as keygen
@@ -58,6 +59,20 @@ def main():
     with open(cfg.FILE_DEMOGRAPHICS, 'w+') as out_demographics:
         for region in regions:
             out_demographics.write("%s,%s\n" % (region.key, region.population))
+
+    print("Loading US state ISO codes from file %s" % cfg.FILE_US_STATES_AND_ISO_CODES)
+    with open(cfg.FILE_US_STATES_AND_ISO_CODES, encoding="utf8") as state_codes:
+        reader = csv.reader(state_codes)
+        state_codes = {iso: keygen.generate_region_keys("%s,%s" % (state, "United States")) for state, iso in reader}
+
+    print("Updating contacts from file %s" % cfg.FILE_COVID_TRACKER_STATES_META)
+    with open(cfg.FILE_COVID_TRACKER_STATES_META, encoding="utf8") as states_meta:
+        with open(cfg.FILE_CONTACTS, 'w+') as out_contacts:
+            json.dump([__extract_meta(state_codes[i["state"]]["region"], i) for i in json.load(states_meta)], out_contacts)
+
+
+def __extract_meta(key: str, data: dict) -> dict:
+    return {'key': key, **{field: data[field] for field in cfg.COVID_TRACKING_PROCESSOR_META_FIELDS}}
 
 
 if __name__ == '__main__':

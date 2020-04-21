@@ -30,7 +30,11 @@ FILE_SERIES_DEFINITIONS = join(META_DIRECTORY, "series.csv")
 FILE_REGIONS = join(META_DIRECTORY, "regions.csv")
 FILE_LOCATIONS = join(META_DIRECTORY, "locations.csv")
 FILE_DEMOGRAPHICS = join(META_DIRECTORY, "demographics.csv")
-MX_STATES_FILE = join(LOOKUPS_DIRECTORY, "mx_states_and_iso_codes.csv")
+FILE_FACTS = join(META_DIRECTORY, "facts.csv")
+FILE_CONTACTS = join(META_DIRECTORY, "contacts.csv")
+
+FILE_US_STATES_AND_ISO_CODES = join(LOOKUPS_DIRECTORY, "us_states_and_iso_codes.csv")
+FILE_MX_STATES_AND_ISO_CODES = join(LOOKUPS_DIRECTORY, "mx_states_and_iso_codes.csv")
 
 """
 ENVIRONMENT VARIABLES
@@ -41,12 +45,14 @@ DB_HOST = environ.get("DB_HOST", "localhost")
 DB_PORT = environ.get("DB_PORT",  "27017")
 DB_NAME = environ.get("DB_NAME", "cvd19")
 
-
 """
 DOWNLOADS
 """
 FILE_JHU_REGIONS = join(GITHUB_DIRECTORY, "CSSEGISandData/regions.csv")
 FILE_MX_REGIONS = join(META_DIRECTORY, "mx_regions.csv")
+FILE_COVID_TRACKER_STATES_CURRENT = join(DOWNLOADS_DIRECTORY, "covidtracking/states_current.json")
+FILE_COVID_TRACKER_STATES_META = join(DOWNLOADS_DIRECTORY, "covidtracking/states_meta.json")
+FILE_COVID_TRACKER_US_CURRENT = join(DOWNLOADS_DIRECTORY, "covidtracking/us_current.json")
 
 """
 DOWNLOADS_PROCESSOR
@@ -60,7 +66,6 @@ DOWNLOADS_PROCESSOR_NAME_REPLACEMENTS = {
     'District of Columbia, District of Columbia': 'District of Columbia',
     'District of Columbia,District of Columbia': 'District of Columbia'
 }
-
 
 """
 MONGO
@@ -83,7 +88,6 @@ GOOGLE_API_GEOCODE_COORD_URL = "https://maps.googleapis.com/maps/api/geocode/jso
 GOOGLE_API_GEOCODE_ADDR_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false&key=%s"
 GOOGLE_API_KEY = environ.get("GOOGLE_API_KEY")
 
-
 """
 US PREPROCESSOR
  - US_PROCESSOR_COLUMN_DEFINITIONS: The columns in the data files is inconsistent. This defines the fields for each file
@@ -94,7 +98,6 @@ US_PROCESSOR_DATA_SOURCES = [
     DataSource("covid19", "confirmed", join(GITHUB_DIRECTORY, "CSSEGISandData/confirmed_us.csv")),
     DataSource("covid19", "deaths", join(GITHUB_DIRECTORY, "CSSEGISandData/deaths_us.csv"))
 ]
-
 
 """
 MX PREPROCESSOR
@@ -119,6 +122,20 @@ GLOBAL_PROCESSOR_DATA_SOURCES = [
     DataSource("covid19", "deaths", join(GITHUB_DIRECTORY, "CSSEGISandData/deaths_global.csv"))
 ]
 
+"""
+COVIDTRACKING.COM PREPROCESSOR
+"""
+COVID_TRACKING_PROCESSOR_STATE_FIELDS = [
+    "positive", "negative", "pending", "recovered", "hospitalizedCurrently", "hospitalizedCumulative",
+    "inIcuCurrently", "inIcuCumulative", "onVentilatorCurrently", "onVentilatorCumulative", "dateModified"
+]
+
+COVID_TRACKING_PROCESSOR_US_FIELDS = [
+    "positive", "negative", "pending", "recovered", "hospitalizedCurrently", "hospitalizedCumulative",
+    "inIcuCurrently", "inIcuCumulative", "onVentilatorCurrently", "onVentilatorCumulative", "lastModified"
+]
+
+COVID_TRACKING_PROCESSOR_META_FIELDS = ["covid19Site", "twitter"]
 
 """
 MX SCRAPER
