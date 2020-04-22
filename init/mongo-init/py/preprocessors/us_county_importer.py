@@ -28,7 +28,7 @@ def create_us_counties():
             location = repository.find_location(state, county)
             if not location:
                 created += 1
-                repository.create_location(state, county, float(lat), float(lon), county_region_id)
+                repository.create_location(state, county, float(lat or '0.0'), float(lon or '0.0'), county_region_id)
 
     print("Created %s new locations" % str(created))
 
