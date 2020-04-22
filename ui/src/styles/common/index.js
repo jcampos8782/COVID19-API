@@ -61,6 +61,10 @@ const css = theme => ({
   green: {
     color: theme.palette.success.main
   },
+  headlineTitleBox: {
+    maxHeight: 100,
+    overflowX: 'hidden'
+  },
   historyCalendar: {
     height: 150
   },

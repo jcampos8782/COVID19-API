@@ -63,7 +63,7 @@ export default class HeadlinesCard extends React.Component {
                                 <Grid item xs={4} md={3} lg={6}>
                                   <CardMedia component="img" image={headline.imgSrc} />
                                 </Grid>
-                                <Grid item xs={8} md={9} lg={6}>
+                                <Grid item xs={8} md={9} lg={6} className={classes.headlineTitleBox}>
                                   <Typography variant="body2" align="left"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
                                 </Grid>
                                 <Grid item xs={12}>
