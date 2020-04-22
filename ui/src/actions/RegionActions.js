@@ -15,12 +15,27 @@ export const receiveSubregions = (regionId, subregions) => ({ type: Actions.RECE
 export const requestRegionByGeoCoords = (lat,lon) =>  ({ type: Actions.REQUEST_REGION_BY_GEOLOCATION, lat, lon })
 export const receiveRegionByGeoCoords = region =>  ({ type: Actions.RECEIVE_REGION, region })
 
+export const requestFacts = regionId => ({type: Actions.REQUEST_FACTS, regionId})
+export const receiveFacts = facts => ({type: Actions.RECEIVE_FACTS, facts})
+
+export const requestDemographics = regionId => ({type: Actions.REQUEST_DEMOGRAPHICS, regionId})
+export const receiveDemographics = demographics => ({type: Actions.RECEIVE_DEMOGRAPHICS, demographics})
+
+export const requestContacts = regionId => ({type: Actions.REQUEST_CONTACTS, regionId})
+export const receiveContacts = contacts => ({type: Actions.RECEIVE_CONTACTS, contacts})
+
 export const fetchClosestRegion = (lat,lon) => {
   return (dispatch,getState) => {
     dispatch(requestRegionByGeoCoords(lat,lon));
     return fetch(`${SERVER_URL}/api/regions/geo?lat=${lat}&lon=${lon}`)
       .then(response => response.json(), e => { throw new Error("Failed to retrieve region")})
       .then(json => dispatch(receiveRegion(json)))
+      .then(action => {
+        dispatch(fetchDemographics(action.region.id));
+        dispatch(fetchFacts(action.region.id));
+        dispatch(fetchContacts(action.region.id));
+        return action;
+      })
       .catch(e => dispatch(error(e.message)));
   }
 }
@@ -41,6 +56,12 @@ export const fetchRegion = (regionId) => {
     return fetch(`${SERVER_URL}/api/regions/${regionId}`)
       .then(response => response.json(), e => { throw new Error("Failed to retrieve region")})
       .then(json => dispatch(receiveRegion(json)))
+      .then(action => {
+        dispatch(fetchDemographics(action.region.id));
+        dispatch(fetchFacts(action.region.id));
+        dispatch(fetchContacts(action.region.id));
+        return action;
+      })
       .catch(e => dispatch(error(e.message)));
   }
 }
@@ -53,4 +74,34 @@ export const fetchRegions = () => {
             .then(json => dispatch(receiveRegions(json)))
             .catch(e => dispatch(error(e.message)));
     }
+}
+
+export const fetchFacts = regionId => {
+  return dispatch => {
+    dispatch(requestFacts(regionId));
+    return fetch(`${SERVER_URL}/api/regions/${regionId}/facts`)
+        .then(response => response.json(), e => { throw new Error("Failed to retrieve facts")})
+        .then(json => dispatch(receiveFacts(json)))
+        .catch(e => dispatch(error(e.message)));;
+  }
+}
+
+export const fetchDemographics = regionId => {
+  return dispatch => {
+    dispatch(requestDemographics(regionId));
+    return fetch(`${SERVER_URL}/api/regions/${regionId}/demographics`)
+        .then(response => response.json(), e => { throw new Error("Failed to retrieve facts")})
+        .then(json => dispatch(receiveDemographics(json)))
+        .catch(e => dispatch(error(e.message)));;
+  }
+}
+
+export const fetchContacts = regionId => {
+  return dispatch => {
+    dispatch(requestContacts(regionId));
+    return fetch(`${SERVER_URL}/api/regions/${regionId}/contacts`)
+        .then(response => response.json(), e => { throw new Error("Failed to retrieve facts")})
+        .then(json => dispatch(receiveContacts(json)))
+        .catch(e => dispatch(error(e.message)));;
+  }
 }

@@ -5,12 +5,29 @@ import {styled} from '../../../styles';
 
 import {fetchDemographics, fetchFacts, fetchContacts} from '../../../actions';
 
-const mapStateToProps = state => ({
-  region: state.regions.current,
-  contacts: state.facts.contacts,
-  demographics: state.facts.demographics,
-  facts: state.facts.facts
-})
+const mapStateToProps = state => {
+  // Find data for the region if one is set.
+  let currentRegion = state.regions.current;
+  let confirmed = null;
+
+  if (currentRegion) {
+    let regionData = state.data.find(d => d.regions[0] === currentRegion.id);
+    let confirmedData = regionData ? regionData.data.confirmed : null;
+    confirmed = confirmedData ? confirmedData[confirmedData.length - 1] : null
+  }
+
+  return {
+    region: state.regions.current,
+    contacts: state.region.contacts,
+    demographics: state.region.demographics,
+    facts: {
+      recovered: state.region.facts.recovered,
+      confirmed: confirmed,
+      tests: state.region.facts.tests
+    },
+    hospitalizations: state.region.facts.hospitalizations ? state.region.facts.hospitalizations.current : null
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
     fetchData: regionId => {
