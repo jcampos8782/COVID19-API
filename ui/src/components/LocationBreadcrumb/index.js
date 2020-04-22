@@ -4,9 +4,9 @@ import { styled } from '../../styles';
 import { loadRegion } from '../../actions';
 
 const mapStateToProps = state => {
-  let locationTree = state.regions.current.parents.slice(0);
+  let locationTree = state.region.parents.slice(0);
   locationTree.reverse();
-  locationTree.push(state.regions.current);
+  locationTree.push(state.region);
   return {
     locations: locationTree
   };

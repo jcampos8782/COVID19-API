@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
 import { ResponsivePie } from '@nivo/pie';
@@ -14,108 +15,121 @@ export default class LocalCard extends React.Component {
   render() {
     const {
       classes,
+      contacts,
       demographics,
       facts,
       hospitalizations,
+      loading,
       region
     } = this.props;
-    return (
-      <Card variant="outlined">
-        <CardHeader
-          className={classes.cardHeader}
-          title={region.name}
-          />
-        <CardContent>
-          <Grid container spacing={2}>
+
+    return loading ? <div /> : (
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Typography variant="Overline"><strong>Official Links</strong></Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Link href={contacts.www}>
+                <Icon color="primary" style={{paddingRight: 10}} className={`${classes.icon} fas fa-globe`} />
+              </Link>
+              <Link href={contacts.twitter}>
+                <Icon color="primary" style={{paddingRight: 10}} className={`${classes.icon} fab fa-twitter`} />
+              </Link>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider style={{marginTop: 20, marginBottom:20}} light />
+              <Typography variant="Overline"><strong>Current Statistics</strong></Typography>
+            </Grid>
             <Grid item xs={6} >
               <Grid container>
                 <Grid item xs={12}>
-                  <Typography variant="caption"><strong>Population</strong></Typography>
+                  <Typography variant="caption">population</Typography>
                 </Grid>
                 <Grid item xs={4} sm={2} md={3} lg={4}>
                   <Icon color="primary" style={{paddingRight: 10}} className={`${classes.icon} fas fa-users`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} md={9} lg={8}>
-                  <Typography variant="caption">{demographics.population || 'Not Available'}</Typography>
+                  <Typography variant="button">{demographics.population || 'No Data'}</Typography>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={6}>
               <Grid container>
                 <Grid item xs={12}>
-                  <Typography variant="caption"><strong>Recovered</strong></Typography>
+                  <Typography variant="caption">Recovered</Typography>
                 </Grid>
                 <Grid item xs={4} sm={2} md={3} lg={4}>
                   <Icon style={{paddingRight: 10}} className={`${classes.icon} ${classes.green} fas fa-heartbeat`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} md={9} lg={8}>
-                  <Typography variant="caption">{facts.recovered || 'NotAvailable'}</Typography>
+                  <Typography variant="button">{facts.recovered || 'No Data'}</Typography>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={6}>
               <Grid container>
                 <Grid item xs={12}>
-                  <Typography variant="caption"><strong>Confirmed</strong></Typography>
+                  <Typography variant="caption">Confirmed</Typography>
                 </Grid>
                 <Grid item xs={4} sm={2} md={3} lg={4}>
                   <Icon color="secondary" style={{paddingRight: 10}} className={`${classes.icon} fas fa-head-side-cough`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} md={9} lg={8}>
-                  <Typography variant="caption">{facts.confirmed || 'Not Available'}</Typography>
+                  <Typography variant="button">{facts.confirmed || 'No Data'}</Typography>
                 </Grid>
               </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider style={{marginTop: 20, marginBottom:20}} light />
+              <Typography variant="Overline"><strong>Hospitalizations</strong></Typography>
             </Grid>
             <Grid item xs={6}>
               <Grid container>
                 <Grid item xs={12}>
-                  <Typography variant="caption"><strong>Hospitalized</strong></Typography>
+                  <Typography variant="caption">Admitted</Typography>
                 </Grid>
                 <Grid item xs={4} sm={2} md={3} lg={4}>
                   <Icon color="error" style={{paddingRight: 10}} className={`${classes.icon} fas fa-clinic-medical`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} md={9} lg={8}>
-                  <Typography variant="caption">{hospitalizations && hospitalizations.admitted ? hospitalizations.admitted : 'Not Available'}</Typography>
+                  <Typography variant="button">{hospitalizations && hospitalizations.admitted ? hospitalizations.admitted : 'No Data'}</Typography>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={6}>
               <Grid container>
                 <Grid item xs={12}>
-                  <Typography variant="caption"><strong>Intensive Care</strong></Typography>
+                  <Typography variant="caption">Intensive Care</Typography>
                 </Grid>
                 <Grid item xs={4} sm={2} md={3} lg={4}>
                   <Icon color="error" style={{paddingRight: 10}} className={`${classes.icon} fas fa-procedures`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} md={9} lg={8}>
-                  <Typography variant="caption">{hospitalizations && hospitalizations.intensiveCare ? hospitalizations.intensiveCare : 'Not Available'}</Typography>
+                  <Typography variant="button">{hospitalizations && hospitalizations.intensiveCare ? hospitalizations.intensiveCare : 'No Data'}</Typography>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={6}>
               <Grid container>
                 <Grid item xs={12}>
-                  <Typography variant="caption"><strong>Ventilator</strong></Typography>
+                  <Typography variant="caption">Ventilator</Typography>
                 </Grid>
                 <Grid item xs={4} sm={2} md={3} lg={4}>
                   <Icon color="error" style={{paddingRight: 10}} className={`${classes.icon} fas fa-lungs-virus`}/>
                 </Grid>
                 <Grid item xs={8} sm={10} md={9} lg={8}>
-                  <Typography variant="caption">{hospitalizations && hospitalizations.onVentilator ? hospitalizations.onVentilator : 'Not Available'}</Typography>
+                  <Typography variant="button">{hospitalizations && hospitalizations.onVentilator ? hospitalizations.onVentilator : 'No Data'}</Typography>
                 </Grid>
               </Grid>
             </Grid>
+            <Divider style={{marginTop: 20, marginBottom:20}} light />
+            <Grid item xs={12}>
+              <Typography variant="overline">Testing Results</Typography>
+            </Grid>
+            {
+              facts.tests ? <TestChart {...facts.tests} /> : 'Not Available'
+            }
           </Grid>
-          <Divider style={{marginTop: 20, marginBottom:20}} light />
-          <Grid item xs={12}>
-            <Typography variant="overline"><strong>Tests Administered</strong></Typography>
-          </Grid>
-          {
-            facts.tests ? <TestChart {...facts.tests} /> : 'Not Available'
-          }
-
-        </CardContent>
-      </Card>
     )
   }
 }

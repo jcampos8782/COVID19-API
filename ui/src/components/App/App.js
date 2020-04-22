@@ -32,8 +32,8 @@ export default class App extends React.Component {
 
             if(this.props.isGeolocationAvailable) {
               this.props.fetchGeolocation()
-              .then(r => this.props.fetchDefaultSeries())
-              .catch(e => this.props.error("Error during geolocation lookup"));
+                .then(r => this.props.fetchDefaultSeries())
+                .catch(e => this.props.error("Error during geolocation lookup"));
             }
           },
           error => {

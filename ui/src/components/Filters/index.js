@@ -15,7 +15,7 @@ const mapStateToProps = state => {
     regions: state.filters.regionFilters,
     location: state.location,
     selectedSeriesId: state.filters.selectedSeriesId,
-    selectedRegionId: state.regions.current ? state.regions.current.id : -1
+    selectedRegionId: state.region ? state.region.id : -1
   };
 };
 

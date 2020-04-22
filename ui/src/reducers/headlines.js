@@ -10,8 +10,8 @@ const initialState = {
   error: null,
   loading: false,
   paging: {
-    rowsPerPage: 3,
-    rowsPerPageOptions: [3],
+    rowsPerPage: 5,
+    rowsPerPageOptions: [5],
     currentPage: 0
   }
 };

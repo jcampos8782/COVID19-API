@@ -37,7 +37,7 @@ const css = theme => ({
     backgroundColor: theme.palette.error.dark
   },
   icon: {
-    width: 'auto',
+    width: 'auto'
   },
   filterLabel: {
     paddingBottom: 6

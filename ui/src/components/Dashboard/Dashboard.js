@@ -84,7 +84,7 @@ export default class Dashboard extends React.Component {
                 <Grid item xs={12} sm={12} md={4} lg={4} >
                   <Grid container spacing={1}>
                     <Grid item xs={12}>
-                      <Cards.LocalCard />
+                      <Cards.HeadlinesCard />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -95,7 +95,13 @@ export default class Dashboard extends React.Component {
         <Grid item xs={12} md={12} lg={3}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6} lg={12}>
-              <Cards.HeadlinesCard />
+              <Cards.LinksCard />
+            </Grid>
+            <Grid item xs={12} md={6} lg={12}>
+              <Cards.AboutCard />
+            </Grid>
+            <Grid item xs={12} md={6} lg={12}>
+              <Cards.ContributeCard />
             </Grid>
           </Grid>
         </Grid>

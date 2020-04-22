@@ -23,9 +23,9 @@ export function fetchSeriesList() {
 
 export function fetchDefaultSeries() {
   return (dispatch,getState) => {
-    let { filters, regions } = getState();
-    if (regions.current && filters.selectedSeriesId !== -1) {
-      dispatch(fetchSeriesByRegion(filters.selectedSeriesId, regions.current.id));
+    let { filters, region } = getState();
+    if (region && filters.selectedSeriesId !== -1) {
+      dispatch(fetchSeriesByRegion(filters.selectedSeriesId, region.id));
     }
   }
 }

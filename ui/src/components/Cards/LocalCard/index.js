@@ -7,17 +7,17 @@ import {fetchDemographics, fetchFacts, fetchContacts} from '../../../actions';
 
 const mapStateToProps = state => {
   // Find data for the region if one is set.
-  let currentRegion = state.regions.current;
   let confirmed = null;
-
-  if (currentRegion) {
-    let regionData = state.data.find(d => d.regions[0] === currentRegion.id);
-    let confirmedData = regionData ? regionData.data.confirmed : null;
-    confirmed = confirmedData ? confirmedData[confirmedData.length - 1] : null
+  if (!state.region) {
+    return { loading: true }
   }
 
+  let regionData = state.data.find(d => d.regions[0] === state.region.id);
+  let confirmedData = regionData ? regionData.data.confirmed : null;
+  confirmed = confirmedData ? confirmedData[confirmedData.length - 1] : null
+
   return {
-    region: state.regions.current,
+    region: state.region,
     contacts: state.region.contacts,
     demographics: state.region.demographics,
     facts: {

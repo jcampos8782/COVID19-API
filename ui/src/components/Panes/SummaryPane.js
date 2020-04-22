@@ -1,9 +1,6 @@
 import React from 'react';
 
-import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
@@ -12,15 +9,16 @@ import TabPanel from './TabPanel';
 import TimeSeriesHeatMap from '../TimeSeriesHeatMap';
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
 
-import { formatDateKey, formatDateString } from '../../util';
+import { ResponsivePie } from '@nivo/pie';
+
+import { formatDateKey } from '../../util';
 
 export default class SummaryPane extends React.Component {
   render() {
-    const { data, meta, view, classes, value, index } = this.props;
+    const { data, meta, view, value, index } = this.props;
 
     let trends = (
       <Grid container>
-        <Typography variant="h6">Trends</Typography>
         <Grid item style={{height:30, marginTop: 15, marginBottom: 20}} xs={12} md={12} lg={12}>
           <TimeSeriesHeatMap
             keys={meta.columns}
@@ -46,78 +44,39 @@ export default class SummaryPane extends React.Component {
         </Grid>
       </Grid>
     );
-
-    let dailyCards = (
-      <Grid item xs={12}>
-        <Grid container spacing={1} style={{paddingBottom:30, paddingTop: 10}}>
-        {
-          data.map(series => {
-            let recentData = series.data.recent.data;
-            let last = recentData[recentData.length - 1];
-            let previous = recentData[recentData.length - 2];
-            let d = previous === 0 ? 1 : previous;
-            let percentChange = ((last - previous)/d * 100).toFixed(1);
-            let iconClass = percentChange >= 0 ? `${classes.red} fas fa-arrow-up xs` : `${classes.green} fas fa-arrow-down xs`;
-            let diffIcon = <Icon className={`${classes.xsIcon} ${iconClass}`} />
-
-            return (
-              <Grid key={series.id} item xs={12} sm={6} md={6}>
-                <Card variant="outlined" color="secondary">
-                  <CardHeader
-                    style={{paddingLeft: 10, paddingTop:16, paddingBottom: 16 }}
-                      avatar={
-                        <Avatar className={classes[series.id]} style={{marginRight: -11}}>
-                          <Icon className={`${classes.icon} ${view.icons[series.id].className}`}  />
-                        </Avatar>
-                      }
-                      title={
-                          <Typography variant="h5" style={{fontSize: '1.25rem'}}>
-                            {series.data.recent.data[series.data.recent.data.length - 1]}
-                          </Typography>
-                      }
-                      subheader={
-                        <Typography variant="caption">
-                          {formatDateString(new Date(meta.columns[meta.columns.length -1]))}
-                        </Typography>
-                      }
-                      action={
-                        <Typography variant="caption" style={{fontSize: '0.75rem'}}> {percentChange}% {diffIcon}</Typography>
-                      }
-                  />
-                  <CardContent className={classes.cardBody}>
-                    <Typography variant="overline">{series.id}</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            );
-          })
-        }
+    let lastSeven = (
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="h6">Last 7 Days</Typography>
+        </Grid>
+        <Grid item style={{height:300}} xs={12}>
+          <TimeSeriesLineChart
+            theme={view.theme}
+            title="Last 7 Days"
+            data={data.map(series => (
+              {
+                id: series.id,
+                data: series.data.recent.data.map((val,idx) => ({
+                    x: formatDateKey(meta.columns[meta.columns.length - 7 + idx]),
+                    y: val
+                  }
+                ))
+              }
+            ))
+          }
+          />
         </Grid>
       </Grid>
     );
 
-    let lastSeven = (
+    let testing = (
       <Grid container>
-      {
-        data.map(series => (
-          <Grid item key={`${series.id}-recent`} style={{height:300}} xs={12} md={12} lg={6}>
-            <TimeSeriesLineChart
-              theme={view.theme}
-              title={series.id}
-              data={[
-                {
-                  id: series.id,
-                  data: series.data.recent.data.map((val,idx) => ({
-                      x: formatDateKey(meta.columns[meta.columns.length - 7 + idx]),
-                      y: val
-                    }
-                  ))
-                }
-              ]}
-            />
-          </Grid>
-        ))
-      }
+        <Grid item xs={12}>
+          <Typography variant="h6">Test Results</Typography>
+        </Grid>
+        <Grid item style={{height:300}} xs={12}>
+          <TestsGraph {...this.props}/>
+        </Grid>
       </Grid>
     );
 
@@ -127,17 +86,262 @@ export default class SummaryPane extends React.Component {
         index={index}
         children={
           <Grid container>
+            <Overview {...this.props}/>
             {trends}
             <Grid item xs={12}>
               <Grid container>
-                {dailyCards}
+                <Grid item xs={12} md={6}>
+                  {lastSeven}
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  {testing}
+                </Grid>
               </Grid>
             </Grid>
-            <Typography variant="h6">Last 7 Days</Typography>
-            {lastSeven}
+            <Divider style={{marginTop: 20, marginBottom: 20}} light />
+            <Hospitalizations {...this.props} />
           </Grid>
         }
       />
     )
   }
 }
+
+const Overview = props => (
+  <Grid container>
+    <Grid item xs={6} sm={3}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="caption">Population</Typography>
+        </Grid>
+        <Grid item xs={4} sm={2} md={3} lg={4}>
+          <Icon color="primary" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-users`}/>
+        </Grid>
+        <Grid item xs={8} sm={10} md={9} lg={8}>
+          <Typography variant="button">{'No Data'}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid item xs={6} sm={3}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="caption">Recovered</Typography>
+        </Grid>
+        <Grid item xs={4} sm={2} md={3} lg={4}>
+          <Icon style={{paddingRight: 10}} className={`${props.classes.icon} ${props.classes.green} fas fa-heartbeat`}/>
+        </Grid>
+        <Grid item xs={8} sm={10} md={9} lg={8}>
+          <Typography variant="button">{'No Data'}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid item xs={6} sm={3}>
+      <Grid container>
+        <Grid item xs={12} >
+          <Typography variant="caption">Confirmed</Typography>
+        </Grid>
+        <Grid item xs={4} sm={2} md={3} lg={4}>
+          <Icon color="secondary" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-head-side-cough`}/>
+        </Grid>
+        <Grid item xs={8} sm={10} md={9} lg={8}>
+          <Typography variant="button">{'No Data'}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid item xs={6} sm={3}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="caption">Deaths</Typography>
+        </Grid>
+        <Grid item xs={4} sm={2} md={3} lg={4}>
+          <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-skull-crossbones`}/>
+        </Grid>
+        <Grid item xs={8} sm={10} md={9} lg={8}>
+          <Typography variant="button">{'No Data'}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+  </Grid>
+);
+
+const Hospitalizations = props => (
+  <Grid container>
+    <Grid item xs={12}>
+      <Typography variant="h6">Hospitalizations</Typography>
+    </Grid>
+    <Grid item xs={12}>
+      <Typography variant="overline"><strong>Current</strong></Typography>
+    </Grid>
+    <Grid item xs={4} sm={3}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="caption">Admitted</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-clinic-medical`}/>
+        </Grid>
+        <Grid item xs={8}>
+          <Typography variant="button">{'No Data'}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid item xs={4} sm={3}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="caption">Intensive Care</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-procedures`}/>
+        </Grid>
+        <Grid item xs={8}>
+          <Typography variant="button">{'No Data'}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid item xs={4} sm={3}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="caption">Ventilator</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-lungs-virus`}/>
+        </Grid>
+        <Grid item xs={8}>
+          <Typography variant="button">{'No Data'}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid item xs={12}>
+      <Typography variant="overline"><strong>Cumulative</strong></Typography>
+    </Grid>
+    <Grid item xs={4} sm={3}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="caption">Admitted</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-clinic-medical`}/>
+        </Grid>
+        <Grid item xs={8}>
+          <Typography variant="button">{'No Data'}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid item xs={4} sm={3}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="caption">Intensive Care</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-procedures`}/>
+        </Grid>
+        <Grid item xs={8}>
+          <Typography variant="button">{'No Data'}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid item xs={4} sm={3}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="caption">Ventilator</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-lungs-virus`}/>
+        </Grid>
+        <Grid item xs={8}>
+          <Typography variant="button">{'No Data'}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+  </Grid>
+)
+
+const TestsGraph = props => (
+  <ResponsivePie
+      data={
+        [
+          { id: "positive", label: "Positive", value: 29000 },
+          { id: "negative", label: "Negative", value: 290000},
+          { id: "pending", label: "Pending", value: 0 }
+        ]
+      }
+      margin={{ top: 30, left: 40, bottom:80}}
+      innerRadius={0.7}
+      startAngle={270}
+      padAngle={2}
+      cornerRadius={3}
+      enableSlicesLabels={false}
+      colors={{ scheme: 'nivo' }}
+      borderWidth={1}
+      fitWidth={true}
+      borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
+      radialLabelsSkipAngle={10}
+      radialLabelsTextXOffset={6}
+      radialLabelsTextColor="#333333"
+      radialLabelsLinkOffset={0}
+      radialLabelsLinkDiagonalLength={16}
+      radialLabelsLinkHorizontalLength={24}
+      radialLabelsLinkStrokeWidth={1}
+      radialLabelsLinkColor={{ from: 'color' }}
+      slicesLabelsSkipAngle={10}
+      slicesLabelsTextColor="#333333"
+      animate={true}
+      motionStiffness={90}
+      motionDamping={15}
+      defs={[
+          {
+              id: 'dots',
+              type: 'patternDots',
+              background: 'inherit',
+              color: 'rgba(255, 255, 255, 0.3)',
+              size: 4,
+              padding: 1,
+              stagger: true
+          },
+          {
+              id: 'lines',
+              type: 'patternLines',
+              background: 'inherit',
+              color: 'rgba(255, 255, 255, 0.3)',
+              rotation: -45,
+              lineWidth: 6,
+              spacing: 10
+          }
+      ]}
+      fill={[
+          {
+              match: {
+                  id: 'pending'
+              },
+              id: 'dots'
+          },
+          {
+              match: {
+                  id: 'negative'
+              },
+              id: 'lines'
+          },
+      ]}
+      legends={[
+          {
+              anchor: 'bottom-right',
+              direction: 'column',
+              translateX: 30,
+              translateY: 0,
+              itemWidth: 100,
+              itemHeight: 18,
+              itemTextColor: '#999',
+              symbolSize: 18,
+              symbolShape: 'circle',
+              effects: [
+                  {
+                      on: 'hover',
+                      style: {
+                          itemTextColor: '#000'
+                      }
+                  }
+              ]
+          }
+      ]}
+    />
+)

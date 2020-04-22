@@ -22,6 +22,7 @@ export default class ErrorCard extends React.Component {
             This is an Open Source project available on <Link className={classes.link} href="https://github.com/jcampos8782/COVID19-API">GitHub</Link>.
             A special thank you to others making open source contributions that have made this project possible.
           </Typography>
+          <br />
           <Typography variant="body2" align="justify">
             If there is a particular feature you would like to see, have encountered an error, or would like to discuss how you could
             contribute me, connect with me over email, LinkedIn, or Facebook.

@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import {styled} from '../../styles';
 
 const mapStateToProps = state => {
-  if (state.data.length === 0 || state.regions.current === null) {
+  if (state.data.length === 0 || state.region === null) {
     return { data: [] };
   }
 
   let currentSeries = state.series.current;
-  let aggregateDataItem = state.data.find(d => d.regions[0] === state.regions.current.id);
-  let subregionDataItems = state.data.filter(d => d.regions[0] !== state.regions.current.id);
+  let aggregateDataItem = state.data.find(d => d.regions[0] === state.region.id);
+  let subregionDataItems = state.data.filter(d => d.regions[0] !== state.region.id);
 
   let aggregateSeries = aggregateDataItem ?
       aggregateDataItem.data :
@@ -31,7 +31,7 @@ const mapStateToProps = state => {
 
       subregionDataItems.forEach(r => {
         let subregionId = r.regions[0];
-        let subregion = state.regions.current.subregions.find(s => s.id === subregionId);
+        let subregion = state.region.subregions.find(s => s.id === subregionId);
         let subregionName = subregion ? subregion.name : subregionId;
 
         // If a data set includes a subregion not returned from the /regions/<id>
@@ -58,6 +58,10 @@ const mapStateToProps = state => {
   });
 
   return {
+    contacts: {
+      www: "covid19.jsoncampos.com",
+      twitter: "@whatever"
+    },
     view: {
       theme: state.theme,
       selectedTabId: state.filters.selectedTabId,
@@ -67,10 +71,10 @@ const mapStateToProps = state => {
       },
     },
     meta: {
-      region: state.regions.current.name,
-      currentRegion: state.regions.current,
-      currentSubregion:  state.regions.current.subregions.find(s => s.id === state.filters.selectedSubregionId),
-      subregions: state.regions.current.subregions.map(r => r.name),
+      region: state.region.name,
+      currentRegion: state.region,
+      currentSubregion:  state.region.subregions.find(s => s.id === state.filters.selectedSubregionId),
+      subregions: state.region.subregions.map(r => r.name),
       columns: currentSeries.columns
     },
     headlines: state.headlines,

@@ -59,17 +59,8 @@ export default class HeadlinesCard extends React.Component {
                         headlines.articles.slice(currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((headline,idx) => (
                           <TableRow key={idx}>
                             <TableCell>
-                              <Grid container spacing={1}>
-                                <Grid item xs={4} md={3} lg={6}>
-                                  <CardMedia component="img" image={headline.imgSrc} />
-                                </Grid>
-                                <Grid item xs={8} md={9} lg={6} className={classes.headlineTitleBox}>
-                                  <Typography variant="body2" align="left"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <Typography variant="caption">{formatDateString(new Date(headline.publishedAt))} - {headline.source}</Typography>
-                                </Grid>
-                              </Grid>
+                              <Typography variant="body2" align="left"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
+                              <Typography variant="caption">{formatDateString(new Date(headline.publishedAt))} - {headline.source}</Typography>
                             </TableCell>
                           </TableRow>
                         ))
