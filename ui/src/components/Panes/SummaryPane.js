@@ -74,7 +74,7 @@ export default class SummaryPane extends React.Component {
         <Grid item xs={12}>
           <Typography variant="h6">Test Results</Typography>
         </Grid>
-        <Grid item style={{height:300}} xs={12}>
+        <Grid item style={{height:250}} xs={12}>
           <TestsGraph {...this.props}/>
         </Grid>
       </Grid>
@@ -88,6 +88,7 @@ export default class SummaryPane extends React.Component {
           <Grid container>
             <Overview {...this.props}/>
             {trends}
+            <Hospitalizations {...this.props} />
             <Grid item xs={12}>
               <Grid container>
                 <Grid item xs={12} md={6}>
@@ -98,8 +99,6 @@ export default class SummaryPane extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Divider style={{marginTop: 20, marginBottom: 20}} light />
-            <Hospitalizations {...this.props} />
           </Grid>
         }
       />
@@ -165,91 +164,49 @@ const Overview = props => (
 );
 
 const Hospitalizations = props => (
-  <Grid container>
+  <Grid container style={{paddingBottom: 20}}>
     <Grid item xs={12}>
       <Typography variant="h6">Hospitalizations</Typography>
     </Grid>
     <Grid item xs={12}>
-      <Typography variant="overline"><strong>Current</strong></Typography>
+      <Typography variant="overline">Current/Cumulative</Typography>
     </Grid>
-    <Grid item xs={4} sm={3}>
+    <Grid item xs={6} sm={4}>
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="caption">Admitted</Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-clinic-medical`}/>
         </Grid>
-        <Grid item xs={8}>
-          <Typography variant="button">{'No Data'}</Typography>
+        <Grid item xs={9}>
+          <Typography variant="button">{'No Data / No Data'}</Typography>
         </Grid>
       </Grid>
     </Grid>
-    <Grid item xs={4} sm={3}>
+    <Grid item xs={6} sm={4}>
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="caption">Intensive Care</Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-procedures`}/>
         </Grid>
-        <Grid item xs={8}>
-          <Typography variant="button">{'No Data'}</Typography>
+        <Grid item xs={9}>
+          <Typography variant="button">{'No Data / No Data'}</Typography>
         </Grid>
       </Grid>
     </Grid>
-    <Grid item xs={4} sm={3}>
+    <Grid item xs={6} sm={4}>
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="caption">Ventilator</Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-lungs-virus`}/>
         </Grid>
-        <Grid item xs={8}>
-          <Typography variant="button">{'No Data'}</Typography>
-        </Grid>
-      </Grid>
-    </Grid>
-    <Grid item xs={12}>
-      <Typography variant="overline"><strong>Cumulative</strong></Typography>
-    </Grid>
-    <Grid item xs={4} sm={3}>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant="caption">Admitted</Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-clinic-medical`}/>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography variant="button">{'No Data'}</Typography>
-        </Grid>
-      </Grid>
-    </Grid>
-    <Grid item xs={4} sm={3}>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant="caption">Intensive Care</Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-procedures`}/>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography variant="button">{'No Data'}</Typography>
-        </Grid>
-      </Grid>
-    </Grid>
-    <Grid item xs={4} sm={3}>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant="caption">Ventilator</Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-lungs-virus`}/>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography variant="button">{'No Data'}</Typography>
+        <Grid item xs={9}>
+          <Typography variant="button">{'No Data / No Data'}</Typography>
         </Grid>
       </Grid>
     </Grid>
@@ -265,7 +222,7 @@ const TestsGraph = props => (
           { id: "pending", label: "Pending", value: 0 }
         ]
       }
-      margin={{ top: 30, left: 40, bottom:80}}
+      margin={{ top: 30, left: 40 }}
       innerRadius={0.7}
       startAngle={270}
       padAngle={2}
