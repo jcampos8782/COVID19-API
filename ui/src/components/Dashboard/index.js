@@ -1,5 +1,5 @@
 import Dashboard from './Dashboard';
-import { selectDashboardTab, loadRegion } from '../../actions';
+import { selectTab, loadRegion } from '../../actions';
 import { connect } from 'react-redux';
 import {styled} from '../../styles';
 
@@ -63,8 +63,7 @@ const mapStateToProps = state => {
       twitter: "@whatever"
     },
     view: {
-      theme: state.theme,
-      selectedTabId: state.filters.selectedTabId,
+      ...state.view,
       icons: {
         confirmed: { className: "fas fa-head-side-cough", color: "white" },
         deaths: { className: "fas fa-skull-crossbones", color: "red" }
@@ -94,7 +93,7 @@ const mapStateToProps = state => {
 };
 
 let mapDispatchToProps = dispatch => ({
-  selectTab: (e,t) => dispatch(selectDashboardTab(t)),
+  selectTab: (e,t) => dispatch(selectTab(t)),
   loadRegion: (index, selectedRegionId) => dispatch(loadRegion(index, selectedRegionId))
 });
 

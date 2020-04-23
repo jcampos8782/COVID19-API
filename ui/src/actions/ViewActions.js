@@ -1,10 +1,12 @@
-import {SELECT_THEME} from './types';
+import {SELECT_THEME, SELECT_TAB} from './types';
+
+export const selectTab = id => ({ type: SELECT_TAB, id })
 export const selectTheme = theme => ({type: SELECT_THEME, theme})
 
 export const toggleTheme = (cookies) => {
   return (dispatch,getState) => {
-    const { theme } = getState();
-    let newTheme = theme === 'light' ? 'dark' : 'light';
+    const { view } = getState();
+    let newTheme = view.theme === 'light' ? 'dark' : 'light';
     cookies.set('theme', newTheme, {'path': '/'});
     return dispatch(selectTheme(newTheme));
   }

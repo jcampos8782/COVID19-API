@@ -83,7 +83,7 @@ const mapStateToProps = (state, own) => ({
     loading: state.loading,
     location: state.location,
     headlines: state.headlines,
-    theme: state.theme,
+    theme: state.view.theme,
     cookies: own.cookies
 });
 

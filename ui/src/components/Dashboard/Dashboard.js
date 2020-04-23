@@ -40,7 +40,7 @@ export default class Dashboard extends React.Component {
             <Grid item xs={12}>
               <Tabs
                 className={classes.tabsContainer}
-                value={view.selectedTabId}
+                value={view.currentTab}
                 onChange={this.props.selectTab}
                 variant="scrollable"
                 scrollButtons="on"
@@ -63,19 +63,19 @@ export default class Dashboard extends React.Component {
                       />
                     <CardContent className={classes.paneCard}>
                       <Panes.SummaryPane {...this.props}
-                        value={view.selectedTabId}
+                        value={view.currentTab}
                         index={0}
                         />
                       <Panes.HistoryPane {...this.props}
-                        value={view.selectedTabId}
+                        value={view.currentTab}
                         index={1}
                         />
                       <Panes.SubregionPane {...this.props}
-                        value={view.selectedTabId}
+                        value={view.currentTab}
                         index={2}
                         />
                       <Panes.DataPane {...this.props}
-                        value={view.selectedTabId}
+                        value={view.currentTab}
                         index={3}
                         />
                     </CardContent>

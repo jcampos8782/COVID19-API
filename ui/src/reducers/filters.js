@@ -2,8 +2,7 @@ import {
   SELECT_REGION,
   SELECT_SERIES,
   UNSELECT_SERIES,
-  SET_FILTER_OPTIONS,
-  SELECT_DASHBOARD_TAB
+  SET_FILTER_OPTIONS
 } from '../actions/types';
 
 const initialState = {
@@ -25,16 +24,10 @@ const initialState = {
     }
   ],
   selectedSeriesId: -1,
-  selectedTabId: 0
 }
 
 export default (state = initialState, action) => {
   switch(action.type) {
-      case SELECT_DASHBOARD_TAB:
-        return {
-          ...state,
-          selectedTabId: action.id
-        };
       case SET_FILTER_OPTIONS:
         return {
           ...state,
