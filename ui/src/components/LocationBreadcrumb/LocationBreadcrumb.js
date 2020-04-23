@@ -18,7 +18,7 @@ export default class LocationBreadcrumb extends React.Component {
               return <Typography variant="h5" key={i}> {l.name} </Typography>;
             }
             return (
-              <Link key={i} href="#" onClick={() => loadRegion(i, l.id)}>
+              <Link key={i} href="#" onClick={() => loadRegion(l.id)}>
                 <Typography variant="h5">{l.name}</Typography>
               </Link>
             );

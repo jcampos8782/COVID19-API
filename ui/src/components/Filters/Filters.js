@@ -18,7 +18,7 @@ export default class Filters extends React.Component {
           label={filter.label}
           selected={filter.value}
           onChange={(e) => loadRegion(e.target.value)}
-          default=<MenuItem value="-1" selected><em>None</em></MenuItem>
+          default=<MenuItem value={filter.none} selected><em>None</em></MenuItem>
           options={filter.options} />
       ));
 

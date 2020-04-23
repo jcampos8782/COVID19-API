@@ -2,16 +2,23 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
-import TabPanel from './TabPanel';
-import TimeSeriesLineChart from '../TimeSeriesLineChart';
+import TabPanel from '../TabPanel';
+import TimeSeriesLineChart from '../../TimeSeriesLineChart';
 
-import {formatDateKey} from '../../util';
+import {formatDateKey} from '../../../util';
 
 export default class SubregionPane extends React.Component {
   // For the charts, display up to 9 unique regions and then an "Others"
   // Regions to show should have highest totals (last item in totals array)
   render() {
-    const {data, meta, view, index, value} = this.props;
+    const {
+      data,
+      meta,
+      theme,
+      index,
+      value
+    } = this.props;
+
     return (
       <TabPanel
         value={value}
@@ -55,8 +62,8 @@ export default class SubregionPane extends React.Component {
             return (
               <Grid item key={`${series}-subregions`} style={{height:300}} sm={12} md={12}>
                 <TimeSeriesLineChart
-                  theme={view.theme}
-                  title={series.id}
+                  theme={theme}
+                  title={series}
                   data={regionData}
                 />
               </Grid>

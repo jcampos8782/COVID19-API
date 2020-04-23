@@ -12,7 +12,12 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    loadRegion: id => {
+    loadRegion: (id) => {
+      // ignore if we get invalid input
+      if (id === "-1") {
+        return;
+      }
+
       new Promise((resolve,reject) => {
         let region = dispatch(loadRegion(id));
         if (region) {

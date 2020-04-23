@@ -4,13 +4,13 @@ import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 
-import TabPanel from './TabPanel';
-import TimeSeriesHeatMap from '../TimeSeriesHeatMap';
-import TimeSeriesLineChart from '../TimeSeriesLineChart';
-
 import { ResponsivePie } from '@nivo/pie';
 
-import { formatDateKey } from '../../util';
+import TabPanel from '../TabPanel';
+import TimeSeriesHeatMap from '../../TimeSeriesHeatMap';
+import TimeSeriesLineChart from '../../TimeSeriesLineChart';
+
+import { formatDateKey } from '../../../util';
 
 export default class SummaryPane extends React.Component {
   render() {

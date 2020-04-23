@@ -14,17 +14,20 @@ const initialState =
     {
       label: 'Country',
       value: -1,
-      options: []
+      options: [],
+      none: "-1"
     },
     {
       label: 'State/Province',
       value: -1,
       options: [],
+      none: "-1"
     },
     {
       label: "County",
       value: -1,
-      options: []
+      options: [],
+      none: "-1"
     }
   ]
 }
@@ -72,11 +75,13 @@ export default (state = initialState, action) => {
           // subfilters
           return {
             ...state,
+            currentTab: initialState.currentTab,
             filters: state.filters.map((filter, idx) =>
               Object.assign(filter, {
                 value: idx === region.parents.length
                   ? region.id
                   : idx < regionIndex ? region.parents[regionIndex - idx - 1].id : -1,
+                none: idx === 0 || idx > regionIndex ? "-1" : region.parents[region.parents.length - idx].id,
                 options: idx <= regionIndex
                   ? filter.options
                   : idx === regionIndex + 1

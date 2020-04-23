@@ -66,7 +66,7 @@ export default class Dashboard extends React.Component {
                         value={view.currentTab}
                         index={0}
                         />
-                      <Panes.HistoryPane {...this.props}
+                      <Panes.HistoryPane
                         value={view.currentTab}
                         index={1}
                         />
@@ -74,7 +74,7 @@ export default class Dashboard extends React.Component {
                         value={view.currentTab}
                         index={2}
                         />
-                      <Panes.DataPane {...this.props}
+                      <Panes.DataPane
                         value={view.currentTab}
                         index={3}
                         />

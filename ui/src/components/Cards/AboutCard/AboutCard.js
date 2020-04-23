@@ -6,8 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
-export default class ErrorCard extends React.Component {
-
+export default class AboutCard extends React.Component {
   render() {
     const { classes } = this.props;
 
