@@ -13,7 +13,7 @@ import {
 
 const mapStateToProps = (state, own) => ({
     filters: state.filters,
-    loading: state.loading,
+    loading: state.loading.length > 0,
     location: state.location,
     headlines: state.headlines,
     theme: state.view.theme,
