@@ -24,6 +24,10 @@ export const receiveDemographics = demographics => ({type: Actions.RECEIVE_DEMOG
 export const requestContacts = regionId => ({type: Actions.REQUEST_CONTACTS, regionId})
 export const receiveContacts = contacts => ({type: Actions.RECEIVE_CONTACTS, contacts})
 
+export const selectRegion = regionId => {
+
+}
+
 export const fetchClosestRegion = (lat,lon) => {
   return (dispatch,getState) => {
     dispatch(requestRegionByGeoCoords(lat,lon));
@@ -42,7 +46,7 @@ export const fetchDefaultRegion = regionName => {
     return (dispatch, getState) => {
       const { regions } = getState();
       let defaultRegion = regions.find(r => r.name === regionName);
-      
+
       if (defaultRegion) {
         return _fetchRegion(dispatch, `${SERVER_URL}/api/regions/${defaultRegion.id}`);
       } else {
@@ -56,7 +60,13 @@ export const fetchSubregions = regionId => {
       dispatch(requestSubregions(regionId));
       return fetch(`${SERVER_URL}/api/regions/${regionId}/subregions`)
         .then(response => response.json(), e => { throw new Error("Failed to retrieve subregions")})
-        .then(json => dispatch(receiveSubregions(regionId, json)))
+        .then(json => {
+          dispatch(receiveSubregions(regionId, json));
+          return {
+            id: regionId,
+            subregions: json
+          }
+        })
         .catch(e => dispatch(error(e.message)));
     }
 }

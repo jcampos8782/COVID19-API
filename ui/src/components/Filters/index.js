@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 
 import {
   loadRegion,
-  selectSeries,
-  unselectSeries,
-  fetchSeriesByRegion,
 } from '../../actions';
 
 const mapStateToProps = state => {
@@ -20,18 +17,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    selectSeries: (selectedSeriesId, selectedRegionId) => {
-      if (selectedSeriesId === "-1") {
-        dispatch(unselectSeries());
-        return;
-      }
-      dispatch(selectSeries(selectedSeriesId));
-
-      if (selectedRegionId !== -1) {
-          dispatch(fetchSeriesByRegion(selectedSeriesId, selectedRegionId))
-      }
-    },
-
     selectRegion: (index, selectedRegionId) => dispatch(loadRegion(index, selectedRegionId))
 });
 

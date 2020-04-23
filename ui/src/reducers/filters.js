@@ -1,7 +1,5 @@
 import {
   SELECT_REGION,
-  SELECT_SERIES,
-  UNSELECT_SERIES,
   SET_FILTER_OPTIONS
 } from '../actions/types';
 
@@ -23,7 +21,6 @@ const initialState = {
       options: []
     }
   ],
-  selectedSeriesId: -1,
 }
 
 export default (state = initialState, action) => {
@@ -41,16 +38,6 @@ export default (state = initialState, action) => {
           regionFilters: state.regionFilters.map((filter, idx) =>
             Object.assign(filter, {selectedId: idx === action.index ? action.id : filter.selectedId}))
         };
-      case SELECT_SERIES:
-        return {
-          ...state,
-          selectedSeriesId: action.id
-        };
-      case UNSELECT_SERIES:
-        return {
-          ...state,
-          selectedSeriesId: -1
-        }
       default:
           return state;
   }

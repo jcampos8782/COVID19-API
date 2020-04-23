@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import {styled} from '../../styles';
 
 const mapStateToProps = state => {
-  if (state.data.length === 0 || state.region === null) {
+  if (state.data.length === 0 || state.region === null || !state.region.id) {
     return { data: [] };
   }
 
-  let currentSeries = state.series.current;
+  let currentSeries = state.series;
   let aggregateDataItem = state.data.find(d => d.regions[0] === state.region.id);
   let subregionDataItems = state.data.filter(d => d.regions[0] !== state.region.id);
 
