@@ -1,10 +1,7 @@
 import Filters from './Filters';
 import {styled} from '../../styles';
 import { connect } from 'react-redux';
-
-import {
-  loadRegion
-} from '../../actions';
+import {loadRegion, fetchSeriesByRegion} from '../../actions';
 
 const mapStateToProps = state => {
   return {
@@ -15,7 +12,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    loadRegion: id => dispatch(loadRegion(id))
+    loadRegion: id => {
+      dispatch(loadRegion(id));
+      dispatch(fetchSeriesByRegion(id));
+    }
 });
 
 export default styled()(connect(mapStateToProps, mapDispatchToProps)(Filters));

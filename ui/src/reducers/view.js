@@ -77,9 +77,11 @@ export default (state = initialState, action) => {
                 value: idx === region.parents.length
                   ? region.id
                   : idx < regionIndex ? region.parents[regionIndex - idx - 1].id : -1,
-                options: idx > regionIndex
-                  ? region.subregions.map(r => ({value: r.id, text: r.name}))
-                  : filter.options
+                options: idx <= regionIndex
+                  ? filter.options
+                  : idx === regionIndex + 1
+                    ? region.subregions.map(r => ({value: r.id, text: r.name}))
+                    : [] // clear any options beyond 1 level
               })
             )
           }

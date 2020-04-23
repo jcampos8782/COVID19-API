@@ -15,7 +15,7 @@ export default class HistoryPane extends React.Component {
             data={data.map(series => ({ id: series.id, data: series.data.aggregates.total}))}
             meta={{
               columns: meta.columns,
-              title: meta.currentSubregion ? meta.currentSubregion.name: meta.region
+              title: meta.region
             }}
           />
         }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {styled} from '../../styles';
 
 const mapStateToProps = state => {
-  if (state.data.length === 0 || state.region === null || !state.region.id) {
+  if (state.data.length === 0 || state.region === null) {
     return { data: [] };
   }
 
@@ -72,7 +72,6 @@ const mapStateToProps = state => {
     meta: {
       region: state.region.name,
       currentRegion: state.region,
-      currentSubregion:  state.region.subregions.find(s => s.id === state.filters.selectedSubregionId),
       subregions: state.region.subregions.map(r => r.name),
       columns: currentSeries.columns
     },
