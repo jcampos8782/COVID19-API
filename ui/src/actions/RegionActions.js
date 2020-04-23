@@ -28,7 +28,7 @@ export const selectRegion = region => ({type: Actions.SELECT_REGION, region })
 
 export const loadRegion = regionId => {
   return dispatch => {
-      dispatch(fetchRegion(regionId))
+      return dispatch(fetchRegion(regionId))
         .then(region => dispatch(selectRegion(region)), e => error(e))
         .catch(e => error(e));
   }

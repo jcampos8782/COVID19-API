@@ -18,17 +18,9 @@ const mapDispatchToProps = dispatch => ({
         return;
       }
 
-      new Promise((resolve,reject) => {
-        let region = dispatch(loadRegion(id));
-        if (region) {
-          resolve();
-        } else {
-          reject("Failed to load region");
-        }
-      })
-      .then(
+      dispatch(loadRegion(id)).then(
         () => dispatch(fetchSeriesByRegion(id)),
-        e => error(e)
+        e => dispatch(error(e))
       );
     }
 });

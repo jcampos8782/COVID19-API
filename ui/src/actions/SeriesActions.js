@@ -53,6 +53,7 @@ const processData = series => {
     const {region} = getState();
 
     let aggregateDataItem = series.data.find(d => d.regions[0] === region.id);
+    console.log(series);
     let subregionDataItems = series.data.filter(d => d.regions[0] !== region.id);
 
     let aggregateSeries = aggregateDataItem ?
