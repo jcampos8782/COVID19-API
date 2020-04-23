@@ -1,6 +1,5 @@
 import * as Actions from './types';
 import { error } from './ErrorActions'
-import { selectSeries } from './FilterActions';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -15,8 +14,10 @@ export function fetchSeriesList() {
     dispatch(requestSeriesList());
     return fetch(`${SERVER_URL}/api/series`)
       .then(response => response.json(), e => { throw new Error("Failed to retrieve series list")})
-      .then(json => dispatch(receiveSeriesList(json)))
-      .then(action => dispatch(selectSeries(action.series[0].id)))
+      .then(json => {
+        dispatch(receiveSeriesList(json))
+        return json;
+      })
       .catch(e => dispatch(error(e.message)));
   }
 }

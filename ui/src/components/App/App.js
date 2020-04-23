@@ -13,33 +13,16 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Dashboard from '../Dashboard';
 import Errors from '../Errors';
 
-import { RECEIVE_REGIONS } from '../../actions/types';
 import { light, dark } from '../../styles';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
 export default class App extends React.Component {
     componentDidMount() {
-      const {cookies} = this.props;
+      const {cookies, start} = this.props;
       if (cookies.cookies.theme) {
-          this.props.selectTheme(cookies.cookies.theme);
+          this.props.setTheme(cookies.cookies.theme);
       }
-
-      Promise.all([this.props.fetchRegions(), this.props.fetchSeriesList()])
-        .then(
-          results => {
-            let regionsAction = results.find(r => r.type === RECEIVE_REGIONS);
-            this.props.setRegions(regionsAction.regions.map(r => ({id: r.id, name: r.name})));
-
-            if(this.props.isGeolocationAvailable) {
-              this.props.fetchGeolocation()
-                .then(r => this.props.fetchDefaultSeries())
-                .catch(e => this.props.error("Error during geolocation lookup"));
-            }
-          },
-          error => {
-            throw new Error(error.message);
-          })
-        .catch(e => this.props.error("Failed to load dashboard."));
+      start(this.props);
     }
 
     render() {

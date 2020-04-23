@@ -27,17 +27,28 @@ export const receiveContacts = contacts => ({type: Actions.RECEIVE_CONTACTS, con
 export const fetchClosestRegion = (lat,lon) => {
   return (dispatch,getState) => {
     dispatch(requestRegionByGeoCoords(lat,lon));
-    return fetch(`${SERVER_URL}/api/regions/geo?lat=${lat}&lon=${lon}`)
-      .then(response => response.json(), e => { throw new Error("Failed to retrieve region")})
-      .then(json => dispatch(receiveRegion(json)))
-      .then(action => {
-        dispatch(fetchDemographics(action.region.id));
-        dispatch(fetchFacts(action.region.id));
-        dispatch(fetchContacts(action.region.id));
-        return action;
-      })
-      .catch(e => dispatch(error(e.message)));
+    return _fetchRegion(dispatch, `${SERVER_URL}/api/regions/geo?lat=${lat}&lon=${lon}`)
   }
+}
+
+export const fetchRegion = (regionId) => {
+  return (dispatch,getState) => {
+    dispatch(requestRegion(regionId));
+    return _fetchRegion(dispatch, `${SERVER_URL}/api/regions/${regionId}`)
+  }
+}
+
+export const fetchDefaultRegion = regionName => {
+    return (dispatch, getState) => {
+      const { regions } = getState();
+      let defaultRegion = regions.find(r => r.name === regionName);
+      
+      if (defaultRegion) {
+        return _fetchRegion(dispatch, `${SERVER_URL}/api/regions/${defaultRegion.id}`);
+      } else {
+        throw new Error(`Could not locate default region "${regionName}"`);
+      }
+    }
 }
 
 export const fetchSubregions = regionId => {
@@ -50,28 +61,15 @@ export const fetchSubregions = regionId => {
     }
 }
 
-export const fetchRegion = (regionId) => {
-  return (dispatch,getState) => {
-    dispatch(requestRegion(regionId));
-    return fetch(`${SERVER_URL}/api/regions/${regionId}`)
-      .then(response => response.json(), e => { throw new Error("Failed to retrieve region")})
-      .then(json => dispatch(receiveRegion(json)))
-      .then(action => {
-        dispatch(fetchDemographics(action.region.id));
-        dispatch(fetchFacts(action.region.id));
-        dispatch(fetchContacts(action.region.id));
-        return action;
-      })
-      .catch(e => dispatch(error(e.message)));
-  }
-}
-
 export const fetchRegions = () => {
     return dispatch => {
         dispatch(requestRegions());
         return fetch(`${SERVER_URL}/api/regions`)
             .then(response => response.json(), e => { throw new Error("Failed to retrieve regions")})
-            .then(json => dispatch(receiveRegions(json)))
+            .then(json => {
+              dispatch(receiveRegions(json))
+              return json;
+            })
             .catch(e => dispatch(error(e.message)));
     }
 }
@@ -104,4 +102,21 @@ export const fetchContacts = regionId => {
         .then(json => dispatch(receiveContacts(json)))
         .catch(e => dispatch(error(e.message)));;
   }
+}
+
+const _fetchRegion = (dispatch, url) => {
+  return fetch(url)
+    .then(response => response.json(), e => { throw new Error("Failed to retrieve region")})
+    .then(region => (
+      Promise.all([
+        dispatch(fetchDemographics(region.id)),
+        dispatch(fetchFacts(region.id)),
+        dispatch(fetchContacts(region.id))
+      ])
+      .then(() => {
+        dispatch(receiveRegion(region));
+        return region;
+      })
+    ))
+    .catch(e => dispatch(error(e.message)));
 }

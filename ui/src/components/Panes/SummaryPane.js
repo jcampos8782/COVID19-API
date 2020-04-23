@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
@@ -117,7 +116,7 @@ const Overview = props => (
           <Icon color="primary" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-users`}/>
         </Grid>
         <Grid item xs={8} sm={10} md={9} lg={8}>
-          <Typography variant="button">{'No Data'}</Typography>
+          <Typography variant="button">{'-'}</Typography>
         </Grid>
       </Grid>
     </Grid>
@@ -130,33 +129,39 @@ const Overview = props => (
           <Icon style={{paddingRight: 10}} className={`${props.classes.icon} ${props.classes.green} fas fa-heartbeat`}/>
         </Grid>
         <Grid item xs={8} sm={10} md={9} lg={8}>
-          <Typography variant="button">{'No Data'}</Typography>
+          <Typography variant="button">{'3000'}</Typography>
         </Grid>
       </Grid>
     </Grid>
     <Grid item xs={6} sm={3}>
       <Grid container>
-        <Grid item xs={12} >
+        <Grid item xs={6} >
           <Typography variant="caption">Confirmed</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="caption"><Icon className={`${props.classes.red} ${props.classes.xsIcon} fas fa-arrow-up xs`} /> 5%</Typography>
         </Grid>
         <Grid item xs={4} sm={2} md={3} lg={4}>
           <Icon color="secondary" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-head-side-cough`}/>
         </Grid>
         <Grid item xs={8} sm={10} md={9} lg={8}>
-          <Typography variant="button">{'No Data'}</Typography>
+          <Typography variant="button">{'-'}</Typography>
         </Grid>
       </Grid>
     </Grid>
     <Grid item xs={6} sm={3}>
       <Grid container>
-        <Grid item xs={12}>
+        <Grid item xs={6} >
           <Typography variant="caption">Deaths</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="caption"><Icon className={`${props.classes.red} ${props.classes.xsIcon} fas fa-arrow-up xs`} /> 5%</Typography>
         </Grid>
         <Grid item xs={4} sm={2} md={3} lg={4}>
           <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-skull-crossbones`}/>
         </Grid>
         <Grid item xs={8} sm={10} md={9} lg={8}>
-          <Typography variant="button">{'No Data'}</Typography>
+          <Typography variant="button">{'-'}</Typography>
         </Grid>
       </Grid>
     </Grid>
@@ -180,7 +185,7 @@ const Hospitalizations = props => (
           <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-clinic-medical`}/>
         </Grid>
         <Grid item xs={9}>
-          <Typography variant="button">{'No Data / No Data'}</Typography>
+          <Typography variant="button">{'- / -'}</Typography>
         </Grid>
       </Grid>
     </Grid>
@@ -193,7 +198,7 @@ const Hospitalizations = props => (
           <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-procedures`}/>
         </Grid>
         <Grid item xs={9}>
-          <Typography variant="button">{'No Data / No Data'}</Typography>
+          <Typography variant="button">{'- / -'}</Typography>
         </Grid>
       </Grid>
     </Grid>
@@ -206,7 +211,7 @@ const Hospitalizations = props => (
           <Icon color="error" style={{paddingRight: 10}} className={`${props.classes.icon} fas fa-lungs-virus`}/>
         </Grid>
         <Grid item xs={9}>
-          <Typography variant="button">{'No Data / No Data'}</Typography>
+          <Typography variant="button">{'- / -'}</Typography>
         </Grid>
       </Grid>
     </Grid>
