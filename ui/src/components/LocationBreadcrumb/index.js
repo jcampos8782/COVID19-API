@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => (
   {
-    loadRegion: (index, selectedRegionId) => dispatch(loadRegion(index, selectedRegionId))
+    loadRegion: selectedRegionId => dispatch(loadRegion(selectedRegionId))
   }
 )
 

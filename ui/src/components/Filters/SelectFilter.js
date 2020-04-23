@@ -26,7 +26,7 @@ export default class SelectFilter extends React.Component {
               >
                   {this.props.default && this.props.default}
                   {
-                      options.map(o => <MenuItem key={o.id} value={o.id}>{o.name}</MenuItem>)
+                      options.map(o => <MenuItem key={o.value} value={o.value}>{o.text}</MenuItem>)
                   }
               </Select>
           </FormControl>

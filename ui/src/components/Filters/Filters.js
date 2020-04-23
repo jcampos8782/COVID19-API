@@ -8,7 +8,7 @@ export default class Filters extends React.Component {
       const {
         classes,
         regions,
-        selectRegion
+        loadRegion
       } = this.props;
 
       let regionFilters = regions.map((filter,idx) => (
@@ -16,8 +16,8 @@ export default class Filters extends React.Component {
           classes={classes}
           key={idx}
           label={filter.label}
-          selected={filter.selectedId}
-          onChange={(e) => selectRegion(idx, e.target.value)}
+          selected={filter.value}
+          onChange={(e) => loadRegion(e.target.value)}
           default=<MenuItem value="-1" selected><em>None</em></MenuItem>
           options={filter.options} />
       ));

@@ -6,8 +6,8 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 export const requestRegion = id => ({ type: Actions.REQUEST_REGION, id })
 export const receiveRegion = region => ({ type: Actions.RECEIVE_REGION, region })
 
-export const requestRegions = () => ({ type: Actions.REQUEST_REGIONS })
-export const receiveRegions = regions => ({ type: Actions.RECEIVE_REGIONS, regions })
+export const requestRegions = level => ({ type: Actions.REQUEST_REGIONS, level })
+export const receiveRegions = (level, regions) => ({ type: Actions.RECEIVE_REGIONS, level, regions })
 
 export const requestSubregions = () => ({ type: Actions.REQUEST_SUBREGIONS })
 export const receiveSubregions = (regionId, subregions) => ({ type: Actions.RECEIVE_SUBREGIONS, regionId, subregions })
@@ -24,21 +24,20 @@ export const receiveDemographics = demographics => ({type: Actions.RECEIVE_DEMOG
 export const requestContacts = regionId => ({type: Actions.REQUEST_CONTACTS, regionId})
 export const receiveContacts = contacts => ({type: Actions.RECEIVE_CONTACTS, contacts})
 
-export const selectRegion = regionId => {
+export const selectRegion = region => ({type: Actions.SELECT_REGION, region })
 
+export const loadRegion = regionId => {
+  return dispatch => {
+      dispatch(fetchRegion(regionId))
+        .then(region => dispatch(selectRegion(region)), e => error(e))
+        .catch(e => error(e));
+  }
 }
 
 export const fetchClosestRegion = (lat,lon) => {
   return (dispatch,getState) => {
     dispatch(requestRegionByGeoCoords(lat,lon));
     return _fetchRegion(dispatch, `${SERVER_URL}/api/regions/geo?lat=${lat}&lon=${lon}`)
-  }
-}
-
-export const fetchRegion = (regionId) => {
-  return (dispatch,getState) => {
-    dispatch(requestRegion(regionId));
-    return _fetchRegion(dispatch, `${SERVER_URL}/api/regions/${regionId}`)
   }
 }
 
@@ -71,45 +70,61 @@ export const fetchSubregions = regionId => {
     }
 }
 
-export const fetchRegions = () => {
+export const fetchRegions = level => {
     return dispatch => {
-        dispatch(requestRegions());
+        dispatch(requestRegions(level));
         return fetch(`${SERVER_URL}/api/regions`)
             .then(response => response.json(), e => { throw new Error("Failed to retrieve regions")})
             .then(json => {
-              dispatch(receiveRegions(json))
+              dispatch(receiveRegions(level, json))
               return json;
             })
             .catch(e => dispatch(error(e.message)));
     }
 }
 
-export const fetchFacts = regionId => {
+const fetchRegion = regionId => {
+  return (dispatch,getState) => {
+    dispatch(requestRegion(regionId));
+    return _fetchRegion(dispatch, `${SERVER_URL}/api/regions/${regionId}`)
+  }
+}
+
+const fetchFacts = regionId => {
   return dispatch => {
     dispatch(requestFacts(regionId));
     return fetch(`${SERVER_URL}/api/regions/${regionId}/facts`)
         .then(response => response.json(), e => { throw new Error("Failed to retrieve facts")})
-        .then(json => dispatch(receiveFacts(json)))
+        .then(json => {
+          dispatch(receiveFacts(json))
+          return json;
+        })
         .catch(e => dispatch(error(e.message)));;
   }
 }
 
-export const fetchDemographics = regionId => {
+const fetchDemographics = regionId => {
   return dispatch => {
     dispatch(requestDemographics(regionId));
     return fetch(`${SERVER_URL}/api/regions/${regionId}/demographics`)
         .then(response => response.json(), e => { throw new Error("Failed to retrieve facts")})
-        .then(json => dispatch(receiveDemographics(json)))
+        .then(json => {
+          dispatch(receiveDemographics(json))
+          return json;
+        })
         .catch(e => dispatch(error(e.message)));;
   }
 }
 
-export const fetchContacts = regionId => {
+const fetchContacts = regionId => {
   return dispatch => {
     dispatch(requestContacts(regionId));
     return fetch(`${SERVER_URL}/api/regions/${regionId}/contacts`)
         .then(response => response.json(), e => { throw new Error("Failed to retrieve facts")})
-        .then(json => dispatch(receiveContacts(json)))
+        .then(json => {
+          dispatch(receiveContacts(json))
+          return json;
+        })
         .catch(e => dispatch(error(e.message)));;
   }
 }
@@ -123,7 +138,13 @@ const _fetchRegion = (dispatch, url) => {
         dispatch(fetchFacts(region.id)),
         dispatch(fetchContacts(region.id))
       ])
-      .then(() => {
+      .then(results => {
+        region = {
+          ...region,
+          demographics: results[0],
+          facts: results[1],
+          contacts: results[2]
+        }
         dispatch(receiveRegion(region));
         return region;
       })

@@ -94,7 +94,7 @@ const mapStateToProps = state => {
 
 let mapDispatchToProps = dispatch => ({
   selectTab: (e,t) => dispatch(selectTab(t)),
-  loadRegion: (index, selectedRegionId) => dispatch(loadRegion(index, selectedRegionId))
+  fetchRegion: selectedRegionId => dispatch(loadRegion(selectedRegionId))
 });
 
 // Aggregates the series from all data series supplied. Combines based on the series name

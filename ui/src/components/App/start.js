@@ -16,9 +16,9 @@ import {
   fetchSubregions,
   fetchRegions,
   fetchSeriesByRegion,
-  setFilterOptions,
-  selectRegion,
   selectSeries,
+  selectRegion,
+  receiveRegions,
   error
 } from '../../actions';
 
@@ -28,7 +28,7 @@ const defaultProps = {
 }
 
 export const start = (dispatch, props = defaultProps) => {
-  Promise.all([loadTopLevelRegions(dispatch), loadAllSeries(dispatch)])
+  Promise.all([dispatch(fetchRegions(0)), loadAllSeries(dispatch)])
     .then(
       ok => loadUserRegion(dispatch, props),
       error => dispatch(error(error))
@@ -37,18 +37,13 @@ export const start = (dispatch, props = defaultProps) => {
       region => {
         dispatch(fetchSeriesByRegion(region.id));
         initializeRegionFilters(dispatch, props, region);
+        dispatch(selectRegion(region));
       },
       error => dispatch(error(error))
     ).catch(e => {
       dispatch(error(e));
     });
 }
-
-// Load all regions and set the options in the root filter
-const loadTopLevelRegions = dispatch => (
-  dispatch(fetchRegions())
-    .then(regions => dispatch(setFilterOptions(0, regions.map(r => ({id: r.id, name: r.name})))))
-)
 
 // Fetch all series and set the filter to the first in the list
 const loadAllSeries = dispatch => (
@@ -72,27 +67,13 @@ const loadUserRegion = (dispatch, props) => {
 // Fetches all ancestors and subregions and loads data into filter options
 const initializeRegionFilters = (dispatch, props, region) => {
   let index = region.parents.length;
-  if (region.subregions) {
-    dispatch(setFilterOptions(index + 1, region.subregions.map(o => ({id: o.id, name: o.name}))));
-  }
 
   // Load subregions for all parents
   Promise.all(region.parents.map(parent => dispatch(fetchSubregions(parent.id))))
     .then(parent => {
-      console.log(parent);
-      // For each dispatched parent request, set the options for the corresponding filters
       parent.forEach(parent => {
         let filterIndex = region.parents.findIndex(p => p.id === parent.id);
-        dispatch(setFilterOptions(index - filterIndex, parent.subregions.map(o => ({id: o.id, name: o.name}))))
+        dispatch(receiveRegions(index - filterIndex, parent.subregions));
       });
     })
-    .then(() => {
-      // Select the regions for each filter
-      region.parents.forEach((p,idx) => {
-        dispatch(selectRegion(index - idx - 1, p.id))
-      });
-
-      // Select the current region
-      dispatch(selectRegion(index, region.id));
-    });
 }

@@ -1,8 +1,6 @@
 import * as Actions from './types';
 
-export const setDefaultLocation = name => ({type: Actions.SET_DEFAULT_LOCATION, name})
 export const geolocationError = error => ({ type: Actions.ERROR_GEOLOCATION, error})
-
 export const requestGeolocation = () => ({ type: Actions.REQUEST_GEOLOCATION })
 export const receiveGeolocation = coords => ({  type: Actions.RECEIVE_GEOLOCATION, coords })
 
