@@ -19,7 +19,7 @@ export default class SubregionPane extends React.Component {
         children={
           meta.subregions.length === 0 ? <div /> : Object.keys(data).map(series => {
             let regionTotals = Object.keys(data[series].data.regional).map(region => {
-              let len = data[series].data.regions[region].total.length;
+              let len = data[series].data.regional[region].total.length;
               return {region, total: data[series].data.regional[region].total[len -1]};
             }).sort((a,b) => b.total - a.total);
 
@@ -37,7 +37,7 @@ export default class SubregionPane extends React.Component {
             regionData.sort((a,b) => a.id < b.id ? 1 : -1);
 
             let otherRegionSums = Array.from({length: meta.columns.length}, n => 0);
-            otherRegionNames.forEach((region) => {
+            otherRegionNames.forEach(region => {
               data[series].data.regional[region].daily.forEach((val,idx) => {
                 otherRegionSums[idx] += val;
               })
@@ -53,7 +53,7 @@ export default class SubregionPane extends React.Component {
             });
 
             return (
-              <Grid item key={`${series.id}-subregions`} style={{height:300}} sm={12} md={12}>
+              <Grid item key={`${series}-subregions`} style={{height:300}} sm={12} md={12}>
                 <TimeSeriesLineChart
                   theme={view.theme}
                   title={series.id}
