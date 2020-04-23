@@ -24,11 +24,11 @@ export default class SummaryPane extends React.Component {
             theme={view.theme}
             data={
               //[{series: "series", "date":"value"...}]
-              data.map(series => (
+              Object.keys(data).map(series => (
               {
-                series: series.id,
+                series: series,
                 ...meta.columns.reduce((obj,date,idx) => {
-                  let values = series.data.aggregates.daily;
+                  let values = data[series].data.aggregates.daily;
                   let current = values[idx];
                   let lastWeek = idx > 7 ? values[idx - 7] : values[0];
                   let difference = current - lastWeek;
@@ -52,10 +52,10 @@ export default class SummaryPane extends React.Component {
           <TimeSeriesLineChart
             theme={view.theme}
             title="Last 7 Days"
-            data={data.map(series => (
+            data={Object.keys(data).map(series => (
               {
-                id: series.id,
-                data: series.data.recent.data.map((val,idx) => ({
+                id: series,
+                data: data[series].data.recent.data.map((val,idx) => ({
                     x: formatDateKey(meta.columns[meta.columns.length - 7 + idx]),
                     y: val
                   }

@@ -12,7 +12,7 @@ export default class HistoryPane extends React.Component {
         index={index}
         children={
           <TimeSeriesDataTable
-            data={data.map(series => ({ id: series.id, data: series.data.aggregates.total}))}
+            data={Object.keys(data).map(series => ({ id: series, data: data[series].data.aggregates.total}))}
             meta={{
               columns: meta.columns,
               title: meta.region

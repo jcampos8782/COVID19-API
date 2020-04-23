@@ -1,7 +1,7 @@
 import Filters from './Filters';
 import {styled} from '../../styles';
 import { connect } from 'react-redux';
-import {loadRegion, fetchSeriesByRegion} from '../../actions';
+import {loadRegion, fetchSeriesByRegion, error} from '../../actions';
 
 const mapStateToProps = state => {
   return {
@@ -13,8 +13,18 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     loadRegion: id => {
-      dispatch(loadRegion(id));
-      dispatch(fetchSeriesByRegion(id));
+      new Promise((resolve,reject) => {
+        let region = dispatch(loadRegion(id));
+        if (region) {
+          resolve();
+        } else {
+          reject("Failed to load region");
+        }
+      })
+      .then(
+        () => dispatch(fetchSeriesByRegion(id)),
+        e => error(e)
+      );
     }
 });
 

@@ -4,7 +4,7 @@ import {
   REQUEST_REGION_BY_GEOLOCATION,
   REQUEST_SERIES_LIST,
   REQUEST_GEOLOCATION,
-  RECEIVE_SERIES,
+  RECEIVE_SERIES_DATA,
   RECEIVE_REGIONS,
   RECEIVE_SERIES_LIST,
   ERROR_GEOLOCATION,
@@ -20,7 +20,7 @@ export default (state = false, action) => {
         case REQUEST_SERIES_LIST:
         case REQUEST_REGIONS:
           return true;
-        case RECEIVE_SERIES:
+        case RECEIVE_SERIES_DATA:
         case RECEIVE_REGIONS:
         case RECEIVE_SERIES_LIST:
         case RECEIVE_GEOLOCATION:

@@ -17,8 +17,8 @@ export default class HistoryPane extends React.Component {
         value={value}
         index={index}
         children={
-          data.map(series => (
-            <Grid key={`${series.id}-history`} container>
+          Object.keys(data).map(series => (
+            <Grid key={`${series}-history`} container>
               <Grid item xs={12} >
                 <Typography variant="overline">
                   {series.id}: {series.current}
@@ -29,7 +29,7 @@ export default class HistoryPane extends React.Component {
                   from={formatDateKey(meta.columns[0])}
                   to={formatDateKey(meta.columns[meta.columns.length - 1])}
                   data={
-                    series.data.aggregates.daily.map((cnt, idx) => {
+                    data[series].data.aggregates.daily.map((cnt, idx) => {
                       return {
                         day: formatDateKey(meta.columns[idx]),
                         value: cnt
@@ -45,7 +45,7 @@ export default class HistoryPane extends React.Component {
                   data={[
                     {
                       id: 'Total',
-                      data: series.data.aggregates.total.map((val,idx) => ({
+                      data: data[series].data.aggregates.total.map((val,idx) => ({
                           x: formatDateKey(meta.columns[idx]),
                           y: val
                         }
@@ -53,7 +53,7 @@ export default class HistoryPane extends React.Component {
                     },
                     {
                       id: 'Daily',
-                      data: series.data.aggregates.daily.map((val,idx) => ({
+                      data: data[series].data.aggregates.daily.map((val,idx) => ({
                           x: formatDateKey(meta.columns[idx]),
                           y: val
                         }

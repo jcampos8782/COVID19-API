@@ -17,10 +17,10 @@ export default class SubregionPane extends React.Component {
         value={value}
         index={index}
         children={
-          meta.subregions.length === 0 ? <div /> : data.map(series => {
-            let regionTotals = Object.keys(series.data.regions).map(region => {
-              let len = series.data.regions[region].total.length;
-              return {region, total: series.data.regions[region].total[len -1]};
+          meta.subregions.length === 0 ? <div /> : Object.keys(data).map(series => {
+            let regionTotals = Object.keys(data[series].data.regional).map(region => {
+              let len = data[series].data.regions[region].total.length;
+              return {region, total: data[series].data.regional[region].total[len -1]};
             }).sort((a,b) => b.total - a.total);
 
             let topRegionNames = regionTotals.slice(0,9).map(r => r.region);
@@ -28,7 +28,7 @@ export default class SubregionPane extends React.Component {
 
             let regionData = topRegionNames.map(region => ({
                 id: region,
-                data: series.data.regions[region].daily.map((val,idx) => ({
+                data: data[series].data.regional[region].daily.map((val,idx) => ({
                   x: formatDateKey(meta.columns[idx]),
                   y: val
                 }))
@@ -38,7 +38,7 @@ export default class SubregionPane extends React.Component {
 
             let otherRegionSums = Array.from({length: meta.columns.length}, n => 0);
             otherRegionNames.forEach((region) => {
-              series.data.regions[region].daily.forEach((val,idx) => {
+              data[series].data.regional[region].daily.forEach((val,idx) => {
                 otherRegionSums[idx] += val;
               })
             })
