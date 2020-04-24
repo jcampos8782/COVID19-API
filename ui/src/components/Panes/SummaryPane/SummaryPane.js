@@ -3,13 +3,12 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { ResponsivePie } from '@nivo/pie';
-
 import TabPanel from '../TabPanel';
 import TimeSeriesHeatMap from '../../TimeSeriesHeatMap';
 import TimeSeriesLineChart from '../../TimeSeriesLineChart';
 import RegionOverviewBadges from '../../RegionOverviewBadges';
 import HospitalizationBadges from '../../HospitalizationBadges';
+import TestingResults from '../../TestingResults';
 
 import { formatDateKey } from '../../../util';
 
@@ -70,17 +69,6 @@ export default class SummaryPane extends React.Component {
       </Grid>
     );
 
-    let testing = (
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant="h6">Test Results</Typography>
-        </Grid>
-        <Grid item style={{height:250}} xs={12}>
-          <TestsGraph {...this.props}/>
-        </Grid>
-      </Grid>
-    );
-
     return (
       <TabPanel
         value={value}
@@ -96,7 +84,7 @@ export default class SummaryPane extends React.Component {
                   {lastSeven}
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  {testing}
+                  <TestingResults />
                 </Grid>
               </Grid>
             </Grid>
@@ -106,93 +94,3 @@ export default class SummaryPane extends React.Component {
     )
   }
 }
-
-const TestsGraph = props => (
-  <ResponsivePie
-      data={
-        [
-          { id: "positive", label: "Positive", value: 29000 },
-          { id: "negative", label: "Negative", value: 290000},
-          { id: "pending", label: "Pending", value: 0 }
-        ]
-      }
-      margin={{ top: 30, left: 40 }}
-      innerRadius={0.7}
-      startAngle={270}
-      padAngle={2}
-      cornerRadius={3}
-      enableSlicesLabels={false}
-      colors={{ scheme: 'nivo' }}
-      borderWidth={1}
-      fitWidth={true}
-      borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
-      radialLabelsSkipAngle={10}
-      radialLabelsTextXOffset={6}
-      radialLabelsTextColor="#333333"
-      radialLabelsLinkOffset={0}
-      radialLabelsLinkDiagonalLength={16}
-      radialLabelsLinkHorizontalLength={24}
-      radialLabelsLinkStrokeWidth={1}
-      radialLabelsLinkColor={{ from: 'color' }}
-      slicesLabelsSkipAngle={10}
-      slicesLabelsTextColor="#333333"
-      animate={true}
-      motionStiffness={90}
-      motionDamping={15}
-      defs={[
-          {
-              id: 'dots',
-              type: 'patternDots',
-              background: 'inherit',
-              color: 'rgba(255, 255, 255, 0.3)',
-              size: 4,
-              padding: 1,
-              stagger: true
-          },
-          {
-              id: 'lines',
-              type: 'patternLines',
-              background: 'inherit',
-              color: 'rgba(255, 255, 255, 0.3)',
-              rotation: -45,
-              lineWidth: 6,
-              spacing: 10
-          }
-      ]}
-      fill={[
-          {
-              match: {
-                  id: 'pending'
-              },
-              id: 'dots'
-          },
-          {
-              match: {
-                  id: 'negative'
-              },
-              id: 'lines'
-          },
-      ]}
-      legends={[
-          {
-              anchor: 'bottom-right',
-              direction: 'column',
-              translateX: 30,
-              translateY: 0,
-              itemWidth: 100,
-              itemHeight: 18,
-              itemTextColor: '#999',
-              symbolSize: 18,
-              symbolShape: 'circle',
-              effects: [
-                  {
-                      on: 'hover',
-                      style: {
-                          itemTextColor: '#000'
-                      }
-                  }
-              ]
-          }
-      ]}
-    />
-)
