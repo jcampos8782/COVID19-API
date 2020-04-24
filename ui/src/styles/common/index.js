@@ -11,6 +11,10 @@ const css = theme => ({
   backdrop: {
     zIndex:1000
   },
+  badgedIcon: {
+    width: 'auto',
+    paddingRight: 10
+  },
   body: {
     position: 'relative',
     display: 'inline-block',
