@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 export default class LocationBreadcrumb extends React.Component {
   render() {
-    const { locations, loadRegion } = this.props;
+    const { locations, loadRegion, classes } = this.props;
     if (locations.length === 0) {
       return <div />;
     }
@@ -18,7 +18,7 @@ export default class LocationBreadcrumb extends React.Component {
               return <Typography variant="h5" key={i}> {l.name} </Typography>;
             }
             return (
-              <Link key={i} href="#" onClick={() => loadRegion(l.id)}>
+              <Link key={i} href="#" className={classes.link} onClick={() => loadRegion(l.id)}>
                 <Typography variant="h5">{l.name}</Typography>
               </Link>
             );

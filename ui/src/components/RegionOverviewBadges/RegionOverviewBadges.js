@@ -22,7 +22,7 @@ export default class RegionOverviewBadges extends React.Component {
         <Grid item xs={6} sm={3}>
           <BadgedIcon
             title="Population"
-            iconClass="fas fa-users"
+            iconClass={`${classes.link} fas fa-users`}
             value={population || '-'}
             />
         </Grid>
