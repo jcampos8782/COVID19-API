@@ -37,6 +37,10 @@ export const light = createMuiTheme(lightBase, {
           ]
         }
       },
+      pie: {
+        colors: 'set2',
+        text: 'black'
+      },
       line: {
         colors: 'category10',
         text: 'black'
@@ -87,6 +91,10 @@ export const dark = createMuiTheme(darkBase, {
             '#f08072'
           ]
         }
+      },
+      pie: {
+        colors: 'dark2',
+        text: 'white'
       },
       line: {
         colors: 'set3',

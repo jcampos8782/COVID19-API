@@ -1,15 +1,20 @@
 import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+
 import Typography from '@material-ui/core/Typography';
 
 import {ResponsivePie} from '@nivo/pie';
 
-import { uppercaseFirst } from '../../util';
+import { uppercaseFirst, formatNumber } from '../../util';
+import { light, dark } from '../../styles';
 
 export default class TestingResults extends React.Component {
   render() {
-    const { data } = this.props;
+    const { data, theme } = this.props;
+    let palette = theme === 'light' ? light.palette : dark.palette;
+
     return (
       <Grid container>
         <Grid item xs={12}>
@@ -27,19 +32,27 @@ export default class TestingResults extends React.Component {
                         value: data[key]
                       }))
                   }
+                  theme={{
+                    tooltip: {
+                      container: {
+                        background: 'rbga(0,0,0,.5)',
+                        boxShadow: 0
+                      }
+                    }
+                  }}
                   margin={{ top: 30, left: 40 }}
                   innerRadius={0.7}
                   startAngle={270}
                   padAngle={2}
                   cornerRadius={3}
                   enableSlicesLabels={false}
-                  colors={{ scheme: 'nivo' }}
+                  colors={{ scheme: palette.nivo.pie.colors }}
                   borderWidth={1}
                   fitWidth={true}
                   borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
                   radialLabelsSkipAngle={10}
                   radialLabelsTextXOffset={6}
-                  radialLabelsTextColor="#333333"
+                  radialLabelsTextColor={palette.nivo.pie.text}
                   radialLabelsLinkOffset={0}
                   radialLabelsLinkDiagonalLength={8}
                   radialLabelsLinkHorizontalLength={8}
@@ -50,6 +63,13 @@ export default class TestingResults extends React.Component {
                   animate={true}
                   motionStiffness={90}
                   motionDamping={15}
+                  tooltip={({ id, value, label, color }) => {
+                    return (
+                      <Paper style={{padding: 3}}>
+                        <Typography variant="button">{formatNumber(value)}</Typography>
+                      </Paper>
+                    )
+                  }}
                   defs={[
                       {
                           id: 'dots',

@@ -3,8 +3,10 @@ import {connect} from 'react-redux';
 import {styled} from '../../styles';
 
 const mapStateToProps = state => {
-  const {region: {facts: {tests}}} = state;
+  const {region: {facts: {tests}}, view} = state;
+
   return {
+    theme: view.theme,
     data: tests && Object.keys(tests).reduce((obj,key) => {
       if (tests[key]) {
         obj[key] = tests[key];
