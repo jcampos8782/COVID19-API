@@ -5,7 +5,7 @@ import { loadRegion, fetchSeriesByRegion, error } from '../../actions';
 
 const mapStateToProps = state => {
   if (!state.region) {
-    return {locations: []}
+    return {loading: true}
   };
 
   let locationTree = state.region.parents.slice(0);
