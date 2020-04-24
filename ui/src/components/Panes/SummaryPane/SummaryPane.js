@@ -5,11 +5,11 @@ import Typography from '@material-ui/core/Typography';
 
 import { ResponsivePie } from '@nivo/pie';
 
-import BadgedIcon from '../../BadgedIcon';
 import TabPanel from '../TabPanel';
 import TimeSeriesHeatMap from '../../TimeSeriesHeatMap';
 import TimeSeriesLineChart from '../../TimeSeriesLineChart';
 import RegionOverviewBadges from '../../RegionOverviewBadges';
+import HospitalizationBadges from '../../HospitalizationBadges';
 
 import { formatDateKey } from '../../../util';
 
@@ -89,7 +89,7 @@ export default class SummaryPane extends React.Component {
           <Grid container>
             <RegionOverviewBadges />
             {trends}
-            <Hospitalizations {...this.props} />
+            <HospitalizationBadges />
             <Grid item xs={12}>
               <Grid container>
                 <Grid item xs={12} md={6}>
@@ -106,41 +106,6 @@ export default class SummaryPane extends React.Component {
     )
   }
 }
-
-const Hospitalizations = props => (
-  <Grid container style={{paddingBottom: 20}}>
-    <Grid item xs={12}>
-      <Typography variant="h6">Hospitalizations</Typography>
-    </Grid>
-    <Grid item xs={12}>
-      <Typography variant="overline">Current/Cumulative</Typography>
-    </Grid>
-    <Grid item xs={6} sm={4}>
-      <BadgedIcon
-        title="Admitted"
-        color="error"
-        iconClass="fas fa-clinic-medical"
-        value="-/-"
-        />
-    </Grid>
-    <Grid item xs={6} sm={4}>
-      <BadgedIcon
-        title="Intensive Care"
-        color="error"
-        iconClass="fas fa-procedures"
-        value="-/-"
-        />
-    </Grid>
-    <Grid item xs={6} sm={4}>
-      <BadgedIcon
-        title="Ventiliator"
-        color="error"
-        iconClass="fas fa-lungs-virus"
-        value="-/-"
-        />
-    </Grid>
-  </Grid>
-)
 
 const TestsGraph = props => (
   <ResponsivePie

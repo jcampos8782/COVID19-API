@@ -8,7 +8,6 @@ const DEFAULT_VALUE = '-';
 
 const formatValue = value => value ? formatNumber(value) : DEFAULT_VALUE;
 const calculatePercentChange = (n,d) => {
-
     if (d === 0) {
       d = 1;
     }
