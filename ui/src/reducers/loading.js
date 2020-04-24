@@ -6,7 +6,9 @@ import {
   RECEIVE_SERIES_LIST,
   ERROR_GEOLOCATION,
   ERROR_LOADING,
-  RECEIVE_GEOLOCATION
+  RECEIVE_GEOLOCATION,
+  REQUEST_REGION,
+  RECEIVE_REGION
 } from '../actions/types';
 
 export default (state = [], action) => {
@@ -15,8 +17,10 @@ export default (state = [], action) => {
         case REQUEST_GEOLOCATION:
         case REQUEST_SERIES_LIST:
         case REQUEST_REGIONS:
+        case REQUEST_REGION:
           actions.push(action);
           return actions;
+        case RECEIVE_REGION:
         case RECEIVE_REGIONS:
         case RECEIVE_SERIES_LIST:
         case RECEIVE_GEOLOCATION:
