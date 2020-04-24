@@ -6,7 +6,7 @@ const mapStateToProps = (state, selfProps) => {
   const {data, region, series} = state;
   return {
       data: Object.keys(data).map(
-        component => ({ id: component, data: data[component].data.aggregates.total})
+        component => ({ id: component, data: data[component].aggregates.total})
       ),
       columns: series.columns,
       title: region.name

@@ -28,7 +28,7 @@ export default class SummaryPane extends React.Component {
               {
                 series: series,
                 ...meta.columns.reduce((obj,date,idx) => {
-                  let values = data[series].data.aggregates.daily;
+                  let values = data[series].aggregates.daily;
                   let current = values[idx];
                   let lastWeek = idx > 7 ? values[idx - 7] : values[0];
                   let difference = current - lastWeek;
@@ -55,7 +55,7 @@ export default class SummaryPane extends React.Component {
             data={Object.keys(data).map(series => (
               {
                 id: series,
-                data: data[series].data.recent.data.map((val,idx) => ({
+                data: data[series].recent.data.map((val,idx) => ({
                     x: formatDateKey(meta.columns[meta.columns.length - 7 + idx]),
                     y: val
                   }

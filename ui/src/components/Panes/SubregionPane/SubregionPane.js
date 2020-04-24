@@ -13,8 +13,9 @@ export default class SubregionPane extends React.Component {
   render() {
     const {
       data,
-      meta,
       theme,
+      columns,
+      title,
       index,
       value
     } = this.props;
@@ -24,47 +25,36 @@ export default class SubregionPane extends React.Component {
         value={value}
         index={index}
         children={
-          meta.subregions.length === 0 ? <div /> : Object.keys(data).map(series => {
-            let regionTotals = Object.keys(data[series].data.regional).map(region => {
-              let len = data[series].data.regional[region].total.length;
-              return {region, total: data[series].data.regional[region].total[len -1]};
-            }).sort((a,b) => b.total - a.total);
+          Object.keys(data).map(series => {
+            let { top, others } = data[series];
 
-            let topRegionNames = regionTotals.slice(0,9).map(r => r.region);
-            let otherRegionNames = regionTotals.slice(9).map(r => r.region);
-
-            let regionData = topRegionNames.map(region => ({
-                id: region,
-                data: data[series].data.regional[region].daily.map((val,idx) => ({
-                  x: formatDateKey(meta.columns[idx]),
-                  y: val
-                }))
+            // Convert to point format for graph
+            let points = Object.keys(top).map(region => ({
+              id: region,
+              data: top[region].daily.map((val,idx) => ({
+                x: formatDateKey(columns[idx]),
+                y: val
+              }))
             }));
 
-            regionData.sort((a,b) => a.id < b.id ? 1 : -1);
-
-            let otherRegionSums = Array.from({length: meta.columns.length}, n => 0);
-            otherRegionNames.forEach(region => {
-              data[series].data.regional[region].daily.forEach((val,idx) => {
-                otherRegionSums[idx] += val;
-              })
-            })
-
-            // Add other to the front of the array
-            regionData.unshift({
-              id: "Other",
-              data: otherRegionSums.map((val,idx) => ({
-                x: formatDateKey(meta.columns[idx]),
+            // Prepend the others data. The graphs display backwards
+            points.push({
+              id: "All Others",
+              data: others.map((val,idx) => ({
+                x: formatDateKey(columns[idx]),
                 y: val
               }))
             });
+
+            // The graph displays points descending
+            points.reverse();
 
             return (
               <Grid item key={`${series}-subregions`} style={{height:300}} sm={12} md={12}>
                 <TimeSeriesLineChart
                   theme={theme}
-                  title={series}
-                  data={regionData}
+                  title={title}
+                  data={points}
                 />
               </Grid>
             );

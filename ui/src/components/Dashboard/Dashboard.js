@@ -70,7 +70,7 @@ export default class Dashboard extends React.Component {
                         value={view.currentTab}
                         index={1}
                         />
-                      <Panes.SubregionPane {...this.props}
+                      <Panes.SubregionPane
                         value={view.currentTab}
                         index={2}
                         />

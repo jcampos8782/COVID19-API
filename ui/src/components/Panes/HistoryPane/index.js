@@ -9,8 +9,8 @@ const mapStateToProps = state => {
     data: Object.keys(data).reduce((obj,key) => {
       obj[key] = {
         current: data[key].current,
-        aggregate: data[key].data.aggregates.total,
-        daily: data[key].data.aggregates.daily
+        aggregate: data[key].aggregates.total,
+        daily: data[key].aggregates.daily
       };
       return obj;
     }, {}),

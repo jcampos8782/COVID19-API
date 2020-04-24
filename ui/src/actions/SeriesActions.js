@@ -42,7 +42,6 @@ export function fetchSeriesByRegion(regionId) {
           return data;
         })
         .catch(e => {
-          console.log(e);
           dispatch(error(e.message))
         });
     }
@@ -53,7 +52,6 @@ const processData = series => {
     const {region} = getState();
 
     let aggregateDataItem = series.data.find(d => d.regions[0] === region.id);
-    console.log(series);
     let subregionDataItems = series.data.filter(d => d.regions[0] !== region.id);
 
     let aggregateSeries = aggregateDataItem ?
@@ -86,6 +84,8 @@ const processData = series => {
           }
 
           statistics[series]['subregions'][subregionName] = {}
+          statistics[series]['subregions'][subregionName]['current'] = r.data[series][r.data[series].length - 1]
+          statistics[series]['subregions'][subregionName]['mostRecent'] = r.data[series][r.data[series].length - 1] - r.data[series][r.data[series].length - 2]
           statistics[series]['subregions'][subregionName]['total'] = r.data[series];
           statistics[series]['subregions'][subregionName]['daily'] = r.data[series].map((val,idx) => {
             return idx > 0 ? val - r.data[series][idx - 1] : val;
@@ -105,11 +105,10 @@ const processData = series => {
       let length = aggregateSeries[series].length;
       obj[series] = {
         current: aggregateSeries[series][length - 1],
-        data: {
-          aggregates: statistics[series].aggregates,
-          recent: statistics[series].recent,
-          regional: statistics[series].subregions
-        }
+        mostRecent: aggregateSeries[series][length - 1] - aggregateSeries[series][length - 2],
+        aggregates: statistics[series].aggregates,
+        recent: statistics[series].recent,
+        regional: statistics[series].subregions
       };
       return obj;
     }, {});
