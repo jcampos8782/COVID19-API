@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     const { data, series, view } = state;
-
+    if (!(data && series)) {
+      return { loading: true }
+    }
     return {
       data: {
         keys: Object.keys(data),

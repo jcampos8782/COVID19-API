@@ -6,7 +6,9 @@ const MAX_REGIONS = 9;
 
 const mapStateToProps = state => {
   const {data, region, view, series} = state;
-
+  if (!(data && region && series)) {
+    return { loading: true }
+  }
   return {
     theme: view.theme,
     columns: series.columns,

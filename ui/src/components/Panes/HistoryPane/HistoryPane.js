@@ -17,8 +17,13 @@ export default class HistoryPane extends React.Component {
       theme,
       index,
       value,
-      classes
+      classes,
+      loading
     } = this.props;
+
+    if (loading) {
+      return <div />
+    }
 
     return (
       <TabPanel

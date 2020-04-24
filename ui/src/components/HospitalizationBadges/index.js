@@ -10,6 +10,11 @@ const formatFact = fact => fact ? `${formatValue(fact.current)}/${formatValue(fa
 const formatValue = value => value ? formatNumber(value) : DEFAULT_VALUE;
 
 const mapStateToProps = state => {
+  const {region} = state;
+  if (!region) {
+    return {loading: true}
+  }
+
   const {region: { facts: {hospitalizations}}} = state;
   const { cumulative, current } = hospitalizations ? hospitalizations: {cumulative: {}, current: {}};
 

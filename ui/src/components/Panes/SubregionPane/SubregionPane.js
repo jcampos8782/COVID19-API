@@ -17,8 +17,13 @@ export default class SubregionPane extends React.Component {
       columns,
       title,
       index,
-      value
+      value,
+      loading,
     } = this.props;
+
+    if (loading) {
+      return <div />
+    }
 
     return (
       <TabPanel

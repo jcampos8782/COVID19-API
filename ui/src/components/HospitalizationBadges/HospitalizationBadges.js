@@ -1,5 +1,6 @@
 import React from 'react';
 
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -10,7 +11,8 @@ export default class RegionOverviewBadges extends React.Component {
     const {
       admitted,
       intensiveCare,
-      onVentilator
+      onVentilator,
+      loading
     } = this.props;
 
     return (
@@ -26,7 +28,7 @@ export default class RegionOverviewBadges extends React.Component {
             title="Admitted"
             color="error"
             iconClass="fas fa-clinic-medical"
-            value={ admitted || "-/-" }
+            value={ loading ? <LinearProgress variant="query" /> : admitted }
             />
         </Grid>
         <Grid item xs={6} sm={4}>
@@ -34,7 +36,7 @@ export default class RegionOverviewBadges extends React.Component {
             title="Intensive Care"
             color="error"
             iconClass="fas fa-procedures"
-            value={ intensiveCare || "-/-" }
+            value={ loading ? <LinearProgress variant="query" /> : intensiveCare }
             />
         </Grid>
         <Grid item xs={6} sm={4}>
@@ -42,7 +44,7 @@ export default class RegionOverviewBadges extends React.Component {
             title="Ventiliator"
             color="error"
             iconClass="fas fa-lungs-virus"
-            value={ onVentilator || "-/-" }
+            value={ loading ? <LinearProgress variant="query" /> : onVentilator }
             />
         </Grid>
       </Grid>

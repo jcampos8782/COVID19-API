@@ -16,6 +16,9 @@ const calculatePercentChange = (n,d) => {
 
 const mapStateToProps = state => {
   const {region, data} = state;
+  if (!(region && data)) {
+    return {loading: true}
+  }
 
   let currentDeaths = data.deaths ? data.deaths.current : null;
   let currentConfirmed = data.confirmed ? data.confirmed.current : null;

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 
@@ -14,7 +15,8 @@ export default class RegionOverviewBadges extends React.Component {
       confirmedCount,
       percentChangeDeaths,
       percentChangeConfirmed,
-      classes
+      classes,
+      loading
     } = this.props;
 
     return (
@@ -23,14 +25,14 @@ export default class RegionOverviewBadges extends React.Component {
           <BadgedIcon
             title="Population"
             iconClass={`${classes.link} fas fa-users`}
-            value={population || '-'}
+            value={loading ? <LinearProgress variant="query" /> : population }
             />
         </Grid>
         <Grid item xs={6} sm={3}>
           <BadgedIcon
             title="Recovered"
             iconClass={`${classes.green} fas fa-heartbeat`}
-            value={recovered || '-'}
+            value={loading ? <LinearProgress variant="query" /> : recovered}
             />
         </Grid>
         <Grid item xs={6} sm={3}>
@@ -38,8 +40,8 @@ export default class RegionOverviewBadges extends React.Component {
             title="Confirmed"
             color="secondary"
             iconClass="fas fa-head-side-cough"
-            caption={<ChangeIcon {...this.props} value={percentChangeConfirmed} />}
-            value={confirmedCount}
+            caption={!loading && <ChangeIcon {...this.props} value={percentChangeConfirmed} />}
+            value={loading ? <LinearProgress variant="query" />: confirmedCount}
             />
         </Grid>
         <Grid item xs={6} sm={3}>
@@ -47,8 +49,8 @@ export default class RegionOverviewBadges extends React.Component {
             title="Deaths"
             color="error"
             iconClass="fas fa-skull-crossbones"
-            caption={<ChangeIcon {...this.props} value={percentChangeDeaths} />}
-            value={deathsCount}
+            caption={!loading && <ChangeIcon {...this.props} value={percentChangeDeaths} />}
+            value={loading ? <LinearProgress variant="query" />: deathsCount}
             />
         </Grid>
       </Grid>

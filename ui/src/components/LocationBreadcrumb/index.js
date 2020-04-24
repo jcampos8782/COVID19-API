@@ -4,6 +4,10 @@ import { styled } from '../../styles';
 import { loadRegion, fetchSeriesByRegion, error } from '../../actions';
 
 const mapStateToProps = state => {
+  if (!state.region) {
+    return {locations: []}
+  };
+
   let locationTree = state.region.parents.slice(0);
   locationTree.reverse();
   locationTree.push(state.region);

@@ -12,7 +12,7 @@ import { light, dark } from '../../styles';
 
 export default class TestingResults extends React.Component {
   render() {
-    const { data, theme } = this.props;
+    const { data, theme, loading } = this.props;
     let palette = theme === 'light' ? light.palette : dark.palette;
 
     return (
@@ -21,7 +21,7 @@ export default class TestingResults extends React.Component {
           <Typography variant="h6">Test Results</Typography>
         </Grid>
         <Grid item style={{height:250}} xs={12}>
-          {
+          { loading ? <div /> :
             !data
               ? <Typography variant="overline"> No Data For Region</Typography>
               : <ResponsivePie

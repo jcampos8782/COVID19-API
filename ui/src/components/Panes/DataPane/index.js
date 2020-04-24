@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   const {data, region, series} = state;
+  if (!(data && region && series)) {
+    return { loading: true }
+  }
   return {
       data: Object.keys(data).map(
         component => ({ id: component, data: data[component].aggregates.total})

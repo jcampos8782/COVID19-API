@@ -16,10 +16,7 @@ import * as Cards from '../Cards';
 export default class Dashboard extends React.Component {
 
   render() {
-    const { data, meta, view, classes } = this.props;
-    if (data.length === 0) {
-      return <div/>;
-    }
+    const { region, view, classes } = this.props;
 
     return (
       <Grid
@@ -31,60 +28,61 @@ export default class Dashboard extends React.Component {
         <Grid item xs={12} md={12} lg={9}>
           <Grid container>
             <Grid className={classes.breadcrumbs} item xs={12} style={{paddingLeft:30}}>
-              <LocationBreadcrumb
-                className={classes.breadcrumbs}
-                locations={meta.locations}
-                loadRegion={this.props.loadRegion}
-                />
+              <LocationBreadcrumb className={classes.breadcrumbs} />
             </Grid>
             <Grid item xs={12}>
-              <Tabs
-                className={classes.tabsContainer}
-                value={view.currentTab}
-                onChange={this.props.selectTab}
-                variant="scrollable"
-                scrollButtons="on"
-                >
-                <Tab label="Summary" {...a11yProps(0)} />
-                <Tab label="History" {...a11yProps(1)} />
-                <Tab label="Subregions" {...a11yProps(2)} disabled={meta.subregions.length === 0}/>
-                <Tab label="Data" {...a11yProps(3)} />
-              </Tabs>
+
             </Grid>
-            <Grid item xs={12}>
-              <Grid container direction="row-reverse" spacing={1}>
-                <Grid item xs={12} sm={12} md={8} lg={8}>
-                  <Card variant="outlined" >
-                    <CardHeader
-                      className={classes.cardHeader}
-                      title={
-                        <Filters />
-                        }
-                      />
-                    <CardContent className={classes.paneCard}>
-                      <Panes.SummaryPane
-                        value={view.currentTab}
-                        index={0}
+            <Grid container>
+              <Grid item xs={12}>
+                <Tabs
+                  className={classes.tabsContainer}
+                  value={view.currentTab}
+                  onChange={this.props.selectTab}
+                  variant="scrollable"
+                  scrollButtons="on"
+                  >
+                  <Tab label="Summary" {...a11yProps(0)} />
+                  <Tab label="History" {...a11yProps(1)} />
+                  <Tab label="Subregions" {...a11yProps(2)} disabled={region && region.subregions.length === 0}/>
+                  <Tab label="Data" {...a11yProps(3)} />
+                </Tabs>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container direction="row-reverse" spacing={1}>
+                  <Grid item xs={12} sm={12} md={8} lg={8}>
+                    <Card variant="outlined" >
+                      <CardHeader
+                        className={classes.cardHeader}
+                        title={
+                          <Filters />
+                          }
                         />
-                      <Panes.HistoryPane
-                        value={view.currentTab}
-                        index={1}
-                        />
-                      <Panes.SubregionPane
-                        value={view.currentTab}
-                        index={2}
-                        />
-                      <Panes.DataPane
-                        value={view.currentTab}
-                        index={3}
-                        />
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} sm={12} md={4} lg={4} >
-                  <Grid container spacing={1}>
-                    <Grid item xs={12}>
-                      <Cards.HeadlinesCard />
+                      <CardContent className={classes.paneCard}>
+                        <Panes.SummaryPane
+                          value={view.currentTab}
+                          index={0}
+                          />
+                        <Panes.HistoryPane
+                          value={view.currentTab}
+                          index={1}
+                          />
+                        <Panes.SubregionPane
+                          value={view.currentTab}
+                          index={2}
+                          />
+                        <Panes.DataPane
+                          value={view.currentTab}
+                          index={3}
+                          />
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={4} lg={4} >
+                    <Grid container spacing={1}>
+                      <Grid item xs={12}>
+                        <Cards.HeadlinesCard />
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>

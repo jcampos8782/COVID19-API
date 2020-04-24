@@ -3,6 +3,11 @@ import {connect} from 'react-redux';
 import {styled} from '../../styles';
 
 const mapStateToProps = state => {
+  const {region} = state;
+  if (!region) {
+    return { loading: true }
+  }
+  
   const {region: {facts: {tests}}, view} = state;
 
   return {
