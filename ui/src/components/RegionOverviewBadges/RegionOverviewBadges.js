@@ -18,7 +18,7 @@ export default class RegionOverviewBadges extends React.Component {
     } = this.props;
 
     return (
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={6} sm={3}>
           <BadgedIcon
             title="Population"
