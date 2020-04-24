@@ -14,27 +14,27 @@ import { formatDateKey } from '../../../util';
 
 export default class SummaryPane extends React.Component {
   render() {
-    const { data, meta, view, value, index } = this.props;
+    const {
+      data,
+      columns,
+      theme,
+      value,
+      index
+    } = this.props;
 
     let trends = (
       <Grid container>
         <Grid item style={{height:30, marginTop: 15, marginBottom: 20}} xs={12} md={12} lg={12}>
           <TimeSeriesHeatMap
-            keys={meta.columns}
-            theme={view.theme}
+            keys={columns}
+            theme={theme}
             data={
               //[{series: "series", "date":"value"...}]
-              Object.keys(data).map(series => (
+              data.keys.map(key => (
               {
-                series: series,
-                ...meta.columns.reduce((obj,date,idx) => {
-                  let values = data[series].aggregates.daily;
-                  let current = values[idx];
-                  let lastWeek = idx > 7 ? values[idx - 7] : values[0];
-                  let difference = current - lastWeek;
-                  let denom = lastWeek === 0 ? 1 : lastWeek;
-                  let percentChange = ((difference / denom) * 100).toFixed(2);
-                  obj[date] = parseFloat(percentChange)
+                series: key,
+                ...columns.reduce((obj,date,idx) => {
+                  obj[date] = data.weeklyRateOfChange[key][idx]
                   return obj;
                 },{})
               }))
@@ -43,6 +43,7 @@ export default class SummaryPane extends React.Component {
         </Grid>
       </Grid>
     );
+
     let lastSeven = (
       <Grid container>
         <Grid item xs={12}>
@@ -50,13 +51,13 @@ export default class SummaryPane extends React.Component {
         </Grid>
         <Grid item style={{height:300}} xs={12}>
           <TimeSeriesLineChart
-            theme={view.theme}
+            theme={theme}
             title="Last 7 Days"
-            data={Object.keys(data).map(series => (
+            data={data.keys.map(series => (
               {
                 id: series,
-                data: data[series].recent.data.map((val,idx) => ({
-                    x: formatDateKey(meta.columns[meta.columns.length - 7 + idx]),
+                data: data.recent[series].map((val,idx) => ({
+                    x: formatDateKey(columns[columns.length - 7 + idx]),
                     y: val
                   }
                 ))

@@ -62,7 +62,7 @@ export default class Dashboard extends React.Component {
                         }
                       />
                     <CardContent className={classes.paneCard}>
-                      <Panes.SummaryPane {...this.props}
+                      <Panes.SummaryPane
                         value={view.currentTab}
                         index={0}
                         />

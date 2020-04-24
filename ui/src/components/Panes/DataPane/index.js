@@ -2,7 +2,7 @@ import DataPane from './DataPane';
 import {styled} from '../../../styles';
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state, selfProps) => {
+const mapStateToProps = state => {
   const {data, region, series} = state;
   return {
       data: Object.keys(data).map(
