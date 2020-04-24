@@ -57,8 +57,8 @@ export default class HeadlinesCard extends React.Component {
                         headlines.articles.slice(currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((headline,idx) => (
                           <TableRow key={idx}>
                             <TableCell>
-                              <Typography variant="body2"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
-                              <Typography variant="caption"> Published on {formatDateString(new Date(headline.publishedAt))} by {headline.source}</Typography>
+                              <Typography variant="body2" align="left"><Link className={classes.link} href={headline.url}>{headline.title}</Link></Typography>
+                              <Typography variant="caption">{formatDateString(new Date(headline.publishedAt))} - {headline.source}</Typography>
                             </TableCell>
                           </TableRow>
                         ))

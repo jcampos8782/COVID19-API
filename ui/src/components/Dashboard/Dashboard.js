@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component {
         direction="row"
         alignItems="flex-start"
         justify="flex-start">
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={12} lg={9}>
           <Grid container>
             <Grid className={classes.breadcrumbs} item xs={12} style={{paddingLeft:30}}>
               <LocationBreadcrumb
@@ -40,7 +40,7 @@ export default class Dashboard extends React.Component {
             <Grid item xs={12}>
               <Tabs
                 className={classes.tabsContainer}
-                value={view.selectedTabId}
+                value={view.currentTab}
                 onChange={this.props.selectTab}
                 variant="scrollable"
                 scrollButtons="on"
@@ -62,41 +62,45 @@ export default class Dashboard extends React.Component {
                         }
                       />
                     <CardContent className={classes.paneCard}>
-                      <Panes.SummaryPane {...this.props}
-                        value={view.selectedTabId}
+                      <Panes.SummaryPane
+                        value={view.currentTab}
                         index={0}
                         />
-                      <Panes.HistoryPane {...this.props}
-                        value={view.selectedTabId}
+                      <Panes.HistoryPane
+                        value={view.currentTab}
                         index={1}
                         />
-                      <Panes.SubregionPane {...this.props}
-                        value={view.selectedTabId}
+                      <Panes.SubregionPane
+                        value={view.currentTab}
                         index={2}
                         />
-                      <Panes.DataPane {...this.props}
-                        value={view.selectedTabId}
+                      <Panes.DataPane
+                        value={view.currentTab}
                         index={3}
                         />
                     </CardContent>
                   </Card>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4} lg={4} >
-                    <Cards.HeadlinesCard />
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Cards.HeadlinesCard />
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={12} lg={3}>
           <Grid container spacing={1}>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6} lg={12}>
               <Cards.LinksCard />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6} lg={12}>
               <Cards.AboutCard />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6} lg={12}>
               <Cards.ContributeCard />
             </Grid>
           </Grid>

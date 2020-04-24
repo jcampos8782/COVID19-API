@@ -3,6 +3,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import orange from '@material-ui/core/colors/orange';
 import grey from '@material-ui/core/colors/grey';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
 
 const lightBase = createMuiTheme({palette: { type: 'light'}});
 const darkBase = createMuiTheme({palette: {type: 'dark'}});
@@ -16,6 +18,12 @@ export const light = createMuiTheme(lightBase, {
     secondary: {
       main: orange[400]
     },
+    success: {
+      main: green[600]
+    },
+    error: {
+      main: red[800]
+    },
     nivo: {
       heatmap: {
         colors: {
@@ -28,6 +36,10 @@ export const light = createMuiTheme(lightBase, {
             '#d9241e'
           ]
         }
+      },
+      pie: {
+        colors: 'set2',
+        text: 'black'
       },
       line: {
         colors: 'category10',
@@ -61,6 +73,12 @@ export const dark = createMuiTheme(darkBase, {
     secondary: {
       main: orange[600]
     },
+    success: {
+      main: green[600]
+    },
+    error: {
+      main: red[800]
+    },
     nivo: {
       heatmap: {
         colors: {
@@ -73,6 +91,10 @@ export const dark = createMuiTheme(darkBase, {
             '#f08072'
           ]
         }
+      },
+      pie: {
+        colors: 'dark2',
+        text: 'white'
       },
       line: {
         colors: 'set3',

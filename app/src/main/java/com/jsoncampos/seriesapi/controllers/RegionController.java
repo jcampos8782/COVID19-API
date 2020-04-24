@@ -16,11 +16,23 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.jsoncampos.seriesapi.controllers.responses.GetAllRegionsResponse;
 import com.jsoncampos.seriesapi.controllers.responses.GetNearestRegionResponse;
+import com.jsoncampos.seriesapi.controllers.responses.GetRegionContactsResponse;
+import com.jsoncampos.seriesapi.controllers.responses.GetRegionDemographicsResponse;
+import com.jsoncampos.seriesapi.controllers.responses.GetRegionFactsResponse;
 import com.jsoncampos.seriesapi.controllers.responses.GetRegionResponse;
 import com.jsoncampos.seriesapi.controllers.responses.GetSubregionsResponse;
+import com.jsoncampos.seriesapi.dto.ContactsDto;
+import com.jsoncampos.seriesapi.dto.DemographicsDto;
+import com.jsoncampos.seriesapi.dto.FactsDto;
 import com.jsoncampos.seriesapi.dto.mappers.Mappers;
+import com.jsoncampos.seriesapi.models.Contacts;
+import com.jsoncampos.seriesapi.models.Demographics;
+import com.jsoncampos.seriesapi.models.Facts;
 import com.jsoncampos.seriesapi.models.Location;
 import com.jsoncampos.seriesapi.models.Region;
+import com.jsoncampos.seriesapi.services.ContactsService;
+import com.jsoncampos.seriesapi.services.DemographicsService;
+import com.jsoncampos.seriesapi.services.FactsService;
 import com.jsoncampos.seriesapi.services.LocationSearchService;
 import com.jsoncampos.seriesapi.services.RegionSearchService;
 
@@ -31,11 +43,22 @@ public class RegionController {
 	
 	private RegionSearchService searchSvc;
 	private LocationSearchService locationSvc;
-
+	private DemographicsService demographicsSvc;
+	private FactsService factsSvc;
+	private ContactsService contactsSvc;
+	
 	@Autowired
-	public RegionController(RegionSearchService searchSvc, LocationSearchService locationSvc) {
+	public RegionController(
+			RegionSearchService searchSvc, 
+			LocationSearchService locationSvc, 
+			DemographicsService demographicsSvc,
+			FactsService factsSvc,
+			ContactsService contactsSvc) {
 		this.searchSvc = searchSvc;
 		this.locationSvc = locationSvc;
+		this.demographicsSvc = demographicsSvc;
+		this.factsSvc = factsSvc;
+		this.contactsSvc = contactsSvc;
 	}
 
 	@GetMapping
@@ -109,4 +132,51 @@ public class RegionController {
 		return new GetSubregionsResponse(subregions.stream().map(Mappers::convertToDto).collect(Collectors.toList()));
 	}
 	
+	@GetMapping("/{id}/demographics")
+	public GetRegionDemographicsResponse getRegionDemographics(@PathVariable("id") String regionId) {
+		Region region = searchSvc.find(regionId);
+
+		if(region == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Region not found");
+		}
+		
+		Demographics demographics = demographicsSvc.getDemographicsForRegion(regionId);
+		if (demographics == null) {
+			return new GetRegionDemographicsResponse(new DemographicsDto());
+		}
+		
+		return new GetRegionDemographicsResponse(Mappers.convertToDto(demographics));
+	}
+	
+	@GetMapping("/{id}/contacts")
+	public GetRegionContactsResponse getRegionContacts(@PathVariable("id") String regionId) {
+		Region region = searchSvc.find(regionId);
+
+		if(region == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Region not found");
+		}
+		
+		Contacts contacts = contactsSvc.getContactsForRegion(regionId);
+		if (contacts == null) {
+			return new GetRegionContactsResponse(new ContactsDto());
+		}
+		
+		return new GetRegionContactsResponse(Mappers.convertToDto(contacts));
+	}
+	
+	@GetMapping("/{id}/facts")
+	public GetRegionFactsResponse getRegionFacts(@PathVariable("id") String regionId) {
+		Region region = searchSvc.find(regionId);
+
+		if(region == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Region not found");
+		}
+		
+		Facts facts = factsSvc.getFactsForRegion(regionId);
+		if (facts == null) {
+			return new GetRegionFactsResponse(new FactsDto());
+		}
+		
+		return new GetRegionFactsResponse(Mappers.convertToDto(facts));
+	}
 }

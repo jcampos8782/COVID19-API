@@ -1,38 +1,28 @@
 import Filters from './Filters';
 import {styled} from '../../styles';
 import { connect } from 'react-redux';
-
-import {
-  loadRegion,
-  selectSeries,
-  unselectSeries,
-  fetchSeriesByRegion,
-} from '../../actions';
+import {loadRegion, fetchSeriesByRegion, error} from '../../actions';
 
 const mapStateToProps = state => {
   return {
-    series: state.series.all,
-    regions: state.filters.regionFilters,
+    regions: state.view.filters,
     location: state.location,
-    selectedSeriesId: state.filters.selectedSeriesId,
-    selectedRegionId: state.regions.current ? state.regions.current.id : -1
+    selectedRegionId: state.region ? state.region.id : -1
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-    selectSeries: (selectedSeriesId, selectedRegionId) => {
-      if (selectedSeriesId === "-1") {
-        dispatch(unselectSeries());
+    loadRegion: (id) => {
+      // ignore if we get invalid input
+      if (id === "-1") {
         return;
       }
-      dispatch(selectSeries(selectedSeriesId));
 
-      if (selectedRegionId !== -1) {
-          dispatch(fetchSeriesByRegion(selectedSeriesId, selectedRegionId))
-      }
-    },
-
-    selectRegion: (index, selectedRegionId) => dispatch(loadRegion(index, selectedRegionId))
+      dispatch(loadRegion(id)).then(
+        () => dispatch(fetchSeriesByRegion(id)),
+        e => dispatch(error(e))
+      );
+    }
 });
 
 export default styled()(connect(mapStateToProps, mapDispatchToProps)(Filters));

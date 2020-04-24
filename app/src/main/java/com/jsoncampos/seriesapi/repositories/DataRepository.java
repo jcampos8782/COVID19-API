@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import com.jsoncampos.seriesapi.models.Data;
 
-public interface DataRepository extends MongoRepository<Data, Long> {
+public interface DataRepository extends MongoRepository<Data, String> {
 	
 	public List<Data> findBySeriesId(ObjectId seriesId);
 	

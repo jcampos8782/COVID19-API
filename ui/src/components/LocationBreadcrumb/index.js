@@ -1,12 +1,12 @@
 import LocationBreadcrumb from './LocationBreadcrumb';
 import { connect } from 'react-redux';
 import { styled } from '../../styles';
-import { loadRegion } from '../../actions';
+import { loadRegion, fetchSeriesByRegion, error } from '../../actions';
 
 const mapStateToProps = state => {
-  let locationTree = state.regions.current.parents.slice(0);
+  let locationTree = state.region.parents.slice(0);
   locationTree.reverse();
-  locationTree.push(state.regions.current);
+  locationTree.push(state.region);
   return {
     locations: locationTree
   };
@@ -14,7 +14,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => (
   {
-    loadRegion: (index, selectedRegionId) => dispatch(loadRegion(index, selectedRegionId))
+    loadRegion: id => {
+      dispatch(loadRegion(id)).then(
+        () => dispatch(fetchSeriesByRegion(id)),
+        e => dispatch(error(e))
+      );
+    }
   }
 )
 

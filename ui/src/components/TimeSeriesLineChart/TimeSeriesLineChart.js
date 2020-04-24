@@ -99,7 +99,6 @@ export default class TimeSeriesLineChart extends React.Component {
         }}
         useMesh={true}
         enableSlices="x"
-        enableCrosshair="x"
         animate={true}
         legends={[
           {

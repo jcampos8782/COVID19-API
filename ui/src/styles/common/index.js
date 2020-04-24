@@ -11,6 +11,10 @@ const css = theme => ({
   backdrop: {
     zIndex:1000
   },
+  badgedIcon: {
+    width: 'auto',
+    paddingRight: 10
+  },
   body: {
     position: 'relative',
     display: 'inline-block',
@@ -36,7 +40,9 @@ const css = theme => ({
   deaths: {
     backgroundColor: theme.palette.error.dark
   },
-
+  icon: {
+    width: 'auto'
+  },
   filterLabel: {
     paddingBottom: 6
   },
@@ -57,7 +63,11 @@ const css = theme => ({
     }
   },
   green: {
-    color: theme.palette.success.light
+    color: theme.palette.success.main
+  },
+  headlineTitleBox: {
+    maxHeight: 100,
+    overflowX: 'hidden'
   },
   historyCalendar: {
     height: 150
@@ -67,6 +77,13 @@ const css = theme => ({
   },
   link: {
     color: theme.palette.primary.linkText
+  },
+  localBadges: {
+    '& > .MuiBadge-badge': {
+      position:'relative',
+      left:-100,
+      top: -3
+    }
   },
   navLink: {
     width: 'fit-content',
@@ -87,6 +104,10 @@ const css = theme => ({
   red: {
     color: theme.palette.error.dark
   },
+  smIcon: {
+    fontSize: '1.1em',
+    width: 'auto'
+  },
   success: {
     color: theme.palette.success.main,
     fontSize: 'inherit'
@@ -100,7 +121,8 @@ const css = theme => ({
     fontSize: 'inherit'
   },
   xsIcon: {
-    fontSize: '1em'
+    fontSize: '1em',
+    width: 'auto'
   }
 })
 
