@@ -35,7 +35,8 @@ def process_downloads():
                         aggregates[component][parent_key] = [aggregates[component][parent_key][i] + int(data[i].split('.')[0]) for i in range(len(data))]
 
             for parent_key in aggregates[component]:
-                out.write("%s,%s\n" % (parent_key,  ",".join(str(s) for s in aggregates[component][parent_key])))
+                if parent_key not in DOWNLOADS_PROCESSOR_FILTERED_KEYS:
+                    out.write("%s,%s\n" % (parent_key,  ",".join(str(s) for s in aggregates[component][parent_key])))
 
     print("Import complete!")
 

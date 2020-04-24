@@ -58,6 +58,7 @@ FILE_COVID_TRACKER_US_CURRENT = join(DOWNLOADS_DIRECTORY, "covidtracking/us_curr
 DOWNLOADS_PROCESSOR
 """
 DOWNLOADS_PROCESSOR_NAME_FILTER = [re.compile(s) for s in ["Unassigned", "^Out of", "Recovered"]]
+DOWNLOADS_PROCESSOR_FILTERED_KEYS = ["united_states"]
 DOWNLOADS_PROCESSOR_NAME_REPLACEMENTS = {
     'US': 'United States',
     'Korea, South': 'South Korea',
