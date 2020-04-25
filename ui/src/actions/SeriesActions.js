@@ -48,6 +48,9 @@ export function fetchSeriesByRegion(regionId) {
     }
 }
 
+// TODO: a better fix Hack for now
+const order = ["confirmed", "deaths", "recovered"]
+
 const processData = series => {
   return (dispatch, getState) => {
     const {region} = getState();
@@ -88,7 +91,7 @@ const processData = series => {
           if (!r.data[series]) {
             return;
           }
-          
+
           statistics[series]['subregions'][subregionName] = {}
           statistics[series]['subregions'][subregionName]['current'] = r.data[series][r.data[series].length - 1]
           statistics[series]['subregions'][subregionName]['mostRecent'] = r.data[series][r.data[series].length - 1] - r.data[series][r.data[series].length - 2]
@@ -107,7 +110,7 @@ const processData = series => {
       };
     });
 
-    return Object.keys(aggregateSeries).reduce((obj,series) => {
+    return Object.keys(aggregateSeries).sort((a,b) => order.indexOf(a) - order.indexOf(b)).reduce((obj,series) => {
       let length = aggregateSeries[series].length;
       obj[series] = {
         current: aggregateSeries[series][length - 1],
