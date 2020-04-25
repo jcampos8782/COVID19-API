@@ -4,8 +4,8 @@ This project includes components for downloading, indexing, querying, and browsi
 The data sets currently being downloaded pertain to the COVID-19 pandemic. The set contains global data
 indexed into MongoDB with geospatial indexes to allow for querying by location.
 
-![Dark Theme](/screenshots/dark.png)
-![Subregions](/screenshots/subregions.png)
+![Light](/screenshots/light.png)
+![Dark](/screenshots/dark.png)
 
 # UI
 
