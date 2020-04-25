@@ -57,9 +57,19 @@ const css = theme => ({
     [theme.breakpoints.down('xs')]: {
       "& > div": {
         display: 'inline-flex',
-        width: 110,
+        width: '33%',
         paddingRight: 10
       }
+    }
+  },
+  filterIcon: {
+    padding: 6,
+    top:3,
+    [theme.breakpoints.down('xs')]: {
+        display: 'none'
+    },
+    '& > span span': {
+      fontSize: '.5em',
     }
   },
   green: {

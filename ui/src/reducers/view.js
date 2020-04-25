@@ -15,19 +15,21 @@ const initialState =
       label: 'Country',
       value: -1,
       options: [],
-      none: "-1"
+      none: -1
     },
     {
       label: 'State/Province',
       value: -1,
       options: [],
-      none: "-1"
+      none: -1,
+      icon: "fas fa-minus-circle"
     },
     {
       label: "County",
       value: -1,
       options: [],
-      none: "-1"
+      none: -1,
+      icon: "fas fa-minus-circle"
     }
   ]
 }
@@ -81,7 +83,7 @@ export default (state = initialState, action) => {
                 value: idx === region.parents.length
                   ? region.id
                   : idx < regionIndex ? region.parents[regionIndex - idx - 1].id : -1,
-                none: idx === 0 || idx > regionIndex ? "-1" : region.parents[region.parents.length - idx].id,
+                none: idx === 0 || idx > regionIndex ? -1 : region.parents[region.parents.length - idx].id,
                 options: idx <= regionIndex
                   ? filter.options
                   : idx === regionIndex + 1
