@@ -26,6 +26,18 @@ const css = theme => ({
       display: 'none'
     }
   },
+  breadcrumbIcon: {
+    fontSize: '1.0rem',
+    color: theme.palette.primary.linkText
+  },
+  breadcrumbItem: {
+    display: 'inline-flex',
+    alignItems: 'baseline',
+    padding: 0
+  },
+  breadcrumbText: {
+    paddingRight: 10
+  },
   cardHeader: {
     backgroundColor: theme.palette.background.default
   },

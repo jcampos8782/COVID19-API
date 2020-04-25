@@ -15,16 +15,16 @@ export default class LocationBreadcrumb extends React.Component {
           loading ? <Typography style={{visibility: 'hidden'}} variant="h5">...</Typography> : locations.map((l,i) => {
             if (i === locations.length - 1) {
               return (
-                <Container style={{display: 'inline-flex', alignItems: 'baseline', padding: 0}}>
-                  <Typography style={{paddingRight: 10}} variant="h5" key={i}> {l.name}</Typography>
+                <Container className={classes.breadcrumbItem}>
+                  <Typography className={classes.breadcrumbText} variant="h5" key={i}> {l.name}</Typography>
                   {l.contacts && <ContactLinks {...this.props} contacts={l.contacts} /> }
                 </Container>
               );
             }
             return (
-              <Container style={{display: 'inline-flex', alignItems: 'baseline', padding: 0}}>
+              <Container className={classes.breadcrumbItem}>
                 <Link key={i} href="#" className={classes.link} onClick={() => loadRegion(l.id)}>
-                  <Typography style={{paddingRight: 10}} variant="h5">{l.name}</Typography>
+                  <Typography className={classes.breadcrumbText} variant="h5">{l.name}</Typography>
                 </Link>
                 {l.contacts && <ContactLinks {...this.props} contacts={l.contacts} /> }
               </Container>
@@ -42,14 +42,14 @@ const ContactLinks = ({contacts,classes}) => {
     {
       contacts.www &&
       <Link href="#" onClick={() => window.open(contacts.www)}>
-        <Icon style={{fontSize: '1.0rem'}} className={`${classes.link} fas fa-globe`}/>
+        <Icon className={`${classes.breadcrumbIcon} fas fa-globe`}/>
       </Link>
     }
     { contacts.www && contacts.twitter && <span>&nbsp;</span> }
     {
       contacts.twitter &&
       <Link href="#" onClick={() => window.open(`https://twitter.com/${contacts.twitter}`)}>
-        <Icon style={{fontSize: '1.0rem'}} className={`${classes.link} fab fa-twitter`}/>
+        <Icon className={`${classes.breadcrumbIcon} fab fa-twitter`}/>
       </Link>
     }
   </Container>
