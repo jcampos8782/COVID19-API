@@ -31,6 +31,15 @@ else
   echo "File exists. Skipping download of confirmed data"
 fi
 
+if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/recovered_global.csv" ]]; then
+  echo "Downloading global confirmed cases data..."
+  wget -O ./data/downloads/github/CSSEGISandData/recovered_global.csv "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
+  echo "Complete!"
+  echo ""
+else
+  echo "File exists. Skipping download of confirmed data"
+fi
+
 if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/deaths_global.csv" ]]; then
   echo "Downloading global deaths cases data..."
   wget -O ./data/downloads/github/CSSEGISandData/deaths_global.csv "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
@@ -134,6 +143,13 @@ cat ./data/processed/covid19/deaths_global.csv >> ./data/processed/covid19/death
 cat ./data/processed/covid19/deaths_us.csv >> ./data/processed/covid19/deaths.csv
 cat ./data/processed/covid19/deaths_mx.csv >> ./data/processed/covid19/deaths.csv
 
+if [[ -e "./data/processed/covid19/deaths.csv" ]]; then
+  rm ./data/processed/covid19/recovered.csv
+fi
+
+touch ./data/processed/covid19/recovered.csv
+cat ./data/processed/covid19/recovered_global.csv >> ./data/processed/covid19/recovered.csv
+
 echo "------------------------"
 echo "AGGREGATION COMPLETE"
 echo "------------------------"
@@ -142,7 +158,7 @@ echo "------------------------"
 echo "CLEANING UP..."
 echo "------------------------"
 
-rm ./data/processed/covid19/confirmed_global.csv ./data/processed/covid19/deaths_global.csv
+rm ./data/processed/covid19/confirmed_global.csv ./data/processed/covid19/deaths_global.csv ./data/processed/covid19/recovered_global.csv
 rm ./data/processed/covid19/confirmed_us.csv ./data/processed/covid19/deaths_us.csv
 rm ./data/processed/covid19/confirmed_mx.csv ./data/processed/covid19/deaths_mx.csv
 

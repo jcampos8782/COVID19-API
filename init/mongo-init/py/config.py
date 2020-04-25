@@ -122,7 +122,8 @@ GLOBAL PREPROCESSOR
 GLOBAL_PROCESSOR_COLUMN_DEFINITIONS = {'confirmed': {'name': 5, 'data': 11}, 'deaths': {'name': 5, 'data': 12}}
 GLOBAL_PROCESSOR_DATA_SOURCES = [
     DataSource("covid19", "confirmed", join(GITHUB_DIRECTORY, "CSSEGISandData/confirmed_global.csv")),
-    DataSource("covid19", "deaths", join(GITHUB_DIRECTORY, "CSSEGISandData/deaths_global.csv"))
+    DataSource("covid19", "deaths", join(GITHUB_DIRECTORY, "CSSEGISandData/deaths_global.csv")),
+    DataSource("covid19", "recovered", join(GITHUB_DIRECTORY, "CSSEGISandData/recovered_global.csv"))
 ]
 
 """

@@ -42,6 +42,7 @@ export function fetchSeriesByRegion(regionId) {
           return data;
         })
         .catch(e => {
+          console.log(e)
           dispatch(error(e.message))
         });
     }
@@ -83,6 +84,11 @@ const processData = series => {
             return;
           }
 
+          // Its possible the data is not available in the subregions. Skip if thats the case
+          if (!r.data[series]) {
+            return;
+          }
+          
           statistics[series]['subregions'][subregionName] = {}
           statistics[series]['subregions'][subregionName]['current'] = r.data[series][r.data[series].length - 1]
           statistics[series]['subregions'][subregionName]['mostRecent'] = r.data[series][r.data[series].length - 1] - r.data[series][r.data[series].length - 2]
