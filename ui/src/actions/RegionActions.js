@@ -136,9 +136,18 @@ const _fetchRegion = (dispatch, url) => {
       Promise.all([
         dispatch(fetchDemographics(region.id)),
         dispatch(fetchFacts(region.id)),
-        dispatch(fetchContacts(region.id))
-      ])
+        dispatch(fetchContacts(region.id)),
+        region.parents.map(p => dispatch(fetchContacts(p.id)))
+      ].flat())
       .then(results => {
+        // Parent contacts come back in results [3...]
+        for(let i = 3; i < results.length; i++) {
+          region.parents[i - 3] = {
+            ...region.parents[i-3],
+            contacts: results[i]
+          };
+        };
+
         region = {
           ...region,
           demographics: results[0],

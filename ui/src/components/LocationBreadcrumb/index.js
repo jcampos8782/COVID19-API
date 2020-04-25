@@ -11,10 +11,9 @@ const mapStateToProps = state => {
   let locationTree = state.region.parents.slice(0);
   locationTree.reverse();
   locationTree.push(state.region);
-  
+
   return {
     locations: locationTree,
-    contacts: state.region.contacts
   };
 }
 

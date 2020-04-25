@@ -16,15 +16,18 @@ export default class LocationBreadcrumb extends React.Component {
             if (i === locations.length - 1) {
               return (
                 <Container style={{display: 'inline-flex', alignItems: 'baseline', padding: 0}}>
-                  <Typography style={{paddingRight: 10}} variant="h5" key={i}> {l.name} </Typography>
-                  <ContactLinks {...this.props} />
+                  <Typography style={{paddingRight: 10}} variant="h5" key={i}> {l.name}</Typography>
+                  {l.contacts && <ContactLinks {...this.props} contacts={l.contacts} /> }
                 </Container>
               );
             }
             return (
-              <Link key={i} href="#" className={classes.link} onClick={() => loadRegion(l.id)}>
-                <Typography variant="h5">{l.name}</Typography>
-              </Link>
+              <Container style={{display: 'inline-flex', alignItems: 'baseline', padding: 0}}>
+                <Link key={i} href="#" className={classes.link} onClick={() => loadRegion(l.id)}>
+                  <Typography style={{paddingRight: 10}} variant="h5">{l.name}</Typography>
+                </Link>
+                {l.contacts && <ContactLinks {...this.props} contacts={l.contacts} /> }
+              </Container>
             );
           })
         }
@@ -34,20 +37,19 @@ export default class LocationBreadcrumb extends React.Component {
 }
 
 const ContactLinks = ({contacts,classes}) => {
-  console.log(contacts);
   return (
   <Container style={{display: 'contents'}}>
     {
       contacts.www &&
       <Link href="#" onClick={() => window.open(contacts.www)}>
-        <Icon style={{fontSize: '1.0rem'}} className='fas fa-globe'/>
+        <Icon style={{fontSize: '1.0rem'}} className={`${classes.link} fas fa-globe`}/>
       </Link>
     }
-    &nbsp;
+    { contacts.www && contacts.twitter && <span>&nbsp;</span> }
     {
       contacts.twitter &&
       <Link href="#" onClick={() => window.open(`https://twitter.com/${contacts.twitter}`)}>
-        <Icon style={{fontSize: '1.0rem'}} className='fab fa-twitter'/>
+        <Icon style={{fontSize: '1.0rem'}} className={`${classes.link} fab fa-twitter`}/>
       </Link>
     }
   </Container>
