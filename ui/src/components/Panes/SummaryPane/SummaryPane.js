@@ -51,7 +51,7 @@ export default class SummaryPane extends React.Component {
 }
 
 const Trends = ({columns, theme, data, classes}) => (
-  <Grid container style={{marginTop: 20}}>
+  <Grid container style={{marginTop: 10}}>
     <Grid item xs={12}>
       <Typography variant="h6">
         Growth Rate
