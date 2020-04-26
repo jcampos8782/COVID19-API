@@ -4,6 +4,8 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
@@ -16,7 +18,7 @@ import * as Cards from '../Cards';
 export default class Dashboard extends React.Component {
 
   render() {
-    const { region, view, classes } = this.props;
+    const { region, view, refresh, classes } = this.props;
 
     return (
       <Grid
@@ -57,6 +59,11 @@ export default class Dashboard extends React.Component {
                         title={
                           <Filters />
                           }
+                        action={
+                          <IconButton onClick={() => refresh(region.id)}>
+                            <Icon className="fas fa-sync-alt" />
+                          </IconButton>
+                        }
                         />
                       <CardContent className={classes.paneCard}>
                         <Panes.SummaryPane

@@ -14,7 +14,8 @@ const mapStateToProps = state => {
 
 let mapDispatchToProps = dispatch => ({
   selectTab: (e,t) => dispatch(selectTab(t)),
-  fetchRegion: selectedRegionId => dispatch(loadRegion(selectedRegionId))
+  fetchRegion: selectedRegionId => dispatch(loadRegion(selectedRegionId)),
+  refresh: currentRegionId => dispatch(loadRegion(currentRegionId))
 });
 
 export default styled()(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
