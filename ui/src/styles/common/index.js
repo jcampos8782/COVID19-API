@@ -15,6 +15,9 @@ const css = theme => ({
     width: 'auto',
     paddingRight: 10
   },
+  badgedIconTitle: {
+    whiteSpace: 'nowrap'
+  },
   body: {
     position: 'relative',
     display: 'inline-block',

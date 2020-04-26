@@ -17,8 +17,8 @@ export default class BadgedIcon extends React.Component {
 
     return (
       <Grid container>
-        <Grid item xs={6}>
-          <Typography variant="caption">{title}</Typography>
+        <Grid item xs={6} >
+          <Typography variant="caption" className={classes.badgedIconTitle}>{title}</Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="caption">{caption}</Typography>

@@ -13,13 +13,13 @@ const Palette = colors => ( value => {
   let c;
   if (value === 0) {
     c = colors.emptyColor;
-  } else if (value < 0) {
+  } else if (value < 5) {
     c = colors.spectrum[0];
-  } else if (value < 50) {
+  } else if (value < 10) {
     c = colors.spectrum[1];
-  } else if (value < 100) {
+  } else if (value < 15) {
     c = colors.spectrum[2];
-  } else if (value < 200) {
+  } else if (value < 20) {
     c = colors.spectrum[3];
   } else {
     c = colors.spectrum[4];

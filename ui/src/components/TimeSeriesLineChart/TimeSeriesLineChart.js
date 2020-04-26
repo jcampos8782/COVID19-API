@@ -14,7 +14,7 @@ const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
 export default class TimeSeriesLineChart extends React.Component {
 
   render() {
-    const { data, theme, curve } = this.props;
+    const { data, theme, curve, labelFormat = x => x} = this.props;
     let palette = theme === 'light' ? light.palette : dark.palette;
 
     if (data.length === 0) {
@@ -60,7 +60,7 @@ export default class TimeSeriesLineChart extends React.Component {
                       <Icon fontSize="small" className="fas fa-circle xs" style={{color: point.serieColor, fontSize: ".75em", paddingRight: 0}}/>
                     </ListItemIcon>
                     <ListItemText>
-                        <strong>{point.serieId}</strong>: {point.data.yFormatted}
+                        <strong>{point.serieId}</strong>: {labelFormat(point.data.yFormatted)}
                     </ListItemText>
                   </ListItem>
                 ))
