@@ -60,8 +60,8 @@ export default class Dashboard extends React.Component {
                           <Filters />
                           }
                         action={
-                          <IconButton onClick={() => refresh(region.id)}>
-                            <Icon className="fas fa-sync-alt" />
+                          <IconButton className={classes.smIcon} onClick={() => refresh(region.id)}>
+                            <Icon className={`${classes.smIcon} fas fa-sync-alt`} />
                           </IconButton>
                         }
                         />
