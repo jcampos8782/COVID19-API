@@ -7,6 +7,7 @@ import util.key_generator as keygen
 def process_downloads():
     print("Processing US data input files...")
     aggregates = {source.component: {} for source in GLOBAL_PROCESSOR_DATA_SOURCES}
+    written_keys = {source.component: set() for source in GLOBAL_PROCESSOR_DATA_SOURCES}
 
     for source in GLOBAL_PROCESSOR_DATA_SOURCES:
         print("Processing %s" % source.file)
@@ -22,7 +23,12 @@ def process_downloads():
                     else:
                         keys = keygen.generate_region_keys(name)
                         parent_key = keys["parent"]
-                        out.write("%s,%s\n" % (keys["region"], ",".join(data)))
+
+                        if keys["region"] not in written_keys[component]:
+                            written_keys[component].add(keys["region"])
+                            out.write("%s,%s\n" % (keys["region"], ",".join(data)))
+                        else:
+                            print("Detected duplicate key %s (parent: %s)" % (keys["region"], parent_key))
 
                         if parent_key:
                             if parent_key not in aggregates[component]:
@@ -34,7 +40,10 @@ def process_downloads():
                             aggregates[component][parent_key] = [aggregates[component][parent_key][i] + int(data[i].split('.')[0]) for i in range(len(data))]
 
             for parent_key in aggregates[component]:
-                out.write("%s,%s\n" % (parent_key,  ",".join(str(s) for s in aggregates[component][parent_key])))
+                if parent_key not in written_keys[component]:
+                    out.write("%s,%s\n" % (parent_key,  ",".join(str(s) for s in aggregates[component][parent_key])))
+                else:
+                    print("Skipping duplicate parent key %s (data already written)" % parent_key)
 
     print("Import complete!")
 
