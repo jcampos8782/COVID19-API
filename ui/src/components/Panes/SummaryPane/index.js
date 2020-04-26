@@ -34,12 +34,13 @@ const mapStateToProps = state => {
       },
       theme: view.theme,
       period: view.recentPeriod,
+      recentPeriodOptions: view.recentPeriodOptions,
       columns: series.columns
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-  updatePeriod: (e, period) => dispatch(setRecentPeriod(period))
+  updatePeriod: period => dispatch(setRecentPeriod(period))
 });
 
 export default styled()(connect(mapStateToProps, mapDispatchToProps)(SummaryPane));

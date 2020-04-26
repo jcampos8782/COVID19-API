@@ -12,7 +12,7 @@ const initialState =
   theme: 'light',
   currentTab: 0,
   recentPeriod: 7,
-  recentOption: [7, 14, 30],
+  recentPeriodOptions: [7, 14, 30],
   filters: [
     {
       label: 'Country',

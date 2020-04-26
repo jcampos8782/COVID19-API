@@ -123,6 +123,10 @@ const css = theme => ({
       padding: '0 !important'
     }
   },
+  recentDataSlider: {
+    width:'75%',
+    marginLeft: 30
+  },
   red: {
     color: theme.palette.error.dark
   },
