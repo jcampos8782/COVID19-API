@@ -15,11 +15,11 @@ export const light = createMuiTheme(lightBase, {
     primary: {
       main: blueGrey[600],
     },
-    secondary: {
-      main: orange[400]
-    },
     success: {
       main: green[600]
+    },
+    warn: {
+      main: orange[400]
     },
     error: {
       main: red[800]
@@ -70,11 +70,11 @@ export const dark = createMuiTheme(darkBase, {
       main: blueGrey[800],
       linkText: '#8dd3c7'
     },
-    secondary: {
-      main: orange[600]
-    },
     success: {
       main: green[600]
+    },
+    warn: {
+      main: orange[400]
     },
     error: {
       main: red[800]

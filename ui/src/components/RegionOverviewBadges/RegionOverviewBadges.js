@@ -40,8 +40,7 @@ export default class RegionOverviewBadges extends React.Component {
         <Grid item xs={6} sm={3}>
           <BadgedIcon
             title="Confirmed"
-            color="secondary"
-            iconClass="fas fa-head-side-cough"
+            iconClass={`${classes.orange} fas fa-head-side-cough`}
             caption={!loading && <ChangeIcon {...this.props} value={percentChangeConfirmed}/>}
             value={loading ? <LinearProgress variant="query" />: confirmedCount}
             />

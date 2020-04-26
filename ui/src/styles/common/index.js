@@ -117,6 +117,9 @@ const css = theme => ({
       background: theme.palette.secondary.light
     }
   },
+  orange: {
+    color: theme.palette.warning.main
+  },
   paneCard: {
     '& > div': {
       border: 0,
@@ -125,7 +128,8 @@ const css = theme => ({
   },
   recentDataSlider: {
     width:'75%',
-    marginLeft: 30
+    marginLeft: 30,
+    color: theme.palette.secondary.main
   },
   red: {
     color: theme.palette.error.dark
