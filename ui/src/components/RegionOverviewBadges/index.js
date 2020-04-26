@@ -25,8 +25,10 @@ const mapStateToProps = state => {
   let currentRecovered = data.recovered ? data.recovered.current : region.facts.recovered;
   let recentDeaths = data.deaths ? data.deaths.mostRecent : null;
   let recentConfirmed = data.confirmed ? data.confirmed.mostRecent : null;
+  let recentRecovered = data.recovered ? data.recovered.mostRecent: null;
   let percentChangeDeaths = data.deaths ? calculatePercentChange(recentDeaths, currentDeaths) : null;
   let percentChangeConfirmed = data.confirmed ? calculatePercentChange(recentConfirmed, currentConfirmed) : null;
+  let percentChangeRecovered = data.confirmed ? calculatePercentChange(recentRecovered, currentRecovered) : null;
 
   return {
     population: formatValue(region.demographics.population),
@@ -34,7 +36,8 @@ const mapStateToProps = state => {
     deathsCount: formatValue(currentDeaths),
     confirmedCount: formatValue(currentConfirmed),
     percentChangeDeaths: percentChangeDeaths,
-    percentChangeConfirmed: percentChangeConfirmed
+    percentChangeConfirmed: percentChangeConfirmed,
+    percentChangeRecovered: percentChangeRecovered
   }
 };
 

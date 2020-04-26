@@ -15,6 +15,7 @@ export default class RegionOverviewBadges extends React.Component {
       confirmedCount,
       percentChangeDeaths,
       percentChangeConfirmed,
+      percentChangeRecovered,
       classes,
       loading
     } = this.props;
@@ -32,6 +33,7 @@ export default class RegionOverviewBadges extends React.Component {
           <BadgedIcon
             title="Recovered"
             iconClass={`${classes.green} fas fa-heartbeat`}
+            caption={!loading && <ChangeIcon {...this.props} value={percentChangeRecovered} invertColors />}
             value={loading ? <LinearProgress variant="query" /> : recovered}
             />
         </Grid>
@@ -40,7 +42,7 @@ export default class RegionOverviewBadges extends React.Component {
             title="Confirmed"
             color="secondary"
             iconClass="fas fa-head-side-cough"
-            caption={!loading && <ChangeIcon {...this.props} value={percentChangeConfirmed} />}
+            caption={!loading && <ChangeIcon {...this.props} value={percentChangeConfirmed}/>}
             value={loading ? <LinearProgress variant="query" />: confirmedCount}
             />
         </Grid>
@@ -58,12 +60,12 @@ export default class RegionOverviewBadges extends React.Component {
   }
 }
 
-const ChangeIcon = ({classes,value}) => (
+const ChangeIcon = ({classes, invertColors, value}) => (
   value && <div>
     <Icon className={
       value > 0
-        ? `${classes.red} ${classes.xsIcon} fas fa-arrow-up xs`
-        : `${classes.green} ${classes.xsIcon} fas fa-arrow-down xs`
+        ? `${invertColors ? classes.green : classes.red} ${classes.xsIcon} fas fa-arrow-up xs`
+        : `${invertColors ? classes.red: classes.green} ${classes.xsIcon} fas fa-arrow-down xs`
       }
     />
     {value}%
