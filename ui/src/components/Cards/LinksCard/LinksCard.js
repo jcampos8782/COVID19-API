@@ -37,7 +37,10 @@ export default class LinksCard extends React.Component {
           <Divider light style={{marginTop: 10, marginBottom: 10}}/>
           <Typography variant="h6">Data Sources</Typography>
           <Typography variant="body2">
-            <Link className={classes.link} href="https://github.com/CSSEGISandData/COVID-19" rel="noopener">John's Hopkins University Data</Link>
+            <Link className={classes.link} href="https://github.com/CSSEGISandData/COVID-19" rel="noopener">John's Hopkins University</Link>
+          </Typography>
+          <Typography variant="body2">
+            <Link className={classes.link} href="https://covidtracking.com/" rel="noopener">CovidTracking.com</Link>
           </Typography>
           <Typography variant="body2">
             < Link className={classes.link} href="https://github.com/carranco-sga/Mexico-COVID-19" rel="noopener">Mexico State Data</Link>
