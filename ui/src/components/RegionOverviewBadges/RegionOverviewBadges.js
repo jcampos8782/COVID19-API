@@ -33,7 +33,7 @@ export default class RegionOverviewBadges extends React.Component {
           <BadgedIcon
             title="Recovered"
             iconClass={`${classes.green} fas fa-heartbeat`}
-            caption={!loading && <ChangeIcon {...this.props} value={percentChangeRecovered} invertColors />}
+            caption={!loading && !Number.isNaN(percentChangeRecovered) && <ChangeIcon {...this.props} value={percentChangeRecovered} invertColors />}
             value={loading ? <LinearProgress variant="query" /> : recovered}
             />
         </Grid>
