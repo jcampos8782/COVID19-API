@@ -101,13 +101,6 @@ const processData = series => {
           });
         });
       });
-
-      // Calculate last 7 days of data from the diffs
-      let len = statistics[series].aggregates.total.length;
-      statistics[series]['recent'] = {
-          total: statistics[series].aggregates.total[len - 1] - statistics[series].aggregates.total[len - 8],
-          data: statistics[series].aggregates.daily.slice(len-7)
-      };
     });
 
     return Object.keys(aggregateSeries).sort((a,b) => order.indexOf(a) - order.indexOf(b)).reduce((obj,series) => {
@@ -116,7 +109,6 @@ const processData = series => {
         current: aggregateSeries[series][length - 1],
         mostRecent: aggregateSeries[series][length - 1] - aggregateSeries[series][length - 2],
         aggregates: statistics[series].aggregates,
-        recent: statistics[series].recent,
         regional: statistics[series].subregions
       };
       return obj;

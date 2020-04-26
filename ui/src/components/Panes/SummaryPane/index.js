@@ -1,6 +1,7 @@
 import SummaryPane from './SummaryPane';
 import {styled} from '../../../styles';
 import { connect } from 'react-redux';
+import {setRecentPeriod} from '../../../actions';
 
 const mapStateToProps = state => {
     const { data, series, view } = state;
@@ -12,8 +13,10 @@ const mapStateToProps = state => {
         keys: Object.keys(data),
         // Last X days
         recent: Object.keys(data).reduce((obj, key) => {
-            obj[key] = data[key].recent.data
-            return obj;
+          // Calculate last MAX_RECENT_PERIOD days of data from the diffs
+          let len = data[key].aggregates.daily.length;
+          obj[key] = data[key].aggregates.daily.slice(len-view.recentPeriod)
+          return obj;
         },{}),
         // Day X to Day x - 7 percentage increase/decrease
         weeklyRateOfChange: Object.keys(data).reduce((obj,key) => {
@@ -30,10 +33,13 @@ const mapStateToProps = state => {
         }, {})
       },
       theme: view.theme,
+      period: view.recentPeriod,
       columns: series.columns
     }
 }
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+  updatePeriod: (e, period) => dispatch(setRecentPeriod(period))
+});
 
 export default styled()(connect(mapStateToProps, mapDispatchToProps)(SummaryPane));

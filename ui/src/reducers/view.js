@@ -3,13 +3,16 @@ import {
   SELECT_TAB,
   CHANGE_FILTER_SELECTION,
   RECEIVE_REGIONS,
-  SELECT_REGION
+  SELECT_REGION,
+  SET_RECENT_PERIOD
 } from '../actions/types';
 
 const initialState =
 {
   theme: 'light',
   currentTab: 0,
+  recentPeriod: 7,
+  recentOption: [7, 14, 30],
   filters: [
     {
       label: 'Country',
@@ -45,6 +48,11 @@ export default (state = initialState, action) => {
           return {
             ...state,
             currentTab: action.id
+          };
+        case SET_RECENT_PERIOD:
+          return {
+            ...state,
+            recentPeriod: action.period
           };
         case CHANGE_FILTER_SELECTION:
           return {
