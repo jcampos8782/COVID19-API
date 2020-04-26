@@ -15,14 +15,14 @@ export default class LocationBreadcrumb extends React.Component {
           loading ? <Typography style={{visibility: 'hidden'}} variant="h5">...</Typography> : locations.map((l,i) => {
             if (i === locations.length - 1) {
               return (
-                <Container className={classes.breadcrumbItem}>
-                  <Typography className={classes.breadcrumbText} variant="h5" key={i}> {l.name}</Typography>
+                <Container key={i} className={classes.breadcrumbItem}>
+                  <Typography className={classes.breadcrumbText} variant="h5"> {l.name}</Typography>
                   {l.contacts && <ContactLinks {...this.props} contacts={l.contacts} /> }
                 </Container>
               );
             }
             return (
-              <Container className={classes.breadcrumbItem}>
+              <Container key={i} className={classes.breadcrumbItem}>
                 <Link key={i} href="#" className={classes.link} onClick={() => loadRegion(l.id)}>
                   <Typography className={classes.breadcrumbText} variant="h5">{l.name}</Typography>
                 </Link>

@@ -30,8 +30,8 @@ const defaultProps = {
 export const start = (dispatch, props = defaultProps) => {
   Promise.all([dispatch(fetchRegions(0)), loadAllSeries(dispatch)])
     .then(
-      ok => loadUserRegion(dispatch, props),
-      error => dispatch(error(error))
+      results => loadUserRegion(dispatch, results[0], props),
+      e => dispatch(error(e))
     )
     .then(
       region => {
@@ -39,7 +39,7 @@ export const start = (dispatch, props = defaultProps) => {
         initializeRegionFilters(dispatch, props, region);
         dispatch(selectRegion(region));
       },
-      error => dispatch(error(error))
+      e => dispatch(error(e))
     ).catch(e => {
       dispatch(error(e));
     });
@@ -52,7 +52,7 @@ const loadAllSeries = dispatch => (
 )
 
 // Loads the user's region. Uses geolocation if possible
-const loadUserRegion = (dispatch, props) => {
+const loadUserRegion = (dispatch, allRegions, props) => {
   if(!props.isGeolocationAvailable) {
     return dispatch(fetchDefaultRegion(props.defaultRegionName));
   }
@@ -60,7 +60,7 @@ const loadUserRegion = (dispatch, props) => {
   return dispatch(fetchGeolocation())
     .then(
       coords => dispatch(fetchClosestRegion(coords.latitude, coords.longitude)),
-      error => dispatch(fetchDefaultRegion(props.defaultRegionName))
+      error => dispatch(fetchDefaultRegion(allRegions, props.defaultRegionName))
     )
 }
 

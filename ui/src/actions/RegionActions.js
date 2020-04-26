@@ -41,11 +41,9 @@ export const fetchClosestRegion = (lat,lon) => {
   }
 }
 
-export const fetchDefaultRegion = regionName => {
+export const fetchDefaultRegion = (allRegions, regionName) => {
     return (dispatch, getState) => {
-      const { regions } = getState();
-      let defaultRegion = regions.find(r => r.name === regionName);
-
+      let defaultRegion = allRegions.find(r => r.name === regionName);
       if (defaultRegion) {
         return _fetchRegion(dispatch, `${SERVER_URL}/api/regions/${defaultRegion.id}`);
       } else {
