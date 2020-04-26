@@ -95,7 +95,7 @@ US PREPROCESSOR
  - US_PROCESSOR_COLUMN_DEFINITIONS: The columns in the data files is inconsistent. This defines the fields for each file
  - US_PROCESSOR_DATA_SOURCES: series component and file location tuple
 """
-US_PROCESSOR_FILTERED_KEYS = set("united_states")
+US_PROCESSOR_FILTERED_KEYS = set(["united_states"])
 US_PROCESSOR_COLUMN_DEFINITIONS = {'confirmed': {'name': 5, 'key': 10, 'data': 11}, 'deaths': {'name': 5, 'key': 10, 'data': 12}}
 US_PROCESSOR_DATA_SOURCES = [
     DataSource("covid19", "confirmed", join(GITHUB_DIRECTORY, "CSSEGISandData/confirmed_us.csv")),

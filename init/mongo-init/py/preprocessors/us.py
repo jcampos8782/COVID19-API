@@ -28,9 +28,12 @@ def process_downloads():
                         if parent_key not in aggregates[component]:
                             aggregates[component][parent_key] = [0] * len(data)
 
-                        if keys["region"] not in written_keys[component] and keys["region"] not in US_PROCESSOR_FILTERED_KEYS:
-                            written_keys[component].add(keys["region"])
-                            out.write("%s,%s\n" % (keys["region"], ",".join(data)))
+                        if keys["region"] not in written_keys[component]:
+                            if keys["region"] not in US_PROCESSOR_FILTERED_KEYS:
+                                written_keys[component].add(keys["region"])
+                                out.write("%s,%s\n" % (keys["region"], ",".join(data)))
+                            else:
+                                print("Skipping filtered key %s" % parent_key)
                         else:
                             print("Detected duplicate key %s (parent: %s)" % (keys["region"], parent_key))
 
@@ -40,8 +43,11 @@ def process_downloads():
                         aggregates[component][parent_key] = [aggregates[component][parent_key][i] + int(data[i].split('.')[0]) for i in range(len(data))]
 
             for parent_key in aggregates[component]:
-                if parent_key not in written_keys[component] and parent_key not in US_PROCESSOR_FILTERED_KEYS:
-                    out.write("%s,%s\n" % (parent_key,  ",".join(str(s) for s in aggregates[component][parent_key])))
+                if parent_key not in written_keys[component]:
+                    if parent_key not in US_PROCESSOR_FILTERED_KEYS:
+                        out.write("%s,%s\n" % (parent_key,  ",".join(str(s) for s in aggregates[component][parent_key])))
+                    else:
+                        print("Skipping filtered key %s" % parent_key)
                 else:
                     print("Skipping duplicate parent key %s " % parent_key)
 
