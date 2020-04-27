@@ -15,7 +15,7 @@ const css = theme => ({
     width: 'auto',
     paddingRight: 10
   },
-  badgedIconTitle: {
+  badgedIconText: {
     whiteSpace: 'nowrap'
   },
   body: {
@@ -148,6 +148,12 @@ const css = theme => ({
   tabsContainer: {
     position: 'relative',
     left: -25
+  },
+  trendsDoublingContainer: {
+    [theme.breakpoints.up('sm')]: {
+      top: '25%',
+      position: 'relative'
+    }
   },
   warning: {
     color: theme.palette.warning.main,

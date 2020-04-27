@@ -54,7 +54,7 @@ export default class Trends extends React.Component {
         <Grid item xs={12}>
           <Grid container >
             <Grid item xs={12} sm={3} md={2}>
-              <Grid container>
+              <Grid container className={classes.trendsDoublingContainer}>
                 <Grid item xs={6} sm={12}>
                   <BadgedIcon
                     title="Will double in"

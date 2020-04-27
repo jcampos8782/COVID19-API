@@ -18,16 +18,16 @@ export default class BadgedIcon extends React.Component {
     return (
       <Grid container>
         <Grid item xs={6} >
-          <Typography variant="caption" className={classes.badgedIconTitle}>{title}</Typography>
+          <Typography variant="caption" className={classes.badgedIconText}>{title}</Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="caption">{caption}</Typography>
+          <Typography variant="caption" className={classes.badgedIconText}>{caption}</Typography>
         </Grid>
         <Grid item xs={4} sm={2} md={3} lg={4}>
           <Icon color={color} className={`${classes.badgedIcon} ${iconClass}`}/>
         </Grid>
         <Grid item xs={8} sm={10} md={9} lg={8}>
-          <Typography variant="button">{value}</Typography>
+          <Typography variant="button" className={classes.badgedIconText}>{value}</Typography>
         </Grid>
       </Grid>
     );
