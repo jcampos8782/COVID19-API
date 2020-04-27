@@ -15,6 +15,9 @@ export const light = createMuiTheme(lightBase, {
     primary: {
       main: blueGrey[600],
     },
+    secondary: {
+      main: "#f48fb1"
+    },
     success: {
       main: green[600]
     },
