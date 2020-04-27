@@ -56,8 +56,6 @@ const mapStateToProps = state => {
       trends
     },
     theme: view.theme,
-    period: view.recentPeriod,
-    recentPeriodOptions: view.recentPeriodOptions,
     columns: series.columns
   }
 }

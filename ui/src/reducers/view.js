@@ -11,8 +11,10 @@ const initialState =
 {
   theme: 'light',
   currentTab: 0,
-  recentPeriod: 7,
-  recentPeriodOptions: [7, 14, 30],
+  recent: {
+    period: 7,
+    options: [7, 14, 30]
+  },
   filters: [
     {
       label: 'Country',
@@ -52,7 +54,10 @@ export default (state = initialState, action) => {
         case SET_RECENT_PERIOD:
           return {
             ...state,
-            recentPeriod: action.period
+            recent: {
+              ...state.recent,
+              period: action.period
+            }
           };
         case CHANGE_FILTER_SELECTION:
           return {

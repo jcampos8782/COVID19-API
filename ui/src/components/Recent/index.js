@@ -16,13 +16,13 @@ const mapStateToProps = state => {
       recent: Object.keys(data).reduce((obj, key) => {
         // Calculate last MAX_RECENT_PERIOD days of data from the diffs
         let len = data[key].aggregates.daily.length;
-        obj[key] = data[key].aggregates.daily.slice(len-view.recentPeriod)
+        obj[key] = data[key].aggregates.daily.slice(len-view.recent.period)
         return obj;
       },{}),
     },
     theme: view.theme,
-    period: view.recentPeriod,
-    recentPeriodOptions: view.recentPeriodOptions,
+    period: view.recent.period,
+    recentPeriodOptions: view.recent.options,
     columns: series.columns
   }
 }

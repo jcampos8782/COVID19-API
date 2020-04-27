@@ -48,10 +48,9 @@ export default class Recent extends React.Component {
               {
                 id: series,
                 data: data.recent[series].map((val,idx) => ({
-                    x: formatDateKey(columns[columns.length - period + idx]),
-                    y: val
-                  }
-                ))
+                  x: formatDateKey(columns[columns.length - period + idx]),
+                  y: val
+                }))
               }
             ))
           }
