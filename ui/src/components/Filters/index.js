@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => ({
       }
 
       dispatch(loadRegion(id)).then(
-        () => dispatch(fetchSeriesByRegion(id)),
+        region => dispatch(fetchSeriesByRegion(region)),
         e => dispatch(error(e))
       );
     }

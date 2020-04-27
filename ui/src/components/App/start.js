@@ -35,7 +35,7 @@ export const start = (dispatch, props = defaultProps) => {
     )
     .then(
       region => {
-        dispatch(fetchSeriesByRegion(region.id));
+        dispatch(fetchSeriesByRegion(region));
         initializeRegionFilters(dispatch, props, region);
         dispatch(selectRegion(region));
       },
