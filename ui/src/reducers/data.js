@@ -3,17 +3,16 @@ import {
   REQUEST_SERIES_BY_REGION_ID
 } from '../actions/types';
 
-export default (state = {}, action) => {
+export default (state = null, action) => {
     switch(action.type) {
         case RECEIVE_SERIES_DATA:
             return processData({...action});
         case REQUEST_SERIES_BY_REGION_ID:
-            return {};
+            return null;
         default:
             return state;
     }
 }
-
 
 // TODO: a better fix Hack for now
 const order = ["confirmed", "deaths", "recovered"]

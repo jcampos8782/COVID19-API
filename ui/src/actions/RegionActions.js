@@ -29,8 +29,8 @@ export const selectRegion = region => ({type: Actions.SELECT_REGION, region })
 export const loadRegion = regionId => {
   return dispatch => {
       return dispatch(fetchRegion(regionId))
-        .then(region => dispatch(selectRegion(region)), e => error(e))
-        .catch(e => error(e));
+        .then(region => dispatch(selectRegion(region)), e => dispatch(error(e)))
+        .catch(e => dispatch(error(e)));
   }
 }
 
@@ -47,7 +47,7 @@ export const fetchDefaultRegion = (allRegions, regionName) => {
       if (defaultRegion) {
         return _fetchRegion(dispatch, `${SERVER_URL}/api/regions/${defaultRegion.id}`);
       } else {
-        throw new Error(`Could not locate default region "${regionName}"`);
+        dispatch(error( new Error(`Could not locate default region "${regionName}"`)));
       }
     }
 }
@@ -64,7 +64,7 @@ export const fetchSubregions = regionId => {
             subregions: json
           }
         })
-        .catch(e => dispatch(error(e.message)));
+        .catch(e => dispatch(error(e)));
     }
 }
 
@@ -77,7 +77,7 @@ export const fetchRegions = level => {
               dispatch(receiveRegions(level, json))
               return json;
             })
-            .catch(e => dispatch(error(e.message)));
+            .catch(e => dispatch(error(e)));
     }
 }
 
@@ -97,7 +97,7 @@ const fetchFacts = regionId => {
           dispatch(receiveFacts(json))
           return json;
         })
-        .catch(e => dispatch(error(e.message)));;
+        .catch(e => dispatch(error(e)));;
   }
 }
 
@@ -110,7 +110,7 @@ const fetchDemographics = regionId => {
           dispatch(receiveDemographics(json))
           return json;
         })
-        .catch(e => dispatch(error(e.message)));;
+        .catch(e => dispatch(error(e)));;
   }
 }
 
@@ -123,7 +123,7 @@ const fetchContacts = regionId => {
           dispatch(receiveContacts(json))
           return json;
         })
-        .catch(e => dispatch(error(e.message)));;
+        .catch(e => dispatch(error(e)));;
   }
 }
 
@@ -156,5 +156,5 @@ const _fetchRegion = (dispatch, url) => {
         return region;
       })
     ))
-    .catch(e => dispatch(error(e.message)));
+    .catch(e => dispatch(error(e)));
 }

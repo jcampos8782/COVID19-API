@@ -20,7 +20,7 @@ export function fetchSeriesList() {
         dispatch(receiveSeriesList(json))
         return json;
       })
-      .catch(e => dispatch(error(e.message)));
+      .catch(e => dispatch(error(e)));
   }
 }
 
@@ -45,7 +45,7 @@ export function fetchSeriesByRegion(region) {
           return { region, series };
         })
         .catch(e => {
-          dispatch(error(e.message))
+          dispatch(error(e))
         });
     }
 }
