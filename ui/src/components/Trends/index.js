@@ -2,6 +2,8 @@ import Trends from './Trends';
 import {connect} from 'react-redux';
 import {styled} from '../../styles';
 
+import {setTrendSeries, setTrendPeriod} from '../../actions';
+
 const getBaseLog = (x, y) => Math.log(y) / Math.log(x);
 
 const mapStateToProps = state => {
@@ -10,7 +12,24 @@ const mapStateToProps = state => {
     return { loading: true }
   }
 
-  let trends = Object.keys(data).reduce((obj, series) => {
+  return {
+    data: {
+      keys: Object.keys(data),
+      trends: calculateTrends(data)
+    },
+    theme: view.theme,
+    columns: series.columns,
+    ...view.trends
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  selectSeries: series => dispatch(setTrendSeries(series)),
+  selectPeriod: period => dispatch(setTrendPeriod(period))
+})
+
+const calculateTrends = data => (
+  Object.keys(data).reduce((obj, series) => {
     let totals = data[series].aggregates.total;
     let daily = data[series].aggregates.daily;
 
@@ -42,24 +61,13 @@ const mapStateToProps = state => {
     let x = 1 + (rollingGrowth[rollingGrowth.length-1])/100;
     let y = (totals[totals.length - 1] * 2)/totals[totals.length - 1];
     obj[series] = {
-      growth,
-      rollingGrowth,
+      daily: growth,
+      rolling: rollingGrowth,
       doubling: Math.ceil(getBaseLog(x,y))
     };
 
     return obj;
-  }, {});
-
-  return {
-    data: {
-      keys: Object.keys(data),
-      trends
-    },
-    theme: view.theme,
-    columns: series.columns
-  }
-}
-
-const mapDispatchToProps = dispatch => ({})
+  }, {})
+);
 
 export default styled()(connect(mapStateToProps,mapDispatchToProps)(Trends));

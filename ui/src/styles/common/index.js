@@ -149,11 +149,17 @@ const css = theme => ({
     position: 'relative',
     left: -25
   },
+  trendsControlContainer: {
+    whiteSpace: 'nowrap'
+  },
   trendsDoublingContainer: {
     [theme.breakpoints.up('sm')]: {
       top: '25%',
       position: 'relative'
     }
+  },
+  trendsSeriesLabels: {
+    fontSize: '.75rem'
   },
   warning: {
     color: theme.palette.warning.main,

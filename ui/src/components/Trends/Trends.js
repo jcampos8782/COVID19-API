@@ -1,15 +1,20 @@
 import React from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 
 import BadgedIcon from '../BadgedIcon';
 import TimeSeriesHeatMap from '../TimeSeriesHeatMap';
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
 
-import { formatDateKey } from '../../util';
+import { formatDateKey, uppercaseFirst } from '../../util';
 
 export default class Trends extends React.Component {
   render() {
@@ -18,7 +23,13 @@ export default class Trends extends React.Component {
       theme,
       data,
       loading,
-      classes
+      classes,
+      selectedPeriod,
+      selectedSeries,
+      periodOptions,
+      seriesOptions,
+      selectSeries,
+      selectPeriod
     } = this.props;
 
     if (loading) {
@@ -44,7 +55,7 @@ export default class Trends extends React.Component {
               {
                 series: key,
                 ...columns.reduce((obj,date,idx) => {
-                  obj[date] = data.trends[key].rollingGrowth[idx]
+                  obj[date] = data.trends[key].rolling[idx]
                   return obj;
                 },{})
               }))
@@ -80,22 +91,60 @@ export default class Trends extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item style={{height: 300, marginTop: 15}} xs={12} sm={9} md={10}>
+            <Grid item style={{height: 300}} xs={12} sm={9} md={10}>
+              <Grid container>
+                <Grid item className={classes.trendsControlContainer} xs={12} md={6}>
+                  <FormControl style={{display: "inline-block"}} displaycomponent="fieldset">
+                    <RadioGroup  value={selectedPeriod}  />
+                    {
+                      seriesOptions.map(o => (
+                        <FormControlLabel
+                          key={o}
+                          checked={selectedSeries === o}
+                          value={o}
+                          label={<Typography variant="caption">{uppercaseFirst(o)}</Typography>}
+                          labelPlacement="start"
+                          disabled={Object.keys(data.trends).indexOf(o) === -1}
+                          control={<Radio size="small" onChange={e => selectSeries(e.target.value)} /> }
+                          />
+                      ))
+                    }
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Slider
+                    className={classes.recentDataSlider}
+                    defaultValue={periodOptions[0]}
+                    max={periodOptions[periodOptions.length - 1]}
+                    step={null}
+                    valueLabelDisplay="auto"
+                    marks={periodOptions.map(p => ({ value: p, label: `${p} Days`}))}
+                    onChangeCommitted={(e, period) =>  selectPeriod(period)}
+                    />
+                </Grid>
+              </Grid>
               <TimeSeriesLineChart
                 curve="natural"
                 labelFormat={v => `${v}%`}
-                max={100}
                 theme={theme}
-                data={data.keys.map(series => (
+                data={[
                   {
-                    id: series,
-                    data: data.trends[series].rollingGrowth.map((val,idx) => ({
+                    id: "Daily",
+                    data: data.trends[selectedSeries].daily.slice(-selectedPeriod).map((val,idx) => ({
+                        x: formatDateKey(columns[idx]),
+                        y: val
+                      }
+                    ))
+                  },
+                  {
+                    id: "Rolling",
+                    data: data.trends[selectedSeries].rolling.slice(-selectedPeriod).map((val,idx) => ({
                         x: formatDateKey(columns[idx]),
                         y: val
                       }
                     ))
                   }
-                ))
+                ]
               }
               />
             </Grid>

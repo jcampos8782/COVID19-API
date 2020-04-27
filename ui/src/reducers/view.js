@@ -4,7 +4,10 @@ import {
   CHANGE_FILTER_SELECTION,
   RECEIVE_REGIONS,
   SELECT_REGION,
-  SET_RECENT_PERIOD
+  SET_RECENT_PERIOD,
+  SET_TREND_SERIES,
+  SET_TREND_PERIOD,
+  RECEIVE_SERIES_DATA
 } from '../actions/types';
 
 const initialState =
@@ -14,6 +17,12 @@ const initialState =
   recent: {
     period: 7,
     options: [7, 14, 30]
+  },
+  trends: {
+    seriesOptions: ["confirmed", "deaths", "recovered"], //TODO: extract from data
+    selectedSeries: "confirmed",
+    periodOptions: [30, 60, 90],
+    selectedPeriod: 30
   },
   filters: [
     {
@@ -78,6 +87,33 @@ export default (state = initialState, action) => {
                   : filter.options
             })
           )};
+        case SET_TREND_SERIES:
+          return {
+            ...state,
+            trends: {
+              ...state.trends,
+              selectedSeries: action.series
+            }
+          };
+        case SET_TREND_PERIOD:
+          return {
+            ...state,
+            trends: {
+              ...state.trends,
+              selectedPeriod: action.period
+            }
+          };
+        case RECEIVE_SERIES_DATA:
+          // reset controls
+          return {
+            ...state,
+            recent: {
+              ...initialState.recent
+            },
+            trends: {
+              ...initialState.trends
+            }
+          }
         case SELECT_REGION:
           // Two things:
           //  - set the filter if its not already set
