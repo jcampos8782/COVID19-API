@@ -2,7 +2,6 @@ import React from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
@@ -55,9 +54,7 @@ export default class App extends React.Component {
                 </Grid>
               </Toolbar>
             </AppBar>
-            <Backdrop open={this.props.loading} className={classes.backdrop}>
-              <CircularProgress color="inherit" />
-            </Backdrop>
+            <Backdrop open={this.props.loading} className={classes.backdrop} />
             <Grid container className={classes.body}>
               <Errors />
               <Dashboard />

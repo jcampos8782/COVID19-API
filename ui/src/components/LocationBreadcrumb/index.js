@@ -20,10 +20,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
   {
     loadRegion: id => {
-      dispatch(loadRegion(id)).then(
-        region => dispatch(fetchSeriesByRegion(region)),
-        e => dispatch(error(e))
-      );
+      dispatch(loadRegion(id))
+        .then(
+          region => dispatch(fetchSeriesByRegion(region)),
+          e => dispatch(error(e))
+        )
+        .catch(e => dispatch(error(e)));
     }
   }
 )

@@ -28,15 +28,15 @@ export function fetchSeriesByRegion(region) {
     return (dispatch, getState) => {
       let { series } = getState();
 
-      if (!series) {
-        throw new Error("Called fetchSeriesByRegion but series is null")
+      if (!series || !series.id) {
+        throw new Error("Called fetchSeriesByRegion but series is null");
       }
 
-      if (!region) {
-        throw new Error("Called fetchSeriesByRegion but region is null")
+      if (!region || !region.id) {
+        throw new Error("Failed to request series for region");
       }
 
-      dispatch(requestSeriesByRegion(series.id, region));
+      dispatch(requestSeriesByRegion(series.id, region.id));
 
       return fetch(`${SERVER_URL}/api/series/${series.id}/regions/${region.id}`)
         .then(response => response.json(), e => { throw new Error("Failed to retrieve series")})
