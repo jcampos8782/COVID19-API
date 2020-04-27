@@ -62,8 +62,6 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-
-}
+const mapDispatchToProps = dispatch => ({})
 
 export default styled()(connect(mapStateToProps,mapDispatchToProps)(Trends));
