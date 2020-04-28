@@ -41,7 +41,7 @@ const calculateTrends = data => (
       if (total === 0 || i === 0) {
         return 0;
       }
-      return 100 * (n/total);
+      return parseFloat((100 * (n/total)).toFixed(2));
     });
 
     let rollingGrowth = growth.map((dailyRate, i) => {
