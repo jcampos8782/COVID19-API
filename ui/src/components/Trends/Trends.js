@@ -133,7 +133,7 @@ export default class Trends extends React.Component {
                     {
                       id: "Daily",
                       data: data.trends[selectedSeries].daily.slice(-selectedPeriod).map((val,idx) => ({
-                          x: formatDateKey(columns[idx]),
+                          x: formatDateKey(columns.slice(-selectedPeriod)[idx]),
                           y: val
                         }
                       ))
@@ -141,7 +141,7 @@ export default class Trends extends React.Component {
                     {
                       id: "Rolling",
                       data: data.trends[selectedSeries].rolling.slice(-selectedPeriod).map((val,idx) => ({
-                          x: formatDateKey(columns[idx]),
+                          x: formatDateKey(columns.slice(-selectedPeriod)[idx]),
                           y: val
                         }
                       ))
