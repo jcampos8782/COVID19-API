@@ -14,9 +14,16 @@ const DATE_FORMAT = new Intl.DateTimeFormat('en-US');
 export default class TimeSeriesLineChart extends React.Component {
 
   render() {
-    const { data, theme, curve, labelFormat = x => x} = this.props;
-    let palette = theme === 'light' ? light.palette : dark.palette;
+    const {
+      data,
+      theme,
+      curve,
+      layers,
+      colors, 
+      labelFormat = x => x
+    } = this.props;
 
+    let palette = theme === 'light' ? light.palette : dark.palette;
     if (data.length === 0) {
       return <div/>
     }
@@ -35,7 +42,7 @@ export default class TimeSeriesLineChart extends React.Component {
       <ResponsiveLine
         margin={{ top: 0, right: 30, bottom:80, left: 50 }}
         data={data}
-        colors={{scheme: palette.nivo.line.colors}}
+        colors={{scheme: (colors ? colors : palette.nivo.line.colors)}}
         curve={ curve ? curve : "linear"}
         theme={{
           axis: {
@@ -100,6 +107,7 @@ export default class TimeSeriesLineChart extends React.Component {
         useMesh={true}
         enableSlices="x"
         animate={true}
+        layers={layers}
         legends={[
           {
               anchor: 'top-left',

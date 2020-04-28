@@ -91,7 +91,7 @@ export default class Trends extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item style={{height: 300}} xs={12} sm={9} md={10}>
+            <Grid item xs={12} sm={9} md={10}>
               <Grid container>
                 <Grid item className={classes.trendsControlContainer} xs={12} md={6}>
                   <FormControl style={{display: "inline-block"}} displaycomponent="fieldset">
@@ -123,34 +123,64 @@ export default class Trends extends React.Component {
                     />
                 </Grid>
               </Grid>
-              <TimeSeriesLineChart
-                curve="natural"
-                labelFormat={v => `${v}%`}
-                theme={theme}
-                data={[
-                  {
-                    id: "Daily",
-                    data: data.trends[selectedSeries].daily.slice(-selectedPeriod).map((val,idx) => ({
-                        x: formatDateKey(columns[idx]),
-                        y: val
-                      }
-                    ))
-                  },
-                  {
-                    id: "Rolling",
-                    data: data.trends[selectedSeries].rolling.slice(-selectedPeriod).map((val,idx) => ({
-                        x: formatDateKey(columns[idx]),
-                        y: val
-                      }
-                    ))
-                  }
-                ]
-              }
-              />
+              <Grid container style={{height: 300}}>
+                <TimeSeriesLineChart
+                  curve="natural"
+                  labelFormat={v => `${v}%`}
+                  theme={theme}
+                  layers={['grid', 'markers', 'areas', Lines, 'slices', 'points', 'axes', 'legends']}
+                  data={[
+                    {
+                      id: "Daily",
+                      data: data.trends[selectedSeries].daily.slice(-selectedPeriod).map((val,idx) => ({
+                          x: formatDateKey(columns[idx]),
+                          y: val
+                        }
+                      ))
+                    },
+                    {
+                      id: "Rolling",
+                      data: data.trends[selectedSeries].rolling.slice(-selectedPeriod).map((val,idx) => ({
+                          x: formatDateKey(columns[idx]),
+                          y: val
+                        }
+                      ))
+                    }
+                  ]
+                }
+                />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
     )
   }
+}
+
+const styleById = {
+    Rolling: {
+        strokeDasharray: '12, 6',
+        strokeWidth: 2,
+    },
+    default: {
+        strokeWidth: 2,
+    },
+}
+
+const Lines = ({ series, lineGenerator, xScale, yScale }) => {
+    return series.map(({ id, data, color }) => (
+        <path
+            key={id}
+            d={lineGenerator(
+                data.map(d => ({
+                    x: xScale(d.data.x),
+                    y: yScale(d.data.y),
+                }))
+            )}
+            fill="none"
+            stroke={color}
+            style={styleById[id] || styleById.default}
+        />
+    ))
 }
