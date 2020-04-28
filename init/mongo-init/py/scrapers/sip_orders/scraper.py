@@ -16,7 +16,7 @@ def main():
 
     with open(FILE_SIP_ORDERS, 'w+') as file:
         for state, sip_order_date in data.items():
-            file.write("%s,%s\n" % (key_generator.generate_region_keys("%s,%s" % (state, "United States"))["region"], sip_order_date))
+            file.write("%s,%s\n" % (key_generator.generate_region_keys("%s,%s" % (state.strip(), "United States"))["region"], sip_order_date))
 
     print("Complete!")
 

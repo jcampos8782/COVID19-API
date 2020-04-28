@@ -18,6 +18,15 @@ def process_downloads():
     with open(FILE_COVID_TRACKER_US_CURRENT, encoding="utf8") as us_current:
         facts.append(__extract_us_facts(json.load(us_current)[0]))
 
+    print("Updating SIP order data from file %s" % FILE_SIP_ORDERS)
+    with open(FILE_SIP_ORDERS, encoding="utf8") as sip_orders:
+        for state, order_date in csv.reader(sip_orders):
+            state_facts = [f for f in facts if f["key"] == state]
+            if not state_facts:
+                print("No facts found for state %s. Skipping" % state)
+            else:
+                state_facts[0]["sipOrderDate"] = order_date
+
     print("Creating facts file %s" % FILE_FACTS)
     with open(FILE_FACTS, 'w+') as out_facts:
         json.dump(facts, out_facts)

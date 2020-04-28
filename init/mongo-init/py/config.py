@@ -30,7 +30,7 @@ FILE_SERIES_DEFINITIONS = join(META_DIRECTORY, "series.csv")
 FILE_REGIONS = join(META_DIRECTORY, "regions.csv")
 FILE_LOCATIONS = join(META_DIRECTORY, "locations.csv")
 FILE_DEMOGRAPHICS = join(META_DIRECTORY, "demographics.csv")
-FILE_FACTS = join(META_DIRECTORY, "facts.csv")
+FILE_FACTS = join(META_DIRECTORY, "facts.json")
 FILE_SIP_ORDERS = join(META_DIRECTORY, "sip_orders.csv")
 FILE_CONTACTS = join(META_DIRECTORY, "contacts.csv")
 
