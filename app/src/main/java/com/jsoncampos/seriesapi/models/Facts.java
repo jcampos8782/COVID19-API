@@ -36,6 +36,15 @@ public class Facts {
 	@Field("onVentilatorCurrently")
 	private Integer onVentilatorCurrent;
 	
+	@Field("sipOrderDate")
+	private String sipOrderDate;
+	
+	public String getSipOrderDate() {
+		return sipOrderDate;
+	}
+	public void setSipOrderDate(String sipOrderDate) {
+		this.sipOrderDate = sipOrderDate;
+	}
 	public String getId() {
 		return this.id;
 	}

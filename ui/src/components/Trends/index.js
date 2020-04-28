@@ -7,18 +7,32 @@ import {setTrendSeries, setTrendPeriod} from '../../actions';
 const getBaseLog = (x, y) => Math.log(y) / Math.log(x);
 
 const mapStateToProps = state => {
-  const { data, series, view } = state;
-  if (!(data && series)) {
+  const { data, series, region, view } = state;
+  if (!(data && series && region)) {
     return { loading: true }
   }
+
+  let facts = {...region.facts};
+
+  if (!facts.sipOrderDate) {
+    for(let i = 0; i < region.parents.length; i++) {
+      if (region.parents[i].facts.sipOrderDate) {
+        facts.sipOrderDate = region.parents[i].facts.sipOrderDate;
+        break;
+      }
+    }
+  }
+
+  const {trends: {selectedPeriod}} = view;
 
   return {
     data: {
       keys: Object.keys(data),
-      trends: calculateTrends(data)
+      sipOrderDate: new Date(facts.sipOrderDate),
+      trends: calculateTrends(data, selectedPeriod)
     },
     theme: view.theme,
-    columns: series.columns,
+    columns: series.columns.slice(-selectedPeriod),
     ...view.trends
   }
 }
@@ -28,7 +42,7 @@ const mapDispatchToProps = dispatch => ({
   selectPeriod: period => dispatch(setTrendPeriod(period))
 })
 
-const calculateTrends = data => (
+const calculateTrends = (data,period) => (
   Object.keys(data).reduce((obj, series) => {
     let totals = data[series].aggregates.total;
     let daily = data[series].aggregates.daily;
@@ -61,8 +75,8 @@ const calculateTrends = data => (
     let x = 1 + (rollingGrowth[rollingGrowth.length-1])/100;
     let y = (totals[totals.length - 1] * 2)/totals[totals.length - 1];
     obj[series] = {
-      daily: growth,
-      rolling: rollingGrowth,
+      daily: growth.slice(-period),
+      rolling: rollingGrowth.slice(-period),
       doubling: Math.ceil(getBaseLog(x,y))
     };
 

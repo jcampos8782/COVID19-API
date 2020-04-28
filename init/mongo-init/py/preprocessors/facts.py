@@ -25,7 +25,7 @@ def process_downloads():
             if not state_facts:
                 print("No facts found for state %s. Skipping" % state)
             else:
-                state_facts[0]["sipOrderDate"] = order_date
+                state_facts[0]["facts"]["sipOrderDate"] = order_date
 
     print("Creating facts file %s" % FILE_FACTS)
     with open(FILE_FACTS, 'w+') as out_facts:

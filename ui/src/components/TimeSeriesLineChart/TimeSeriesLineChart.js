@@ -19,8 +19,11 @@ export default class TimeSeriesLineChart extends React.Component {
       theme,
       curve,
       layers,
-      colors, 
-      labelFormat = x => x
+      colors,
+      markers = null,
+      labelFormat = x => x,
+      max,
+      min
     } = this.props;
 
     let palette = theme === 'light' ? light.palette : dark.palette;
@@ -36,12 +39,14 @@ export default class TimeSeriesLineChart extends React.Component {
       return localMax > max ? localMax : max;
     }, 0);
 
-    let yMax = maxValue + Math.ceil(maxValue/10);
+    let yMax = max ? max : maxValue + Math.ceil(maxValue/10) + 10;
+    let yMin = min ? min : 0;
 
     return (
       <ResponsiveLine
         margin={{ top: 0, right: 30, bottom:80, left: 50 }}
         data={data}
+        markers={markers}
         colors={{scheme: (colors ? colors : palette.nivo.line.colors)}}
         curve={ curve ? curve : "linear"}
         theme={{
@@ -51,6 +56,9 @@ export default class TimeSeriesLineChart extends React.Component {
                 fill: palette.nivo.line.text
               }
             }
+          },
+          markers: {
+            lineColor: palette.nivo.line.text
           }
         }}
         sliceTooltip={({slice}) => {
@@ -85,8 +93,8 @@ export default class TimeSeriesLineChart extends React.Component {
         yScale={{
             type: 'linear',
             stacked: false,
-            max: yMax > 10 ? yMax : 10,
-            min: 0
+            max: yMax,
+            min: yMin
         }}
         xFormat={(d) => DATE_FORMAT.format(d)}
         enablePointLabel={false}

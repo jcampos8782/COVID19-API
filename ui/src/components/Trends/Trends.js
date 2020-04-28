@@ -14,6 +14,7 @@ import BadgedIcon from '../BadgedIcon';
 import TimeSeriesHeatMap from '../TimeSeriesHeatMap';
 import TimeSeriesLineChart from '../TimeSeriesLineChart';
 
+import {light, dark} from '../../styles';
 import { formatDateKey, uppercaseFirst } from '../../util';
 
 export default class Trends extends React.Component {
@@ -36,8 +37,10 @@ export default class Trends extends React.Component {
       return <CircularProgress style={{margin:150}} />;
     };
 
+    let palette = theme === 'light' ? light.palette : dark.palette;
     let doublingConfirmed = data.trends["confirmed"].doubling;
-    let doublingDeaths = data.trends["deaths"].doubling
+    let doublingDeaths = data.trends["deaths"].doubling;
+
     return (
       <Grid container style={{marginTop: 10}}>
         <Grid item xs={12}>
@@ -128,20 +131,42 @@ export default class Trends extends React.Component {
                   curve="natural"
                   labelFormat={v => `${v}%`}
                   theme={theme}
-                  layers={['grid', 'markers', 'areas', Lines, 'slices', 'points', 'axes', 'legends']}
+                  max={
+                    data.trends[selectedSeries].daily.reduce((max,curr) => curr > max ? curr : max, 0)
+                  }
+                  markers={
+                    data.sipOrderDate > new Date(columns[0])
+                      ? [{
+                          axis: 'x',
+                          value: data.sipOrderDate,
+                          legend: "Shelter-in-Place Order",
+                          lineStyle: {
+                            strokeDasharray: '1, 8',
+                            strokeWidth: 3,
+                            strokeLinejoin: 'round',
+                            strokeLinecap: 'round'
+                          },
+                          textStyle: {
+                            fill: palette.nivo.line.text
+                          },
+                          legendOffsetY: 50
+                        }]
+                        : null
+                      }
+                  layers={['grid', 'areas', Lines,  'slices', 'points', 'axes', 'markers', 'legends']}
                   data={[
                     {
                       id: "Daily",
-                      data: data.trends[selectedSeries].daily.slice(-selectedPeriod).map((val,idx) => ({
-                          x: formatDateKey(columns.slice(-selectedPeriod)[idx]),
+                      data: data.trends[selectedSeries].daily.map((val,idx) => ({
+                          x: formatDateKey(columns[idx]),
                           y: val
                         }
                       ))
                     },
                     {
                       id: "Rolling",
-                      data: data.trends[selectedSeries].rolling.slice(-selectedPeriod).map((val,idx) => ({
-                          x: formatDateKey(columns.slice(-selectedPeriod)[idx]),
+                      data: data.trends[selectedSeries].rolling.map((val,idx) => ({
+                          x: formatDateKey(columns[idx]),
                           y: val
                         }
                       ))

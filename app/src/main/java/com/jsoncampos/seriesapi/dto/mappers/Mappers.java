@@ -69,6 +69,7 @@ public class Mappers {
 				.withTestingStatistics(facts.getPositiveTests(), facts.getNegativeTests(), facts.getPendingTests())
 				.withCurrentHospitalizations(facts.getHospitalizedCurrent(), facts.getIntensiveCareCurrent(), facts.getOnVentilatorCurrent())
 				.withCumulativeHospitalizations(facts.getHospitalizedCumulative(), facts.getIntensiveCareCumulative(), facts.getOnVentilatorCumulative())
+				.withSipOrderDate(facts.getSipOrderDate())
 				.build();
 	}
 }

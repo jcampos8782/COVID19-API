@@ -140,15 +140,17 @@ const _fetchRegion = (dispatch, url) => {
         dispatch(fetchDemographics(region.id)),
         dispatch(fetchFacts(region.id)),
         dispatch(fetchContacts(region.id)),
-        region.parents.map(p => dispatch(fetchContacts(p.id)))
+        region.parents.map(p => dispatch(fetchContacts(p.id))),
+        region.parents.map(p => dispatch(fetchFacts(p.id)))
       ].flat())
       .then(results => {
-        // Parent contacts come back in results [3...]
-        for(let i = 3; i < results.length; i++) {
-          region.parents[i - 3] = {
-            ...region.parents[i-3],
-            contacts: results[i]
-          };
+        let contactsStartIdx = 3, contactsEndIdx = 3 + region.parents.length;
+        let parentContacts = results.slice(contactsStartIdx, contactsEndIdx);
+        let parentFacts = results.slice(contactsEndIdx, contactsEndIdx + region.parents.length);
+
+        for(let i = 0; i < region.parents.length; i++) {
+          region.parents[i].contacts = parentContacts[i];
+          region.parents[i].facts = parentFacts[i];
         };
 
         region = {

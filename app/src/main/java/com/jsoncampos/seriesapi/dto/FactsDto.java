@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "recovered", "tests", "hospitalizations", "dateModified" })
+@JsonPropertyOrder({ "recovered", "tests", "hospitalizations", "sipOrderDate", "dateModified" })
 public class FactsDto {
 	private Integer recovered;
 	private TestingResults tests;
 	private HospitalizationStatistics hospitalizations;
+	private String sipOrderDate;
 	
 	public Integer getRecovered() {
 		return recovered;
@@ -32,6 +33,14 @@ public class FactsDto {
 
 	public void setHospitalizations(HospitalizationStatistics hospitalizations) {
 		this.hospitalizations = hospitalizations;
+	}
+	
+	public String getSipOrderDate() {
+		return sipOrderDate;
+	}
+	
+	public void setSipOrderDate(String sipOrderDate) {
+		this.sipOrderDate = sipOrderDate;
 	}
 
 	public static class TestingResults {
@@ -139,6 +148,11 @@ public class FactsDto {
 		
 		public Builder withCumulativeHospitalizations(Integer admitted, Integer inIcu, Integer onVentilator) {
 			dto.getHospitalizations().setCumulative(new Statistics(admitted, inIcu, onVentilator));
+			return this;
+		}
+		
+		public Builder withSipOrderDate(String sipOrderDate) {
+			dto.setSipOrderDate(sipOrderDate);
 			return this;
 		}
 		

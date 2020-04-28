@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from models import Location
 from config import *
 from util import key_generator
+from dateutil import parser
 
 
 def main():
@@ -16,7 +17,9 @@ def main():
 
     with open(FILE_SIP_ORDERS, 'w+') as file:
         for state, sip_order_date in data.items():
-            file.write("%s,%s\n" % (key_generator.generate_region_keys("%s,%s" % (state.strip(), "United States"))["region"], sip_order_date))
+            iso_date = parser.parse(sip_order_date).isoformat()
+            state_key = key_generator.generate_region_keys("%s,%s" % (state.strip(), "United States"))["region"]
+            file.write("%s,%s\n" % (state_key, iso_date))
 
     print("Complete!")
 
