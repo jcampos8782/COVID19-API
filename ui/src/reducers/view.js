@@ -22,7 +22,7 @@ const initialState =
     seriesOptions: ["confirmed", "deaths", "recovered"], //TODO: extract from data
     selectedSeries: "confirmed",
     periodOptions: [30, 60, 90],
-    selectedPeriod: 30
+    selectedPeriod: 60
   },
   filters: [
     {
