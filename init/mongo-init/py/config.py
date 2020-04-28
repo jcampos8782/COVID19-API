@@ -31,6 +31,7 @@ FILE_REGIONS = join(META_DIRECTORY, "regions.csv")
 FILE_LOCATIONS = join(META_DIRECTORY, "locations.csv")
 FILE_DEMOGRAPHICS = join(META_DIRECTORY, "demographics.csv")
 FILE_FACTS = join(META_DIRECTORY, "facts.csv")
+FILE_SIP_ORDERS = join(META_DIRECTORY, "sip_orders.csv")
 FILE_CONTACTS = join(META_DIRECTORY, "contacts.csv")
 
 FILE_US_STATES_AND_ISO_CODES = join(LOOKUPS_DIRECTORY, "us_states_and_iso_codes.csv")
@@ -147,6 +148,14 @@ COVID_TRACKING_FACT_FIELDS = {
 }
 
 COVID_TRACKING_PROCESSOR_META_FIELDS = {"covid19Site": "www", "twitter": "twitter"}
+
+
+"""
+SHELTER IN PLACE (SIP) SCRAPER
+"""
+SIP_SCRAPER_URL = "https://www.finra.org/rules-guidance/key-topics/covid-19/shelter-in-place"
+SIP_SCRAPER_DOWNLOAD_DIRECTORY = join(DOWNLOADS_DIRECTORY, "finra")
+SIP_SCRAPER_PARSER = "lxml"
 
 """
 MX SCRAPER
