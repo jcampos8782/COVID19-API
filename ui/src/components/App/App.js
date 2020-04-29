@@ -30,7 +30,6 @@ export default class App extends React.Component {
 
     render() {
         const { classes, theme } = this.props;
-
         let themeIconClass = theme === 'light' ? 'far fa-lightbulb' : 'fas fa-lightbulb';
         return (
           <MuiThemeProvider theme={theme === 'light' ? light : dark}>

@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 export default class LocationBreadcrumb extends React.Component {
   render() {
     const { locations, loadRegion, classes, loading } = this.props;
-
+    
     return (
       <Breadcrumbs aria-label="locations">
         {

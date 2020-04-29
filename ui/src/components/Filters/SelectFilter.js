@@ -20,7 +20,6 @@ export default class SelectFilter extends React.Component {
       defaultItem,
       classes
     } = this.props;
-    
       return (
           <FormControl style={{display: options.length === 0 ? 'none' : ''}}>
               <InputLabel shrink>{label}</InputLabel>

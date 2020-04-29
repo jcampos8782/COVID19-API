@@ -25,7 +25,7 @@ export default class Recent extends React.Component {
     if (loading) {
       return <CircularProgress style={{margin:150}} />
     }
-
+    
     return (
       <Grid container>
         <Grid item xs={12}>

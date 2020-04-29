@@ -24,7 +24,7 @@ export default class HistoryPane extends React.Component {
     if (loading) {
       return <div />
     }
-
+    
     return (
       <TabPanel
         value={value}

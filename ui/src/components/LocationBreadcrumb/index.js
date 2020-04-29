@@ -2,20 +2,27 @@ import LocationBreadcrumb from './LocationBreadcrumb';
 import { connect } from 'react-redux';
 import { styled } from '../../styles';
 import { loadRegion, fetchSeriesByRegion, error } from '../../actions';
+import { createSelector } from 'reselect'
+import { getRegion } from '../../selectors';
 
-const mapStateToProps = state => {
-  if (!state.region) {
-    return {loading: true}
-  };
+const getLocationTree = createSelector(
+  [getRegion],
+  region => {
+    if (!region) {
+      return null;
+    }
 
-  let locationTree = state.region.parents.slice(0);
-  locationTree.reverse();
-  locationTree.push(state.region);
+    let locationTree = region.parents.slice(0);
+    locationTree.reverse();
+    locationTree.push(region);
+    return locationTree;
+  }
+);
 
-  return {
-    locations: locationTree,
-  };
-}
+const mapStateToProps = state => ({
+    loading: !state.region,
+    locations: getLocationTree(state),
+})
 
 const mapDispatchToProps = dispatch => (
   {

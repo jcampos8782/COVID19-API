@@ -18,7 +18,7 @@ import * as Cards from '../Cards';
 export default class Dashboard extends React.Component {
 
   render() {
-    const { region, view, refresh, classes } = this.props;
+    const { region, refresh, classes, tab } = this.props;
 
     return (
       <Grid
@@ -39,7 +39,7 @@ export default class Dashboard extends React.Component {
               <Grid item xs={12}>
                 <Tabs
                   className={classes.tabsContainer}
-                  value={view.currentTab}
+                  value={tab}
                   onChange={this.props.selectTab}
                   variant="scrollable"
                   scrollButtons="on"
@@ -67,19 +67,19 @@ export default class Dashboard extends React.Component {
                         />
                       <CardContent className={classes.paneCard}>
                         <Panes.SummaryPane
-                          value={view.currentTab}
+                          value={tab}
                           index={0}
                           />
                         <Panes.HistoryPane
-                          value={view.currentTab}
+                          value={tab}
                           index={1}
                           />
                         <Panes.SubregionPane
-                          value={view.currentTab}
+                          value={tab}
                           index={2}
                           />
                         <Panes.DataPane
-                          value={view.currentTab}
+                          value={tab}
                           index={3}
                           />
                       </CardContent>

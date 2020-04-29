@@ -8,9 +8,7 @@ const mapStateToProps = state => {
     return { loading: true }
   }
   return {
-      data: Object.keys(data).map(
-        component => ({ id: component, data: data[component].aggregates.total})
-      ),
+      data: data,
       columns: series.columns,
       title: region.name
     }

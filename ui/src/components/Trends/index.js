@@ -1,46 +1,38 @@
 import Trends from './Trends';
 import {connect} from 'react-redux';
 import {styled} from '../../styles';
-
+import { createSelector } from 'reselect';
 import {setTrendSeries, setTrendPeriod} from '../../actions';
+import {getData, getRegion, getSeries, getTrendsFilterSettings} from '../../selectors';
 
 const getBaseLog = (x, y) => Math.log(y) / Math.log(x);
 
-const mapStateToProps = state => {
-  const { data, series, region, view } = state;
-  if (!(data && series && region)) {
-    return { loading: true }
-  }
-
-  let facts = {...region.facts};
-
-  if (!facts.sipOrderDate) {
-    for(let i = 0; i < region.parents.length; i++) {
-      if (region.parents[i].facts.sipOrderDate) {
-        facts.sipOrderDate = region.parents[i].facts.sipOrderDate;
-        break;
+const extractData = createSelector(
+  [getData, getRegion, getTrendsFilterSettings],
+  (data, region, filter) => {
+    let facts = {...region.facts};
+    
+    if (!facts.sipOrderDate) {
+      for(let i = 0; i < region.parents.length; i++) {
+        if (region.parents[i].facts.sipOrderDate) {
+          facts.sipOrderDate = region.parents[i].facts.sipOrderDate;
+          break;
+        }
       }
     }
-  }
 
-  const {trends: {selectedPeriod}} = view;
-
-  return {
-    data: {
+    return {
       keys: Object.keys(data),
       sipOrderDate: new Date(facts.sipOrderDate),
-      trends: calculateTrends(data, selectedPeriod)
-    },
-    theme: view.theme,
-    columns: series.columns.slice(-selectedPeriod),
-    ...view.trends
+      trends: calculateTrends(data, filter.selectedPeriod)
+    };
   }
-}
+);
 
-const mapDispatchToProps = dispatch => ({
-  selectSeries: series => dispatch(setTrendSeries(series)),
-  selectPeriod: period => dispatch(setTrendPeriod(period))
-})
+const getColumnsForPeriod = createSelector(
+  [getSeries, getTrendsFilterSettings],
+  (series, filter) => series.columns.slice(-filter.selectedPeriod)
+)
 
 const calculateTrends = (data,period) => (
   Object.keys(data).reduce((obj, series) => {
@@ -83,5 +75,25 @@ const calculateTrends = (data,period) => (
     return obj;
   }, {})
 );
+
+
+const mapStateToProps = state => {
+  const { data, series, region, view } = state;
+  if (!(data && series && region)) {
+    return { loading: true }
+  }
+
+  return {
+    data: extractData(state),
+    theme: view.theme,
+    columns: getColumnsForPeriod(state),
+    ...view.trends
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  selectSeries: series => dispatch(setTrendSeries(series)),
+  selectPeriod: period => dispatch(setTrendPeriod(period))
+})
 
 export default styled()(connect(mapStateToProps,mapDispatchToProps)(Trends));

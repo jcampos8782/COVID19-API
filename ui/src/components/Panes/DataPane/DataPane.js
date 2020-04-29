@@ -17,14 +17,14 @@ export default class DataPane extends React.Component {
     if (loading) {
       return <div />
     }
-
+    
     return (
       <TabPanel
         value={value}
         index={index}
         children={
           <TimeSeriesDataTable
-            data={data}
+            data={Object.keys(data).map(component => ({ id: component, data: data[component].aggregates.total}))}
             meta={{ columns: columns, title: title }}
           />
         }

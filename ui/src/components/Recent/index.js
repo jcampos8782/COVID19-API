@@ -1,7 +1,22 @@
 import Recent from './Recent';
 import {connect} from 'react-redux';
+import {createSelector} from 'reselect';
 import {styled} from '../../styles';
 import {setRecentPeriod} from '../../actions';
+import {getData, getRecentFilterSettings} from '../../selectors';
+
+const extractRecentData = createSelector(
+  [getData, getRecentFilterSettings],
+  (data, recentFilter) => ({
+    keys: Object.keys(data),
+    recent: Object.keys(data).reduce((obj, key) => {
+      // Calculate last MAX_RECENT_PERIOD days of data from the diffs
+      let len = data[key].aggregates.daily.length;
+      obj[key] = data[key].aggregates.daily.slice(len-recentFilter.period)
+      return obj;
+    },{})
+  })
+);
 
 const mapStateToProps = state => {
   const { data, series, view } = state;
@@ -10,16 +25,7 @@ const mapStateToProps = state => {
   }
 
   return {
-    data: {
-      keys: Object.keys(data),
-      // Last X days
-      recent: Object.keys(data).reduce((obj, key) => {
-        // Calculate last MAX_RECENT_PERIOD days of data from the diffs
-        let len = data[key].aggregates.daily.length;
-        obj[key] = data[key].aggregates.daily.slice(len-view.recent.period)
-        return obj;
-      },{}),
-    },
+    data: extractRecentData(state),
     theme: view.theme,
     period: view.recent.period,
     recentPeriodOptions: view.recent.options,

@@ -7,7 +7,7 @@ const mapStateToProps = state => {
   let {region, data, view } = state;
   return {
     data,
-    view,
+    tab: view.currentTab,
     region
   };
 };

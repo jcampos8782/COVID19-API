@@ -28,6 +28,7 @@ export default class Trends extends React.Component {
       selectedPeriod,
       selectedSeries,
       periodOptions,
+      periodDefault,
       seriesOptions,
       selectSeries,
       selectPeriod
@@ -36,7 +37,7 @@ export default class Trends extends React.Component {
     if (loading) {
       return <CircularProgress style={{margin:150}} />;
     };
-
+    
     let palette = theme === 'light' ? light.palette : dark.palette;
     let doublingConfirmed = data.trends["confirmed"].doubling;
     let doublingDeaths = data.trends["deaths"].doubling;
@@ -117,7 +118,7 @@ export default class Trends extends React.Component {
                 <Grid item xs={12} md={6}>
                   <Slider
                     className={classes.recentDataSlider}
-                    defaultValue={periodOptions[0]}
+                    defaultValue={periodDefault}
                     max={periodOptions[periodOptions.length - 1]}
                     step={null}
                     valueLabelDisplay="auto"

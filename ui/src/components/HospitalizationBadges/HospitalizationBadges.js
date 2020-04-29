@@ -14,7 +14,7 @@ export default class RegionOverviewBadges extends React.Component {
       onVentilator,
       loading
     } = this.props;
-
+    
     return (
       <Grid container style={{paddingBottom: 20}}>
         <Grid item xs={12}>

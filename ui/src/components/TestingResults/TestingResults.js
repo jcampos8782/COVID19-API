@@ -14,7 +14,7 @@ export default class TestingResults extends React.Component {
   render() {
     const { data, theme, loading } = this.props;
     let palette = theme === 'light' ? light.palette : dark.palette;
-
+    
     return (
       <Grid container>
         <Grid item xs={12}>
