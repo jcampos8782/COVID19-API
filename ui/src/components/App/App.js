@@ -29,8 +29,16 @@ export default class App extends React.Component {
     }
 
     render() {
-        const { classes, theme } = this.props;
+        const {
+          loading,
+          classes,
+          theme,
+          cookies,
+          toggleTheme
+        } = this.props;
+
         let themeIconClass = theme === 'light' ? 'far fa-lightbulb' : 'fas fa-lightbulb';
+
         return (
           <MuiThemeProvider theme={theme === 'light' ? light : dark}>
             <CssBaseline />
@@ -39,10 +47,10 @@ export default class App extends React.Component {
                 <Icon className={themeIconClass} />
                 <Switch
                   checked={theme === 'light'}
-                  onChange={() => this.props.toggleTheme(this.props.cookies)}
+                  onChange={() => toggleTheme(cookies)}
                   />
                 <Grid container alignItems="center" justify="flex-end" spacing={1} >
-                  <IconButton className={classes.navLink} aria-label="github" onClick={() => window.open('mailto:jason@jsoncampos.com')}>
+                  <IconButton className={classes.navLink} aria-label="email" onClick={() => window.open('mailto:jason@jsoncampos.com')}>
                       <Icon className="far fa-envelope" />
                   </IconButton>
                   <IconButton className={classes.navLink} aria-label="github" onClick={() => window.open('http://github.com/jcampos8782/covid19-api')}>
@@ -57,7 +65,7 @@ export default class App extends React.Component {
                 </Grid>
               </Toolbar>
             </AppBar>
-            <Backdrop open={this.props.loading} className={classes.backdrop} />
+            <Backdrop open={loading} className={classes.backdrop} />
             <Grid container className={classes.body}>
               <Errors />
               <Dashboard />

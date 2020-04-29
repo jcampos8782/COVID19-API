@@ -29,11 +29,8 @@ export default class Dashboard extends React.Component {
         justify="flex-start">
         <Grid item xs={12} md={12} lg={9}>
           <Grid container>
-            <Grid className={classes.breadcrumbs} item xs={12} style={{paddingLeft:30}}>
-              <LocationBreadcrumb className={classes.breadcrumbs} />
-            </Grid>
-            <Grid item xs={12}>
-
+            <Grid className={classes.breadcrumbs} item xs={12}>
+              <LocationBreadcrumb />
             </Grid>
             <Grid container>
               <Grid item xs={12}>

@@ -21,9 +21,16 @@ const css = theme => ({
   body: {
     position: 'relative',
     display: 'inline-block',
-    top: 75
+    top: 75,
+    [theme.breakpoints.down('sm')]: {
+      top:65
+    },
+    [theme.breakpoints.down('xs')]: {
+      top: 55
+    }
   },
   breadcrumbs: {
+    paddingLeft: 30,
     // Hide on small screens
     [theme.breakpoints.down('sm')]: {
       display: 'none'
@@ -96,6 +103,9 @@ const css = theme => ({
   },
   historyCalendar: {
     height: 150
+  },
+  hospitalizationBadges: {
+    paddingBottom: 20
   },
   lineChartContainer: {
     height: 300

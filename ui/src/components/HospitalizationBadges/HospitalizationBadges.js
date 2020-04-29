@@ -12,11 +12,12 @@ export default class RegionOverviewBadges extends React.Component {
       admitted,
       intensiveCare,
       onVentilator,
-      loading
+      loading,
+      classes
     } = this.props;
-    
+
     return (
-      <Grid container style={{paddingBottom: 20}}>
+      <Grid container className={classes.hospitalizationBadges}>
         <Grid item xs={12}>
           <Typography variant="h6">Hospitalizations</Typography>
         </Grid>

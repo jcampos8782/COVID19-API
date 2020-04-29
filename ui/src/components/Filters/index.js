@@ -3,13 +3,11 @@ import {styled} from '../../styles';
 import { connect } from 'react-redux';
 import {loadRegion, fetchSeriesByRegion, error} from '../../actions';
 
-const mapStateToProps = state => {
-  return {
-    regions: state.view.filters,
-    location: state.location,
-    selectedRegionId: state.region ? state.region.id : -1
-  };
-};
+const mapStateToProps = state => ({
+  regions: state.view.filters,
+  location: state.location,
+  selectedRegionId: state.region ? state.region.id : -1
+})
 
 const mapDispatchToProps = dispatch => ({
     loadRegion: (id) => {
