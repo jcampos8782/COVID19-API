@@ -35,9 +35,11 @@ export const start = (dispatch, props = defaultProps) => {
     )
     .then(
       region => {
-        dispatch(fetchSeriesByRegion(region));
-        initializeRegionFilters(dispatch, props, region);
-        dispatch(selectRegion(region));
+        initializeRegionFilters(dispatch, props, region)
+          .then(() => {
+            dispatch(fetchSeriesByRegion(region));
+            dispatch(selectRegion(region));
+          })
       },
       e => dispatch(error(e))
     ).catch(e => {
@@ -69,7 +71,7 @@ const initializeRegionFilters = (dispatch, props, region) => {
   let index = region.parents.length;
 
   // Load subregions for all parents
-  Promise.all(region.parents.map(parent => dispatch(fetchSubregions(parent.id))))
+  return Promise.all(region.parents.map(parent => dispatch(fetchSubregions(parent.id))))
     .then(parent => {
       parent.forEach(parent => {
         let filterIndex = region.parents.findIndex(p => p.id === parent.id);
