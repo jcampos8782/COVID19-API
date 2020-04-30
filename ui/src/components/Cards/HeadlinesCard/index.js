@@ -2,6 +2,8 @@ import HeadlinesCard from './HeadlinesCard.js';
 import {styled} from '../../../styles';
 import { connect } from 'react-redux';
 
+import { getHeadlines } from '../../../selectors';
+
 import {
   fetchHeadlines,
   changeHeadlinesPage,
@@ -10,7 +12,7 @@ import {
 
 const mapStateToProps = state => (
   {
-    headlines: state.headlines
+    headlines: getHeadlines(state)
   }
 );
 

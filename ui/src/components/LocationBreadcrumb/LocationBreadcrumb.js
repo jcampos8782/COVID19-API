@@ -7,12 +7,12 @@ import Typography from '@material-ui/core/Typography';
 
 export default class LocationBreadcrumb extends React.Component {
   render() {
-    const { locations, loadRegion, classes, loading } = this.props;
-    
+    const { locations, loadRegion, classes } = this.props;
+
     return (
       <Breadcrumbs aria-label="locations">
         {
-          loading ? <Typography style={{visibility: 'hidden'}} variant="h5">...</Typography> : locations.map((l,i) => {
+          !locations ? <Typography style={{visibility: 'hidden'}} variant="h5">...</Typography> : locations.map((l,i) => {
             if (i === locations.length - 1) {
               return (
                 <Container key={i} className={classes.breadcrumbItem}>

@@ -3,15 +3,24 @@ import {connect} from 'react-redux';
 import {styled} from '../../styles';
 import { createSelector } from 'reselect';
 import {setTrendSeries, setTrendPeriod} from '../../actions';
-import {getData, getRegion, getSeries, getTrendsFilterSettings} from '../../selectors';
+import {
+  getData,
+  getFacts,
+  getRegion,
+  getSeriesDataColumns,
+  getTrendsFilterSettings,
+  getTheme
+} from '../../selectors';
 
 const getBaseLog = (x, y) => Math.log(y) / Math.log(x);
 
-const extractData = createSelector(
-  [getData, getRegion, getTrendsFilterSettings],
-  (data, region, filter) => {
-    let facts = {...region.facts};
-    
+const extractTrendData = createSelector(
+  [getData, getRegion, getFacts, getTrendsFilterSettings],
+  (data, region, facts, filter) => {
+    if (!(data && region && facts)) {
+      return null;
+    }
+
     if (!facts.sipOrderDate) {
       for(let i = 0; i < region.parents.length; i++) {
         if (region.parents[i].facts.sipOrderDate) {
@@ -30,8 +39,8 @@ const extractData = createSelector(
 );
 
 const getColumnsForPeriod = createSelector(
-  [getSeries, getTrendsFilterSettings],
-  (series, filter) => series.columns.slice(-filter.selectedPeriod)
+  [getSeriesDataColumns, getTrendsFilterSettings],
+  (columns, filter) => columns ? columns.slice(-filter.selectedPeriod) : null
 )
 
 const calculateTrends = (data,period) => (
@@ -77,19 +86,12 @@ const calculateTrends = (data,period) => (
 );
 
 
-const mapStateToProps = state => {
-  const { data, series, region, view } = state;
-  if (!(data && series && region)) {
-    return { loading: true }
-  }
-
-  return {
-    data: extractData(state),
-    theme: view.theme,
-    columns: getColumnsForPeriod(state),
-    ...view.trends
-  }
-}
+const mapStateToProps = state => ({
+  data: extractTrendData(state),
+  theme: getTheme(state),
+  columns: getColumnsForPeriod(state),
+  ...getTrendsFilterSettings(state)
+})
 
 const mapDispatchToProps = dispatch => ({
   selectSeries: series => dispatch(setTrendSeries(series)),

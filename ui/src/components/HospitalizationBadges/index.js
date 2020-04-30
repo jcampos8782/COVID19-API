@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { styled } from '../../styles';
 import { formatNumber } from '../../util';
+import { getHospitalizations } from '../../selectors';
 
 const DEFAULT_VALUE = '-';
 
@@ -10,13 +11,12 @@ const formatFact = fact => fact ? `${formatValue(fact.current)}/${formatValue(fa
 const formatValue = value => value ? formatNumber(value) : DEFAULT_VALUE;
 
 const mapStateToProps = state => {
-  const {region} = state;
-  if (!region) {
-    return {loading: true}
+  const hospitalizations = getHospitalizations(state);
+  if(!hospitalizations) {
+    return { loading: true }
   }
 
-  const {region: { facts: {hospitalizations}}} = state;
-  const { cumulative, current } = hospitalizations ? hospitalizations: {cumulative: {}, current: {}};
+  const { cumulative = {}, current = {} } = hospitalizations;
 
   return {
     admitted: formatFact({cumulative: cumulative.admitted, current: current.admitted}),

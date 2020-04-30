@@ -2,11 +2,10 @@ import Filters from './Filters';
 import {styled} from '../../styles';
 import { connect } from 'react-redux';
 import {loadRegion, fetchSeriesByRegion, error} from '../../actions';
+import {getRegionFilters} from '../../selectors';
 
 const mapStateToProps = state => ({
-  regions: state.view.filters,
-  location: state.location,
-  selectedRegionId: state.region ? state.region.id : -1
+  filters: getRegionFilters(state)
 })
 
 const mapDispatchToProps = dispatch => ({

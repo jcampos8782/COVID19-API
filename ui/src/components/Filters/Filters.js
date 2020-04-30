@@ -6,27 +6,27 @@ export default class Filters extends React.Component {
   render() {
       const {
         classes,
-        regions,
+        filters,
         loadRegion
       } = this.props;
 
-      let regionFilters = regions.map((filter,idx) => (
-        <SelectFilter
-          classes={classes}
-          key={idx}
-          label={filter.label}
-          selected={filter.value}
-          onChange={(e) => loadRegion(e.target.value)}
-          defaultItem={{value: filter.none, label: 'None'}}
-          options={filter.options}
-          icon={filter.icon}
-          iconAction={() => loadRegion(filter.none)}
-          />
-      ));
-
       return (
         <div className={classes.filters}>
-          {regionFilters}
+          {
+            filters.map((filter,idx) => (
+              <SelectFilter
+                classes={classes}
+                key={idx}
+                label={filter.label}
+                selected={filter.value}
+                onChange={(e) => loadRegion(e.target.value)}
+                defaultItem={{value: filter.none, label: 'None'}}
+                options={filter.options}
+                icon={filter.icon}
+                iconAction={() => loadRegion(filter.none)}
+              />
+            ))
+          }
         </div>
       );
   }

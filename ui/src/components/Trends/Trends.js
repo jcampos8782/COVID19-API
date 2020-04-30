@@ -23,7 +23,6 @@ export default class Trends extends React.Component {
       columns,
       theme,
       data,
-      loading,
       classes,
       selectedPeriod,
       selectedSeries,
@@ -34,10 +33,10 @@ export default class Trends extends React.Component {
       selectPeriod
     } = this.props;
 
-    if (loading) {
+    if (!data) {
       return <CircularProgress style={{margin:150}} />;
     };
-    
+
     let palette = theme === 'light' ? light.palette : dark.palette;
     let doublingConfirmed = data.trends["confirmed"].doubling;
     let doublingDeaths = data.trends["deaths"].doubling;

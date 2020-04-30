@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { styled } from '../../styles';
 import { formatNumber } from '../../util';
+import { getDemographics, getFacts, getData } from '../../selectors';
 
 const DEFAULT_VALUE = '-';
 
@@ -15,14 +16,16 @@ const calculatePercentChange = (n,d) => {
 }
 
 const mapStateToProps = state => {
-  const {region, data} = state;
-  if (!(region && data)) {
-    return {loading: true}
+  let facts = getFacts(state);
+  let data = getData(state);
+  let demographics = getDemographics(state);
+  
+  if (!(data && facts && demographics)) {
+    return { loading: true }
   }
-
   let currentDeaths = data.deaths ? data.deaths.current : null;
   let currentConfirmed = data.confirmed ? data.confirmed.current : null;
-  let currentRecovered = data.recovered ? data.recovered.current : region.facts.recovered;
+  let currentRecovered = data.recovered ? data.recovered.current : facts.recovered;
   let recentDeaths = data.deaths ? data.deaths.mostRecent : null;
   let recentConfirmed = data.confirmed ? data.confirmed.mostRecent : null;
   let recentRecovered = data.recovered ? data.recovered.mostRecent: null;
@@ -31,7 +34,7 @@ const mapStateToProps = state => {
   let percentChangeRecovered = data.confirmed ? calculatePercentChange(recentRecovered, currentRecovered) : null;
 
   return {
-    population: formatValue(region.demographics.population),
+    population: formatValue(demographics.population),
     recovered: formatValue(currentRecovered),
     deathsCount: formatValue(currentDeaths),
     confirmedCount: formatValue(currentConfirmed),

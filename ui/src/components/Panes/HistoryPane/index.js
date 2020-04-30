@@ -2,32 +2,28 @@ import HistoryPane from './HistoryPane';
 import {styled} from '../../../styles';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getData, getKeys } from '../../../selectors';
+import { getData, getDataKeys, getTheme, getSeriesDataColumns } from '../../../selectors';
 
-const extractData = createSelector(
+const extractHistoryData = createSelector(
   [getData],
-  data => Object.keys(data).reduce((obj,key) => {
-    obj[key] = {
-      current: data[key].current,
-      aggregate: data[key].aggregates.total,
-      daily: data[key].aggregates.daily
-    };
-    return obj;
-  }, {})
+  data => data
+    ? Object.keys(data).reduce((obj,key) => {
+        obj[key] = {
+          current: data[key].current,
+          aggregate: data[key].aggregates.total,
+          daily: data[key].aggregates.daily
+        };
+        return obj;
+      }, {})
+    : null
 );
 
-const mapStateToProps = state => {
-  const {data, series, view} = state;
-  if (!(data && series)) {
-    return { loading: true }
-  }
-  return {
-    data: extractData(state),
-    theme: view.theme,
-    keys: getKeys(state),
-    columns: series.columns,
-  }
-}
+const mapStateToProps = state => ({
+  data: extractHistoryData(state),
+  theme: getTheme(state),
+  keys: getDataKeys(state),
+  columns: getSeriesDataColumns(state),
+})
 
 const mapDispatchToProps = dispatch => ({})
 

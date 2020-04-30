@@ -18,14 +18,13 @@ export default class Recent extends React.Component {
       recentPeriodOptions,
       updatePeriod,
       classes,
-      data,
-      loading
+      data
     } = this.props;
 
-    if (loading) {
+    if (!data) {
       return <CircularProgress style={{margin:150}} />
     }
-    
+
     return (
       <Grid container>
         <Grid item xs={12}>

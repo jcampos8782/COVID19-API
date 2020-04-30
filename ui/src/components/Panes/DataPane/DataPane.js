@@ -7,17 +7,16 @@ export default class DataPane extends React.Component {
   render() {
     const {
       data,
-      loading,
       columns,
       title,
       value,
       index
     } = this.props;
 
-    if (loading) {
+    if (!data) {
       return <div />
     }
-    
+
     return (
       <TabPanel
         value={value}
