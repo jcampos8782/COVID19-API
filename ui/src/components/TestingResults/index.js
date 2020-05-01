@@ -7,9 +7,9 @@ import {getFacts, getTheme} from '../../selectors';
 
 const extractTestData = createSelector(
   getFacts,
-  tests => tests && Object.keys(tests).reduce((obj,key) => {
-    if (tests[key]) {
-      obj[key] = tests[key];
+  facts => facts && facts.tests && Object.keys(facts.tests).reduce((obj,key) => {
+    if (facts.tests[key]) {
+      obj[key] = facts.tests[key];
     }
     return obj;
   }, {})

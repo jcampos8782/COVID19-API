@@ -105,7 +105,7 @@ const css = theme => ({
     height: 150
   },
   hospitalizationBadges: {
-    paddingBottom: 20
+    paddingLeft: 10
   },
   lineChartContainer: {
     height: 300

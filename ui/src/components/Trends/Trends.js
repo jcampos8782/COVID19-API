@@ -24,7 +24,6 @@ export default class Trends extends React.Component {
       theme,
       data,
       classes,
-      selectedPeriod,
       selectedSeries,
       periodOptions,
       periodDefault,
@@ -98,7 +97,7 @@ export default class Trends extends React.Component {
               <Grid container>
                 <Grid item className={classes.trendsControlContainer} xs={12} md={6}>
                   <FormControl style={{display: "inline-block"}} displaycomponent="fieldset">
-                    <RadioGroup  value={selectedPeriod}  />
+                    <RadioGroup  value={selectedSeries}  />
                     {
                       seriesOptions.map(o => (
                         <FormControlLabel

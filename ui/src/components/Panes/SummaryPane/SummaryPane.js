@@ -25,13 +25,13 @@ export default class SummaryPane extends React.Component {
           <Grid container>
             <RegionOverviewBadges />
             <Trends />
-            <HospitalizationBadges />
-            <Grid item xs={12}>
+            <Recent />
+            <Grid item xs={12} style={{paddingTop:20}}>
               <Grid container>
-                <Grid item xs={12} md={6}>
-                <Recent />
+                <Grid item xs={12} sm={4}>
+                  <HospitalizationBadges />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={8}>
                   <TestingResults />
                 </Grid>
               </Grid>

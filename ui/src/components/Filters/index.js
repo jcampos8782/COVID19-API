@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     loadRegion: (id) => {
       // ignore if we get invalid input
-      if (id === "-1") {
+      if (id === -1) {
         return;
       }
 

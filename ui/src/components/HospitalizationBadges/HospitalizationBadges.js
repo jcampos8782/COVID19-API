@@ -24,7 +24,7 @@ export default class RegionOverviewBadges extends React.Component {
         <Grid item xs={12}>
           <Typography variant="overline">Current/Cumulative</Typography>
         </Grid>
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={12}>
           <BadgedIcon
             title="Admitted"
             color="error"
@@ -32,7 +32,7 @@ export default class RegionOverviewBadges extends React.Component {
             value={ loading ? <LinearProgress variant="query" /> : admitted }
             />
         </Grid>
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={12}>
           <BadgedIcon
             title="Intensive Care"
             color="error"
@@ -40,7 +40,7 @@ export default class RegionOverviewBadges extends React.Component {
             value={ loading ? <LinearProgress variant="query" /> : intensiveCare }
             />
         </Grid>
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={12}>
           <BadgedIcon
             title="Ventiliator"
             color="error"

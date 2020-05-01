@@ -4,6 +4,7 @@ import {
   CHANGE_FILTER_SELECTION,
   RECEIVE_REGIONS,
   SELECT_REGION,
+  SET_RECENT_SERIES,
   SET_RECENT_PERIOD,
   SET_TREND_SERIES,
   SET_TREND_PERIOD,
@@ -15,8 +16,10 @@ const initialState =
   theme: 'light',
   currentTab: 0,
   recent: {
-    period: 7,
-    options: [7, 14, 30]
+    selectedSeries: "confirmed",
+    seriesOptions: ["confirmed", "deaths", "recovered"],
+    selectedPeriod: 7,
+    periodOptions: [7, 14, 30]
   },
   trends: {
     seriesOptions: ["confirmed", "deaths", "recovered"], //TODO: extract from data
@@ -66,7 +69,15 @@ export default (state = initialState, action) => {
             ...state,
             recent: {
               ...state.recent,
-              period: action.period
+              selectedPeriod: action.period
+            }
+          };
+        case SET_RECENT_SERIES:
+          return {
+            ...state,
+            recent: {
+              ...state.recent,
+              selectedSeries: action.series
             }
           };
         case CHANGE_FILTER_SELECTION:

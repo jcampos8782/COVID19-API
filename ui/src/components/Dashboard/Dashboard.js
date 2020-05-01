@@ -43,8 +43,7 @@ export default class Dashboard extends React.Component {
                   >
                   <Tab label="Summary" {...a11yProps(0)} />
                   <Tab label="History" {...a11yProps(1)} />
-                  <Tab label="Subregions" {...a11yProps(2)} disabled={region && region.subregions.length === 0}/>
-                  <Tab label="Data" {...a11yProps(3)} />
+                  <Tab label="Data" {...a11yProps(2)} />
                 </Tabs>
               </Grid>
               <Grid item xs={12}>
@@ -71,13 +70,9 @@ export default class Dashboard extends React.Component {
                           value={tab}
                           index={1}
                           />
-                        <Panes.SubregionPane
-                          value={tab}
-                          index={2}
-                          />
                         <Panes.DataPane
                           value={tab}
-                          index={3}
+                          index={2}
                           />
                       </CardContent>
                     </Card>

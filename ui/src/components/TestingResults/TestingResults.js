@@ -21,7 +21,7 @@ export default class TestingResults extends React.Component {
           <Typography variant="h6">Test Results</Typography>
         </Grid>
         <Grid item style={{height:250}} xs={12}>
-          { !data ? <div /> :
+          {
             !data
               ? <Typography variant="overline">No Data For Region</Typography>
               : <ResponsivePie
@@ -40,9 +40,10 @@ export default class TestingResults extends React.Component {
                       }
                     }
                   }}
-                  margin={{ top: 30, left: 40 }}
-                  innerRadius={0.7}
+                  margin={{bottom:80, left: 60, top:30}}
+                  innerRadius={0.4}
                   startAngle={270}
+                  endAngle={450}
                   padAngle={2}
                   cornerRadius={3}
                   enableSlicesLabels={false}
@@ -106,23 +107,15 @@ export default class TestingResults extends React.Component {
                   ]}
                   legends={[
                       {
-                          anchor: 'bottom-right',
+                          anchor: 'top-left',
                           direction: 'column',
-                          translateX: 30,
+                          translateX: -40,
                           translateY: 0,
                           itemWidth: 100,
                           itemHeight: 18,
-                          itemTextColor: '#999',
                           symbolSize: 18,
                           symbolShape: 'circle',
-                          effects: [
-                              {
-                                  on: 'hover',
-                                  style: {
-                                      itemTextColor: '#000'
-                                  }
-                              }
-                          ]
+                          itemTextColor: palette.nivo.pie.text,
                       }
                   ]}
                 />

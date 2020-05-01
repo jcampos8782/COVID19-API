@@ -30,7 +30,7 @@ export default class SelectFilter extends React.Component {
                 onChange={onChange}
                 disabled={options.length === 0}
               >
-                  <MenuItem value={defaultItem.value} selected><em>{defaultItem.label}</em></MenuItem>
+                  <MenuItem value={defaultItem.value} style={{ display: defaultItem.value === -1 ? 'none' : ''}} selected><em>{defaultItem.label}</em></MenuItem>
                   {
                       options.map(o => <MenuItem key={o.value} value={o.value}>{o.text}</MenuItem>)
                   }

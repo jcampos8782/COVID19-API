@@ -28,6 +28,10 @@ export const light = createMuiTheme(lightBase, {
       main: red[800]
     },
     nivo: {
+      bar: {
+        colors: 'paired',
+        text: 'black'
+      },
       heatmap: {
         colors: {
           emptyColor: lightBase.palette.background.default,
@@ -83,6 +87,10 @@ export const dark = createMuiTheme(darkBase, {
       main: red[800]
     },
     nivo: {
+      bar: {
+        colors: 'set3',
+        text: 'white'
+      },
       heatmap: {
         colors: {
           emptyColor: darkBase.palette.background.default,
