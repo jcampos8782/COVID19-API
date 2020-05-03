@@ -54,5 +54,4 @@ def process_downloads():
     print("Import complete!")
 
 
-if __name__ == '__main__':
-    process_downloads()
+
