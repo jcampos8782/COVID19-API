@@ -33,7 +33,7 @@ FILE_DEMOGRAPHICS = join(META_DIRECTORY, "demographics.csv")
 FILE_FACTS = join(META_DIRECTORY, "facts.json")
 FILE_SIP_ORDERS = join(META_DIRECTORY, "sip_orders.csv")
 FILE_CONTACTS = join(META_DIRECTORY, "contacts.csv")
-
+FILE_RT_LIVE = join(DOWNLOADS_DIRECTORY, "rt.live/data.csv")
 FILE_US_STATES_AND_ISO_CODES = join(LOOKUPS_DIRECTORY, "us_states_and_iso_codes.csv")
 FILE_MX_STATES_AND_ISO_CODES = join(LOOKUPS_DIRECTORY, "mx_states_and_iso_codes.csv")
 
@@ -177,3 +177,9 @@ MX_SCRAPER_EXPECTED_ROWS = {
     'Mexico City': 3,
     'Baja California': 4
 }
+
+"""
+RT.LIVE DOWNLOADER
+"""
+RT_LIVE_DOWNLOADER_URL = "https://d14wlfuexuxgcm.cloudfront.net/covid/rt.csv"
+

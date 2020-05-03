@@ -1,6 +1,7 @@
 [ ! -e "./data/processed/covid19" ] && mkdir -p ./data/processed/covid19
 [ ! -e "./data/downloads/github/CSSEGISandData" ] && mkdir -p ./data/downloads/github/CSSEGISandData
 [ ! -e "./data/downloads/covidtracking" ] && mkdir -p ./data/downloads/covidtracking
+[ ! -e "./data/downloads/rt.live" ] && mkdir -p ./data/downloads/rt.pearl_river
 
 force=""
 
@@ -28,7 +29,7 @@ if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/confirmed_global
   echo "Complete!"
   echo ""
 else
-  echo "File exists. Skipping download of confirmed data"
+  echo "File exists. Skipping download of Global confirmed data"
 fi
 
 if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/recovered_global.csv" ]]; then
@@ -37,7 +38,7 @@ if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/recovered_global
   echo "Complete!"
   echo ""
 else
-  echo "File exists. Skipping download of confirmed data"
+  echo "File exists. Skipping download of Global recovered data"
 fi
 
 if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/deaths_global.csv" ]]; then
@@ -46,7 +47,7 @@ if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/deaths_global.cs
   echo "Complete!"
   echo ""
 else
-  echo "File exists. Skipping download of confirmed data"
+  echo "File exists. Skipping download of Global confirmed data"
 fi
 
 if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/confirmed_us.csv" ]]; then
@@ -55,7 +56,7 @@ if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/confirmed_us.csv
   echo "Complete!"
   echo ""
 else
-  echo "File exists. Skipping download of confirmed data"
+  echo "File exists. Skipping download of US confirmed data"
 fi
 
 if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/deaths_us.csv" ]]; then
@@ -64,16 +65,16 @@ if [[  "$force" || ! -e "./data/downloads/github/CSSEGISandData/deaths_us.csv" ]
   echo "Complete!"
   echo ""
 else
-  echo "File exists. Skipping download of confirmed data"
+  echo "File exists. Skipping download of US deaths data"
 fi
 
-if [[  "$force" || ! -e "./data/downloads/github/carranco-sga/Mexico_COVID19_CTD.csv" ]]; then
+if [[  "$force" || ! -e "./data/downloads/github/carranco-sga/mx_data.csv" ]]; then
   echo "Downloading MX data..."
   wget -O ./data/downloads/github/carranco-sga/mx_data.csv "https://raw.githubusercontent.com/carranco-sga/Mexico-COVID-19/master/Mexico_COVID19_CTD.csv"
   echo "Complete!"
   echo ""
 else
-  echo "File exists. Skipping download of confirmed data"
+  echo "File exists. Skipping download of MX data"
 fi
 
 if [[  "$force" || ! -e "./data/downloads/covidtracking/us_current.json" ]]; then
@@ -82,7 +83,7 @@ if [[  "$force" || ! -e "./data/downloads/covidtracking/us_current.json" ]]; the
   echo "Complete!"
   echo ""
 else
-  echo "File exists. Skipping download of confirmed data"
+  echo "File exists. Skipping download of covid tracking US data"
 fi
 
 if [[  "$force" || ! -e "./data/downloads/covidtracking/states_current.json" ]]; then
@@ -91,7 +92,7 @@ if [[  "$force" || ! -e "./data/downloads/covidtracking/states_current.json" ]];
   echo "Complete!"
   echo ""
 else
-  echo "File exists. Skipping download of confirmed data"
+  echo "File exists. Skipping download of covid tracking state data"
 fi
 
 if [[  "$force" || ! -e "./data/downloads/covidtracking/states_meta.json" ]]; then
@@ -100,7 +101,16 @@ if [[  "$force" || ! -e "./data/downloads/covidtracking/states_meta.json" ]]; th
   echo "Complete!"
   echo ""
 else
-  echo "File exists. Skipping download of confirmed data"
+  echo "File exists. Skipping download of covidtracking state metadata"
+fi
+
+if [[  "$force" || ! -e "./data/downloads/rt.live/data.csv" ]]; then
+  echo "Downloading RT.live CSV data..."
+  PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/downloader.py
+  echo "Complete!"
+  echo ""
+else
+  echo "File exists. Skipping download of rt.live data"
 fi
 
 echo "------------------------"
@@ -114,6 +124,9 @@ echo "------------------------"
 
 echo "Extracting COVID-19 columns"
 echo "covid19,COVID-19,$(head -n 1 ./data/downloads/github/CSSEGISandData/confirmed_global.csv | cut -d ',' -f 5-)" > ./data/meta/series.csv
+
+echo "Extracting RT0 columns"
+echo "rt,RT,$(cut -d ',' -f1 data/downloads/rt.live/data.csv | sed "1 d" | sort | uniq |tr '\n' ',' | sed 's/,*$//g')" >> ./data/meta/series.csv
 
 PYTHONPATH=./init/mongo-init/py/:$PYTHONPATH python3  ./init/mongo-init/py/preprocessor.py
 
