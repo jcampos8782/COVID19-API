@@ -14,8 +14,9 @@ def generate_region_keys(key: str) -> {}:
 
 # TODO: regex
 def __keyify__(key: str) -> str:
-    return key.replace(', ', ',')\
-        .strip()\
+    return key.strip()\
+        .replace(', ', ',')\
+        .replace(' ,', ',')\
         .replace(' ', '_')\
         .replace('/', '_')\
         .replace(',', '-')\
