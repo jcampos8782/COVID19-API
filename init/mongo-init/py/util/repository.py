@@ -19,11 +19,11 @@ def find_series_by_key(key: str) -> dict:
     return db["series"].find_one({"key": __generate_series_key(key)})
 
 
-def create_series(key: str, name: str) -> int:
+def create_series(key: str, name: str, cols: []) -> int:
     return db['series'].insert_one({
         "key": __generate_series_key(key),
         "name": name,
-        "cols": []
+        "cols": cols
     }).inserted_id
 
 
