@@ -28,6 +28,10 @@ export default class App extends React.Component {
         this.props.error(e, info);
     }
 
+    static getDerivedStateFromError(error) {
+        return {errors: ["Error"]}
+    }
+
     render() {
         const {
           loading,

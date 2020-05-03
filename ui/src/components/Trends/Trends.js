@@ -35,7 +35,7 @@ export default class Trends extends React.Component {
     if (!data) {
       return <CircularProgress style={{margin:150}} />;
     };
-
+    console.log(data);
     let palette = theme === 'light' ? light.palette : dark.palette;
     let doublingConfirmed = data.trends["confirmed"].doubling;
     let doublingDeaths = data.trends["deaths"].doubling;

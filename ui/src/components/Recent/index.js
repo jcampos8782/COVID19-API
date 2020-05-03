@@ -58,9 +58,13 @@ const getDataForPeriod = createSelector(
       return null;
     }
 
+    if (!data[filter.selectedSeries]) {
+      return { [region.name]: [] }
+    }
+
     // If there are subregions, aggregate their data. Otherwise just use the
     // daily data for the region.
-    if (Object.keys(subregionData[filter.selectedSeries]).length > 1) {
+    if (subregionData[filter.selectedSeries] && Object.keys(subregionData[filter.selectedSeries]).length > 1) {
       return Object.keys(subregionData[filter.selectedSeries]).reduce((obj, region) => {
         obj[region] = subregionData[filter.selectedSeries][region].slice(-filter.selectedPeriod);
         return obj;

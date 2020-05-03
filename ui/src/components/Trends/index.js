@@ -33,7 +33,7 @@ const extractTrendData = createSelector(
     return {
       keys: Object.keys(data),
       sipOrderDate: new Date(facts.sipOrderDate),
-      trends: calculateTrends(data, filter.selectedPeriod)
+      trends: calculateTrends(data, filter.selectedPeriod, filter)
     };
   }
 );
@@ -43,8 +43,13 @@ const getColumnsForPeriod = createSelector(
   (columns, filter) => columns ? columns.slice(-filter.selectedPeriod) : null
 )
 
-const calculateTrends = (data,period) => (
-  Object.keys(data).reduce((obj, series) => {
+const calculateTrends = (data, period, filter) => (
+  filter.seriesOptions.reduce((obj, series) => {
+    if (!data[series]) {
+      obj[series] = { daily: [], rolling: [], doubling: null }
+      return obj;
+    }
+
     let totals = data[series].aggregates.total;
     let daily = data[series].aggregates.daily;
 
