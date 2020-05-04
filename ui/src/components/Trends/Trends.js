@@ -35,7 +35,7 @@ export default class Trends extends React.Component {
     if (!data) {
       return <CircularProgress style={{margin:150}} />;
     };
-    console.log(data);
+    
     let palette = theme === 'light' ? light.palette : dark.palette;
     let doublingConfirmed = data.trends["confirmed"].doubling;
     let doublingDeaths = data.trends["deaths"].doubling;
@@ -106,7 +106,7 @@ export default class Trends extends React.Component {
                           value={o}
                           label={<Typography variant="caption">{uppercaseFirst(o)}</Typography>}
                           labelPlacement="start"
-                          disabled={Object.keys(data.trends).indexOf(o) === -1}
+                          disabled={data.keys.indexOf(o) === -1}
                           control={<Radio size="small" onChange={e => selectSeries(e.target.value)} /> }
                           />
                       ))
