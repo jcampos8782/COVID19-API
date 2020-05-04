@@ -4,10 +4,10 @@ import Dashboard from './Dashboard';
 
 import { styled } from '../../styles';
 import { selectTab, loadRegion } from '../../actions';
-import { getData, getCurrentTab, getRegion} from '../../selectors';
+import { getCovid19Data, getCurrentTab, getRegion} from '../../selectors';
 
 const mapStateToProps = state => ({
-  data: getData(state),
+  data: getCovid19Data(state),
   tab: getCurrentTab(state),
   region: getRegion(state)
 });

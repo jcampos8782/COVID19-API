@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { styled } from '../../styles';
 import { formatNumber } from '../../util';
-import { getDemographics, getFacts, getData } from '../../selectors';
+import { getDemographics, getFacts, getCovid19Data } from '../../selectors';
 
 const DEFAULT_VALUE = '-';
 
@@ -17,9 +17,9 @@ const calculatePercentChange = (n,d) => {
 
 const mapStateToProps = state => {
   let facts = getFacts(state);
-  let data = getData(state);
+  let data = getCovid19Data(state);
   let demographics = getDemographics(state);
-  
+
   if (!(data && facts && demographics)) {
     return { loading: true }
   }

@@ -1,23 +1,7 @@
-import {
-  RECEIVE_SERIES_DATA,
-  REQUEST_SERIES_BY_REGION_ID
-} from '../actions/types';
+import {createSeriesReducer} from './factory';
 
-export default (state = null, action) => {
-    switch(action.type) {
-        case RECEIVE_SERIES_DATA:
-            return processData({...action});
-        case REQUEST_SERIES_BY_REGION_ID:
-            return null;
-        default:
-            return state;
-    }
-}
-
-// TODO: a better fix Hack for now
 const order = ["confirmed", "deaths", "recovered"]
-
-const processData = ({region, series}) => {
+const handler = ({region, series}) => {
   let aggregateDataItem = series.data.find(d => d.regions[0] === region.id);
   let subregionDataItems = series.data.filter(d => d.regions[0] !== region.id);
 
@@ -93,3 +77,5 @@ const aggregateData = (subregions) => {
     return obj;
   }, {});
 }
+
+export default createSeriesReducer("COVID-19", handler);

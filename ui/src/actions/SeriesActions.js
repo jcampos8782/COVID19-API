@@ -6,7 +6,7 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 export const selectSeries = series => ({ type: Actions.SELECT_SERIES, series })
 
 export const requestSeriesList = () => ({ type: Actions.REQUEST_SERIES_LIST })
-export const requestSeriesByRegion = (seriesId, regionId) => ({ type: Actions.REQUEST_SERIES_BY_REGION_ID, seriesId, regionId })
+export const requestSeriesByRegion = (series, region) => ({ type: Actions.REQUEST_SERIES_BY_REGION_ID, series, region })
 
 export const receiveSeriesData = (region, series) => ({ type: Actions.RECEIVE_SERIES_DATA, region, series })
 export const receiveSeriesList = series => ({ type: Actions.RECEIVE_SERIES_LIST, series })
@@ -36,7 +36,7 @@ export function fetchSeriesByRegion(region) {
         throw new Error("Failed to request series for region");
       }
 
-      dispatch(requestSeriesByRegion(series.id, region.id));
+      dispatch(requestSeriesByRegion(series, region));
 
       return fetch(`${SERVER_URL}/api/series/${series.id}/regions/${region.id}`)
         .then(response => response.json(), e => { throw new Error("Failed to retrieve series")})

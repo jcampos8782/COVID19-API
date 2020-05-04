@@ -1,4 +1,4 @@
-export { default as data } from './data';
+export { default as data } from './Data';
 export { default as errors } from './errors';
 export { default as headlines } from './headlines';
 export { default as loading } from './loading';

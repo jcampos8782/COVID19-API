@@ -4,7 +4,7 @@ import {createSelector} from 'reselect';
 import {styled} from '../../styles';
 import {setRecentPeriod, setRecentSeries} from '../../actions';
 import {
-  getData,
+  getCovid19Data,
   getDataKeys,
   getTheme,
   getRegion,
@@ -16,7 +16,7 @@ import {
 const MAX_REGIONS = 9;
 
 const extractSubregionsData = createSelector(
-  [getData, getSeries],
+  [getCovid19Data, getSeries],
   (data, series) => (
     data
     ? Object.keys(data).reduce((obj,key) => {
@@ -52,7 +52,7 @@ const extractSubregionsData = createSelector(
 );
 
 const getDataForPeriod = createSelector(
-  [getData, extractSubregionsData, getRegion, getRecentFilterSettings],
+  [getCovid19Data, extractSubregionsData, getRegion, getRecentFilterSettings],
   (data, subregionData, region, filter) => {
     if (!(data && region)) {
       return null;

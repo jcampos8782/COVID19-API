@@ -4,7 +4,7 @@ import {styled} from '../../styles';
 import { createSelector } from 'reselect';
 import {setTrendSeries, setTrendPeriod} from '../../actions';
 import {
-  getData,
+  getCovid19Data,
   getFacts,
   getRegion,
   getSeriesDataColumns,
@@ -15,7 +15,7 @@ import {
 const getBaseLog = (x, y) => Math.log(y) / Math.log(x);
 
 const extractTrendData = createSelector(
-  [getData, getRegion, getFacts, getTrendsFilterSettings],
+  [getCovid19Data, getRegion, getFacts, getTrendsFilterSettings],
   (data, region, facts, filter) => {
     if (!(data && region && facts)) {
       return null;

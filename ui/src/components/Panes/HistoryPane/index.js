@@ -2,10 +2,10 @@ import HistoryPane from './HistoryPane';
 import {styled} from '../../../styles';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getData, getDataKeys, getTheme, getSeriesDataColumns } from '../../../selectors';
+import { getCovid19Data, getDataKeys, getTheme, getSeriesDataColumns } from '../../../selectors';
 
 const extractHistoryData = createSelector(
-  [getData],
+  [getCovid19Data],
   data => data
     ? Object.keys(data).reduce((obj,key) => {
         obj[key] = {
