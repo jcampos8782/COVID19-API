@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 export default class LocationBreadcrumb extends React.Component {
   render() {
-    const { locations, loadRegion, classes } = this.props;
+    const { locations, series, loadRegion, classes } = this.props;
 
     return (
       <Breadcrumbs aria-label="locations">
@@ -23,7 +23,7 @@ export default class LocationBreadcrumb extends React.Component {
             }
             return (
               <Container key={i} className={classes.breadcrumbItem}>
-                <Link key={i} href="#" className={classes.link} onClick={() => loadRegion(l.id)}>
+                <Link key={i} href="#" className={classes.link} onClick={() => loadRegion(l.id, series)}>
                   <Typography className={classes.breadcrumbText} variant="h5">{l.name}</Typography>
                 </Link>
                 {l.contacts && <ContactLinks {...this.props} contacts={l.contacts} /> }

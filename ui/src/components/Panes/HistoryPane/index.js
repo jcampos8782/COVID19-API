@@ -2,7 +2,7 @@ import HistoryPane from './HistoryPane';
 import {styled} from '../../../styles';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getCovid19Data, getDataKeys, getTheme, getSeriesDataColumns } from '../../../selectors';
+import { getCovid19Data, getTheme, getCovid19Columns } from '../../../selectors';
 
 const extractHistoryData = createSelector(
   [getCovid19Data],
@@ -21,8 +21,7 @@ const extractHistoryData = createSelector(
 const mapStateToProps = state => ({
   data: extractHistoryData(state),
   theme: getTheme(state),
-  keys: getDataKeys(state),
-  columns: getSeriesDataColumns(state),
+  columns: getCovid19Columns(state),
 })
 
 const mapDispatchToProps = dispatch => ({})

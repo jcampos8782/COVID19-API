@@ -1,12 +1,10 @@
-import {
-  SELECT_SERIES
-} from '../actions/types';
+import { RECEIVE_SERIES_LIST } from '../actions/types';
 
-export default (state = null, action) => {
-    switch(action.type) {
-        case SELECT_SERIES:
-          return action.series;
-        default:
-            return state;
-    }
+export default (state = [], action) => {
+  switch(action.type) {
+    case RECEIVE_SERIES_LIST:
+      return action.series;
+    default:
+      return state;
+  }
 }

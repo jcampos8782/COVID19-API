@@ -7,7 +7,7 @@ import {
   getCovid19Data,
   getFacts,
   getRegion,
-  getSeriesDataColumns,
+  getCovid19Columns,
   getTrendsFilterSettings,
   getTheme
 } from '../../selectors';
@@ -39,7 +39,7 @@ const extractTrendData = createSelector(
 );
 
 const getColumnsForPeriod = createSelector(
-  [getSeriesDataColumns, getTrendsFilterSettings],
+  [getCovid19Columns, getTrendsFilterSettings],
   (columns, filter) => columns ? columns.slice(-filter.selectedPeriod) : null
 )
 

@@ -7,9 +7,10 @@ export default class Filters extends React.Component {
       const {
         classes,
         filters,
+        series,
         loadRegion
       } = this.props;
-
+      console.log(series)
       return (
         <div className={classes.filters}>
           {
@@ -19,11 +20,11 @@ export default class Filters extends React.Component {
                 key={idx}
                 label={filter.label}
                 selected={filter.value}
-                onChange={(e) => loadRegion(e.target.value)}
+                onChange={(e) => loadRegion(e.target.value, series)}
                 defaultItem={{value: filter.none, label: 'None'}}
                 options={filter.options}
                 icon={filter.icon}
-                iconAction={() => loadRegion(filter.none)}
+                iconAction={() => loadRegion(filter.none, series)}
               />
             ))
           }

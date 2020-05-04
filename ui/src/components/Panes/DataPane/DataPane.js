@@ -12,7 +12,7 @@ export default class DataPane extends React.Component {
       value,
       index
     } = this.props;
-
+    
     if (!data) {
       return <div />
     }

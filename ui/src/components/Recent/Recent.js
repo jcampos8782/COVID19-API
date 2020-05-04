@@ -27,7 +27,6 @@ export default class Recent extends React.Component {
       classes,
       data,
       columns,
-      keys,
       selectPeriod,
       selectSeries,
       selectedSeries,
@@ -59,7 +58,7 @@ export default class Recent extends React.Component {
                       value={o}
                       label={<Typography variant="caption">{uppercaseFirst(o)}</Typography>}
                       labelPlacement="start"
-                      disabled={keys.indexOf(o) === -1}
+                      disabled={Object.keys(data).indexOf(o) === -1}
                       control={<Radio size="small" onChange={e => selectSeries(e.target.value)} /> }
                       />
                   ))

@@ -5,19 +5,17 @@ import {styled} from '../../styles';
 import {setRecentPeriod, setRecentSeries} from '../../actions';
 import {
   getCovid19Data,
-  getDataKeys,
   getTheme,
   getRegion,
-  getSeries,
-  getSeriesDataColumns,
+  getCovid19Columns,
   getRecentFilterSettings
 } from '../../selectors';
 
 const MAX_REGIONS = 9;
 
 const extractSubregionsData = createSelector(
-  [getCovid19Data, getSeries],
-  (data, series) => (
+  [getCovid19Data, getCovid19Columns],
+  (data, columns) => (
     data
     ? Object.keys(data).reduce((obj,key) => {
         let regionalData = data[key].regional;
@@ -36,7 +34,7 @@ const extractSubregionsData = createSelector(
 
         // Aggregate all others into a single "Others"
         let otherRegionNames = regionsSortedByTotal.slice(MAX_REGIONS);
-        let otherRegionsAggregate = Array.from({length: series.columns.length}, n => 0);
+        let otherRegionsAggregate = Array.from({length: columns.length}, n => 0);
         otherRegionNames.forEach(region => {
           regionalData[region].daily.forEach((val,idx) => {
             otherRegionsAggregate[idx] += val;
@@ -75,13 +73,12 @@ const getDataForPeriod = createSelector(
   });
 
 const getColumnsForPeriod = createSelector(
-  [getSeriesDataColumns, getRecentFilterSettings],
+  [getCovid19Columns, getRecentFilterSettings],
   (columns, filter) => columns ? columns.slice(-filter.selectedPeriod) : null
 );
 
 const mapStateToProps = state => ({
   data: getDataForPeriod(state),
-  keys: getDataKeys(state),
   theme: getTheme(state),
   columns: getColumnsForPeriod(state),
   ...getRecentFilterSettings(state)

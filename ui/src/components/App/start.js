@@ -16,7 +16,6 @@ import {
   fetchSubregions,
   fetchRegions,
   fetchSeriesByRegion,
-  selectSeries,
   selectRegion,
   receiveRegions,
   error
@@ -28,7 +27,7 @@ const defaultProps = {
 }
 
 export const start = (dispatch, props = defaultProps) => {
-  Promise.all([dispatch(fetchRegions(0)), loadAllSeries(dispatch)])
+  dispatch(fetchRegions(0))
     .then(
       results => loadUserRegion(dispatch, results[0], props),
       e => dispatch(error(e))
@@ -36,22 +35,15 @@ export const start = (dispatch, props = defaultProps) => {
     .then(
       region => {
         initializeRegionFilters(dispatch, props, region)
-          .then(() => {
-            dispatch(fetchSeriesByRegion(region));
-            dispatch(selectRegion(region));
-          })
+          .then(() => dispatch(fetchSeriesList()))
+          .then(series => Promise.all(series.map(s => dispatch(fetchSeriesByRegion(s, region)))))
+          .then(() => dispatch(selectRegion(region)))
       },
       e => dispatch(error(e))
     ).catch(e => {
       dispatch(error(e));
     });
 }
-
-// Fetch all series and set the filter to the first in the list
-const loadAllSeries = dispatch => (
-  dispatch(fetchSeriesList())
-    .then(series => dispatch(selectSeries(series[0])))
-)
 
 // Loads the user's region. Uses geolocation if possible
 const loadUserRegion = (dispatch, allRegions, props) => {

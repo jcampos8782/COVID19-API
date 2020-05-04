@@ -3,8 +3,6 @@ import { error } from './ErrorActions'
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
-export const selectSeries = series => ({ type: Actions.SELECT_SERIES, series })
-
 export const requestSeriesList = () => ({ type: Actions.REQUEST_SERIES_LIST })
 export const requestSeriesByRegion = (series, region) => ({ type: Actions.REQUEST_SERIES_BY_REGION_ID, series, region })
 
@@ -24,10 +22,8 @@ export function fetchSeriesList() {
   }
 }
 
-export function fetchSeriesByRegion(region) {
-    return (dispatch, getState) => {
-      let { series } = getState();
-
+export function fetchSeriesByRegion(series, region) {
+    return dispatch => {
       if (!series || !series.id) {
         throw new Error("Called fetchSeriesByRegion but series is null");
       }
