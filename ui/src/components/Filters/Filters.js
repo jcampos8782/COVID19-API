@@ -10,7 +10,7 @@ export default class Filters extends React.Component {
         series,
         loadRegion
       } = this.props;
-      console.log(series)
+      
       return (
         <div className={classes.filters}>
           {
