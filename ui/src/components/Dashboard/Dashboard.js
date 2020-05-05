@@ -66,13 +66,9 @@ export default class Dashboard extends React.Component {
                           value={tab}
                           index={0}
                           />
-                        <Panes.HistoryPane
-                          value={tab}
-                          index={1}
-                          />
                         <Panes.DataPane
                           value={tab}
-                          index={2}
+                          index={1}
                           />
                       </CardContent>
                     </Card>

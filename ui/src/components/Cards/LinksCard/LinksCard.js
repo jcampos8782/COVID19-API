@@ -43,6 +43,9 @@ export default class LinksCard extends React.Component {
             <Link className={classes.link} href="https://covidtracking.com/" rel="noopener">CovidTracking.com</Link>
           </Typography>
           <Typography variant="body2">
+            <Link className={classes.link} href="https://rt.live" rel="noopener">RT.Live</Link>
+          </Typography>
+          <Typography variant="body2">
             < Link className={classes.link} href="https://github.com/carranco-sga/Mexico-COVID-19" rel="noopener">Mexico State Data</Link>
           </Typography>
           <Typography variant="body2">
