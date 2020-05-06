@@ -29,7 +29,7 @@ const defaultProps = {
 export const start = (dispatch, props = defaultProps) => {
   dispatch(fetchRegions(0))
     .then(
-      results => loadUserRegion(dispatch, results[0], props),
+      results => loadUserRegion(dispatch, results, props),
       e => dispatch(error(e))
     )
     .then(
