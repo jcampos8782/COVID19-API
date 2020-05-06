@@ -26,6 +26,7 @@ export default class Recent extends React.Component {
       theme,
       classes,
       data,
+      series,
       columns,
       selectPeriod,
       selectSeries,
@@ -39,7 +40,7 @@ export default class Recent extends React.Component {
     }
 
     const palette = theme === 'light' ? light.palette : dark.palette;
-
+    
     return (
       <Grid container>
         <Grid item xs={12}>
@@ -58,7 +59,7 @@ export default class Recent extends React.Component {
                       value={o}
                       label={<Typography variant="caption">{uppercaseFirst(o)}</Typography>}
                       labelPlacement="start"
-                      disabled={Object.keys(data).indexOf(o) === -1}
+                      disabled={series.indexOf(o) === -1}
                       control={<Radio size="small" onChange={e => selectSeries(e.target.value)} /> }
                       />
                   ))

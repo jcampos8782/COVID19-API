@@ -15,7 +15,7 @@ import {
   fetchClosestRegion,
   fetchSubregions,
   fetchRegions,
-  fetchSeriesByRegion,
+  loadAllSeriesForRegion,
   selectRegion,
   receiveRegions,
   error
@@ -36,7 +36,7 @@ export const start = (dispatch, props = defaultProps) => {
       region => {
         initializeRegionFilters(dispatch, props, region)
           .then(() => dispatch(fetchSeriesList()))
-          .then(series => Promise.all(series.map(s => dispatch(fetchSeriesByRegion(s, region)))))
+          .then(() => dispatch(loadAllSeriesForRegion(region)))
           .then(() => dispatch(selectRegion(region)))
       },
       e => dispatch(error(e))

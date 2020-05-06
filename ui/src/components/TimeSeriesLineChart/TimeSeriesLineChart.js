@@ -23,7 +23,13 @@ export default class TimeSeriesLineChart extends React.Component {
       markers = null,
       labelFormat = x => x,
       max,
-      min
+      min,
+      lineWidth = 1,
+      enableArea = true,
+      areaBaselineValue,
+      enablePoints = true,
+      enableGridX = true,
+      enableGridY = true
     } = this.props;
 
     let palette = theme === 'light' ? light.palette : dark.palette;
@@ -98,7 +104,8 @@ export default class TimeSeriesLineChart extends React.Component {
         }}
         xFormat={(d) => DATE_FORMAT.format(d)}
         enablePointLabel={false}
-        enableArea={true}
+        enableArea={enableArea}
+        areaBaselineValue={areaBaselineValue}
         axisBottom={{
             format: '%b %d',
             tickSize: 15,
@@ -106,6 +113,7 @@ export default class TimeSeriesLineChart extends React.Component {
             itemTextColor: palette.nivo.line.text,
             tickRotation: 30
         }}
+        enablePoints={enablePoints}
         pointSize={5}
         pointBorderWidth={1}
         pointBorderColor={{
@@ -113,9 +121,12 @@ export default class TimeSeriesLineChart extends React.Component {
             modifiers: [['darker', 0.5]],
         }}
         useMesh={true}
+        enableGridX={enableGridX}
+        enableGridY={enableGridY}
         enableSlices="x"
         animate={true}
         layers={layers}
+        lineWidth={lineWidth}
         legends={[
           {
               anchor: 'top-left',

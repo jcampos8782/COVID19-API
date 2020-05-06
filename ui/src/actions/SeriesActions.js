@@ -1,5 +1,6 @@
 import * as Actions from './types';
 import { error } from './ErrorActions'
+import { getSeries } from '../selectors'
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -19,6 +20,12 @@ export function fetchSeriesList() {
         return json;
       })
       .catch(e => dispatch(error(e)));
+  }
+}
+
+export function loadAllSeriesForRegion(region) {
+  return (dispatch, getState) => {
+    return Promise.all(getSeries(getState()).map(series => dispatch(fetchSeriesByRegion(series, region))));
   }
 }
 

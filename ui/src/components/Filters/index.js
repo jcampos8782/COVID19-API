@@ -1,7 +1,7 @@
 import Filters from './Filters';
 import {styled} from '../../styles';
 import { connect } from 'react-redux';
-import {loadRegion, fetchSeriesByRegion, error} from '../../actions';
+import {loadRegion, loadAllSeriesForRegion, error} from '../../actions';
 import {getRegionFilters, getCovid19Series} from '../../selectors';
 
 const mapStateToProps = state => ({
@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
 
       dispatch(loadRegion(id))
         .then(
-          region => dispatch(fetchSeriesByRegion(series, region)),
+          region => dispatch(loadAllSeriesForRegion(region)),
           e => dispatch(error(e))
         )
         .catch(e => dispatch(error(e)));

@@ -24,14 +24,6 @@ export default class App extends React.Component {
       start(this.props);
     }
 
-    componentDidCatch(e, info) {
-        this.props.error(e, info);
-    }
-
-    static getDerivedStateFromError(error) {
-        return {errors: ["Error"]}
-    }
-
     render() {
         const {
           loading,

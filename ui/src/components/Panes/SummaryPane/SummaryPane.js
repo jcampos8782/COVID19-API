@@ -7,6 +7,7 @@ import TabPanel from '../TabPanel';
 import HospitalizationBadges from '../../HospitalizationBadges';
 import Recent from '../../Recent';
 import RegionOverviewBadges from '../../RegionOverviewBadges';
+import Rt from '../../Rt';
 import TestingResults from '../../TestingResults';
 import Trends from '../../Trends';
 
@@ -26,7 +27,8 @@ export default class SummaryPane extends React.Component {
             <RegionOverviewBadges />
             <Trends />
             <Recent />
-            <Grid item xs={12} style={{paddingTop:20}}>
+            <Rt />
+            <Grid item xs={12}>
               <Grid container>
                 <Grid item xs={12} sm={4}>
                   <HospitalizationBadges />

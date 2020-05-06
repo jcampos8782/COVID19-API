@@ -72,3 +72,7 @@ export const getColumnsForPeriod = createSelector(
   [getCovid19Columns, getRecentFilterSettings],
   (columns, filter) => columns ? columns.slice(-filter.selectedPeriod) : null
 );
+
+export const getAvailableSeries = createSelector(
+  [getCovid19Data], data => data ? Object.keys(data) : []
+)
