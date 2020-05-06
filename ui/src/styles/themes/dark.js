@@ -34,6 +34,10 @@ export default createMuiTheme(base, {
         colors: 'set3',
         text: 'white'
       },
+      fills: {
+        good: '#66c2a5',
+        bad: '#f08072'
+      },
       heatmap: {
         colors: {
           emptyColor: base.palette.background.default,

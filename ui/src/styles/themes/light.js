@@ -28,6 +28,10 @@ export default createMuiTheme({
     contrastThreshold: 3,
     tonalOffset: 0.2,
     nivo: {
+      fills: {
+        good: base.palette.success.light,
+        bad: base.palette.error.light
+      },
       bar: {
         colors: 'paired',
         text: 'black'

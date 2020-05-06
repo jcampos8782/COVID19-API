@@ -50,13 +50,13 @@ export default class Recent extends React.Component {
                   max={MAX}
                   layers={[
                     'grid',
-                    'markers',
                     'areas',
                     AreaLayer(data, palette),
                     'lines',
                     'slices',
                     'axes',
-                    'points'
+                    'points',
+                    'markers'
                 ]}
                   curve="monotoneX"
                   areaBaselineValue={1}
@@ -97,6 +97,9 @@ const generateMarkers = (sipOrderDate, palette) => {
         stroke: palette.nivo.bar.itemTextColor,
         strokeWidth: 3,
         strokeDasharray: '12, 8',
+      },
+      textStyle: {
+        fill: palette.nivo.line.text
       },
       legend: "Spreading/Slowing"
     }
@@ -173,14 +176,14 @@ const AreaLayer = (data, palette) => (props) => {
                   {
                       id: 'good',
                       type: 'patternLines',
-                      background: palette.success.light,
-                      color: palette.success.light,
+                      background: palette.nivo.fills.good,
+                      color: palette.nivo.fills.good
                   },
                   {
                       id: 'bad',
                       type: 'patternLines',
-                      background: palette.error.light,
-                      color: palette.error.light,
+                      background: palette.nivo.fills.bad,
+                      color: palette.nivo.fills.bad
                   }
                 ]}
             />
