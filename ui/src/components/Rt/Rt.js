@@ -2,6 +2,8 @@ import React from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import Icon from '@material-ui/core/Icon';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { Defs } from '@nivo/core'
 import { area, curveMonotoneX } from 'd3-shape'
@@ -32,7 +34,12 @@ export default class Recent extends React.Component {
     return (
       <Grid container style={{paddingTop: 10}}>
         <Grid item xs={12}>
-          <Typography variant="h6">Effective Reproduction Rate (R<sub>t</sub>)</Typography>
+          <Typography variant="h6">
+            Effective Reproduction Rate (R<sub>t</sub>)&nbsp;
+            <Tooltip title="Number of people an infected person infects">
+              <Icon style={{ fontSize: '.75em'}} className="far fa-question-circle"/>
+            </Tooltip>
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           {
