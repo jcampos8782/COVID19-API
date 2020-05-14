@@ -3,9 +3,8 @@ services:
   nginx:
     build: ./docker/nginx
     ports:
-      - 8000:80
+      - 443:443
     depends_on:
-      - api
       - ui
   api:
     build:
