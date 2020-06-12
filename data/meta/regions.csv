@@ -122,6 +122,8 @@ Cuba,cuba,,1,CU,CUB,
 Cyprus,cyprus,,1,CY,CYP,
 Czechia,czechia,,1,CZ,CZE,
 Denmark,denmark,,1,DK,DNK,
+Faroe Islands,faroe_islands-denmark,denmark,2,FO,FRO,
+Greenland,greenland-denmark,denmark,2,GL,GRL,
 Diamond Princess,diamond_princess,,1,,,
 Djibouti,djibouti,,1,DJ,DJI,
 Dominica,dominica,,1,DM,DMA,
@@ -137,6 +139,16 @@ Ethiopia,ethiopia,,1,ET,ETH,
 Fiji,fiji,,1,FJ,FJI,
 Finland,finland,,1,FI,FIN,
 France,france,,1,FR,FRA,
+French Guiana,french_guiana-france,france,2,GF,GUF,
+French Polynesia,french_polynesia-france,france,2,PF,PYF,
+Guadeloupe,guadeloupe-france,france,2,GP,GLP,
+Martinique,martinique-france,france,2,MQ,MTQ,
+Mayotte,mayotte-france,france,2,YT,MYT,
+New Caledonia,new_caledonia-france,france,2,NC,NCL,
+Reunion,reunion-france,france,2,RE,REU,
+Saint Barthelemy,saint_barthelemy-france,france,2,BL,BLM,
+Saint Pierre and Miquelon,saint_pierre_and_miquelon-france,france,2,PM,SPM,
+St Martin,st_martin-france,france,2,MF,MAF,
 Gabon,gabon,,1,GA,GAB,
 Gambia,gambia,,1,GM,GMB,
 Georgia,georgia,,1,GE,GEO,
@@ -171,6 +183,42 @@ Honduras,honduras,,1,HN,HND,
 Hungary,hungary,,1,HU,HUN,
 Iceland,iceland,,1,IS,ISL,
 India,india,,1,IN,IND,
+Andaman and Nicobar Islands,andaman_and_nicobar_islands-india,india,2,IN,IND,
+Andhra Pradesh,andhra_pradesh-india,india,2,IN,IND,
+Arunachal Pradesh,arunachal_pradesh-india,india,2,IN,IND,
+Assam,assam-india,india,2,IN,IND,
+Bihar,bihar-india,india,2,IN,IND,
+Chandigarh,chandigarh-india,india,2,IN,IND,
+Chhattisgarh,chhattisgarh-india,india,2,IN,IND,
+Dadra and Nagar Haveli and Daman and Diu,dadra_and_nagar_haveli_and_daman_and_diu-india,india,2,IN,IND,
+Delhi,delhi-india,india,2,IN,IND,
+Goa,goa-india,india,2,IN,IND,
+Gujarat,gujarat-india,india,2,IN,IND,
+Haryana,haryana-india,india,2,IN,IND,
+Himachal Pradesh,himachal_pradesh-india,india,2,IN,IND,
+Jammu and Kashmir,jammu_and_kashmir-india,india,2,IN,IND,
+Jharkhand,jharkhand-india,india,2,IN,IND,
+Karnataka,karnataka-india,india,2,IN,IND,
+Kerala,kerala-india,india,2,IN,IND,
+Ladakh,ladakh-india,india,2,IN,IND,
+Madhya Pradesh,madhya_pradesh-india,india,2,IN,IND,
+Maharashtra,maharashtra-india,india,2,IN,IND,
+Manipur,manipur-india,india,2,IN,IND,
+Meghalaya,meghalaya-india,india,2,IN,IND,
+Mizoram,mizoram-india,india,2,IN,IND,
+Nagaland,nagaland-india,india,2,IN,IND,
+Odisha,odisha-india,india,2,IN,IND,
+Puducherry,puducherry-india,india,2,IN,IND,
+Punjab,punjab-india,india,2,IN,IND,
+Rajasthan,rajasthan-india,india,2,IN,IND,
+Sikkim,sikkim-india,india,2,IN,IND,
+Tamil Nadu,tamil_nadu-india,india,2,IN,IND,
+Telangana,telangana-india,india,2,IN,IND,
+Tripura,tripura-india,india,2,IN,IND,
+Uttar Pradesh,uttar_pradesh-india,india,2,IN,IND,
+Uttarakhand,uttarakhand-india,india,2,IN,IND,
+West Bengal,west_bengal-india,india,2,IN,IND,
+Unknown,unknown-india,india,2,IN,IND,
 Indonesia,indonesia,,1,ID,IDN,
 Iran,iran,,1,IR,IRN,
 Iraq,iraq,,1,IQ,IRQ,
@@ -317,6 +365,10 @@ MS Zaandam,ms_zaandam,,1,,,
 Namibia,namibia,,1,NA,NAM,
 Nepal,nepal,,1,NP,NPL,
 Netherlands,netherlands,,1,NL,NLD,
+Aruba,aruba-netherlands,netherlands,2,AW,ABW,
+Curacao,curacao-netherlands,netherlands,2,CW,CUW,
+Sint Maarten,sint_maarten-netherlands,netherlands,2,SX,SXM,
+Bonaire/Sint Eustatius/Saba,bonaire_sint_eustatius_saba-netherlands,netherlands,2,BQ,BES,
 New Zealand,new_zealand,,1,NZ,NZL,
 Nicaragua,nicaragua,,1,NI,NIC,
 Niger,niger,,1,NE,NER,
@@ -325,6 +377,14 @@ North Macedonia,north_macedonia,,1,MK,MKD,
 Norway,norway,,1,NO,NOR,
 Oman,oman,,1,OM,OMN,
 Pakistan,pakistan,,1,PK,PAK,
+Azad Jammu and Kashmir,azad_jammu_and_kashmir-pakistan,pakistan,2,PK,PAK,
+Balochistan,balochistan-pakistan,pakistan,2,PK,PAK,
+Gilgit-Baltistan,gilgit-baltistan-pakistan,pakistan,2,PK,PAK,
+Islamabad,islamabad-pakistan,pakistan,2,PK,PAK,
+Khyber Pakhtunkhwa,khyber_pakhtunkhwa-pakistan,pakistan,2,PK,PAK,
+Punjab,punjab-pakistan,pakistan,2,PK,PAK,
+Sindh,sindh-pakistan,pakistan,2,PK,PAK,
+Unknown,unknown-pakistan,pakistan,2,PK,PAK,
 Panama,panama,,1,PA,PAN,
 Papua New Guinea,papua_new_guinea,,1,PG,PNG,
 Paraguay,paraguay,,1,PY,PRY,
@@ -487,6 +547,28 @@ Sri Lanka,sri_lanka,,1,LK,LKA,
 Sudan,sudan,,1,SD,SDN,
 Suriname,suriname,,1,SR,SUR,
 Sweden,sweden,,1,SE,SWE,
+Blekinge,blekinge-sweden,sweden,2,SE,SWE,
+Dalarna,dalarna-sweden,sweden,2,SE,SWE,
+Gavleborg,gavleborg-sweden,sweden,2,SE,SWE,
+Gotland,gotland-sweden,sweden,2,SE,SWE,
+Halland,halland-sweden,sweden,2,SE,SWE,
+Jamtland Harjedalen,jamtland_harjedalen-sweden,sweden,2,SE,SWE,
+Jonkoping,jonkoping-sweden,sweden,2,SE,SWE,
+Kalmar,kalmar-sweden,sweden,2,SE,SWE,
+Kronoberg,kronoberg-sweden,sweden,2,SE,SWE,
+Norrbotten,norrbotten-sweden,sweden,2,SE,SWE,
+Orebro,orebro-sweden,sweden,2,SE,SWE,
+Ostergotland,ostergotland-sweden,sweden,2,SE,SWE,
+Skane,skane-sweden,sweden,2,SE,SWE,
+Sormland,sormland-sweden,sweden,2,SE,SWE,
+Stockholm,stockholm-sweden,sweden,2,SE,SWE,
+Uppsala,uppsala-sweden,sweden,2,SE,SWE,
+Varmland,varmland-sweden,sweden,2,SE,SWE,
+Vasterbotten,vasterbotten-sweden,sweden,2,SE,SWE,
+Vasternorrland,vasternorrland-sweden,sweden,2,SE,SWE,
+Vastmanland,vastmanland-sweden,sweden,2,SE,SWE,
+Vastra Gotaland,vastra_gotaland-sweden,sweden,2,SE,SWE,
+Unknown,unknown-sweden,sweden,2,SE,SWE,
 Switzerland,switzerland,,1,CH,CHE,
 Syria,syria,,1,SY,SYR,
 Taiwan,taiwan,,1,TW,TWN,
@@ -530,32 +612,11 @@ Zhytomyr Oblast,zhytomyr_oblast-ukraine,ukraine,2,UA,UKR,
 Unknown,unknown-ukraine,ukraine,2,UA,UKR,
 United Arab Emirates,united_arab_emirates,,1,AE,ARE,
 United Kingdom,united_kingdom,,1,GB,GBR,
-Uruguay,uruguay,,1,UY,URY,
-Uzbekistan,uzbekistan,,1,UZ,UZB,
-Venezuela,venezuela,,1,VE,VEN,
-Vietnam,vietnam,,1,VN,VNM,
-West Bank and Gaza,west_bank_and_gaza,,1,PS,PSE,
-Western Sahara,western_sahara,,1,EH,ESH,
-Yemen,yemen,,1,YE,YEM,
-Zambia,zambia,,1,ZM,ZMB,
-Zimbabwe,zimbabwe,,1,ZW,ZWE,
-Faroe Islands,faroe_islands-denmark,denmark,2,FO,FRO,
-Greenland,greenland-denmark,denmark,2,GL,GRL,
-French Guiana,french_guiana-france,france,2,GF,GUF,
-French Polynesia,french_polynesia-france,france,2,PF,PYF,
-Guadeloupe,guadeloupe-france,france,2,GP,GLP,
-Martinique,martinique-france,france,2,MQ,MTQ,
-Mayotte,mayotte-france,france,2,YT,MYT,
-New Caledonia,new_caledonia-france,france,2,NC,NCL,
-Reunion,reunion-france,france,2,RE,REU,
-Saint Barthelemy,saint_barthelemy-france,france,2,BL,BLM,
-Saint Pierre and Miquelon,saint_pierre_and_miquelon-france,france,2,PM,SPM,
-St Martin,st_martin-france,france,2,MF,MAF,
-Aruba,aruba-netherlands,netherlands,2,AW,ABW,
-Curacao,curacao-netherlands,netherlands,2,CW,CUW,
-Sint Maarten,sint_maarten-netherlands,netherlands,2,SX,SXM,
-Bonaire/Sint Eustatius/Saba,bonaire_sint_eustatius_saba-netherlands,netherlands,2,BQ,BES,
-Anguilla,anguilla-united_kingdom,united_kingdom,2,AI,AIA,
+England,england-united_kingdom,united_kingdom,2,GB,GBR,
+Northern Ireland,northern_ireland-united_kingdom,united_kingdom,2,GB,GBR,
+Scotland,scotland-united_kingdom,united_kingdom,2,GB,GBR,
+Wales,wales-united_kingdom,united_kingdom,2,GB,GBR,
+Unknown,unknown-united_kingdom,united_kingdom,2,GB,GBR,
 Bermuda,bermuda-united_kingdom,united_kingdom,2,BM,BMU,
 British Virgin Islands,british_virgin_islands-united_kingdom,united_kingdom,2,VG,VGB,
 Cayman Islands,cayman_islands-united_kingdom,united_kingdom,2,KY,CYM,
@@ -565,6 +626,16 @@ Gibraltar,gibraltar-united_kingdom,united_kingdom,2,GI,GIB,
 Isle of Man,isle_of_man-united_kingdom,united_kingdom,2,IM,IMN,
 Montserrat,montserrat-united_kingdom,united_kingdom,2,MS,MSR,
 Turks and Caicos Islands,turks_and_caicos_islands-united_kingdom,united_kingdom,2,TC,TCA,
+Anguilla,anguilla-united_kingdom,united_kingdom,2,AI,AIA,
+Uruguay,uruguay,,1,UY,URY,
+Uzbekistan,uzbekistan,,1,UZ,UZB,
+Venezuela,venezuela,,1,VE,VEN,
+Vietnam,vietnam,,1,VN,VNM,
+West Bank and Gaza,west_bank_and_gaza,,1,PS,PSE,
+Western Sahara,western_sahara,,1,EH,ESH,
+Yemen,yemen,,1,YE,YEM,
+Zambia,zambia,,1,ZM,ZMB,
+Zimbabwe,zimbabwe,,1,ZW,ZWE,
 Australia,australia,,1,AU,AUS,
 Australian Capital Territory,australian_capital_territory-australia,australia,2,AU,AUS,
 New South Wales,new_south_wales-australia,australia,2,AU,AUS,
@@ -631,13 +702,13 @@ Virgin Islands,virgin_islands-united_states,united_states,2,VI,VIR,78
 Puerto Rico,puerto_rico-united_states,united_states,2,PR,PRI,72
 Diamond Princess,diamond_princess-united_states,united_states,2,US,USA,88888
 Grand Princess,grand_princess-united_states,united_states,2,US,USA,99999
-Alabama,alabama-united_states,united_states,2,US,USA,1
-Alaska,alaska-united_states,united_states,2,US,USA,2
-Arizona,arizona-united_states,united_states,2,US,USA,4
-Arkansas,arkansas-united_states,united_states,2,US,USA,5
-California,california-united_states,united_states,2,US,USA,6
-Colorado,colorado-united_states,united_states,2,US,USA,8
-Connecticut,connecticut-united_states,united_states,2,US,USA,9
+Alabama,alabama-united_states,united_states,2,US,USA,01
+Alaska,alaska-united_states,united_states,2,US,USA,02
+Arizona,arizona-united_states,united_states,2,US,USA,04
+Arkansas,arkansas-united_states,united_states,2,US,USA,05
+California,california-united_states,united_states,2,US,USA,06
+Colorado,colorado-united_states,united_states,2,US,USA,08
+Connecticut,connecticut-united_states,united_states,2,US,USA,09
 Delaware,delaware-united_states,united_states,2,US,USA,10
 District of Columbia,district_of_columbia-united_states,united_states,2,US,USA,11
 Florida,florida-united_states,united_states,2,US,USA,12
@@ -701,322 +772,322 @@ Southwest Utah,southwest_utah-utah-united_states,utah-united_states,3,US,USA,
 TriCounty,tricounty-utah-united_states,utah-united_states,3,US,USA,
 Weber-Morgan,weber-morgan-utah-united_states,utah-united_states,3,US,USA,
 Veteran Hospitals,veteran_hospitals-united_states,united_states,2,US,USA,
-Autauga,autauga-alabama-united_states,alabama-united_states,3,US,USA,1001
-Baldwin,baldwin-alabama-united_states,alabama-united_states,3,US,USA,1003
-Barbour,barbour-alabama-united_states,alabama-united_states,3,US,USA,1005
-Bibb,bibb-alabama-united_states,alabama-united_states,3,US,USA,1007
-Blount,blount-alabama-united_states,alabama-united_states,3,US,USA,1009
-Bullock,bullock-alabama-united_states,alabama-united_states,3,US,USA,1011
-Butler,butler-alabama-united_states,alabama-united_states,3,US,USA,1013
-Calhoun,calhoun-alabama-united_states,alabama-united_states,3,US,USA,1015
-Chambers,chambers-alabama-united_states,alabama-united_states,3,US,USA,1017
-Cherokee,cherokee-alabama-united_states,alabama-united_states,3,US,USA,1019
-Chilton,chilton-alabama-united_states,alabama-united_states,3,US,USA,1021
-Choctaw,choctaw-alabama-united_states,alabama-united_states,3,US,USA,1023
-Clarke,clarke-alabama-united_states,alabama-united_states,3,US,USA,1025
-Clay,clay-alabama-united_states,alabama-united_states,3,US,USA,1027
-Cleburne,cleburne-alabama-united_states,alabama-united_states,3,US,USA,1029
-Coffee,coffee-alabama-united_states,alabama-united_states,3,US,USA,1031
-Colbert,colbert-alabama-united_states,alabama-united_states,3,US,USA,1033
-Conecuh,conecuh-alabama-united_states,alabama-united_states,3,US,USA,1035
-Coosa,coosa-alabama-united_states,alabama-united_states,3,US,USA,1037
-Covington,covington-alabama-united_states,alabama-united_states,3,US,USA,1039
-Crenshaw,crenshaw-alabama-united_states,alabama-united_states,3,US,USA,1041
-Cullman,cullman-alabama-united_states,alabama-united_states,3,US,USA,1043
-Dale,dale-alabama-united_states,alabama-united_states,3,US,USA,1045
-Dallas,dallas-alabama-united_states,alabama-united_states,3,US,USA,1047
-DeKalb,dekalb-alabama-united_states,alabama-united_states,3,US,USA,1049
-Elmore,elmore-alabama-united_states,alabama-united_states,3,US,USA,1051
-Escambia,escambia-alabama-united_states,alabama-united_states,3,US,USA,1053
-Etowah,etowah-alabama-united_states,alabama-united_states,3,US,USA,1055
-Fayette,fayette-alabama-united_states,alabama-united_states,3,US,USA,1057
-Franklin,franklin-alabama-united_states,alabama-united_states,3,US,USA,1059
-Geneva,geneva-alabama-united_states,alabama-united_states,3,US,USA,1061
-Greene,greene-alabama-united_states,alabama-united_states,3,US,USA,1063
-Hale,hale-alabama-united_states,alabama-united_states,3,US,USA,1065
-Henry,henry-alabama-united_states,alabama-united_states,3,US,USA,1067
-Houston,houston-alabama-united_states,alabama-united_states,3,US,USA,1069
-Jackson,jackson-alabama-united_states,alabama-united_states,3,US,USA,1071
-Jefferson,jefferson-alabama-united_states,alabama-united_states,3,US,USA,1073
-Lamar,lamar-alabama-united_states,alabama-united_states,3,US,USA,1075
-Lauderdale,lauderdale-alabama-united_states,alabama-united_states,3,US,USA,1077
-Lawrence,lawrence-alabama-united_states,alabama-united_states,3,US,USA,1079
-Lee,lee-alabama-united_states,alabama-united_states,3,US,USA,1081
-Limestone,limestone-alabama-united_states,alabama-united_states,3,US,USA,1083
-Lowndes,lowndes-alabama-united_states,alabama-united_states,3,US,USA,1085
-Macon,macon-alabama-united_states,alabama-united_states,3,US,USA,1087
-Madison,madison-alabama-united_states,alabama-united_states,3,US,USA,1089
-Marengo,marengo-alabama-united_states,alabama-united_states,3,US,USA,1091
-Marion,marion-alabama-united_states,alabama-united_states,3,US,USA,1093
-Marshall,marshall-alabama-united_states,alabama-united_states,3,US,USA,1095
-Mobile,mobile-alabama-united_states,alabama-united_states,3,US,USA,1097
-Monroe,monroe-alabama-united_states,alabama-united_states,3,US,USA,1099
-Montgomery,montgomery-alabama-united_states,alabama-united_states,3,US,USA,1101
-Morgan,morgan-alabama-united_states,alabama-united_states,3,US,USA,1103
-Perry,perry-alabama-united_states,alabama-united_states,3,US,USA,1105
-Pickens,pickens-alabama-united_states,alabama-united_states,3,US,USA,1107
-Pike,pike-alabama-united_states,alabama-united_states,3,US,USA,1109
-Randolph,randolph-alabama-united_states,alabama-united_states,3,US,USA,1111
-Russell,russell-alabama-united_states,alabama-united_states,3,US,USA,1113
-St. Clair,st._clair-alabama-united_states,alabama-united_states,3,US,USA,1115
-Shelby,shelby-alabama-united_states,alabama-united_states,3,US,USA,1117
-Sumter,sumter-alabama-united_states,alabama-united_states,3,US,USA,1119
-Talladega,talladega-alabama-united_states,alabama-united_states,3,US,USA,1121
-Tallapoosa,tallapoosa-alabama-united_states,alabama-united_states,3,US,USA,1123
-Tuscaloosa,tuscaloosa-alabama-united_states,alabama-united_states,3,US,USA,1125
-Walker,walker-alabama-united_states,alabama-united_states,3,US,USA,1127
-Washington,washington-alabama-united_states,alabama-united_states,3,US,USA,1129
-Wilcox,wilcox-alabama-united_states,alabama-united_states,3,US,USA,1131
-Winston,winston-alabama-united_states,alabama-united_states,3,US,USA,1133
-Aleutians East,aleutians_east-alaska-united_states,alaska-united_states,3,US,USA,2013
-Aleutians West,aleutians_west-alaska-united_states,alaska-united_states,3,US,USA,2016
-Anchorage,anchorage-alaska-united_states,alaska-united_states,3,US,USA,2020
-Bethel,bethel-alaska-united_states,alaska-united_states,3,US,USA,2050
-Bristol Bay,bristol_bay-alaska-united_states,alaska-united_states,3,US,USA,2060
-Denali,denali-alaska-united_states,alaska-united_states,3,US,USA,2068
-Dillingham,dillingham-alaska-united_states,alaska-united_states,3,US,USA,2070
-Fairbanks North Star,fairbanks_north_star-alaska-united_states,alaska-united_states,3,US,USA,2090
-Haines,haines-alaska-united_states,alaska-united_states,3,US,USA,2100
-Hoonah-Angoon,hoonah-angoon-alaska-united_states,alaska-united_states,3,US,USA,2105
-Juneau,juneau-alaska-united_states,alaska-united_states,3,US,USA,2110
-Kenai Peninsula,kenai_peninsula-alaska-united_states,alaska-united_states,3,US,USA,2122
-Ketchikan Gateway,ketchikan_gateway-alaska-united_states,alaska-united_states,3,US,USA,2130
-Kodiak Island,kodiak_island-alaska-united_states,alaska-united_states,3,US,USA,2150
-Kusilvak,kusilvak-alaska-united_states,alaska-united_states,3,US,USA,2158
-Lake and Peninsula,lake_and_peninsula-alaska-united_states,alaska-united_states,3,US,USA,2164
-Matanuska-Susitna,matanuska-susitna-alaska-united_states,alaska-united_states,3,US,USA,2170
-Nome,nome-alaska-united_states,alaska-united_states,3,US,USA,2180
-North Slope,north_slope-alaska-united_states,alaska-united_states,3,US,USA,2185
-Northwest Arctic,northwest_arctic-alaska-united_states,alaska-united_states,3,US,USA,2188
-Petersburg,petersburg-alaska-united_states,alaska-united_states,3,US,USA,2195
-Prince of Wales-Hyder,prince_of_wales-hyder-alaska-united_states,alaska-united_states,3,US,USA,2198
-Sitka,sitka-alaska-united_states,alaska-united_states,3,US,USA,2220
-Skagway,skagway-alaska-united_states,alaska-united_states,3,US,USA,2230
-Southeast Fairbanks,southeast_fairbanks-alaska-united_states,alaska-united_states,3,US,USA,2240
-Valdez-Cordova,valdez-cordova-alaska-united_states,alaska-united_states,3,US,USA,2261
-Wrangell,wrangell-alaska-united_states,alaska-united_states,3,US,USA,2275
-Yakutat,yakutat-alaska-united_states,alaska-united_states,3,US,USA,2282
-Yukon-Koyukuk,yukon-koyukuk-alaska-united_states,alaska-united_states,3,US,USA,2290
-Apache,apache-arizona-united_states,arizona-united_states,3,US,USA,4001
-Cochise,cochise-arizona-united_states,arizona-united_states,3,US,USA,4003
-Coconino,coconino-arizona-united_states,arizona-united_states,3,US,USA,4005
-Gila,gila-arizona-united_states,arizona-united_states,3,US,USA,4007
-Graham,graham-arizona-united_states,arizona-united_states,3,US,USA,4009
-Greenlee,greenlee-arizona-united_states,arizona-united_states,3,US,USA,4011
-La Paz,la_paz-arizona-united_states,arizona-united_states,3,US,USA,4012
-Maricopa,maricopa-arizona-united_states,arizona-united_states,3,US,USA,4013
-Mohave,mohave-arizona-united_states,arizona-united_states,3,US,USA,4015
-Navajo,navajo-arizona-united_states,arizona-united_states,3,US,USA,4017
-Pima,pima-arizona-united_states,arizona-united_states,3,US,USA,4019
-Pinal,pinal-arizona-united_states,arizona-united_states,3,US,USA,4021
-Santa Cruz,santa_cruz-arizona-united_states,arizona-united_states,3,US,USA,4023
-Yavapai,yavapai-arizona-united_states,arizona-united_states,3,US,USA,4025
-Yuma,yuma-arizona-united_states,arizona-united_states,3,US,USA,4027
-Arkansas,arkansas-arkansas-united_states,arkansas-united_states,3,US,USA,5001
-Ashley,ashley-arkansas-united_states,arkansas-united_states,3,US,USA,5003
-Baxter,baxter-arkansas-united_states,arkansas-united_states,3,US,USA,5005
-Benton,benton-arkansas-united_states,arkansas-united_states,3,US,USA,5007
-Boone,boone-arkansas-united_states,arkansas-united_states,3,US,USA,5009
-Bradley,bradley-arkansas-united_states,arkansas-united_states,3,US,USA,5011
-Calhoun,calhoun-arkansas-united_states,arkansas-united_states,3,US,USA,5013
-Carroll,carroll-arkansas-united_states,arkansas-united_states,3,US,USA,5015
-Chicot,chicot-arkansas-united_states,arkansas-united_states,3,US,USA,5017
-Clark,clark-arkansas-united_states,arkansas-united_states,3,US,USA,5019
-Clay,clay-arkansas-united_states,arkansas-united_states,3,US,USA,5021
-Cleburne,cleburne-arkansas-united_states,arkansas-united_states,3,US,USA,5023
-Cleveland,cleveland-arkansas-united_states,arkansas-united_states,3,US,USA,5025
-Columbia,columbia-arkansas-united_states,arkansas-united_states,3,US,USA,5027
-Conway,conway-arkansas-united_states,arkansas-united_states,3,US,USA,5029
-Craighead,craighead-arkansas-united_states,arkansas-united_states,3,US,USA,5031
-Crawford,crawford-arkansas-united_states,arkansas-united_states,3,US,USA,5033
-Crittenden,crittenden-arkansas-united_states,arkansas-united_states,3,US,USA,5035
-Cross,cross-arkansas-united_states,arkansas-united_states,3,US,USA,5037
-Dallas,dallas-arkansas-united_states,arkansas-united_states,3,US,USA,5039
-Desha,desha-arkansas-united_states,arkansas-united_states,3,US,USA,5041
-Drew,drew-arkansas-united_states,arkansas-united_states,3,US,USA,5043
-Faulkner,faulkner-arkansas-united_states,arkansas-united_states,3,US,USA,5045
-Franklin,franklin-arkansas-united_states,arkansas-united_states,3,US,USA,5047
-Fulton,fulton-arkansas-united_states,arkansas-united_states,3,US,USA,5049
-Garland,garland-arkansas-united_states,arkansas-united_states,3,US,USA,5051
-Grant,grant-arkansas-united_states,arkansas-united_states,3,US,USA,5053
-Greene,greene-arkansas-united_states,arkansas-united_states,3,US,USA,5055
-Hempstead,hempstead-arkansas-united_states,arkansas-united_states,3,US,USA,5057
-Hot Spring,hot_spring-arkansas-united_states,arkansas-united_states,3,US,USA,5059
-Howard,howard-arkansas-united_states,arkansas-united_states,3,US,USA,5061
-Independence,independence-arkansas-united_states,arkansas-united_states,3,US,USA,5063
-Izard,izard-arkansas-united_states,arkansas-united_states,3,US,USA,5065
-Jackson,jackson-arkansas-united_states,arkansas-united_states,3,US,USA,5067
-Jefferson,jefferson-arkansas-united_states,arkansas-united_states,3,US,USA,5069
-Johnson,johnson-arkansas-united_states,arkansas-united_states,3,US,USA,5071
-Lafayette,lafayette-arkansas-united_states,arkansas-united_states,3,US,USA,5073
-Lawrence,lawrence-arkansas-united_states,arkansas-united_states,3,US,USA,5075
-Lee,lee-arkansas-united_states,arkansas-united_states,3,US,USA,5077
-Lincoln,lincoln-arkansas-united_states,arkansas-united_states,3,US,USA,5079
-Little River,little_river-arkansas-united_states,arkansas-united_states,3,US,USA,5081
-Logan,logan-arkansas-united_states,arkansas-united_states,3,US,USA,5083
-Lonoke,lonoke-arkansas-united_states,arkansas-united_states,3,US,USA,5085
-Madison,madison-arkansas-united_states,arkansas-united_states,3,US,USA,5087
-Marion,marion-arkansas-united_states,arkansas-united_states,3,US,USA,5089
-Miller,miller-arkansas-united_states,arkansas-united_states,3,US,USA,5091
-Mississippi,mississippi-arkansas-united_states,arkansas-united_states,3,US,USA,5093
-Monroe,monroe-arkansas-united_states,arkansas-united_states,3,US,USA,5095
-Montgomery,montgomery-arkansas-united_states,arkansas-united_states,3,US,USA,5097
-Nevada,nevada-arkansas-united_states,arkansas-united_states,3,US,USA,5099
-Newton,newton-arkansas-united_states,arkansas-united_states,3,US,USA,5101
-Ouachita,ouachita-arkansas-united_states,arkansas-united_states,3,US,USA,5103
-Perry,perry-arkansas-united_states,arkansas-united_states,3,US,USA,5105
-Phillips,phillips-arkansas-united_states,arkansas-united_states,3,US,USA,5107
-Pike,pike-arkansas-united_states,arkansas-united_states,3,US,USA,5109
-Poinsett,poinsett-arkansas-united_states,arkansas-united_states,3,US,USA,5111
-Polk,polk-arkansas-united_states,arkansas-united_states,3,US,USA,5113
-Pope,pope-arkansas-united_states,arkansas-united_states,3,US,USA,5115
-Prairie,prairie-arkansas-united_states,arkansas-united_states,3,US,USA,5117
-Pulaski,pulaski-arkansas-united_states,arkansas-united_states,3,US,USA,5119
-Randolph,randolph-arkansas-united_states,arkansas-united_states,3,US,USA,5121
-St. Francis,st._francis-arkansas-united_states,arkansas-united_states,3,US,USA,5123
-Saline,saline-arkansas-united_states,arkansas-united_states,3,US,USA,5125
-Scott,scott-arkansas-united_states,arkansas-united_states,3,US,USA,5127
-Searcy,searcy-arkansas-united_states,arkansas-united_states,3,US,USA,5129
-Sebastian,sebastian-arkansas-united_states,arkansas-united_states,3,US,USA,5131
-Sevier,sevier-arkansas-united_states,arkansas-united_states,3,US,USA,5133
-Sharp,sharp-arkansas-united_states,arkansas-united_states,3,US,USA,5135
-Stone,stone-arkansas-united_states,arkansas-united_states,3,US,USA,5137
-Union,union-arkansas-united_states,arkansas-united_states,3,US,USA,5139
-Van Buren,van_buren-arkansas-united_states,arkansas-united_states,3,US,USA,5141
-Washington,washington-arkansas-united_states,arkansas-united_states,3,US,USA,5143
-White,white-arkansas-united_states,arkansas-united_states,3,US,USA,5145
-Woodruff,woodruff-arkansas-united_states,arkansas-united_states,3,US,USA,5147
-Yell,yell-arkansas-united_states,arkansas-united_states,3,US,USA,5149
-Alameda,alameda-california-united_states,california-united_states,3,US,USA,6001
-Alpine,alpine-california-united_states,california-united_states,3,US,USA,6003
-Amador,amador-california-united_states,california-united_states,3,US,USA,6005
-Butte,butte-california-united_states,california-united_states,3,US,USA,6007
-Calaveras,calaveras-california-united_states,california-united_states,3,US,USA,6009
-Colusa,colusa-california-united_states,california-united_states,3,US,USA,6011
-Contra Costa,contra_costa-california-united_states,california-united_states,3,US,USA,6013
-Del Norte,del_norte-california-united_states,california-united_states,3,US,USA,6015
-El Dorado,el_dorado-california-united_states,california-united_states,3,US,USA,6017
-Fresno,fresno-california-united_states,california-united_states,3,US,USA,6019
-Glenn,glenn-california-united_states,california-united_states,3,US,USA,6021
-Humboldt,humboldt-california-united_states,california-united_states,3,US,USA,6023
-Imperial,imperial-california-united_states,california-united_states,3,US,USA,6025
-Inyo,inyo-california-united_states,california-united_states,3,US,USA,6027
-Kern,kern-california-united_states,california-united_states,3,US,USA,6029
-Kings,kings-california-united_states,california-united_states,3,US,USA,6031
-Lake,lake-california-united_states,california-united_states,3,US,USA,6033
-Lassen,lassen-california-united_states,california-united_states,3,US,USA,6035
-Los Angeles,los_angeles-california-united_states,california-united_states,3,US,USA,6037
-Madera,madera-california-united_states,california-united_states,3,US,USA,6039
-Marin,marin-california-united_states,california-united_states,3,US,USA,6041
-Mariposa,mariposa-california-united_states,california-united_states,3,US,USA,6043
-Mendocino,mendocino-california-united_states,california-united_states,3,US,USA,6045
-Merced,merced-california-united_states,california-united_states,3,US,USA,6047
-Modoc,modoc-california-united_states,california-united_states,3,US,USA,6049
-Mono,mono-california-united_states,california-united_states,3,US,USA,6051
-Monterey,monterey-california-united_states,california-united_states,3,US,USA,6053
-Napa,napa-california-united_states,california-united_states,3,US,USA,6055
-Nevada,nevada-california-united_states,california-united_states,3,US,USA,6057
-Orange,orange-california-united_states,california-united_states,3,US,USA,6059
-Placer,placer-california-united_states,california-united_states,3,US,USA,6061
-Plumas,plumas-california-united_states,california-united_states,3,US,USA,6063
-Riverside,riverside-california-united_states,california-united_states,3,US,USA,6065
-Sacramento,sacramento-california-united_states,california-united_states,3,US,USA,6067
-San Benito,san_benito-california-united_states,california-united_states,3,US,USA,6069
-San Bernardino,san_bernardino-california-united_states,california-united_states,3,US,USA,6071
-San Diego,san_diego-california-united_states,california-united_states,3,US,USA,6073
-San Francisco,san_francisco-california-united_states,california-united_states,3,US,USA,6075
-San Joaquin,san_joaquin-california-united_states,california-united_states,3,US,USA,6077
-San Luis Obispo,san_luis_obispo-california-united_states,california-united_states,3,US,USA,6079
-San Mateo,san_mateo-california-united_states,california-united_states,3,US,USA,6081
-Santa Barbara,santa_barbara-california-united_states,california-united_states,3,US,USA,6083
-Santa Clara,santa_clara-california-united_states,california-united_states,3,US,USA,6085
-Santa Cruz,santa_cruz-california-united_states,california-united_states,3,US,USA,6087
-Shasta,shasta-california-united_states,california-united_states,3,US,USA,6089
-Sierra,sierra-california-united_states,california-united_states,3,US,USA,6091
-Siskiyou,siskiyou-california-united_states,california-united_states,3,US,USA,6093
-Solano,solano-california-united_states,california-united_states,3,US,USA,6095
-Sonoma,sonoma-california-united_states,california-united_states,3,US,USA,6097
-Stanislaus,stanislaus-california-united_states,california-united_states,3,US,USA,6099
-Sutter,sutter-california-united_states,california-united_states,3,US,USA,6101
-Tehama,tehama-california-united_states,california-united_states,3,US,USA,6103
-Trinity,trinity-california-united_states,california-united_states,3,US,USA,6105
-Tulare,tulare-california-united_states,california-united_states,3,US,USA,6107
-Tuolumne,tuolumne-california-united_states,california-united_states,3,US,USA,6109
-Ventura,ventura-california-united_states,california-united_states,3,US,USA,6111
-Yolo,yolo-california-united_states,california-united_states,3,US,USA,6113
-Yuba,yuba-california-united_states,california-united_states,3,US,USA,6115
-Adams,adams-colorado-united_states,colorado-united_states,3,US,USA,8001
-Alamosa,alamosa-colorado-united_states,colorado-united_states,3,US,USA,8003
-Arapahoe,arapahoe-colorado-united_states,colorado-united_states,3,US,USA,8005
-Archuleta,archuleta-colorado-united_states,colorado-united_states,3,US,USA,8007
-Baca,baca-colorado-united_states,colorado-united_states,3,US,USA,8009
-Bent,bent-colorado-united_states,colorado-united_states,3,US,USA,8011
-Boulder,boulder-colorado-united_states,colorado-united_states,3,US,USA,8013
-Broomfield,broomfield-colorado-united_states,colorado-united_states,3,US,USA,8014
-Chaffee,chaffee-colorado-united_states,colorado-united_states,3,US,USA,8015
-Cheyenne,cheyenne-colorado-united_states,colorado-united_states,3,US,USA,8017
-Clear Creek,clear_creek-colorado-united_states,colorado-united_states,3,US,USA,8019
-Conejos,conejos-colorado-united_states,colorado-united_states,3,US,USA,8021
-Costilla,costilla-colorado-united_states,colorado-united_states,3,US,USA,8023
-Crowley,crowley-colorado-united_states,colorado-united_states,3,US,USA,8025
-Custer,custer-colorado-united_states,colorado-united_states,3,US,USA,8027
-Delta,delta-colorado-united_states,colorado-united_states,3,US,USA,8029
-Denver,denver-colorado-united_states,colorado-united_states,3,US,USA,8031
-Dolores,dolores-colorado-united_states,colorado-united_states,3,US,USA,8033
-Douglas,douglas-colorado-united_states,colorado-united_states,3,US,USA,8035
-Eagle,eagle-colorado-united_states,colorado-united_states,3,US,USA,8037
-Elbert,elbert-colorado-united_states,colorado-united_states,3,US,USA,8039
-El Paso,el_paso-colorado-united_states,colorado-united_states,3,US,USA,8041
-Fremont,fremont-colorado-united_states,colorado-united_states,3,US,USA,8043
-Garfield,garfield-colorado-united_states,colorado-united_states,3,US,USA,8045
-Gilpin,gilpin-colorado-united_states,colorado-united_states,3,US,USA,8047
-Grand,grand-colorado-united_states,colorado-united_states,3,US,USA,8049
-Gunnison,gunnison-colorado-united_states,colorado-united_states,3,US,USA,8051
-Hinsdale,hinsdale-colorado-united_states,colorado-united_states,3,US,USA,8053
-Huerfano,huerfano-colorado-united_states,colorado-united_states,3,US,USA,8055
-Jackson,jackson-colorado-united_states,colorado-united_states,3,US,USA,8057
-Jefferson,jefferson-colorado-united_states,colorado-united_states,3,US,USA,8059
-Kiowa,kiowa-colorado-united_states,colorado-united_states,3,US,USA,8061
-Kit Carson,kit_carson-colorado-united_states,colorado-united_states,3,US,USA,8063
-Lake,lake-colorado-united_states,colorado-united_states,3,US,USA,8065
-La Plata,la_plata-colorado-united_states,colorado-united_states,3,US,USA,8067
-Larimer,larimer-colorado-united_states,colorado-united_states,3,US,USA,8069
-Las Animas,las_animas-colorado-united_states,colorado-united_states,3,US,USA,8071
-Lincoln,lincoln-colorado-united_states,colorado-united_states,3,US,USA,8073
-Logan,logan-colorado-united_states,colorado-united_states,3,US,USA,8075
-Mesa,mesa-colorado-united_states,colorado-united_states,3,US,USA,8077
-Mineral,mineral-colorado-united_states,colorado-united_states,3,US,USA,8079
-Moffat,moffat-colorado-united_states,colorado-united_states,3,US,USA,8081
-Montezuma,montezuma-colorado-united_states,colorado-united_states,3,US,USA,8083
-Montrose,montrose-colorado-united_states,colorado-united_states,3,US,USA,8085
-Morgan,morgan-colorado-united_states,colorado-united_states,3,US,USA,8087
-Otero,otero-colorado-united_states,colorado-united_states,3,US,USA,8089
-Ouray,ouray-colorado-united_states,colorado-united_states,3,US,USA,8091
-Park,park-colorado-united_states,colorado-united_states,3,US,USA,8093
-Phillips,phillips-colorado-united_states,colorado-united_states,3,US,USA,8095
-Pitkin,pitkin-colorado-united_states,colorado-united_states,3,US,USA,8097
-Prowers,prowers-colorado-united_states,colorado-united_states,3,US,USA,8099
-Pueblo,pueblo-colorado-united_states,colorado-united_states,3,US,USA,8101
-Rio Blanco,rio_blanco-colorado-united_states,colorado-united_states,3,US,USA,8103
-Rio Grande,rio_grande-colorado-united_states,colorado-united_states,3,US,USA,8105
-Routt,routt-colorado-united_states,colorado-united_states,3,US,USA,8107
-Saguache,saguache-colorado-united_states,colorado-united_states,3,US,USA,8109
-San Juan,san_juan-colorado-united_states,colorado-united_states,3,US,USA,8111
-San Miguel,san_miguel-colorado-united_states,colorado-united_states,3,US,USA,8113
-Sedgwick,sedgwick-colorado-united_states,colorado-united_states,3,US,USA,8115
-Summit,summit-colorado-united_states,colorado-united_states,3,US,USA,8117
-Teller,teller-colorado-united_states,colorado-united_states,3,US,USA,8119
-Washington,washington-colorado-united_states,colorado-united_states,3,US,USA,8121
-Weld,weld-colorado-united_states,colorado-united_states,3,US,USA,8123
-Yuma,yuma-colorado-united_states,colorado-united_states,3,US,USA,8125
-Fairfield,fairfield-connecticut-united_states,connecticut-united_states,3,US,USA,9001
-Hartford,hartford-connecticut-united_states,connecticut-united_states,3,US,USA,9003
-Litchfield,litchfield-connecticut-united_states,connecticut-united_states,3,US,USA,9005
-Middlesex,middlesex-connecticut-united_states,connecticut-united_states,3,US,USA,9007
-New Haven,new_haven-connecticut-united_states,connecticut-united_states,3,US,USA,9009
-New London,new_london-connecticut-united_states,connecticut-united_states,3,US,USA,9011
-Tolland,tolland-connecticut-united_states,connecticut-united_states,3,US,USA,9013
-Windham,windham-connecticut-united_states,connecticut-united_states,3,US,USA,9015
+Autauga,autauga-alabama-united_states,alabama-united_states,3,US,USA,01001
+Baldwin,baldwin-alabama-united_states,alabama-united_states,3,US,USA,01003
+Barbour,barbour-alabama-united_states,alabama-united_states,3,US,USA,01005
+Bibb,bibb-alabama-united_states,alabama-united_states,3,US,USA,01007
+Blount,blount-alabama-united_states,alabama-united_states,3,US,USA,01009
+Bullock,bullock-alabama-united_states,alabama-united_states,3,US,USA,01011
+Butler,butler-alabama-united_states,alabama-united_states,3,US,USA,01013
+Calhoun,calhoun-alabama-united_states,alabama-united_states,3,US,USA,01015
+Chambers,chambers-alabama-united_states,alabama-united_states,3,US,USA,01017
+Cherokee,cherokee-alabama-united_states,alabama-united_states,3,US,USA,01019
+Chilton,chilton-alabama-united_states,alabama-united_states,3,US,USA,01021
+Choctaw,choctaw-alabama-united_states,alabama-united_states,3,US,USA,01023
+Clarke,clarke-alabama-united_states,alabama-united_states,3,US,USA,01025
+Clay,clay-alabama-united_states,alabama-united_states,3,US,USA,01027
+Cleburne,cleburne-alabama-united_states,alabama-united_states,3,US,USA,01029
+Coffee,coffee-alabama-united_states,alabama-united_states,3,US,USA,01031
+Colbert,colbert-alabama-united_states,alabama-united_states,3,US,USA,01033
+Conecuh,conecuh-alabama-united_states,alabama-united_states,3,US,USA,01035
+Coosa,coosa-alabama-united_states,alabama-united_states,3,US,USA,01037
+Covington,covington-alabama-united_states,alabama-united_states,3,US,USA,01039
+Crenshaw,crenshaw-alabama-united_states,alabama-united_states,3,US,USA,01041
+Cullman,cullman-alabama-united_states,alabama-united_states,3,US,USA,01043
+Dale,dale-alabama-united_states,alabama-united_states,3,US,USA,01045
+Dallas,dallas-alabama-united_states,alabama-united_states,3,US,USA,01047
+DeKalb,dekalb-alabama-united_states,alabama-united_states,3,US,USA,01049
+Elmore,elmore-alabama-united_states,alabama-united_states,3,US,USA,01051
+Escambia,escambia-alabama-united_states,alabama-united_states,3,US,USA,01053
+Etowah,etowah-alabama-united_states,alabama-united_states,3,US,USA,01055
+Fayette,fayette-alabama-united_states,alabama-united_states,3,US,USA,01057
+Franklin,franklin-alabama-united_states,alabama-united_states,3,US,USA,01059
+Geneva,geneva-alabama-united_states,alabama-united_states,3,US,USA,01061
+Greene,greene-alabama-united_states,alabama-united_states,3,US,USA,01063
+Hale,hale-alabama-united_states,alabama-united_states,3,US,USA,01065
+Henry,henry-alabama-united_states,alabama-united_states,3,US,USA,01067
+Houston,houston-alabama-united_states,alabama-united_states,3,US,USA,01069
+Jackson,jackson-alabama-united_states,alabama-united_states,3,US,USA,01071
+Jefferson,jefferson-alabama-united_states,alabama-united_states,3,US,USA,01073
+Lamar,lamar-alabama-united_states,alabama-united_states,3,US,USA,01075
+Lauderdale,lauderdale-alabama-united_states,alabama-united_states,3,US,USA,01077
+Lawrence,lawrence-alabama-united_states,alabama-united_states,3,US,USA,01079
+Lee,lee-alabama-united_states,alabama-united_states,3,US,USA,01081
+Limestone,limestone-alabama-united_states,alabama-united_states,3,US,USA,01083
+Lowndes,lowndes-alabama-united_states,alabama-united_states,3,US,USA,01085
+Macon,macon-alabama-united_states,alabama-united_states,3,US,USA,01087
+Madison,madison-alabama-united_states,alabama-united_states,3,US,USA,01089
+Marengo,marengo-alabama-united_states,alabama-united_states,3,US,USA,01091
+Marion,marion-alabama-united_states,alabama-united_states,3,US,USA,01093
+Marshall,marshall-alabama-united_states,alabama-united_states,3,US,USA,01095
+Mobile,mobile-alabama-united_states,alabama-united_states,3,US,USA,01097
+Monroe,monroe-alabama-united_states,alabama-united_states,3,US,USA,01099
+Montgomery,montgomery-alabama-united_states,alabama-united_states,3,US,USA,01101
+Morgan,morgan-alabama-united_states,alabama-united_states,3,US,USA,01103
+Perry,perry-alabama-united_states,alabama-united_states,3,US,USA,01105
+Pickens,pickens-alabama-united_states,alabama-united_states,3,US,USA,01107
+Pike,pike-alabama-united_states,alabama-united_states,3,US,USA,01109
+Randolph,randolph-alabama-united_states,alabama-united_states,3,US,USA,01111
+Russell,russell-alabama-united_states,alabama-united_states,3,US,USA,01113
+St. Clair,st._clair-alabama-united_states,alabama-united_states,3,US,USA,01115
+Shelby,shelby-alabama-united_states,alabama-united_states,3,US,USA,01117
+Sumter,sumter-alabama-united_states,alabama-united_states,3,US,USA,01119
+Talladega,talladega-alabama-united_states,alabama-united_states,3,US,USA,01121
+Tallapoosa,tallapoosa-alabama-united_states,alabama-united_states,3,US,USA,01123
+Tuscaloosa,tuscaloosa-alabama-united_states,alabama-united_states,3,US,USA,01125
+Walker,walker-alabama-united_states,alabama-united_states,3,US,USA,01127
+Washington,washington-alabama-united_states,alabama-united_states,3,US,USA,01129
+Wilcox,wilcox-alabama-united_states,alabama-united_states,3,US,USA,01131
+Winston,winston-alabama-united_states,alabama-united_states,3,US,USA,01133
+Aleutians East,aleutians_east-alaska-united_states,alaska-united_states,3,US,USA,02013
+Aleutians West,aleutians_west-alaska-united_states,alaska-united_states,3,US,USA,02016
+Anchorage,anchorage-alaska-united_states,alaska-united_states,3,US,USA,02020
+Bethel,bethel-alaska-united_states,alaska-united_states,3,US,USA,02050
+Bristol Bay,bristol_bay-alaska-united_states,alaska-united_states,3,US,USA,02060
+Denali,denali-alaska-united_states,alaska-united_states,3,US,USA,02068
+Dillingham,dillingham-alaska-united_states,alaska-united_states,3,US,USA,02070
+Fairbanks North Star,fairbanks_north_star-alaska-united_states,alaska-united_states,3,US,USA,02090
+Haines,haines-alaska-united_states,alaska-united_states,3,US,USA,02100
+Hoonah-Angoon,hoonah-angoon-alaska-united_states,alaska-united_states,3,US,USA,02105
+Juneau,juneau-alaska-united_states,alaska-united_states,3,US,USA,02110
+Kenai Peninsula,kenai_peninsula-alaska-united_states,alaska-united_states,3,US,USA,02122
+Ketchikan Gateway,ketchikan_gateway-alaska-united_states,alaska-united_states,3,US,USA,02130
+Kodiak Island,kodiak_island-alaska-united_states,alaska-united_states,3,US,USA,02150
+Kusilvak,kusilvak-alaska-united_states,alaska-united_states,3,US,USA,02158
+Lake and Peninsula,lake_and_peninsula-alaska-united_states,alaska-united_states,3,US,USA,02164
+Matanuska-Susitna,matanuska-susitna-alaska-united_states,alaska-united_states,3,US,USA,02170
+Nome,nome-alaska-united_states,alaska-united_states,3,US,USA,02180
+North Slope,north_slope-alaska-united_states,alaska-united_states,3,US,USA,02185
+Northwest Arctic,northwest_arctic-alaska-united_states,alaska-united_states,3,US,USA,02188
+Petersburg,petersburg-alaska-united_states,alaska-united_states,3,US,USA,02195
+Prince of Wales-Hyder,prince_of_wales-hyder-alaska-united_states,alaska-united_states,3,US,USA,02198
+Sitka,sitka-alaska-united_states,alaska-united_states,3,US,USA,02220
+Skagway,skagway-alaska-united_states,alaska-united_states,3,US,USA,02230
+Southeast Fairbanks,southeast_fairbanks-alaska-united_states,alaska-united_states,3,US,USA,02240
+Valdez-Cordova,valdez-cordova-alaska-united_states,alaska-united_states,3,US,USA,02261
+Wrangell,wrangell-alaska-united_states,alaska-united_states,3,US,USA,02275
+Yakutat,yakutat-alaska-united_states,alaska-united_states,3,US,USA,02282
+Yukon-Koyukuk,yukon-koyukuk-alaska-united_states,alaska-united_states,3,US,USA,02290
+Apache,apache-arizona-united_states,arizona-united_states,3,US,USA,04001
+Cochise,cochise-arizona-united_states,arizona-united_states,3,US,USA,04003
+Coconino,coconino-arizona-united_states,arizona-united_states,3,US,USA,04005
+Gila,gila-arizona-united_states,arizona-united_states,3,US,USA,04007
+Graham,graham-arizona-united_states,arizona-united_states,3,US,USA,04009
+Greenlee,greenlee-arizona-united_states,arizona-united_states,3,US,USA,04011
+La Paz,la_paz-arizona-united_states,arizona-united_states,3,US,USA,04012
+Maricopa,maricopa-arizona-united_states,arizona-united_states,3,US,USA,04013
+Mohave,mohave-arizona-united_states,arizona-united_states,3,US,USA,04015
+Navajo,navajo-arizona-united_states,arizona-united_states,3,US,USA,04017
+Pima,pima-arizona-united_states,arizona-united_states,3,US,USA,04019
+Pinal,pinal-arizona-united_states,arizona-united_states,3,US,USA,04021
+Santa Cruz,santa_cruz-arizona-united_states,arizona-united_states,3,US,USA,04023
+Yavapai,yavapai-arizona-united_states,arizona-united_states,3,US,USA,04025
+Yuma,yuma-arizona-united_states,arizona-united_states,3,US,USA,04027
+Arkansas,arkansas-arkansas-united_states,arkansas-united_states,3,US,USA,05001
+Ashley,ashley-arkansas-united_states,arkansas-united_states,3,US,USA,05003
+Baxter,baxter-arkansas-united_states,arkansas-united_states,3,US,USA,05005
+Benton,benton-arkansas-united_states,arkansas-united_states,3,US,USA,05007
+Boone,boone-arkansas-united_states,arkansas-united_states,3,US,USA,05009
+Bradley,bradley-arkansas-united_states,arkansas-united_states,3,US,USA,05011
+Calhoun,calhoun-arkansas-united_states,arkansas-united_states,3,US,USA,05013
+Carroll,carroll-arkansas-united_states,arkansas-united_states,3,US,USA,05015
+Chicot,chicot-arkansas-united_states,arkansas-united_states,3,US,USA,05017
+Clark,clark-arkansas-united_states,arkansas-united_states,3,US,USA,05019
+Clay,clay-arkansas-united_states,arkansas-united_states,3,US,USA,05021
+Cleburne,cleburne-arkansas-united_states,arkansas-united_states,3,US,USA,05023
+Cleveland,cleveland-arkansas-united_states,arkansas-united_states,3,US,USA,05025
+Columbia,columbia-arkansas-united_states,arkansas-united_states,3,US,USA,05027
+Conway,conway-arkansas-united_states,arkansas-united_states,3,US,USA,05029
+Craighead,craighead-arkansas-united_states,arkansas-united_states,3,US,USA,05031
+Crawford,crawford-arkansas-united_states,arkansas-united_states,3,US,USA,05033
+Crittenden,crittenden-arkansas-united_states,arkansas-united_states,3,US,USA,05035
+Cross,cross-arkansas-united_states,arkansas-united_states,3,US,USA,05037
+Dallas,dallas-arkansas-united_states,arkansas-united_states,3,US,USA,05039
+Desha,desha-arkansas-united_states,arkansas-united_states,3,US,USA,05041
+Drew,drew-arkansas-united_states,arkansas-united_states,3,US,USA,05043
+Faulkner,faulkner-arkansas-united_states,arkansas-united_states,3,US,USA,05045
+Franklin,franklin-arkansas-united_states,arkansas-united_states,3,US,USA,05047
+Fulton,fulton-arkansas-united_states,arkansas-united_states,3,US,USA,05049
+Garland,garland-arkansas-united_states,arkansas-united_states,3,US,USA,05051
+Grant,grant-arkansas-united_states,arkansas-united_states,3,US,USA,05053
+Greene,greene-arkansas-united_states,arkansas-united_states,3,US,USA,05055
+Hempstead,hempstead-arkansas-united_states,arkansas-united_states,3,US,USA,05057
+Hot Spring,hot_spring-arkansas-united_states,arkansas-united_states,3,US,USA,05059
+Howard,howard-arkansas-united_states,arkansas-united_states,3,US,USA,05061
+Independence,independence-arkansas-united_states,arkansas-united_states,3,US,USA,05063
+Izard,izard-arkansas-united_states,arkansas-united_states,3,US,USA,05065
+Jackson,jackson-arkansas-united_states,arkansas-united_states,3,US,USA,05067
+Jefferson,jefferson-arkansas-united_states,arkansas-united_states,3,US,USA,05069
+Johnson,johnson-arkansas-united_states,arkansas-united_states,3,US,USA,05071
+Lafayette,lafayette-arkansas-united_states,arkansas-united_states,3,US,USA,05073
+Lawrence,lawrence-arkansas-united_states,arkansas-united_states,3,US,USA,05075
+Lee,lee-arkansas-united_states,arkansas-united_states,3,US,USA,05077
+Lincoln,lincoln-arkansas-united_states,arkansas-united_states,3,US,USA,05079
+Little River,little_river-arkansas-united_states,arkansas-united_states,3,US,USA,05081
+Logan,logan-arkansas-united_states,arkansas-united_states,3,US,USA,05083
+Lonoke,lonoke-arkansas-united_states,arkansas-united_states,3,US,USA,05085
+Madison,madison-arkansas-united_states,arkansas-united_states,3,US,USA,05087
+Marion,marion-arkansas-united_states,arkansas-united_states,3,US,USA,05089
+Miller,miller-arkansas-united_states,arkansas-united_states,3,US,USA,05091
+Mississippi,mississippi-arkansas-united_states,arkansas-united_states,3,US,USA,05093
+Monroe,monroe-arkansas-united_states,arkansas-united_states,3,US,USA,05095
+Montgomery,montgomery-arkansas-united_states,arkansas-united_states,3,US,USA,05097
+Nevada,nevada-arkansas-united_states,arkansas-united_states,3,US,USA,05099
+Newton,newton-arkansas-united_states,arkansas-united_states,3,US,USA,05101
+Ouachita,ouachita-arkansas-united_states,arkansas-united_states,3,US,USA,05103
+Perry,perry-arkansas-united_states,arkansas-united_states,3,US,USA,05105
+Phillips,phillips-arkansas-united_states,arkansas-united_states,3,US,USA,05107
+Pike,pike-arkansas-united_states,arkansas-united_states,3,US,USA,05109
+Poinsett,poinsett-arkansas-united_states,arkansas-united_states,3,US,USA,05111
+Polk,polk-arkansas-united_states,arkansas-united_states,3,US,USA,05113
+Pope,pope-arkansas-united_states,arkansas-united_states,3,US,USA,05115
+Prairie,prairie-arkansas-united_states,arkansas-united_states,3,US,USA,05117
+Pulaski,pulaski-arkansas-united_states,arkansas-united_states,3,US,USA,05119
+Randolph,randolph-arkansas-united_states,arkansas-united_states,3,US,USA,05121
+St. Francis,st._francis-arkansas-united_states,arkansas-united_states,3,US,USA,05123
+Saline,saline-arkansas-united_states,arkansas-united_states,3,US,USA,05125
+Scott,scott-arkansas-united_states,arkansas-united_states,3,US,USA,05127
+Searcy,searcy-arkansas-united_states,arkansas-united_states,3,US,USA,05129
+Sebastian,sebastian-arkansas-united_states,arkansas-united_states,3,US,USA,05131
+Sevier,sevier-arkansas-united_states,arkansas-united_states,3,US,USA,05133
+Sharp,sharp-arkansas-united_states,arkansas-united_states,3,US,USA,05135
+Stone,stone-arkansas-united_states,arkansas-united_states,3,US,USA,05137
+Union,union-arkansas-united_states,arkansas-united_states,3,US,USA,05139
+Van Buren,van_buren-arkansas-united_states,arkansas-united_states,3,US,USA,05141
+Washington,washington-arkansas-united_states,arkansas-united_states,3,US,USA,05143
+White,white-arkansas-united_states,arkansas-united_states,3,US,USA,05145
+Woodruff,woodruff-arkansas-united_states,arkansas-united_states,3,US,USA,05147
+Yell,yell-arkansas-united_states,arkansas-united_states,3,US,USA,05149
+Alameda,alameda-california-united_states,california-united_states,3,US,USA,06001
+Alpine,alpine-california-united_states,california-united_states,3,US,USA,06003
+Amador,amador-california-united_states,california-united_states,3,US,USA,06005
+Butte,butte-california-united_states,california-united_states,3,US,USA,06007
+Calaveras,calaveras-california-united_states,california-united_states,3,US,USA,06009
+Colusa,colusa-california-united_states,california-united_states,3,US,USA,06011
+Contra Costa,contra_costa-california-united_states,california-united_states,3,US,USA,06013
+Del Norte,del_norte-california-united_states,california-united_states,3,US,USA,06015
+El Dorado,el_dorado-california-united_states,california-united_states,3,US,USA,06017
+Fresno,fresno-california-united_states,california-united_states,3,US,USA,06019
+Glenn,glenn-california-united_states,california-united_states,3,US,USA,06021
+Humboldt,humboldt-california-united_states,california-united_states,3,US,USA,06023
+Imperial,imperial-california-united_states,california-united_states,3,US,USA,06025
+Inyo,inyo-california-united_states,california-united_states,3,US,USA,06027
+Kern,kern-california-united_states,california-united_states,3,US,USA,06029
+Kings,kings-california-united_states,california-united_states,3,US,USA,06031
+Lake,lake-california-united_states,california-united_states,3,US,USA,06033
+Lassen,lassen-california-united_states,california-united_states,3,US,USA,06035
+Los Angeles,los_angeles-california-united_states,california-united_states,3,US,USA,06037
+Madera,madera-california-united_states,california-united_states,3,US,USA,06039
+Marin,marin-california-united_states,california-united_states,3,US,USA,06041
+Mariposa,mariposa-california-united_states,california-united_states,3,US,USA,06043
+Mendocino,mendocino-california-united_states,california-united_states,3,US,USA,06045
+Merced,merced-california-united_states,california-united_states,3,US,USA,06047
+Modoc,modoc-california-united_states,california-united_states,3,US,USA,06049
+Mono,mono-california-united_states,california-united_states,3,US,USA,06051
+Monterey,monterey-california-united_states,california-united_states,3,US,USA,06053
+Napa,napa-california-united_states,california-united_states,3,US,USA,06055
+Nevada,nevada-california-united_states,california-united_states,3,US,USA,06057
+Orange,orange-california-united_states,california-united_states,3,US,USA,06059
+Placer,placer-california-united_states,california-united_states,3,US,USA,06061
+Plumas,plumas-california-united_states,california-united_states,3,US,USA,06063
+Riverside,riverside-california-united_states,california-united_states,3,US,USA,06065
+Sacramento,sacramento-california-united_states,california-united_states,3,US,USA,06067
+San Benito,san_benito-california-united_states,california-united_states,3,US,USA,06069
+San Bernardino,san_bernardino-california-united_states,california-united_states,3,US,USA,06071
+San Diego,san_diego-california-united_states,california-united_states,3,US,USA,06073
+San Francisco,san_francisco-california-united_states,california-united_states,3,US,USA,06075
+San Joaquin,san_joaquin-california-united_states,california-united_states,3,US,USA,06077
+San Luis Obispo,san_luis_obispo-california-united_states,california-united_states,3,US,USA,06079
+San Mateo,san_mateo-california-united_states,california-united_states,3,US,USA,06081
+Santa Barbara,santa_barbara-california-united_states,california-united_states,3,US,USA,06083
+Santa Clara,santa_clara-california-united_states,california-united_states,3,US,USA,06085
+Santa Cruz,santa_cruz-california-united_states,california-united_states,3,US,USA,06087
+Shasta,shasta-california-united_states,california-united_states,3,US,USA,06089
+Sierra,sierra-california-united_states,california-united_states,3,US,USA,06091
+Siskiyou,siskiyou-california-united_states,california-united_states,3,US,USA,06093
+Solano,solano-california-united_states,california-united_states,3,US,USA,06095
+Sonoma,sonoma-california-united_states,california-united_states,3,US,USA,06097
+Stanislaus,stanislaus-california-united_states,california-united_states,3,US,USA,06099
+Sutter,sutter-california-united_states,california-united_states,3,US,USA,06101
+Tehama,tehama-california-united_states,california-united_states,3,US,USA,06103
+Trinity,trinity-california-united_states,california-united_states,3,US,USA,06105
+Tulare,tulare-california-united_states,california-united_states,3,US,USA,06107
+Tuolumne,tuolumne-california-united_states,california-united_states,3,US,USA,06109
+Ventura,ventura-california-united_states,california-united_states,3,US,USA,06111
+Yolo,yolo-california-united_states,california-united_states,3,US,USA,06113
+Yuba,yuba-california-united_states,california-united_states,3,US,USA,06115
+Adams,adams-colorado-united_states,colorado-united_states,3,US,USA,08001
+Alamosa,alamosa-colorado-united_states,colorado-united_states,3,US,USA,08003
+Arapahoe,arapahoe-colorado-united_states,colorado-united_states,3,US,USA,08005
+Archuleta,archuleta-colorado-united_states,colorado-united_states,3,US,USA,08007
+Baca,baca-colorado-united_states,colorado-united_states,3,US,USA,08009
+Bent,bent-colorado-united_states,colorado-united_states,3,US,USA,08011
+Boulder,boulder-colorado-united_states,colorado-united_states,3,US,USA,08013
+Broomfield,broomfield-colorado-united_states,colorado-united_states,3,US,USA,08014
+Chaffee,chaffee-colorado-united_states,colorado-united_states,3,US,USA,08015
+Cheyenne,cheyenne-colorado-united_states,colorado-united_states,3,US,USA,08017
+Clear Creek,clear_creek-colorado-united_states,colorado-united_states,3,US,USA,08019
+Conejos,conejos-colorado-united_states,colorado-united_states,3,US,USA,08021
+Costilla,costilla-colorado-united_states,colorado-united_states,3,US,USA,08023
+Crowley,crowley-colorado-united_states,colorado-united_states,3,US,USA,08025
+Custer,custer-colorado-united_states,colorado-united_states,3,US,USA,08027
+Delta,delta-colorado-united_states,colorado-united_states,3,US,USA,08029
+Denver,denver-colorado-united_states,colorado-united_states,3,US,USA,08031
+Dolores,dolores-colorado-united_states,colorado-united_states,3,US,USA,08033
+Douglas,douglas-colorado-united_states,colorado-united_states,3,US,USA,08035
+Eagle,eagle-colorado-united_states,colorado-united_states,3,US,USA,08037
+Elbert,elbert-colorado-united_states,colorado-united_states,3,US,USA,08039
+El Paso,el_paso-colorado-united_states,colorado-united_states,3,US,USA,08041
+Fremont,fremont-colorado-united_states,colorado-united_states,3,US,USA,08043
+Garfield,garfield-colorado-united_states,colorado-united_states,3,US,USA,08045
+Gilpin,gilpin-colorado-united_states,colorado-united_states,3,US,USA,08047
+Grand,grand-colorado-united_states,colorado-united_states,3,US,USA,08049
+Gunnison,gunnison-colorado-united_states,colorado-united_states,3,US,USA,08051
+Hinsdale,hinsdale-colorado-united_states,colorado-united_states,3,US,USA,08053
+Huerfano,huerfano-colorado-united_states,colorado-united_states,3,US,USA,08055
+Jackson,jackson-colorado-united_states,colorado-united_states,3,US,USA,08057
+Jefferson,jefferson-colorado-united_states,colorado-united_states,3,US,USA,08059
+Kiowa,kiowa-colorado-united_states,colorado-united_states,3,US,USA,08061
+Kit Carson,kit_carson-colorado-united_states,colorado-united_states,3,US,USA,08063
+Lake,lake-colorado-united_states,colorado-united_states,3,US,USA,08065
+La Plata,la_plata-colorado-united_states,colorado-united_states,3,US,USA,08067
+Larimer,larimer-colorado-united_states,colorado-united_states,3,US,USA,08069
+Las Animas,las_animas-colorado-united_states,colorado-united_states,3,US,USA,08071
+Lincoln,lincoln-colorado-united_states,colorado-united_states,3,US,USA,08073
+Logan,logan-colorado-united_states,colorado-united_states,3,US,USA,08075
+Mesa,mesa-colorado-united_states,colorado-united_states,3,US,USA,08077
+Mineral,mineral-colorado-united_states,colorado-united_states,3,US,USA,08079
+Moffat,moffat-colorado-united_states,colorado-united_states,3,US,USA,08081
+Montezuma,montezuma-colorado-united_states,colorado-united_states,3,US,USA,08083
+Montrose,montrose-colorado-united_states,colorado-united_states,3,US,USA,08085
+Morgan,morgan-colorado-united_states,colorado-united_states,3,US,USA,08087
+Otero,otero-colorado-united_states,colorado-united_states,3,US,USA,08089
+Ouray,ouray-colorado-united_states,colorado-united_states,3,US,USA,08091
+Park,park-colorado-united_states,colorado-united_states,3,US,USA,08093
+Phillips,phillips-colorado-united_states,colorado-united_states,3,US,USA,08095
+Pitkin,pitkin-colorado-united_states,colorado-united_states,3,US,USA,08097
+Prowers,prowers-colorado-united_states,colorado-united_states,3,US,USA,08099
+Pueblo,pueblo-colorado-united_states,colorado-united_states,3,US,USA,08101
+Rio Blanco,rio_blanco-colorado-united_states,colorado-united_states,3,US,USA,08103
+Rio Grande,rio_grande-colorado-united_states,colorado-united_states,3,US,USA,08105
+Routt,routt-colorado-united_states,colorado-united_states,3,US,USA,08107
+Saguache,saguache-colorado-united_states,colorado-united_states,3,US,USA,08109
+San Juan,san_juan-colorado-united_states,colorado-united_states,3,US,USA,08111
+San Miguel,san_miguel-colorado-united_states,colorado-united_states,3,US,USA,08113
+Sedgwick,sedgwick-colorado-united_states,colorado-united_states,3,US,USA,08115
+Summit,summit-colorado-united_states,colorado-united_states,3,US,USA,08117
+Teller,teller-colorado-united_states,colorado-united_states,3,US,USA,08119
+Washington,washington-colorado-united_states,colorado-united_states,3,US,USA,08121
+Weld,weld-colorado-united_states,colorado-united_states,3,US,USA,08123
+Yuma,yuma-colorado-united_states,colorado-united_states,3,US,USA,08125
+Fairfield,fairfield-connecticut-united_states,connecticut-united_states,3,US,USA,09001
+Hartford,hartford-connecticut-united_states,connecticut-united_states,3,US,USA,09003
+Litchfield,litchfield-connecticut-united_states,connecticut-united_states,3,US,USA,09005
+Middlesex,middlesex-connecticut-united_states,connecticut-united_states,3,US,USA,09007
+New Haven,new_haven-connecticut-united_states,connecticut-united_states,3,US,USA,09009
+New London,new_london-connecticut-united_states,connecticut-united_states,3,US,USA,09011
+Tolland,tolland-connecticut-united_states,connecticut-united_states,3,US,USA,09013
+Windham,windham-connecticut-united_states,connecticut-united_states,3,US,USA,09015
 Kent,kent-delaware-united_states,delaware-united_states,3,US,USA,10001
 New Castle,new_castle-delaware-united_states,delaware-united_states,3,US,USA,10003
 Sussex,sussex-delaware-united_states,delaware-united_states,3,US,USA,10005
