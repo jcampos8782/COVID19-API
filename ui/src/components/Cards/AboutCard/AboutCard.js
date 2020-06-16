@@ -24,7 +24,7 @@ export default class AboutCard extends React.Component {
           <br />
           <Typography variant="body2" align="justify">
             If there is a particular feature you would like to see, have encountered an error, or would like to discuss how you could
-            contribute me, connect with me over email, LinkedIn, or Facebook.
+            contribute, connect with me over email, LinkedIn, or Facebook.
           </Typography>
         </CardContent>
       </Card>
