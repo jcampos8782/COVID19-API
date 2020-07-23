@@ -365,6 +365,19 @@ MS Zaandam,ms_zaandam,,1,,,
 Namibia,namibia,,1,NA,NAM,
 Nepal,nepal,,1,NP,NPL,
 Netherlands,netherlands,,1,NL,NLD,
+Drenthe,drenthe-netherlands,netherlands,2,NL,NLD,
+Flevoland,flevoland-netherlands,netherlands,2,NL,NLD,
+Friesland,friesland-netherlands,netherlands,2,NL,NLD,
+Gelderland,gelderland-netherlands,netherlands,2,NL,NLD,
+Groningen,groningen-netherlands,netherlands,2,NL,NLD,
+Limburg,limburg-netherlands,netherlands,2,NL,NLD,
+Noord-Brabant,noord-brabant-netherlands,netherlands,2,NL,NLD,
+Noord-Holland,noord-holland-netherlands,netherlands,2,NL,NLD,
+Overijssel,overijssel-netherlands,netherlands,2,NL,NLD,
+Utrecht,utrecht-netherlands,netherlands,2,NL,NLD,
+Zeeland,zeeland-netherlands,netherlands,2,NL,NLD,
+Zuid-Holland,zuid-holland-netherlands,netherlands,2,NL,NLD,
+Unknown,unknown-netherlands,netherlands,2,NL,NLD,
 Aruba,aruba-netherlands,netherlands,2,AW,ABW,
 Curacao,curacao-netherlands,netherlands,2,CW,CUW,
 Sint Maarten,sint_maarten-netherlands,netherlands,2,SX,SXM,
@@ -373,6 +386,44 @@ New Zealand,new_zealand,,1,NZ,NZL,
 Nicaragua,nicaragua,,1,NI,NIC,
 Niger,niger,,1,NE,NER,
 Nigeria,nigeria,,1,NG,NGA,
+Abia,abia-nigeria,nigeria,2,NG,NGA,
+Adamawa,adamawa-nigeria,nigeria,2,NG,NGA,
+Akwa Ibom,akwa_ibom-nigeria,nigeria,2,NG,NGA,
+Anambra,anambra-nigeria,nigeria,2,NG,NGA,
+Bauchi,bauchi-nigeria,nigeria,2,NG,NGA,
+Bayelsa,bayelsa-nigeria,nigeria,2,NG,NGA,
+Benue,benue-nigeria,nigeria,2,NG,NGA,
+Borno,borno-nigeria,nigeria,2,NG,NGA,
+Cross River,cross_river-nigeria,nigeria,2,NG,NGA,
+Delta,delta-nigeria,nigeria,2,NG,NGA,
+Ebonyi,ebonyi-nigeria,nigeria,2,NG,NGA,
+Edo,edo-nigeria,nigeria,2,NG,NGA,
+Ekiti,ekiti-nigeria,nigeria,2,NG,NGA,
+Enugu,enugu-nigeria,nigeria,2,NG,NGA,
+Federal Capital Territory,federal_capital_territory-nigeria,nigeria,2,NG,NGA,
+Gombe,gombe-nigeria,nigeria,2,NG,NGA,
+Imo,imo-nigeria,nigeria,2,NG,NGA,
+Jigawa,jigawa-nigeria,nigeria,2,NG,NGA,
+Kaduna,kaduna-nigeria,nigeria,2,NG,NGA,
+Kano,kano-nigeria,nigeria,2,NG,NGA,
+Katsina,katsina-nigeria,nigeria,2,NG,NGA,
+Kebbi,kebbi-nigeria,nigeria,2,NG,NGA,
+Kogi,kogi-nigeria,nigeria,2,NG,NGA,
+Kwara,kwara-nigeria,nigeria,2,NG,NGA,
+Lagos,lagos-nigeria,nigeria,2,NG,NGA,
+Nasarawa,nasarawa-nigeria,nigeria,2,NG,NGA,
+Niger,niger-nigeria,nigeria,2,NG,NGA,
+Ogun,ogun-nigeria,nigeria,2,NG,NGA,
+Ondo,ondo-nigeria,nigeria,2,NG,NGA,
+Osun,osun-nigeria,nigeria,2,NG,NGA,
+Oyo,oyo-nigeria,nigeria,2,NG,NGA,
+Plateau,plateau-nigeria,nigeria,2,NG,NGA,
+Rivers,rivers-nigeria,nigeria,2,NG,NGA,
+Sokoto,sokoto-nigeria,nigeria,2,NG,NGA,
+Taraba,taraba-nigeria,nigeria,2,NG,NGA,
+Yobe,yobe-nigeria,nigeria,2,NG,NGA,
+Zamfara,zamfara-nigeria,nigeria,2,NG,NGA,
+Unknown,unknown-nigeria,nigeria,2,NG,NGA,
 North Macedonia,north_macedonia,,1,MK,MKD,
 Norway,norway,,1,NO,NOR,
 Oman,oman,,1,OM,OMN,
@@ -700,6 +751,84 @@ Guam,guam-united_states,united_states,2,GU,GUM,66
 Northern Mariana Islands,northern_mariana_islands-united_states,united_states,2,MP,MNP,69
 Virgin Islands,virgin_islands-united_states,united_states,2,VI,VIR,78
 Puerto Rico,puerto_rico-united_states,united_states,2,PR,PRI,72
+Adjuntas,adjuntas-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72001
+Aguada,aguada-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72003
+Aguadilla,aguadilla-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72005
+Aguas Buenas,aguas_buenas-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72007
+Aibonito,aibonito-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72009
+Anasco,anasco-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72011
+Arecibo,arecibo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72013
+Arroyo,arroyo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72015
+Barceloneta,barceloneta-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72017
+Barranquitas,barranquitas-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72019
+Bayamon,bayamon-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72021
+Cabo Rojo,cabo_rojo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72023
+Caguas,caguas-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72025
+Camuy,camuy-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72027
+Canovanas,canovanas-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72029
+Carolina,carolina-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72031
+Catano,catano-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72033
+Cayey,cayey-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72035
+Ceiba,ceiba-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72037
+Ciales,ciales-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72039
+Cidra,cidra-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72041
+Coamo,coamo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72043
+Comerio,comerio-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72045
+Corozal,corozal-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72047
+Culebra,culebra-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72049
+Dorado,dorado-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72051
+Fajardo,fajardo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72053
+Florida,florida-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72054
+Guanica,guanica-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72055
+Guayama,guayama-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72057
+Guayanilla,guayanilla-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72059
+Guaynabo,guaynabo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72061
+Gurabo,gurabo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72063
+Hatillo,hatillo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72065
+Hormigueros,hormigueros-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72067
+Humacao,humacao-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72069
+Isabela,isabela-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72071
+Jayuya,jayuya-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72073
+Juana Diaz,juana_diaz-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72075
+Juncos,juncos-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72077
+Lajas,lajas-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72079
+Lares,lares-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72081
+Las Marias,las_marias-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72083
+Las Piedras,las_piedras-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72085
+Loiza,loiza-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72087
+Luquillo,luquillo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72089
+Manati,manati-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72091
+Maricao,maricao-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72093
+Maunabo,maunabo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72095
+Mayaguez,mayaguez-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72097
+Moca,moca-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72099
+Morovis,morovis-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72101
+Naguabo,naguabo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72103
+Naranjito,naranjito-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72105
+Orocovis,orocovis-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72107
+Patillas,patillas-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72109
+Penuelas,penuelas-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72111
+Ponce,ponce-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72113
+Quebradillas,quebradillas-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72115
+Rincon,rincon-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72117
+Rio Grande,rio_grande-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72119
+Sabana Grande,sabana_grande-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72121
+Salinas,salinas-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72123
+San German,san_german-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72125
+San Juan,san_juan-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72127
+San Lorenzo,san_lorenzo-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72129
+San Sebastian,san_sebastian-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72131
+Santa Isabel,santa_isabel-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72133
+Toa Alta,toa_alta-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72135
+Toa Baja,toa_baja-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72137
+Trujillo Alto,trujillo_alto-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72139
+Utuado,utuado-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72141
+Vega Alta,vega_alta-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72143
+Vega Baja,vega_baja-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72145
+Vieques,vieques-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72147
+Villalba,villalba-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72149
+Yabucoa,yabucoa-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72151
+Yauco,yauco-puerto_rico-united_states,puerto_rico-united_states,3,PR,PRI,72153
 Diamond Princess,diamond_princess-united_states,united_states,2,US,USA,88888
 Grand Princess,grand_princess-united_states,united_states,2,US,USA,99999
 Alabama,alabama-united_states,united_states,2,US,USA,01
